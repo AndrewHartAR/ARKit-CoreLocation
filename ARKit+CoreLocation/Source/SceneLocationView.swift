@@ -8,13 +8,18 @@
 
 import Foundation
 import ARKit
+import CoreLocation
 
-class SceneLocationView: UIView, ARSCNViewDelegate {
+class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     private let sceneView = ARSCNView()
+    
+    private let locationManager = LocationManager()
     
     //MARK: Setup
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        locationManager.delegate = self
         
         backgroundColor = UIColor.red
         
@@ -53,4 +58,15 @@ class SceneLocationView: UIView, ARSCNViewDelegate {
     }
     
     //MARK: ARSCNViewDelegate
+    
+    
+    //MARK: LocationManager
+    
+    func locationManagerDidUpdateLocation(_ locationManager: LocationManager, location: CLLocation) {
+        
+    }
+    
+    func locationManagerDidUpdateHeading(_ locationManager: LocationManager, heading: CLLocationDirection) {
+        
+    }
 }

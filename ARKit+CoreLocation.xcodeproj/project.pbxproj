@@ -74,8 +74,8 @@
 		49A3FBF31F099A4A00AA59C8 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				49A3FBF41F099A5F00AA59C8 /* LocationManager.swift */,
 				49A3FBF61F099C8100AA59C8 /* SceneLocationView.swift */,
+				49A3FBF41F099A5F00AA59C8 /* LocationManager.swift */,
 				49A3FBFC1F09B00400AA59C8 /* CLLocation+Extensions.swift */,
 			);
 			path = Source;
