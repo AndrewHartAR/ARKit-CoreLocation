@@ -24,7 +24,7 @@ class SceneLocationView: UIView, ARSCNViewDelegate {
         sceneView.showsStatistics = true
         
         // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        let scene = SCNScene(named: "art.scnassets/scene.scn")!
         sceneView.scene = scene
         addSubview(sceneView)
     }
