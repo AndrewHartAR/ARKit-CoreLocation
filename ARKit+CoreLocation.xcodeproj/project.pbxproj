@@ -13,6 +13,7 @@
 		49A3FBE31F09988100AA59C8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49A3FBE11F09988100AA59C8 /* Main.storyboard */; };
 		49A3FBE51F09988100AA59C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49A3FBE41F09988100AA59C8 /* Assets.xcassets */; };
 		49A3FBE81F09988100AA59C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49A3FBE61F09988100AA59C8 /* LaunchScreen.storyboard */; };
+		49A3FBF51F099A5F00AA59C8 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A3FBF41F099A5F00AA59C8 /* LocationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		49A3FBE41F09988100AA59C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		49A3FBE71F09988100AA59C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		49A3FBE91F09988100AA59C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		49A3FBF41F099A5F00AA59C8 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 		49A3FBDA1F09988100AA59C8 /* ARKit+CoreLocation */ = {
 			isa = PBXGroup;
 			children = (
+				49A3FBF31F099A4A00AA59C8 /* Source */,
 				49A3FBDB1F09988100AA59C8 /* AppDelegate.swift */,
 				49A3FBDD1F09988100AA59C8 /* art.scnassets */,
 				49A3FBDF1F09988100AA59C8 /* ViewController.swift */,
@@ -65,6 +68,14 @@
 				49A3FBE91F09988100AA59C8 /* Info.plist */,
 			);
 			path = "ARKit+CoreLocation";
+			sourceTree = "<group>";
+		};
+		49A3FBF31F099A4A00AA59C8 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				49A3FBF41F099A5F00AA59C8 /* LocationManager.swift */,
+			);
+			path = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,6 +152,7 @@
 			files = (
 				49A3FBE01F09988100AA59C8 /* ViewController.swift in Sources */,
 				49A3FBDC1F09988100AA59C8 /* AppDelegate.swift in Sources */,
+				49A3FBF51F099A5F00AA59C8 /* LocationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,6 +328,7 @@
 				49A3FBEE1F09988100AA59C8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
