@@ -15,6 +15,8 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     
     private let locationManager = LocationManager()
     
+    private(set) var sceneAnnotations = [SceneAnnotation]()
+    
     //MARK: Setup
     override init(frame: CGRect) {
         super.init(frame: frame)
