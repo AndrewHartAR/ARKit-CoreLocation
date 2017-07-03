@@ -20,6 +20,7 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     private let locationManager = LocationManager()
     
     private(set) var sceneAnnotations = [SceneAnnotation]()
+    private var sceneLocationEstimates = [SceneLocationEstimate]()
     
     private var sceneAnchor: SceneAnchor?
     
@@ -44,6 +45,12 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
         super.init(coder: aDecoder)
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        sceneView.frame = self.bounds
+    }
+    
     func run() {
         // Create a session configuration
         let configuration = ARWorldTrackingSessionConfiguration()
@@ -57,12 +64,6 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
         sceneView.session.pause()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        sceneView.frame = self.bounds
-    }
-    
     func setupSceneAnchor() {
         //Heading will be required to setup the node properly
         if let currentFrame = self.sceneView.session.currentFrame,
@@ -73,6 +74,49 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
             
             //Add anchor to scene view
             self.sceneView.session.add(anchor: self.sceneAnchor!)
+        }
+    }
+    
+    //MARK: Scene position
+    
+    class TemporaryAnchor: ARAnchor {
+        var completion: ((_ position: SCNVector3?) -> Void)?
+        
+        init(transform: matrix_float4x4, completion: ((_ position: SCNVector3?) -> Void)?) {
+            self.completion = completion
+            
+            super.init(transform: transform)
+        }
+    }
+    
+    func fetchCurrentScenePosition(completion: @escaping (_ position: SCNVector3?) -> Void) {
+        print("fetch current scene position")
+        if let currentFrame = sceneView.session.currentFrame {
+            let translation = matrix_identity_float4x4
+            let transform = simd_mul(currentFrame.camera.transform, translation)
+            let anchor = TemporaryAnchor(transform: transform, completion: completion)
+            
+            sceneView.session.add(anchor: anchor)
+            
+            //This is continued in renderer:didUpdateNode:forAnchor:,
+            //where it recognises the anchor, figures out the location and calls completion
+        } else {
+            completion(nil)
+        }
+    }
+    
+    //MARK: Scene location estimates
+    
+    ///Adds a scene location estimate based on current time, camera position and location from location manager
+    func addSceneLocationEstimate(location: CLLocation, completion: @escaping () -> Void) {
+        self.fetchCurrentScenePosition() {
+            position in
+            if position != nil {
+                let sceneLocationEstimate = SceneLocationEstimate(location: location, position: position!, date: Date())
+                self.sceneLocationEstimates.append(sceneLocationEstimate)
+            }
+            
+            completion()
         }
     }
     
@@ -95,6 +139,18 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
                 
                 sceneAnchor.node = node
             }
+        } else if let temporaryAnchor = anchor as? TemporaryAnchor {
+            //Used for determining the current position on the map
+            if let sceneNode = sceneAnchor?.node {
+                let convertedPosition = sceneNode.convertPosition(node.position, to: sceneNode)
+                
+                temporaryAnchor.completion?(convertedPosition)
+            } else {
+                temporaryAnchor.completion?(nil)
+            }
+            
+            node.removeFromParentNode()
+            sceneView.session.remove(anchor: temporaryAnchor)
         }
     }
     
@@ -107,7 +163,9 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     //MARK: LocationManager
     
     func locationManagerDidUpdateLocation(_ locationManager: LocationManager, location: CLLocation) {
-        
+        self.addSceneLocationEstimate(location: location, completion: {
+
+        })
     }
     
     func locationManagerDidUpdateHeading(_ locationManager: LocationManager, heading: CLLocationDirection) {
