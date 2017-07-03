@@ -15,6 +15,10 @@ fileprivate class SceneAnchor: ARAnchor {
 }
 
 class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
+    ///The limit to the scene, in terms of what data is considered reasonably accurate.
+    ///Measured in meters.
+    private static let sceneLimit = 100.0
+    
     private let sceneView = ARSCNView()
     
     private let locationManager = LocationManager()
@@ -23,6 +27,8 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     private var sceneLocationEstimates = [SceneLocationEstimate]()
     
     private var sceneAnchor: SceneAnchor?
+    
+    private var updateEstimatesTimer: Timer?
     
     //MARK: Setup
     override init(frame: CGRect) {
@@ -58,10 +64,15 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
         
         // Run the view's session
         sceneView.session.run(configuration)
+        
+        self.updateEstimatesTimer?.invalidate()
+        self.updateEstimatesTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(SceneLocationView.updateEstimates), userInfo: nil, repeats: true)
     }
     
     func pause() {
         sceneView.session.pause()
+        self.updateEstimatesTimer?.invalidate()
+        self.updateEstimatesTimer = nil
     }
     
     func setupSceneAnchor() {
@@ -90,7 +101,6 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     }
     
     func fetchCurrentScenePosition(completion: @escaping (_ position: SCNVector3?) -> Void) {
-        print("fetch current scene position")
         if let currentFrame = sceneView.session.currentFrame {
             let translation = matrix_identity_float4x4
             let transform = simd_mul(currentFrame.camera.transform, translation)
@@ -107,17 +117,51 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     
     //MARK: Scene location estimates
     
+    @objc func updateEstimates() {
+        self.removeOldLocationEstimates {
+            
+        }
+    }
+    
     ///Adds a scene location estimate based on current time, camera position and location from location manager
     func addSceneLocationEstimate(location: CLLocation, completion: @escaping () -> Void) {
         self.fetchCurrentScenePosition() {
             position in
             if position != nil {
-                let sceneLocationEstimate = SceneLocationEstimate(location: location, position: position!, date: Date())
-                self.sceneLocationEstimates.append(sceneLocationEstimate)
+                self.addSceneLocationEstimate(location: location, currentPosition: position!)
             }
             
             completion()
         }
+    }
+    
+    func addSceneLocationEstimate(location: CLLocation, currentPosition: SCNVector3) {
+        print("add scene location estimate: \(currentPosition)")
+        let sceneLocationEstimate = SceneLocationEstimate(location: location, position: currentPosition, date: Date())
+        self.sceneLocationEstimates.append(sceneLocationEstimate)
+    }
+    
+    func removeOldLocationEstimates(completion: @escaping () -> Void) {
+        self.fetchCurrentScenePosition {
+            position in
+            if position != nil {
+                self.removeOldLocationEstimates(currentPosition: position!)
+            }
+            
+            completion()
+        }
+    }
+    
+    func removeOldLocationEstimates(currentPosition: SCNVector3) {
+        let currentPoint = CGPoint.pointWithVector(vector: currentPosition)
+        
+        sceneLocationEstimates = sceneLocationEstimates.filter({
+            let point = CGPoint.pointWithVector(vector: $0.position)
+            
+            let radiusContainsPoint = currentPoint.radiusContainsPoint(radius: CGFloat(SceneLocationView.sceneLimit), point: point)
+            
+            return radiusContainsPoint
+        })
     }
     
     func currentLocation(completion: @escaping (_ location: CLLocation?) -> Void) {
