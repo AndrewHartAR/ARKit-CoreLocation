@@ -49,11 +49,11 @@ extension CLLocation {
         
         let longitudeCoordinate = self.coordinate.coordinateWithBearing(bearing: 90, distanceMeters: translation.longitudeTranslation)
         
-        let location = CLLocation(
+        let coordinate = CLLocationCoordinate2D(
             latitude: latitudeCoordinate.latitude,
             longitude: longitudeCoordinate.longitude)
         
-        return location
+        return CLLocation(coordinate: coordinate, altitude: self.altitude, horizontalAccuracy: self.horizontalAccuracy, verticalAccuracy: self.verticalAccuracy, timestamp: self.timestamp)
     }
 }
 
