@@ -19,6 +19,15 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     ///Measured in meters.
     private static let sceneLimit = 100.0
     
+    ///Displays an arrow that points north upon creation of the scene.
+    ///This is based on Core Location's heading, but the setup isn't always correct
+    ///so the arrow should help to clear that up.
+    ///The setup of the scene to point north occurs within renderer:didUpdateNode:.
+    ///Feel free to improve upon this.
+    ///For one thing, I know it doesn't work too well if you start with your phone angled down.
+    ///The setting for this given at the start of the scene is respected.
+    var displayDebuggingArrow = false
+    
     private let sceneView = ARSCNView()
     
     private let locationManager = LocationManager()
@@ -205,12 +214,14 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
                 node.eulerAngles.y = 0
                 node.eulerAngles.z = 0 - (Float.pi/2)
                 
-                //An arrow that points north
-//                let scene = SCNScene(named: "art.scnassets/arrow.dae")!
-//                let arrowNode = scene.rootNode.childNode(withName: "SketchUp", recursively: true)!
-//                arrowNode.scale = SCNVector3(x: 0.01, y: 0.01, z: 0.01)
-//                arrowNode.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
-//                node.addChildNode(arrowNode)
+                if displayDebuggingArrow {
+                    //An arrow that points north
+                    let scene = SCNScene(named: "art.scnassets/arrow.dae")!
+                    let arrowNode = scene.rootNode.childNode(withName: "SketchUp", recursively: true)!
+                    arrowNode.scale = SCNVector3(x: 0.01, y: 0.01, z: 0.01)
+                    arrowNode.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
+                    node.addChildNode(arrowNode)
+                }
                 
                 sceneAnchor.node = node
             }

@@ -22,11 +22,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // Create a session configuration
-        let configuration = ARWorldTrackingSessionConfiguration()
-        configuration.planeDetection = .horizontal
-        
-        // Run the view's session
+        //Set to true to display an arrow which points north.
+        //Checkout the comments in the property description on this,
+        //it could use some improvement.
+        sceneView.displayDebuggingArrow = false
         sceneView.run()
     }
     
