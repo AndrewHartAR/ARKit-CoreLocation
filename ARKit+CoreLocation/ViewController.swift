@@ -9,14 +9,38 @@
 import UIKit
 import SceneKit
 import ARKit
+import MapKit
 
-class ViewController: UIViewController, ARSCNViewDelegate {
-    let sceneView = SceneLocationView()
+class ViewController: UIViewController, MKMapViewDelegate {
+    let sceneLocationView = SceneLocationView()
+    
+    let mapView = MKMapView()
+    var userAnnotation: MKPointAnnotation?
+    
+    var updateUserLocationTimer: Timer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(sceneView)
+        view.addSubview(sceneLocationView)
+        
+        mapView.delegate = self
+        mapView.showsUserLocation = true
+        view.addSubview(mapView)
+        
+        updateUserLocationTimer = Timer.scheduledTimer(
+            timeInterval: 1,
+            target: self,
+            selector: #selector(ViewController.updateUserLocation),
+            userInfo: nil,
+            repeats: true)
+        
+        //Give it a chance to get the user's location, then update the mapview region
+        DispatchQueue.main.asyncAfter(timeInterval: 3) {
+            let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
+            let region = MKCoordinateRegion(center: self.mapView.userLocation.coordinate, span: span)
+            self.mapView.region = region
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -25,51 +49,72 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         //Set to true to display an arrow which points north.
         //Checkout the comments in the property description on this,
         //it could use some improvement.
-        sceneView.displayDebuggingArrow = false
-        sceneView.run()
+        sceneLocationView.displayDebuggingArrow = false
+        sceneLocationView.run()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         // Pause the view's session
-        sceneView.pause()
+        sceneLocationView.pause()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        sceneView.frame = self.view.bounds
+        sceneLocationView.frame = CGRect(
+            x: 0,
+            y: 0,
+            width: self.view.frame.size.width,
+            height: self.view.frame.size.height)
+        
+        mapView.frame = CGRect(
+            x: 0,
+            y: self.view.frame.size.height / 2,
+            width: self.view.frame.size.width,
+            height: self.view.frame.size.height / 2)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.
     }
+    
+    @objc func updateUserLocation() {
+        sceneLocationView.currentLocation {
+            (location) in
+            if location != nil {
+                DispatchQueue.main.async {
+                    if self.userAnnotation == nil {
+                        self.userAnnotation = MKPointAnnotation()
+                        self.mapView.addAnnotation(self.userAnnotation!)
+                    }
+                        
+                    self.userAnnotation?.coordinate = location!.coordinate
+                    self.userAnnotation!.title = "My Location, acc: \(location!.horizontalAccuracy)"
+                }
+            }
+        }
+    }
+    
+    //MARK: MKMapViewDelegate
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation {
+            return nil
+        }
+        
+        let marker = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: nil)
+        marker.displayPriority = .required
+        
+        return marker
+    }
+}
 
-    // MARK: - ARSCNViewDelegate
-    
-/*
-    // Override to create and configure nodes for anchors added to the view's session.
-    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        let node = SCNNode()
-     
-        return node
-    }
-*/
-    
-    func session(_ session: ARSession, didFailWithError error: Error) {
-        // Present an error message to the user
-        
-    }
-    
-    func sessionWasInterrupted(_ session: ARSession) {
-        // Inform the user that the session has been interrupted, for example, by presenting an overlay
-        
-    }
-    
-    func sessionInterruptionEnded(_ session: ARSession) {
-        // Reset tracking and/or remove existing anchors if consistent tracking is required
-        
+extension DispatchQueue {
+    func asyncAfter(timeInterval: TimeInterval, execute: @escaping () -> Void) {
+        self.asyncAfter(
+            deadline: DispatchTime.now() + Double(Int64(timeInterval * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: execute)
     }
 }
