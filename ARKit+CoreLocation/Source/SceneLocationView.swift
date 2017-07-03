@@ -198,7 +198,8 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
         if let sceneAnchor = anchor as? SceneAnchor {
-            if let heading = self.locationManager.heading {
+            if sceneAnchor.node == nil,
+                let heading = self.locationManager.heading {
                 print("did update node for scene anchor")
                 node.eulerAngles.x -= Float(heading).degreesToRadians
                 node.eulerAngles.y = 0
