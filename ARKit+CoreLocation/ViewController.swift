@@ -19,27 +19,33 @@ class ViewController: UIViewController, MKMapViewDelegate {
     
     var updateUserLocationTimer: Timer?
     
+    ///Whether to show a map view
+    ///The initial value is respected
+    var showMapView: Bool = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.addSubview(sceneLocationView)
         
-        mapView.delegate = self
-        mapView.showsUserLocation = true
-        view.addSubview(mapView)
-        
-        updateUserLocationTimer = Timer.scheduledTimer(
-            timeInterval: 1,
-            target: self,
-            selector: #selector(ViewController.updateUserLocation),
-            userInfo: nil,
-            repeats: true)
-        
-        //Give it a chance to get the user's location, then update the mapview region
-        DispatchQueue.main.asyncAfter(timeInterval: 3) {
-            let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
-            let region = MKCoordinateRegion(center: self.mapView.userLocation.coordinate, span: span)
-            self.mapView.region = region
+        if showMapView {
+            mapView.delegate = self
+            mapView.showsUserLocation = true
+            view.addSubview(mapView)
+            
+            updateUserLocationTimer = Timer.scheduledTimer(
+                timeInterval: 1,
+                target: self,
+                selector: #selector(ViewController.updateUserLocation),
+                userInfo: nil,
+                repeats: true)
+            
+            //Give it a chance to get the user's location, then update the mapview region
+            DispatchQueue.main.asyncAfter(timeInterval: 3) {
+                let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
+                let region = MKCoordinateRegion(center: self.mapView.userLocation.coordinate, span: span)
+                self.mapView.region = region
+            }
         }
     }
     
