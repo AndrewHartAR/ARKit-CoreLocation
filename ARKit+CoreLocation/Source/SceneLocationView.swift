@@ -120,6 +120,36 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
         }
     }
     
+    func currentLocation(completion: @escaping (_ location: CLLocation?) -> Void) {
+        let sortedLocationEstimates = sceneLocationEstimates.sorted(by: {
+            if $0.location.horizontalAccuracy == $1.location.horizontalAccuracy {
+                return $0.date > $1.date
+            }
+            
+            return $0.location.horizontalAccuracy < $1.location.horizontalAccuracy
+        })
+        
+        if let bestEstimate = sortedLocationEstimates.first {
+            fetchCurrentScenePosition(completion: {
+                (position) in
+                if position == nil {
+                    completion(nil)
+                    return
+                }
+                
+                let translation = LocationTranslation(
+                    latitudeTranslation: Double(bestEstimate.position.z - position!.z),
+                    longitudeTranslation: Double(bestEstimate.position.x + position!.x))
+                
+                let translatedLocation = bestEstimate.location.translatedLocation(with: translation)
+                
+                completion(translatedLocation)
+            })
+        } else {
+            completion(nil)
+        }
+    }
+    
     //MARK: ARSCNViewDelegate
     
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
