@@ -145,8 +145,8 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     }
     
     func addSceneLocationEstimate(location: CLLocation, currentPosition: SCNVector3) {
-        print("add scene location estimate: \(currentPosition)")
-        let sceneLocationEstimate = SceneLocationEstimate(location: location, position: currentPosition, date: Date())
+        print("add scene location estimate, position: \(currentPosition), accuracy: \(location.horizontalAccuracy), date: \(location.timestamp)")
+        let sceneLocationEstimate = SceneLocationEstimate(location: location, position: currentPosition)
         self.sceneLocationEstimates.append(sceneLocationEstimate)
     }
     
@@ -176,7 +176,7 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     func currentLocation(completion: @escaping (_ location: CLLocation?) -> Void) {
         let sortedLocationEstimates = sceneLocationEstimates.sorted(by: {
             if $0.location.horizontalAccuracy == $1.location.horizontalAccuracy {
-                return $0.date > $1.date
+                return $0.location.timestamp > $1.location.timestamp
             }
             
             return $0.location.horizontalAccuracy < $1.location.horizontalAccuracy

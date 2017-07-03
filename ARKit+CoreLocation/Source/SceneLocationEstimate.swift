@@ -13,11 +13,9 @@ import SceneKit
 class SceneLocationEstimate {
     let location: CLLocation
     let position: SCNVector3
-    let date: Date
     
-    init(location: CLLocation, position: SCNVector3, date: Date) {
+    init(location: CLLocation, position: SCNVector3) {
         self.location = location
         self.position = position
-        self.date = date
     }
 }
