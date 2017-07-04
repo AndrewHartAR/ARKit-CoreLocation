@@ -23,6 +23,8 @@ class ViewController: UIViewController, MKMapViewDelegate {
     ///The initial value is respected
     var showMapView: Bool = true
     
+    var centerMapOnUserLocation: Bool = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,13 +45,6 @@ class ViewController: UIViewController, MKMapViewDelegate {
                 selector: #selector(ViewController.updateUserLocation),
                 userInfo: nil,
                 repeats: true)
-            
-            //Give it a chance to get the user's location, then update the mapview region
-            DispatchQueue.main.asyncAfter(timeInterval: 3) {
-                let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
-                let region = MKCoordinateRegion(center: self.mapView.userLocation.coordinate, span: span)
-                self.mapView.region = region
-            }
         }
     }
     
@@ -98,7 +93,24 @@ class ViewController: UIViewController, MKMapViewDelegate {
                         
                     self.userAnnotation?.coordinate = location!.coordinate
                     self.userAnnotation!.title = "My Location, acc: \(location!.horizontalAccuracy)"
+                    
+                    if self.centerMapOnUserLocation {
+                        self.mapView.region.center = self.userAnnotation!.coordinate
+                        self.mapView.region.span = MKCoordinateSpan(latitudeDelta: 0.0005, longitudeDelta: 0.0005)
+                    }
                 }
+            }
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        
+        if let touch = touches.first {
+            if touch.view != nil &&
+                (mapView == touch.view! ||
+                    mapView.recursiveSubviews().contains(touch.view!)) {
+                centerMapOnUserLocation = false
             }
         }
     }
@@ -122,5 +134,17 @@ extension DispatchQueue {
     func asyncAfter(timeInterval: TimeInterval, execute: @escaping () -> Void) {
         self.asyncAfter(
             deadline: DispatchTime.now() + Double(Int64(timeInterval * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: execute)
+    }
+}
+
+extension UIView {
+    func recursiveSubviews() -> [UIView] {
+        var recursiveSubviews = self.subviews
+        
+        for subview in subviews {
+            recursiveSubviews.append(contentsOf: subview.recursiveSubviews())
+        }
+        
+        return recursiveSubviews
     }
 }
