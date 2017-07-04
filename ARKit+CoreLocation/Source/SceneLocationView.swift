@@ -9,6 +9,7 @@
 import Foundation
 import ARKit
 import CoreLocation
+import CocoaLumberjack
 
 fileprivate class SceneAnchor: ARAnchor {
     var node: SCNNode?
@@ -147,7 +148,8 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     }
     
     func addSceneLocationEstimate(location: CLLocation, currentPosition: SCNVector3) {
-        print("add scene location estimate, position: \(currentPosition), accuracy: \(location.horizontalAccuracy), date: \(location.timestamp)")
+        DDLogDebug("add scene location estimate, position: \(currentPosition), location: \(location.coordinate), accuracy: \(location.horizontalAccuracy), date: \(location.timestamp)")
+        
         let sceneLocationEstimate = SceneLocationEstimate(location: location, position: currentPosition)
         self.sceneLocationEstimates.append(sceneLocationEstimate)
     }
@@ -170,6 +172,10 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
             let point = CGPoint.pointWithVector(vector: $0.position)
             
             let radiusContainsPoint = currentPoint.radiusContainsPoint(radius: CGFloat(SceneLocationView.sceneLimit), point: point)
+            
+            if !radiusContainsPoint {
+                DDLogDebug("remove scene location estimate, position: \($0.position), location: \($0.location.coordinate), accuracy: \($0.location.horizontalAccuracy), date: \($0.location.timestamp)")
+            }
             
             return radiusContainsPoint
         })
@@ -206,6 +212,14 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
                 
                 let translatedLocation = bestEstimate.location.translatedLocation(with: translation)
                 
+                DDLogDebug("")
+                DDLogDebug("Fetch current location")
+                DDLogDebug("best location estimate, position: \(bestEstimate.position), location: \(bestEstimate.location.coordinate), accuracy: \(bestEstimate.location.horizontalAccuracy), date: \(bestEstimate.location.timestamp)")
+                DDLogDebug("current positon: \(position!)")
+                DDLogDebug("translation: \(translation)")
+                DDLogDebug("translated location: \(translatedLocation)")
+                DDLogDebug("")
+                
                 completion(translatedLocation)
             })
         } else {
@@ -219,7 +233,8 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
         if let sceneAnchor = anchor as? SceneAnchor {
             if sceneAnchor.node == nil,
                 let heading = self.locationManager.heading {
-                print("did update node for scene anchor")
+                DDLogDebug("did update node for scene anchor")
+                
                 node.eulerAngles.x -= Float(heading).degreesToRadians
                 node.eulerAngles.y = 0
                 node.eulerAngles.z = 0 - (Float.pi/2)
