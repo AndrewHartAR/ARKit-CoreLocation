@@ -26,6 +26,10 @@ class ViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Set to true to display an arrow which points north.
+        //Checkout the comments in the property description on this,
+        //it could use some improvement.
+        sceneLocationView.displayDebuggingArrow = true
         view.addSubview(sceneLocationView)
         
         if showMapView {
@@ -51,11 +55,6 @@ class ViewController: UIViewController, MKMapViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        //Set to true to display an arrow which points north.
-        //Checkout the comments in the property description on this,
-        //it could use some improvement.
-        sceneLocationView.displayDebuggingArrow = false
         sceneLocationView.run()
     }
     
@@ -113,6 +112,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
         
         let marker = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: nil)
         marker.displayPriority = .required
+        marker.glyphImage = UIImage(named: "user")
         
         return marker
     }
