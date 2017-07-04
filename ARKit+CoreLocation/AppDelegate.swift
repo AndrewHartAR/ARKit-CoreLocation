@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CocoaLumberjack
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,6 +26,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let vc = ViewController()
         
         self.window!.rootViewController = vc
+        
+        DDLog.add(DDTTYLogger.sharedInstance) // TTY = Xcode console
+        let fileLogger: DDFileLogger = DDFileLogger() // File Logger
+        fileLogger.rollingFrequency = TimeInterval(60*60*24)  // 24 hours
+        fileLogger.logFileManager.maximumNumberOfLogFiles = 7
+        DDLog.add(fileLogger)
+        
+        DDLogDebug("NEW SESSION")
         
         return true
     }
