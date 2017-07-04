@@ -175,7 +175,11 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
         })
     }
     
-    func currentLocation(completion: @escaping (_ location: CLLocation?) -> Void) {
+    ///The best estimation of location that has been taken
+    ///This takes into account horizontal accuracy, and the time at which the estimation was taken
+    ///favouring the most accurate, and then the most recent result.
+    ///This doesn't indicate where the user currently is.
+    func bestLocationEstimate() -> SceneLocationEstimate? {
         let sortedLocationEstimates = sceneLocationEstimates.sorted(by: {
             if $0.location.horizontalAccuracy == $1.location.horizontalAccuracy {
                 return $0.location.timestamp > $1.location.timestamp
@@ -184,7 +188,11 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
             return $0.location.horizontalAccuracy < $1.location.horizontalAccuracy
         })
         
-        if let bestEstimate = sortedLocationEstimates.first {
+        return sortedLocationEstimates.first
+    }
+    
+    func currentLocation(completion: @escaping (_ location: CLLocation?) -> Void) {
+        if let bestEstimate = self.bestLocationEstimate() {
             fetchCurrentScenePosition(completion: {
                 (position) in
                 if position == nil {
