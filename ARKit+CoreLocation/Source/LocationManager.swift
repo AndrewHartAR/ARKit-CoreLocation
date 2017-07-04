@@ -37,6 +37,8 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         self.locationManager!.startUpdatingLocation()
         
         self.locationManager!.requestWhenInUseAuthorization()
+        
+        self.currentLocation = self.locationManager!.location
     }
     
     func requestAuthorization() {
