@@ -40,7 +40,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
             view.addSubview(mapView)
             
             updateUserLocationTimer = Timer.scheduledTimer(
-                timeInterval: 1,
+                timeInterval: 0.5,
                 target: self,
                 selector: #selector(ViewController.updateUserLocation),
                 userInfo: nil,
