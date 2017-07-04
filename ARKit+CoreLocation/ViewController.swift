@@ -92,7 +92,6 @@ class ViewController: UIViewController, MKMapViewDelegate {
                     }
                         
                     self.userAnnotation?.coordinate = location!.coordinate
-                    self.userAnnotation!.title = "My Location, acc: \(location!.horizontalAccuracy)"
                     
                     if self.centerMapOnUserLocation {
                         self.mapView.region.center = self.userAnnotation!.coordinate
