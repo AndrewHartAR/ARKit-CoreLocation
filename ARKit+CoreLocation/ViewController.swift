@@ -94,7 +94,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
                     self.userAnnotation?.coordinate = location!.coordinate
                     
                     if self.centerMapOnUserLocation {
-                        self.mapView.region.center = self.userAnnotation!.coordinate
+                        self.mapView.setCenter(self.userAnnotation!.coordinate, animated: true)
                         self.mapView.region.span = MKCoordinateSpan(latitudeDelta: 0.0005, longitudeDelta: 0.0005)
                     }
                 }
