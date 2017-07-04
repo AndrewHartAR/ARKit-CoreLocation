@@ -191,7 +191,7 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
         return sortedLocationEstimates.first
     }
     
-    func currentLocation(completion: @escaping (_ location: CLLocation?) -> Void) {
+    func fetchCurrentLocation(completion: @escaping (_ location: CLLocation?) -> Void) {
         if let bestEstimate = self.bestLocationEstimate() {
             fetchCurrentScenePosition(completion: {
                 (position) in
@@ -202,7 +202,7 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
                 
                 let translation = LocationTranslation(
                     latitudeTranslation: Double(bestEstimate.position.z - position!.z),
-                    longitudeTranslation: Double(bestEstimate.position.x + position!.x))
+                    longitudeTranslation: Double(position!.x - bestEstimate.position.x))
                 
                 let translatedLocation = bestEstimate.location.translatedLocation(with: translation)
                 

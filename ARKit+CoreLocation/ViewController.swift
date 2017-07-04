@@ -88,7 +88,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
     }
     
     @objc func updateUserLocation() {
-        sceneLocationView.currentLocation {
+        sceneLocationView.fetchCurrentLocation {
             (location) in
             if location != nil {
                 DispatchQueue.main.async {
