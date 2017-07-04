@@ -39,6 +39,8 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     
     private var updateEstimatesTimer: Timer?
     
+    private var didFetchInitialLocation = false
+    
     //MARK: Setup
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -243,6 +245,18 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     func renderer(_ renderer: SCNSceneRenderer, didRenderScene scene: SCNScene, atTime time: TimeInterval) {
         if sceneAnchor == nil {
             self.setupSceneAnchor()
+        }
+        
+        if !didFetchInitialLocation {
+            //Current frame and current location are required for this to be successful
+            if sceneView.session.currentFrame != nil,
+                let currentLocation = self.locationManager.currentLocation {
+                didFetchInitialLocation = true
+                
+                self.addSceneLocationEstimate(location: currentLocation) {
+                    
+                }
+            }
         }
     }
     
