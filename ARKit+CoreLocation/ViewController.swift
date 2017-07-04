@@ -90,12 +90,18 @@ class ViewController: UIViewController, MKMapViewDelegate {
                         self.userAnnotation = MKPointAnnotation()
                         self.mapView.addAnnotation(self.userAnnotation!)
                     }
-                        
-                    self.userAnnotation?.coordinate = location!.coordinate
+                    
+                    UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.allowUserInteraction, animations: {
+                        self.userAnnotation?.coordinate = location!.coordinate
+                    }, completion: nil)
                     
                     if self.centerMapOnUserLocation {
-                        self.mapView.setCenter(self.userAnnotation!.coordinate, animated: true)
-                        self.mapView.region.span = MKCoordinateSpan(latitudeDelta: 0.0005, longitudeDelta: 0.0005)
+                        UIView.animate(withDuration: 0.45, delay: 0, options: UIViewAnimationOptions.allowUserInteraction, animations: {
+                            self.mapView.setCenter(self.userAnnotation!.coordinate, animated: false)
+                        }, completion: {
+                            _ in
+                            self.mapView.region.span = MKCoordinateSpan(latitudeDelta: 0.0005, longitudeDelta: 0.0005)
+                        })
                     }
                 }
             }
