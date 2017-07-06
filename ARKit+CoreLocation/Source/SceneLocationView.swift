@@ -87,19 +87,6 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
         self.updateEstimatesTimer = nil
     }
     
-    func setupSceneAnchor() {
-        //Heading will be required to setup the node properly
-        if let currentFrame = self.sceneView.session.currentFrame,
-            self.locationManager.heading != nil {
-            let translation = matrix_identity_float4x4
-            let transform = simd_mul(currentFrame.camera.transform, translation)
-            self.sceneAnchor = SceneAnchor(transform: transform)
-            
-            //Add anchor to scene view
-            self.sceneView.session.add(anchor: self.sceneAnchor!)
-        }
-    }
-    
     //MARK: Scene position
     
     class TemporaryAnchor: ARAnchor {
