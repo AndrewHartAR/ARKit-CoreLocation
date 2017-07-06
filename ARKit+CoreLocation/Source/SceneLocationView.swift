@@ -36,7 +36,7 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     private(set) var sceneAnnotations = [SceneAnnotation]()
     private var sceneLocationEstimates = [SceneLocationEstimate]()
     
-    private var sceneAnchor: SceneAnchor?
+    private var sceneNode: SCNNode?
     
     private var updateEstimatesTimer: Timer?
     
@@ -215,7 +215,7 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
                 DDLogDebug("")
                 DDLogDebug("Fetch current location")
                 DDLogDebug("best location estimate, position: \(bestEstimate.position), location: \(bestEstimate.location.coordinate), accuracy: \(bestEstimate.location.horizontalAccuracy), date: \(bestEstimate.location.timestamp)")
-                DDLogDebug("current positon: \(position!)")
+                DDLogDebug("current position: \(position!)")
                 DDLogDebug("translation: \(translation)")
                 DDLogDebug("translated location: \(translatedLocation)")
                 DDLogDebug("")
@@ -252,8 +252,8 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
             }
         } else if let temporaryAnchor = anchor as? TemporaryAnchor {
             //Used for determining the current position on the map
-            if let sceneNode = sceneAnchor?.node {
-                let convertedPosition = sceneNode.convertPosition(node.position, to: sceneNode)
+            if sceneNode != nil {
+                let convertedPosition = sceneView.scene.rootNode.convertPosition(node.position, to: sceneNode)
                 
                 temporaryAnchor.completion?(convertedPosition)
             } else {
@@ -266,8 +266,11 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didRenderScene scene: SCNScene, atTime time: TimeInterval) {
-        if sceneAnchor == nil {
-            self.setupSceneAnchor()
+        if sceneNode == nil,
+            let heading = locationManager.heading {
+            sceneNode = SCNNode()
+            sceneNode!.eulerAngles.y += Float(heading).degreesToRadians
+            sceneView.scene.rootNode.addChildNode(sceneNode!)
         }
         
         if !didFetchInitialLocation {
