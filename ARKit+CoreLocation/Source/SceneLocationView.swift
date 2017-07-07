@@ -27,7 +27,7 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     
     private let sceneView = ARSCNView()
     
-    private let locationManager = LocationManager()
+    let locationManager = LocationManager()
     
     private(set) var sceneAnnotations = [SceneAnnotation]()
     private var sceneLocationEstimates = [SceneLocationEstimate]()

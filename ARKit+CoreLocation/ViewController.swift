@@ -25,13 +25,38 @@ class ViewController: UIViewController, MKMapViewDelegate {
     
     var centerMapOnUserLocation: Bool = true
     
+    ///Whether to display some debugging data
+    ///Includes axes and info like the time, heading
+    ///The initial value is respected
+    var displayDebugging = true
+    
+    var infoLabel = UILabel()
+    
+    var updateInfoLabelTimer: Timer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //Set to true to display an arrow which points north.
         //Checkout the comments in the property description on this,
         //it could use some improvement.
-        sceneLocationView.displayDebuggingArrow = true
+        
+        if displayDebugging {
+            sceneLocationView.displayDebuggingArrow = true
+            
+            infoLabel.font = UIFont.systemFont(ofSize: 11)
+            infoLabel.textAlignment = .right
+            infoLabel.textColor = UIColor.white
+            sceneLocationView.addSubview(infoLabel)
+            
+            updateInfoLabelTimer = Timer.scheduledTimer(
+                timeInterval: 0.1,
+                target: self,
+                selector: #selector(ViewController.updateInfoLabel),
+                userInfo: nil,
+                repeats: true)
+        }
+        
         view.addSubview(sceneLocationView)
         
         if showMapView {
@@ -68,6 +93,14 @@ class ViewController: UIViewController, MKMapViewDelegate {
             y: 0,
             width: self.view.frame.size.width,
             height: self.view.frame.size.height)
+        
+        infoLabel.frame = CGRect(x: 6, y: 0, width: self.view.frame.size.width - 12, height: 14)
+        
+        if showMapView {
+            infoLabel.frame.origin.y = (self.view.frame.size.height / 2) - infoLabel.frame.size.height
+        } else {
+            infoLabel.frame.origin.y = self.view.frame.size.height - infoLabel.frame.size.height
+        }
         
         mapView.frame = CGRect(
             x: 0,
@@ -106,6 +139,24 @@ class ViewController: UIViewController, MKMapViewDelegate {
                 }
             }
         }
+    }
+    
+    @objc func updateInfoLabel() {
+        let date = Date()
+        let comp = Calendar.current.dateComponents([.hour, .minute, .second], from: date)
+        
+        guard let hour = comp.hour, let minute = comp.minute, let second = comp.second else {
+            infoLabel.text = ""
+            return
+        }
+        
+        if let heading = sceneLocationView.locationManager.heading {
+            infoLabel.text = "Heading: \(Int(round(heading)))º, "
+        } else {
+            infoLabel.text = ""
+        }
+        
+        infoLabel.text!.append("\(String(format: "%02d", hour)):\(String(format: "%02d", minute)):\(String(format: "%02d", second))")
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
