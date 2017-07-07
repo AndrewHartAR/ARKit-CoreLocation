@@ -11,10 +11,6 @@ import ARKit
 import CoreLocation
 import CocoaLumberjack
 
-fileprivate class SceneAnchor: ARAnchor {
-    var node: SCNNode?
-}
-
 class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     ///The limit to the scene, in terms of what data is considered reasonably accurate.
     ///Measured in meters.
@@ -217,27 +213,7 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     //MARK: ARSCNViewDelegate
     
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
-        if let sceneAnchor = anchor as? SceneAnchor {
-            if sceneAnchor.node == nil,
-                let heading = self.locationManager.heading {
-                DDLogDebug("did update node for scene anchor")
-                
-                node.eulerAngles.x -= Float(heading).degreesToRadians
-                node.eulerAngles.y = 0
-                node.eulerAngles.z = 0 - (Float.pi/2)
-                
-                if displayDebuggingArrow {
-                    //An arrow that points north
-                    let scene = SCNScene(named: "art.scnassets/arrow.dae")!
-                    let arrowNode = scene.rootNode.childNode(withName: "SketchUp", recursively: true)!
-                    arrowNode.scale = SCNVector3(x: 0.01, y: 0.01, z: 0.01)
-                    arrowNode.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
-                    node.addChildNode(arrowNode)
-                }
-                
-                sceneAnchor.node = node
-            }
-        } else if let temporaryAnchor = anchor as? TemporaryAnchor {
+        if let temporaryAnchor = anchor as? TemporaryAnchor {
             //Used for determining the current position on the map
             if sceneNode != nil {
                 let convertedPosition = sceneView.scene.rootNode.convertPosition(node.position, to: sceneNode)
