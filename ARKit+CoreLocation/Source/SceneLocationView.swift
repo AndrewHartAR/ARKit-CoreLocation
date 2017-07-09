@@ -84,50 +84,24 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
         self.updateEstimatesTimer = nil
     }
     
-    //MARK: Scene position
-    
-    class TemporaryAnchor: ARAnchor {
-        var completion: ((_ position: SCNVector3?) -> Void)?
-        
-        init(transform: matrix_float4x4, completion: ((_ position: SCNVector3?) -> Void)?) {
-            self.completion = completion
-            
-            super.init(transform: transform)
-        }
-    }
-    
-    func fetchCurrentScenePosition(completion: @escaping (_ position: SCNVector3?) -> Void) {
-        if let currentFrame = sceneView.session.currentFrame {
-            let translation = matrix_identity_float4x4
-            let transform = simd_mul(currentFrame.camera.transform, translation)
-            let anchor = TemporaryAnchor(transform: transform, completion: completion)
-            
-            sceneView.session.add(anchor: anchor)
-            
-            //This is continued in renderer:didUpdateNode:forAnchor:,
-            //where it recognises the anchor, figures out the location and calls completion
-        } else {
-            completion(nil)
-        }
-    }
-    
     //MARK: Scene location estimates
     
     @objc func updateEstimates() {
-        self.removeOldLocationEstimates {
-            
+        self.removeOldLocationEstimates()
+    }
+    
+    func currentScenePosition() -> SCNVector3? {
+        guard let pointOfView = sceneView.pointOfView else {
+            return nil
         }
+        
+        return sceneView.scene.rootNode.convertPosition(pointOfView.position, to: sceneNode)
     }
     
     ///Adds a scene location estimate based on current time, camera position and location from location manager
-    func addSceneLocationEstimate(location: CLLocation, completion: @escaping () -> Void) {
-        self.fetchCurrentScenePosition() {
-            position in
-            if position != nil {
-                self.addSceneLocationEstimate(location: location, currentPosition: position!)
-            }
-            
-            completion()
+    func addSceneLocationEstimate(location: CLLocation) {
+        if let position = currentScenePosition() {
+            self.addSceneLocationEstimate(location: location, currentPosition: position)
         }
     }
     
@@ -138,19 +112,14 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
         self.sceneLocationEstimates.append(sceneLocationEstimate)
     }
     
-    func removeOldLocationEstimates(completion: @escaping () -> Void) {
-        self.fetchCurrentScenePosition {
-            position in
-            if position != nil {
-                self.removeOldLocationEstimates(currentPosition: position!)
-            }
-            
-            completion()
+    func removeOldLocationEstimates() {
+        if let currentScenePosition = currentScenePosition() {
+            self.removeOldLocationEstimates(currentScenePosition: currentScenePosition)
         }
     }
     
-    func removeOldLocationEstimates(currentPosition: SCNVector3) {
-        let currentPoint = CGPoint.pointWithVector(vector: currentPosition)
+    func removeOldLocationEstimates(currentScenePosition: SCNVector3) {
+        let currentPoint = CGPoint.pointWithVector(vector: currentScenePosition)
         
         sceneLocationEstimates = sceneLocationEstimates.filter({
             let point = CGPoint.pointWithVector(vector: $0.position)
@@ -181,53 +150,30 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
         return sortedLocationEstimates.first
     }
     
-    func fetchCurrentLocation(completion: @escaping (_ location: CLLocation?) -> Void) {
-        if let bestEstimate = self.bestLocationEstimate() {
-            fetchCurrentScenePosition(completion: {
-                (position) in
-                if position == nil {
-                    completion(nil)
-                    return
-                }
-                
-                let translation = LocationTranslation(
-                    latitudeTranslation: Double(bestEstimate.position.z - position!.z),
-                    longitudeTranslation: Double(position!.x - bestEstimate.position.x))
-                
-                let translatedLocation = bestEstimate.location.translatedLocation(with: translation)
-                
-                DDLogDebug("")
-                DDLogDebug("Fetch current location")
-                DDLogDebug("best location estimate, position: \(bestEstimate.position), location: \(bestEstimate.location.coordinate), accuracy: \(bestEstimate.location.horizontalAccuracy), date: \(bestEstimate.location.timestamp)")
-                DDLogDebug("current position: \(position!)")
-                DDLogDebug("translation: \(translation)")
-                DDLogDebug("translated location: \(translatedLocation)")
-                DDLogDebug("")
-                
-                completion(translatedLocation)
-            })
-        } else {
-            completion(nil)
+    func currentLocation() -> CLLocation? {
+        guard let bestEstimate = self.bestLocationEstimate(),
+            let position = currentScenePosition() else {
+                return nil
         }
+        
+        let translation = LocationTranslation(
+            latitudeTranslation: Double(bestEstimate.position.z - position.z),
+            longitudeTranslation: Double(position.x - bestEstimate.position.x))
+        
+        let translatedLocation = bestEstimate.location.translatedLocation(with: translation)
+        
+        DDLogDebug("")
+        DDLogDebug("Fetch current location")
+        DDLogDebug("best location estimate, position: \(bestEstimate.position), location: \(bestEstimate.location.coordinate), accuracy: \(bestEstimate.location.horizontalAccuracy), date: \(bestEstimate.location.timestamp)")
+        DDLogDebug("current position: \(position)")
+        DDLogDebug("translation: \(translation)")
+        DDLogDebug("translated location: \(translatedLocation)")
+        DDLogDebug("")
+        
+        return translatedLocation
     }
     
     //MARK: ARSCNViewDelegate
-    
-    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
-        if let temporaryAnchor = anchor as? TemporaryAnchor {
-            //Used for determining the current position on the map
-            if sceneNode != nil {
-                let convertedPosition = sceneView.scene.rootNode.convertPosition(node.position, to: sceneNode)
-                
-                temporaryAnchor.completion?(convertedPosition)
-            } else {
-                temporaryAnchor.completion?(nil)
-            }
-            
-            node.removeFromParentNode()
-            sceneView.session.remove(anchor: temporaryAnchor)
-        }
-    }
     
     func renderer(_ renderer: SCNSceneRenderer, didRenderScene scene: SCNScene, atTime time: TimeInterval) {
         if sceneNode == nil {
@@ -247,9 +193,7 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
                 let currentLocation = self.locationManager.currentLocation {
                 didFetchInitialLocation = true
                 
-                self.addSceneLocationEstimate(location: currentLocation) {
-                    
-                }
+                self.addSceneLocationEstimate(location: currentLocation)
             }
         }
     }
@@ -257,9 +201,7 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     //MARK: LocationManager
     
     func locationManagerDidUpdateLocation(_ locationManager: LocationManager, location: CLLocation) {
-        self.addSceneLocationEstimate(location: location, completion: {
-
-        })
+        self.addSceneLocationEstimate(location: location)
     }
     
     func locationManagerDidUpdateHeading(_ locationManager: LocationManager, heading: CLLocationDirection) {

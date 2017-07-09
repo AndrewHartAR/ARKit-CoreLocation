@@ -115,27 +115,26 @@ class ViewController: UIViewController, MKMapViewDelegate {
     }
     
     @objc func updateUserLocation() {
-        sceneLocationView.fetchCurrentLocation {
-            (location) in
-            if location != nil {
-                DispatchQueue.main.async {
-                    if self.userAnnotation == nil {
-                        self.userAnnotation = MKPointAnnotation()
-                        self.mapView.addAnnotation(self.userAnnotation!)
-                    }
-                    
-                    UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.allowUserInteraction, animations: {
-                        self.userAnnotation?.coordinate = location!.coordinate
-                    }, completion: nil)
-                    
-                    if self.centerMapOnUserLocation {
-                        UIView.animate(withDuration: 0.45, delay: 0, options: UIViewAnimationOptions.allowUserInteraction, animations: {
-                            self.mapView.setCenter(self.userAnnotation!.coordinate, animated: false)
-                        }, completion: {
-                            _ in
-                            self.mapView.region.span = MKCoordinateSpan(latitudeDelta: 0.0005, longitudeDelta: 0.0005)
-                        })
-                    }
+       let currentLocation = sceneLocationView.currentLocation()
+        
+        if currentLocation != nil {
+            DispatchQueue.main.async {
+                if self.userAnnotation == nil {
+                    self.userAnnotation = MKPointAnnotation()
+                    self.mapView.addAnnotation(self.userAnnotation!)
+                }
+                
+                UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.allowUserInteraction, animations: {
+                    self.userAnnotation?.coordinate = currentLocation!.coordinate
+                }, completion: nil)
+                
+                if self.centerMapOnUserLocation {
+                    UIView.animate(withDuration: 0.45, delay: 0, options: UIViewAnimationOptions.allowUserInteraction, animations: {
+                        self.mapView.setCenter(self.userAnnotation!.coordinate, animated: false)
+                    }, completion: {
+                        _ in
+                        self.mapView.region.span = MKCoordinateSpan(latitudeDelta: 0.0005, longitudeDelta: 0.0005)
+                    })
                 }
             }
         }
