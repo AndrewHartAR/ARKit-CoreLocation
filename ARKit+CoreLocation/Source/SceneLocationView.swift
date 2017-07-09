@@ -69,6 +69,7 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
         // Create a session configuration
         let configuration = ARWorldTrackingSessionConfiguration()
         configuration.planeDetection = .horizontal
+        configuration.worldAlignment = .gravityAndHeading
         
         // Run the view's session
         sceneView.session.run(configuration)
@@ -229,10 +230,8 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didRenderScene scene: SCNScene, atTime time: TimeInterval) {
-        if sceneNode == nil,
-            let heading = locationManager.heading {
+        if sceneNode == nil {
             sceneNode = SCNNode()
-            sceneNode!.eulerAngles.y += Float(heading).degreesToRadians
             sceneView.scene.rootNode.addChildNode(sceneNode!)
             
             if displayDebuggingArrow {
