@@ -29,7 +29,8 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     
     let locationManager = LocationManager()
     
-    private(set) var sceneAnnotations = [SceneAnnotation]()
+    private(set) var locationNodes = [LocationNode]()
+    
     private var sceneLocationEstimates = [SceneLocationEstimate]()
     
     private var sceneNode: SCNNode?
