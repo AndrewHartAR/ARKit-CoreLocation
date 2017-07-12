@@ -174,6 +174,52 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
         return translatedLocation
     }
     
+    //MARK: LocationNodes
+    
+    ///Upon being added, a node's location, locationConfirmed and position will be modified and should not be changed externally.
+    func addLocationNodeForCurrentPosition(locationNode: LocationNode) {
+        guard let currentPosition = currentScenePosition(),
+        let currentLocation = currentLocation(),
+        let sceneNode = self.sceneNode else {
+            return
+        }
+        
+        locationNode.location = currentLocation
+        locationNode.locationConfirmed = false
+        locationNode.position = currentPosition
+        
+        locationNodes.append(locationNode)
+        sceneNode.addChildNode(locationNode)
+    }
+    
+    ///location not being nil, and locationConfirmed being true are required
+    ///Upon being added, a node's position will be modified and should not be changed externally.
+    ///location will not be modified, but taken as accurate.
+    func addLocationNodeWithConfirmedLocation(locationNode: LocationNode) {
+        if locationNode.location == nil || locationNode.locationConfirmed == false {
+            return
+        }
+        
+        guard let currentPosition = currentScenePosition(),
+            let currentLocation = currentLocation(),
+            let sceneNode = self.sceneNode else {
+                return
+        }
+        
+        //Position is set to a position coordinated via the current position
+        let locationTranslation = currentLocation.translation(toLocation: locationNode.location!)
+        
+        let position = SCNVector3(
+            x: currentPosition.x + Float(locationTranslation.longitudeTranslation),
+            y: currentPosition.y,
+            z: currentPosition.z - Float(locationTranslation.longitudeTranslation))
+        
+        locationNode.position = position
+        
+        locationNodes.append(locationNode)
+        sceneNode.addChildNode(locationNode)
+    }
+    
     //MARK: ARSCNViewDelegate
     
     func renderer(_ renderer: SCNSceneRenderer, didRenderScene scene: SCNScene, atTime time: TimeInterval) {
