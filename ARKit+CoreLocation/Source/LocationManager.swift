@@ -11,7 +11,7 @@ import CoreLocation
 
 protocol LocationManagerDelegate: class {
     func locationManagerDidUpdateLocation(_ locationManager: LocationManager, location: CLLocation)
-    func locationManagerDidUpdateHeading(_ locationManager: LocationManager, heading: CLLocationDirection)
+    func locationManagerDidUpdateHeading(_ locationManager: LocationManager, heading: CLLocationDirection, accuracy: CLLocationDirection)
 }
 
 ///Handles retrieving the location and heading from CoreLocation
@@ -77,6 +77,8 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         }
         
         self.delegate?.locationManagerDidUpdateHeading(self, heading: self.heading!)
+    func locationManagerShouldDisplayHeadingCalibration(_ manager: CLLocationManager) -> Bool {
+        return true
     }
 }
 
