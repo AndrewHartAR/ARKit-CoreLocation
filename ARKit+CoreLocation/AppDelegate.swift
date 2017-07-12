@@ -18,14 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        
-        self.window!.makeKeyAndVisible()
-        
-        let vc = ViewController()
-        
-        self.window!.rootViewController = vc
-        
         DDLog.add(DDTTYLogger.sharedInstance) // TTY = Xcode console
         let fileLogger: DDFileLogger = DDFileLogger() // File Logger
         fileLogger.rollingFrequency = TimeInterval(60*60*24)  // 24 hours
@@ -33,6 +25,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DDLog.add(fileLogger)
         
         DDLogDebug("NEW SESSION")
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        
+        self.window!.makeKeyAndVisible()
+        
+        let vc = ViewController()
+        
+        self.window!.rootViewController = vc
         
         return true
     }
