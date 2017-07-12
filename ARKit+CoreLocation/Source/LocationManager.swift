@@ -24,6 +24,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     var currentLocation: CLLocation?
     
     var heading: CLLocationDirection?
+    var headingAccuracy: CLLocationDegrees?
     
     override init() {
         super.init()
@@ -76,7 +77,11 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
             self.heading = newHeading.magneticHeading
         }
         
-        self.delegate?.locationManagerDidUpdateHeading(self, heading: self.heading!)
+        self.headingAccuracy = newHeading.headingAccuracy
+        
+        self.delegate?.locationManagerDidUpdateHeading(self, heading: self.heading!, accuracy: newHeading.headingAccuracy)
+    }
+    
     func locationManagerShouldDisplayHeadingCalibration(_ manager: CLLocationManager) -> Bool {
         return true
     }

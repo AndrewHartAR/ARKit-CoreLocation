@@ -149,8 +149,9 @@ class ViewController: UIViewController, MKMapViewDelegate {
             return
         }
         
-        if let heading = sceneLocationView.locationManager.heading {
-            infoLabel.text = "Heading: \(Int(round(heading)))º, "
+        if let heading = sceneLocationView.locationManager.heading,
+            let accuracy = sceneLocationView.locationManager.headingAccuracy {
+            infoLabel.text = "Heading: \(Int(round(heading)))º, Accuracy: \(Int(round(accuracy)))º, "
         } else {
             infoLabel.text = ""
         }
