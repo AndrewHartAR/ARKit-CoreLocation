@@ -276,6 +276,9 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
         if sceneNode == nil {
             sceneNode = SCNNode()
             sceneView.scene.rootNode.addChildNode(sceneNode!)
+            
+            let axesNode = SCNNode.axesNode(quiverLength: 0.1, quiverThickness: 0.5)
+            sceneNode?.addChildNode(axesNode)
         }
         
         if !didFetchInitialLocation {
