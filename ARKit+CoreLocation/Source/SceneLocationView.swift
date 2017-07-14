@@ -17,15 +17,6 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     ///Measured in meters.
     private static let sceneLimit = 100.0
     
-    ///Displays an arrow that points north upon creation of the scene.
-    ///This is based on Core Location's heading, but the setup isn't always correct
-    ///so the arrow should help to clear that up.
-    ///The setup of the scene to point north occurs within renderer:didUpdateNode:.
-    ///Feel free to improve upon this.
-    ///For one thing, I know it doesn't work too well if you start with your phone angled down.
-    ///The setting for this given at the start of the scene is respected.
-    var displayDebuggingArrow = false
-    
     private let sceneView = ARSCNView()
     
     let locationManager = LocationManager()

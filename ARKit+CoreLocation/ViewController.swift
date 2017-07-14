@@ -41,21 +41,17 @@ class ViewController: UIViewController, MKMapViewDelegate {
         //Checkout the comments in the property description on this,
         //it could use some improvement.
         
-        if displayDebugging {
-            sceneLocationView.displayDebuggingArrow = true
-            
-            infoLabel.font = UIFont.systemFont(ofSize: 11)
-            infoLabel.textAlignment = .right
-            infoLabel.textColor = UIColor.white
-            sceneLocationView.addSubview(infoLabel)
-            
-            updateInfoLabelTimer = Timer.scheduledTimer(
-                timeInterval: 0.1,
-                target: self,
-                selector: #selector(ViewController.updateInfoLabel),
-                userInfo: nil,
-                repeats: true)
-        }
+        infoLabel.font = UIFont.systemFont(ofSize: 11)
+        infoLabel.textAlignment = .right
+        infoLabel.textColor = UIColor.white
+        sceneLocationView.addSubview(infoLabel)
+        
+        updateInfoLabelTimer = Timer.scheduledTimer(
+            timeInterval: 0.1,
+            target: self,
+            selector: #selector(ViewController.updateInfoLabel),
+            userInfo: nil,
+            repeats: true)
         
         view.addSubview(sceneLocationView)
         
