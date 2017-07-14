@@ -200,6 +200,38 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
             return
         }
         
+    
+    func confirmLocationOfDistantLocationNodes() {
+        guard let currentPosition = currentScenePosition() else {
+            return
+        }
+        
+        for locationNode in locationNodes {
+            if !locationNode.locationConfirmed {
+                let currentPoint = CGPoint.pointWithVector(vector: currentPosition)
+                let locationNodePoint = CGPoint.pointWithVector(vector: locationNode.position)
+                
+                if !currentPoint.radiusContainsPoint(radius: CGFloat(SceneLocationView.sceneLimit), point: locationNodePoint) {
+                    confirmLocationOfLocationNode(locationNode: locationNode)
+                }
+            }
+        }
+    }
+    
+    func confirmLocationOfLocationNode(locationNode: LocationNode) {
+        if let bestLocationEstimate = bestLocationEstimate(),
+            locationNode.location == nil ||
+            bestLocationEstimate.location.horizontalAccuracy < locationNode.location!.horizontalAccuracy {
+            let locationTranslation = LocationTranslation(
+                latitudeTranslation: Double(locationNode.position.z - bestLocationEstimate.position.z),
+                longitudeTranslation: Double(locationNode.position.x - bestLocationEstimate.position.x))
+            
+            let translatedLocation = bestLocationEstimate.location.translatedLocation(with: locationTranslation)
+            
+            locationNode.location = translatedLocation
+            locationNode.locationConfirmed = true
+        }
+    }
         guard let currentPosition = currentScenePosition(),
             let currentLocation = currentLocation(),
             let sceneNode = self.sceneNode else {
