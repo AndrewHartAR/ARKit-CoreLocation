@@ -10,6 +10,7 @@ import Foundation
 import ARKit
 import CoreLocation
 import CocoaLumberjack
+import MapKit
 
 class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     ///The limit to the scene, in terms of what data is considered reasonably accurate.
@@ -200,6 +201,11 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
             return
         }
         
+        updatePositionOfLocationNode(locationNode: locationNode)
+        
+        locationNodes.append(locationNode)
+        sceneNode?.addChildNode(locationNode)
+    }
     
     func confirmLocationOfDistantLocationNodes() {
         guard let currentPosition = currentScenePosition() else {
@@ -232,10 +238,19 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
             locationNode.locationConfirmed = true
         }
     }
+    
+    func updatePositionOfLocationNodesWithConfirmedLocation() {
+        for locationNode in locationNodes {
+            if locationNode.locationConfirmed {
+                updatePositionOfLocationNode(locationNode: locationNode)
+            }
+        }
+    }
+    
+    func updatePositionOfLocationNode(locationNode: LocationNode) {
         guard let currentPosition = currentScenePosition(),
-            let currentLocation = currentLocation(),
-            let sceneNode = self.sceneNode else {
-                return
+            let currentLocation = currentLocation() else {
+            return
         }
         
         //Position is set to a position coordinated via the current position
@@ -247,9 +262,6 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
             z: currentPosition.z - Float(locationTranslation.longitudeTranslation))
         
         locationNode.position = position
-        
-        locationNodes.append(locationNode)
-        sceneNode.addChildNode(locationNode)
     }
     
     //MARK: ARSCNViewDelegate
