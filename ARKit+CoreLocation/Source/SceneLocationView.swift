@@ -50,6 +50,8 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
         
+        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
+        
         // Create a new scene
         let scene = SCNScene(named: "art.scnassets/scene.scn")!
         sceneView.scene = scene
