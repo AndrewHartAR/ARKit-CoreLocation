@@ -59,6 +59,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
         if showMapView {
             mapView.delegate = self
             mapView.showsUserLocation = true
+            mapView.alpha = 0.8
             view.addSubview(mapView)
             
             updateUserLocationTimer = Timer.scheduledTimer(
