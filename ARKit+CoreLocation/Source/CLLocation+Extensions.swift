@@ -57,13 +57,23 @@ extension CLLocation {
     }
 }
 
+extension Double {
+    func metersToLatitude() -> Double {
+        return self / (6360500.0)
+    }
+    
+    func metersToLongitude() -> Double {
+        return self / (5602900.0)
+    }
+}
+
 extension CLLocationCoordinate2D {
     func coordinateWithBearing(bearing:Double, distanceMeters:Double) -> CLLocationCoordinate2D {
         //The numbers for earth radius may be _off_ here
         //but this gives a reasonably accurate result..
         //Any correction here is welcome.
-        let distRadiansLat = distanceMeters / (6360500.0) // earth radius in meters latitude
-        let distRadiansLong = distanceMeters / (5602900.0) // earth radius in meters longitude
+        let distRadiansLat = distanceMeters.metersToLatitude() // earth radius in meters latitude
+        let distRadiansLong = distanceMeters.metersToLongitude() // earth radius in meters longitude
         
         let lat1 = self.latitude * Double.pi / 180
         let lon1 = self.longitude * Double.pi / 180
