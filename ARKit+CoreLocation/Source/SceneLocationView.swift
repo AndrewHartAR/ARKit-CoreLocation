@@ -34,7 +34,15 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     
     private var sceneLocationEstimates = [SceneLocationEstimate]()
     
-    private var sceneNode: SCNNode?
+    private var sceneNode: SCNNode? {
+        didSet {
+            if sceneNode != nil {
+                for locationNode in locationNodes {
+                    sceneNode!.addChildNode(locationNode)
+                }
+            }
+        }
+    }
     
     private var updateEstimatesTimer: Timer?
     
