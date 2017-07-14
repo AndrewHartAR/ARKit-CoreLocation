@@ -16,6 +16,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
     
     let mapView = MKMapView()
     var userAnnotation: MKPointAnnotation?
+    var locationEstimateAnnotation: MKPointAnnotation?
     
     var updateUserLocationTimer: Timer?
     
@@ -111,9 +112,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
     }
     
     @objc func updateUserLocation() {
-       let currentLocation = sceneLocationView.currentLocation()
-        
-        if currentLocation != nil {
+        if let currentLocation = sceneLocationView.currentLocation() {
             DispatchQueue.main.async {
                 if self.userAnnotation == nil {
                     self.userAnnotation = MKPointAnnotation()
@@ -121,9 +120,9 @@ class ViewController: UIViewController, MKMapViewDelegate {
                 }
                 
                 UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.allowUserInteraction, animations: {
-                    self.userAnnotation?.coordinate = currentLocation!.coordinate
+                    self.userAnnotation?.coordinate = currentLocation.coordinate
                 }, completion: nil)
-                
+            
                 if self.centerMapOnUserLocation {
                     UIView.animate(withDuration: 0.45, delay: 0, options: UIViewAnimationOptions.allowUserInteraction, animations: {
                         self.mapView.setCenter(self.userAnnotation!.coordinate, animated: false)
@@ -132,27 +131,45 @@ class ViewController: UIViewController, MKMapViewDelegate {
                         self.mapView.region.span = MKCoordinateSpan(latitudeDelta: 0.0005, longitudeDelta: 0.0005)
                     })
                 }
+                
+                if self.displayDebugging {
+                    let bestLocationEstimate = self.sceneLocationView.bestLocationEstimate()
+                    
+                    if bestLocationEstimate != nil {
+                        if self.locationEstimateAnnotation == nil {
+                            self.locationEstimateAnnotation = MKPointAnnotation()
+                            self.mapView.addAnnotation(self.locationEstimateAnnotation!)
+                        }
+                        
+                        self.locationEstimateAnnotation!.coordinate = bestLocationEstimate!.location.coordinate
+                    } else {
+                        if self.locationEstimateAnnotation != nil {
+                            self.mapView.removeAnnotation(self.locationEstimateAnnotation!)
+                            self.locationEstimateAnnotation = nil
+                        }
+                    }
+                }
             }
         }
     }
     
     @objc func updateInfoLabel() {
-        let date = Date()
-        let comp = Calendar.current.dateComponents([.hour, .minute, .second], from: date)
         
-        guard let hour = comp.hour, let minute = comp.minute, let second = comp.second else {
-            infoLabel.text = ""
-            return
+        if let position = sceneLocationView.currentScenePosition() {
+            infoLabel.text = "x: \(String(format: "%.2f", position.x)), y: \(String(format: "%.2f", position.y)), z: \(String(format: "%.2f", position.z)), "
         }
         
         if let heading = sceneLocationView.locationManager.heading,
             let accuracy = sceneLocationView.locationManager.headingAccuracy {
-            infoLabel.text = "Heading: \(Int(round(heading)))º, Accuracy: \(Int(round(accuracy)))º, "
-        } else {
-            infoLabel.text = ""
+            infoLabel.text!.append("Heading: \(Int(round(heading)))º, Accuracy: \(Int(round(accuracy)))º, ")
         }
         
-        infoLabel.text!.append("\(String(format: "%02d", hour)):\(String(format: "%02d", minute)):\(String(format: "%02d", second))")
+        let date = Date()
+        let comp = Calendar.current.dateComponents([.hour, .minute, .second], from: date)
+        
+        if let hour = comp.hour, let minute = comp.minute, let second = comp.second {
+            infoLabel.text!.append("\(String(format: "%02d", hour)):\(String(format: "%02d", minute)):\(String(format: "%02d", second))")
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -183,11 +200,22 @@ class ViewController: UIViewController, MKMapViewDelegate {
             return nil
         }
         
-        let marker = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: nil)
-        marker.displayPriority = .required
-        marker.glyphImage = UIImage(named: "user")
+        if let pointAnnotation = annotation as? MKPointAnnotation {
+            let marker = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: nil)
+            
+            if pointAnnotation == self.userAnnotation {
+                marker.displayPriority = .required
+                marker.glyphImage = UIImage(named: "user")
+            } else {
+                marker.displayPriority = .required
+                marker.markerTintColor = UIColor(hue: 0.267, saturation: 0.67, brightness: 0.77, alpha: 1.0)
+                marker.glyphImage = UIImage(named: "compass")
+            }
+            
+            return marker
+        }
         
-        return marker
+        return nil
     }
 }
 
