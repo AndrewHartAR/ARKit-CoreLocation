@@ -178,16 +178,8 @@ class ViewController: UIViewController, MKMapViewDelegate {
         if let touch = touches.first {
             if touch.view != nil {
                 if (mapView == touch.view! ||
-                        mapView.recursiveSubviews().contains(touch.view!)) {
+                    mapView.recursiveSubviews().contains(touch.view!)) {
                     centerMapOnUserLocation = false
-                } else {
-                    //Add annotation
-                    
-                    let annotationImage = UIImage(named: "pin")!
-                    let plane = SCNPlane(width: 1, height: (1 / annotationImage.size.width) * annotationImage.size.height)
-                    let annotationNode = LocationAnnotationNode(location: nil, image: annotationImage, plane: plane)
-                    
-                    sceneLocationView.addLocationNodeForCurrentPosition(locationNode: annotationNode)
                 }
             }
         }
