@@ -69,6 +69,7 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     }
     
     func run() {
+        DDLogDebug("run")
         // Create a session configuration
         let configuration = ARWorldTrackingSessionConfiguration()
         configuration.planeDetection = .horizontal
@@ -77,21 +78,25 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
         // Run the view's session
         sceneView.session.run(configuration)
         
-        self.updateEstimatesTimer?.invalidate()
-        self.updateEstimatesTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(SceneLocationView.updateEstimates), userInfo: nil, repeats: true)
+        updateEstimatesTimer?.invalidate()
+        updateEstimatesTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(SceneLocationView.updateLocationData), userInfo: nil, repeats: true)
     }
     
     func pause() {
         sceneView.session.pause()
-        self.updateEstimatesTimer?.invalidate()
-        self.updateEstimatesTimer = nil
+        updateEstimatesTimer?.invalidate()
+        updateEstimatesTimer = nil
+    }
+    
+    @objc func updateLocationData() {
+        removeOldLocationEstimates()
+        confirmLocationOfDistantLocationNodes()
+        updatePositionOfLocationNodesWithConfirmedLocation()
+    }
+    
     }
     
     //MARK: Scene location estimates
-    
-    @objc func updateEstimates() {
-        self.removeOldLocationEstimates()
-    }
     
     func currentScenePosition() -> SCNVector3? {
         guard let pointOfView = sceneView.pointOfView else {
@@ -271,12 +276,6 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
         if sceneNode == nil {
             sceneNode = SCNNode()
             sceneView.scene.rootNode.addChildNode(sceneNode!)
-            
-            if displayDebuggingArrow {
-                //An axes that points north
-                let axesNode = SCNNode.axesNode(quiverLength: 0.1, quiverThickness: 0.5)
-                sceneNode!.addChildNode(axesNode)
-            }
         }
         
         if !didFetchInitialLocation {
@@ -296,7 +295,6 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
         self.addSceneLocationEstimate(location: location)
     }
     
-    func locationManagerDidUpdateHeading(_ locationManager: LocationManager, heading: CLLocationDirection) {
-        
+    func locationManagerDidUpdateHeading(_ locationManager: LocationManager, heading: CLLocationDirection, accuracy: CLLocationAccuracy) {
     }
 }
