@@ -9,7 +9,6 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '11.0'
   s.requires_arc = true
   s.source_files = 'ARKit+CoreLocation/Source/*.swift'
-  s.resource     = 'ARKit+CoreLocation/Assets.xcassets', 'ARKit+CoreLocation/art.scnassets'
   s.frameworks   = 'Foundation', 'UIKit', 'ARKit', 'CoreLocation', 'MapKit', 'SceneKit'
   s.ios.deployment_target = '11.0'
 end
