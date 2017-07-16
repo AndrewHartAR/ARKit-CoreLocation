@@ -14,26 +14,26 @@ import CoreLocation
 ///Location is not necessarily confirmed.
 ///When it isn't, the node's position should be used.
 ///Location can be changed and confirmed later.
-class LocationNode: SCNNode {
-    var location: CLLocation?
+public class LocationNode: SCNNode {
+    public var location: CLLocation?
     
-    var locationConfirmed = false
+    public var locationConfirmed = false
     
-    init(location: CLLocation?) {
+    public init(location: CLLocation?) {
         self.location = location
         self.locationConfirmed = location != nil
         super.init()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
-class LocationAnnotationNode: LocationNode {
-    let image: UIImage
+public class LocationAnnotationNode: LocationNode {
+    public let image: UIImage
     
-    init(location: CLLocation?, image: UIImage, plane: SCNPlane) {
+    public init(location: CLLocation?, image: UIImage, plane: SCNPlane) {
         self.image = image
         
         super.init(location: location)
@@ -43,7 +43,7 @@ class LocationAnnotationNode: LocationNode {
         self.constraints = [SCNBillboardConstraint()]
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
