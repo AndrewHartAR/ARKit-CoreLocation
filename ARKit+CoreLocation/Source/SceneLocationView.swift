@@ -270,17 +270,14 @@ public class SceneLocationView: UIView {
         if let bestLocationEstimate = bestLocationEstimate(),
             locationNode.location == nil ||
             bestLocationEstimate.location.horizontalAccuracy < locationNode.location!.horizontalAccuracy {
-            let locationTranslation = LocationTranslation(
-                latitudeTranslation: Double(locationNode.position.z - bestLocationEstimate.position.z),
-                longitudeTranslation: Double(locationNode.position.x - bestLocationEstimate.position.x))
-            
-            let translatedLocation = bestLocationEstimate.location.translatedLocation(with: locationTranslation)
+            let translatedLocation = bestLocationEstimate.translatedLocation(to: locationNode.position)
             
             locationNode.location = translatedLocation
-            locationNode.locationConfirmed = true
-            
-            delegate?.sceneLocationViewDidConfirmLocationOfNode(sceneLocationView: self, node: locationNode)
         }
+        
+        locationNode.locationConfirmed = true
+        
+        delegate?.sceneLocationViewDidConfirmLocationOfNode(sceneLocationView: self, node: locationNode)
     }
     
     func updatePositionOfLocationNodesWithConfirmedLocation() {
