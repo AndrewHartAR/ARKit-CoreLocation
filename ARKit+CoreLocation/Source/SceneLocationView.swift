@@ -50,6 +50,15 @@ public class SceneLocationView: UIView {
     
     private var didFetchInitialLocation = false
     
+    ///Only to be overrided if you plan on manually setting True North.
+    ///When true, sets up the scene to face what the device considers to be True North.
+    ///This can be inaccurate, hence the option to override it.
+    ///The functions for altering True North can be used irrespective of this value,
+    ///but if the scene is oriented to true north, it will update without warning,
+    ///thus affecting your alterations.
+    ///The initial value of this property is respected.
+    public var orientToTrueNorth = true
+    
     //MARK: Setup
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -83,7 +92,12 @@ public class SceneLocationView: UIView {
         // Create a session configuration
         let configuration = ARWorldTrackingSessionConfiguration()
         configuration.planeDetection = .horizontal
-        configuration.worldAlignment = .gravityAndHeading
+        
+        if orientToTrueNorth {
+            configuration.worldAlignment = .gravityAndHeading
+        } else {
+            configuration.worldAlignment = .gravity
+        }
         
         // Run the view's session
         sceneView.session.run(configuration)
@@ -104,6 +118,30 @@ public class SceneLocationView: UIView {
         updatePositionOfLocationNodesWithConfirmedLocation()
     }
     
+    //MARK: True North
+    ///iOS can be inaccurate when setting true north
+    ///The scene is oriented to true north, and will update its heading when it gets a more accurate reading
+    ///You can disable this through setting the
+    ///These functions provide manual overriding of the scene heading,
+    /// if you have a more precise idea of where True North is
+    ///The goal is for the True North orientation problems to be resolved
+    ///At which point these functions would no longer be useful
+    
+    ///Moves the scene heading clockwise by 1 degree
+    ///Intended for correctional purposes
+    public func moveSceneHeadingClockwise() {
+        sceneNode?.eulerAngles.y -= Float(1).degreesToRadians
+    }
+    
+    ///Moves the scene heading anti-clockwise by 1 degree
+    ///Intended for correctional purposes
+    public func moveSceneHeadingAntiClockwise() {
+        sceneNode?.eulerAngles.y += Float(1).degreesToRadians
+    }
+    
+    ///Resets the scene heading to 0
+    func resetSceneHeading() {
+        sceneNode?.eulerAngles.y = 0
     }
     
     //MARK: Scene location estimates
