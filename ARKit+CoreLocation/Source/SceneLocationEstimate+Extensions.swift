@@ -14,7 +14,8 @@ extension SceneLocationEstimate {
     func locationTranslation(to position: SCNVector3) -> LocationTranslation {
         return LocationTranslation(
             latitudeTranslation: Double(self.position.z - position.z),
-            longitudeTranslation: Double(position.x - self.position.x))
+            longitudeTranslation: Double(position.x - self.position.x),
+            altitudeTranslation: Double(position.y - self.position.y))
     }
     
     ///Translates the location by comparing with a given position

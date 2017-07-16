@@ -324,7 +324,7 @@ public class SceneLocationView: UIView {
         
         let position = SCNVector3(
             x: currentPosition.x + Float(locationTranslation.longitudeTranslation),
-            y: currentPosition.y,
+            y: currentPosition.y + Float(locationTranslation.altitudeTranslation),
             z: currentPosition.z - Float(locationTranslation.longitudeTranslation))
         
         locationNode.position = position

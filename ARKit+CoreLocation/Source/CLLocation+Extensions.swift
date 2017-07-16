@@ -13,6 +13,7 @@ import CoreLocation
 struct LocationTranslation {
     var latitudeTranslation: Double
     var longitudeTranslation: Double
+    var altitudeTranslation: Double
 }
 
 extension CLLocation {
@@ -41,7 +42,12 @@ extension CLLocation {
             longitudeTranslation = distanceLongitude
         }
         
-        return LocationTranslation(latitudeTranslation: latitudeTranslation, longitudeTranslation: longitudeTranslation)
+        let altitudeTranslation = location.altitude - self.altitude
+        
+        return LocationTranslation(
+            latitudeTranslation: latitudeTranslation,
+            longitudeTranslation: longitudeTranslation,
+            altitudeTranslation: altitudeTranslation)
     }
     
     func translatedLocation(with translation: LocationTranslation) -> CLLocation {
@@ -53,7 +59,9 @@ extension CLLocation {
             latitude: latitudeCoordinate.latitude,
             longitude: longitudeCoordinate.longitude)
         
-        return CLLocation(coordinate: coordinate, altitude: self.altitude, horizontalAccuracy: self.horizontalAccuracy, verticalAccuracy: self.verticalAccuracy, timestamp: self.timestamp)
+        let altitude = self.altitude + translation.altitudeTranslation
+        
+        return CLLocation(coordinate: coordinate, altitude: altitude, horizontalAccuracy: self.horizontalAccuracy, verticalAccuracy: self.verticalAccuracy, timestamp: self.timestamp)
     }
 }
 
