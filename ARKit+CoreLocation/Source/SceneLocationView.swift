@@ -11,12 +11,12 @@ import ARKit
 import CoreLocation
 import MapKit
 
-protocol SceneLocationViewDelegate: class {
+public protocol SceneLocationViewDelegate: class {
     func sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation)
     func sceneLocationViewDidRemoveSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation)
 }
 
-class SceneLocationView: UIView {
+public class SceneLocationView: UIView {
     ///The limit to the scene, in terms of what data is considered reasonably accurate.
     ///Measured in meters.
     private static let sceneLimit = 100.0
@@ -64,11 +64,11 @@ class SceneLocationView: UIView {
         addSubview(sceneView)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         
         sceneView.frame = self.bounds
