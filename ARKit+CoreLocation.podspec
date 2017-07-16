@@ -1,0 +1,15 @@
+Pod::Spec.new do |s|
+  s.name         = "ARKit+CoreLocation"
+  s.version      = "0.1"
+  s.summary      = "Combines the high accuracy of AR with the scale of GPS data."
+  s.homepage     = "https://github.com/ProjectDent/arkit-corelocation"
+  s.author       = { "Andrew Hart" => "Andrew@ProjectDent.com" }
+  s.license      = { :type => 'MIT', :file => 'LICENSE'  }
+  s.source       = { :git => "https://ProjectDent@github.com/ProjectDent/ARKit-CoreLocation.git", :tag => s.version.to_s, :submodules => false }
+  s.platform     = :ios, '11.0'
+  s.requires_arc = true
+  s.source_files = 'ARKit+CoreLocation/Source/*.swift'
+  s.resource     = 'ARKit+CoreLocation/Assets.xcassets', 'ARKit+CoreLocation/art.scnassets'
+  s.frameworks   = 'Foundation', 'UIKit', 'ARKit', 'CoreLocation', 'MapKit', 'SceneKit'
+  s.ios.deployment_target = '11.0'
+end
