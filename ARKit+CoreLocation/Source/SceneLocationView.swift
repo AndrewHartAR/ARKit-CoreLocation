@@ -21,6 +21,17 @@ public protocol SceneLocationViewDelegate: class {
     func sceneLocationViewDidConfirmLocationOfNode(sceneLocationView: SceneLocationView, node: LocationNode)
 }
 
+///Different methods which can be used when determining locations (such as the user's location).
+public enum LocationEstimateMethod {
+    ///Only uses core location data.
+    ///Not suitable for adding nodes using current position, which requires more precision.
+    case coreLocationDataOnly
+    
+    ///Combines knowledge about movement through the AR world with
+    ///the most relevant Core Location estimate (based on accuracy and time).
+    case mostRelevantEstimate
+}
+
 public class SceneLocationView: UIView {
     ///The limit to the scene, in terms of what data is considered reasonably accurate.
     ///Measured in meters.
@@ -29,6 +40,10 @@ public class SceneLocationView: UIView {
     private let sceneView = ARSCNView()
     
     public weak var delegate: SceneLocationViewDelegate?
+    
+    ///The method to use for determining locations.
+    ///Not advisable to change this as the scene is ongoing.
+    public var locationEstimateMethod: LocationEstimateMethod = .mostRelevantEstimate
     
     let locationManager = LocationManager()
     
@@ -209,6 +224,10 @@ public class SceneLocationView: UIView {
     }
     
     public func currentLocation() -> CLLocation? {
+        if locationEstimateMethod == .coreLocationDataOnly {
+            return locationManager.currentLocation
+        }
+        
         guard let bestEstimate = self.bestLocationEstimate(),
             let position = currentScenePosition() else {
                 return nil
@@ -218,8 +237,7 @@ public class SceneLocationView: UIView {
     }
     
     //MARK: LocationNodes
-    
-    ///Upon being added, a node's location, locationConfirmed and position will be modified and should not be changed externally.
+    ///upon being added, a node's location, locationConfirmed and position may be modified and should not be changed externally.
     public func addLocationNodeForCurrentPosition(locationNode: LocationNode) {
         guard let currentPosition = currentScenePosition(),
         let currentLocation = currentLocation(),
@@ -228,7 +246,14 @@ public class SceneLocationView: UIView {
         }
         
         locationNode.location = currentLocation
-        locationNode.locationConfirmed = false
+        
+        ///Location is not changed after being added when using core location data only for location estimates
+        if locationEstimateMethod == .coreLocationDataOnly {
+            locationNode.locationConfirmed = true
+        } else {
+            locationNode.locationConfirmed = false
+        }
+        
         locationNode.position = currentPosition
         
         locationNodes.append(locationNode)
