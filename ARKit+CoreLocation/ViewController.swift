@@ -70,6 +70,10 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
                 userInfo: nil,
                 repeats: true)
         }
+        
+        if displayDebugging {
+            sceneLocationView.showFeaturePoints = true
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

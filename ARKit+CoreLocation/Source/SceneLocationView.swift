@@ -30,7 +30,7 @@ public class SceneLocationView: UIView {
     
     public weak var delegate: SceneLocationViewDelegate?
     
-    private let locationManager = LocationManager()
+    let locationManager = LocationManager()
     
     private(set) var locationNodes = [LocationNode]()
     
@@ -49,6 +49,10 @@ public class SceneLocationView: UIView {
     private var updateEstimatesTimer: Timer?
     
     private var didFetchInitialLocation = false
+    
+    ///Whether debugging feature points should be displayed.
+    ///Defaults to false
+    var showFeaturePoints = false
     
     ///Only to be overrided if you plan on manually setting True North.
     ///When true, sets up the scene to face what the device considers to be True North.
@@ -70,7 +74,9 @@ public class SceneLocationView: UIView {
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = false
         
-        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
+        if showFeaturePoints {
+            sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
+        }
         
         // Create a new scene
         let scene = SCNScene(named: "art.scnassets/scene.scn")!
