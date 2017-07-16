@@ -13,11 +13,18 @@ import CocoaLumberjack
 import MapKit
 
 class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
+protocol SceneLocationViewDelegate: class {
+    func sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation)
+    func sceneLocationViewDidRemoveSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation)
+}
+
     ///The limit to the scene, in terms of what data is considered reasonably accurate.
     ///Measured in meters.
     private static let sceneLimit = 100.0
     
     private let sceneView = ARSCNView()
+    
+    weak var delegate: SceneLocationViewDelegate?
     
     let locationManager = LocationManager()
     
@@ -114,10 +121,10 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
     }
     
     func addSceneLocationEstimate(location: CLLocation, currentPosition: SCNVector3) {
-        DDLogDebug("add scene location estimate, position: \(currentPosition), location: \(location.coordinate), accuracy: \(location.horizontalAccuracy), date: \(location.timestamp)")
-        
         let sceneLocationEstimate = SceneLocationEstimate(location: location, position: currentPosition)
         self.sceneLocationEstimates.append(sceneLocationEstimate)
+        
+        delegate?.sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: self, position: currentPosition, location: location)
     }
     
     func removeOldLocationEstimates() {
@@ -135,7 +142,7 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
             let radiusContainsPoint = currentPoint.radiusContainsPoint(radius: CGFloat(SceneLocationView.sceneLimit), point: point)
             
             if !radiusContainsPoint {
-                DDLogDebug("remove scene location estimate, position: \($0.position), location: \($0.location.coordinate), accuracy: \($0.location.horizontalAccuracy), date: \($0.location.timestamp)")
+                delegate?.sceneLocationViewDidRemoveSceneLocationEstimate(sceneLocationView: self, position: $0.position, location: $0.location)
             }
             
             return radiusContainsPoint
