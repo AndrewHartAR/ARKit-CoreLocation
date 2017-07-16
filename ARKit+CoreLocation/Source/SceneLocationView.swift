@@ -11,12 +11,12 @@ import ARKit
 import CoreLocation
 import MapKit
 
-class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
 protocol SceneLocationViewDelegate: class {
     func sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation)
     func sceneLocationViewDidRemoveSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation)
 }
 
+class SceneLocationView: UIView {
     ///The limit to the scene, in terms of what data is considered reasonably accurate.
     ///Measured in meters.
     private static let sceneLimit = 100.0
@@ -260,10 +260,22 @@ protocol SceneLocationViewDelegate: class {
         
         locationNode.position = position
     }
+}
+
+//MARK: LocationManager
+extension SceneLocationView: LocationManagerDelegate {
+    func locationManagerDidUpdateLocation(_ locationManager: LocationManager, location: CLLocation) {
+        self.addSceneLocationEstimate(location: location)
+    }
     
-    //MARK: ARSCNViewDelegate
-    
-    func renderer(_ renderer: SCNSceneRenderer, didRenderScene scene: SCNScene, atTime time: TimeInterval) {
+    func locationManagerDidUpdateHeading(_ locationManager: LocationManager, heading: CLLocationDirection, accuracy: CLLocationAccuracy) {
+        
+    }
+}
+
+//MARK: ARSceneViewDelegate
+extension SceneLocationView: ARSCNViewDelegate {
+    public func renderer(_ renderer: SCNSceneRenderer, didRenderScene scene: SCNScene, atTime time: TimeInterval) {
         if sceneNode == nil {
             sceneNode = SCNNode()
             sceneView.scene.rootNode.addChildNode(sceneNode!)
@@ -281,14 +293,5 @@ protocol SceneLocationViewDelegate: class {
                 self.addSceneLocationEstimate(location: currentLocation)
             }
         }
-    }
-    
-    //MARK: LocationManager
-    
-    func locationManagerDidUpdateLocation(_ locationManager: LocationManager, location: CLLocation) {
-        self.addSceneLocationEstimate(location: location)
-    }
-    
-    func locationManagerDidUpdateHeading(_ locationManager: LocationManager, heading: CLLocationDirection, accuracy: CLLocationAccuracy) {
     }
 }
