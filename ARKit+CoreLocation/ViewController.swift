@@ -202,6 +202,12 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
                 if (mapView == touch.view! ||
                     mapView.recursiveSubviews().contains(touch.view!)) {
                     centerMapOnUserLocation = false
+                } else {
+                    let image = UIImage(named: "pin")!
+                    let plane = SCNPlane(width: 1, height: 1)
+                    let annotationNode = LocationAnnotationNode(location: nil, image: image, plane: plane)
+                    
+                    sceneLocationView.addLocationNodeForCurrentPosition(locationNode: annotationNode)
                 }
             }
         }
