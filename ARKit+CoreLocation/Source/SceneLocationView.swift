@@ -79,7 +79,7 @@ public class SceneLocationView: UIView {
         }
         
         // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/scene.scn")!
+        let scene = SCNScene()
         sceneView.scene = scene
         addSubview(sceneView)
     }
