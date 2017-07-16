@@ -119,15 +119,11 @@ public class SceneLocationView: UIView {
     ///Adds a scene location estimate based on current time, camera position and location from location manager
     func addSceneLocationEstimate(location: CLLocation) {
         if let position = currentScenePosition() {
-            self.addSceneLocationEstimate(location: location, currentPosition: position)
+            let sceneLocationEstimate = SceneLocationEstimate(location: location, position: position)
+            self.sceneLocationEstimates.append(sceneLocationEstimate)
+            
+            delegate?.sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: self, position: position, location: location)
         }
-    }
-    
-    func addSceneLocationEstimate(location: CLLocation, currentPosition: SCNVector3) {
-        let sceneLocationEstimate = SceneLocationEstimate(location: location, position: currentPosition)
-        self.sceneLocationEstimates.append(sceneLocationEstimate)
-        
-        delegate?.sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: self, position: currentPosition, location: location)
     }
     
     func removeOldLocationEstimates() {
