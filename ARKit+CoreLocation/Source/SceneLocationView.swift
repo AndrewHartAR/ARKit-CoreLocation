@@ -9,7 +9,6 @@
 import Foundation
 import ARKit
 import CoreLocation
-import CocoaLumberjack
 import MapKit
 
 class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
@@ -76,7 +75,6 @@ protocol SceneLocationViewDelegate: class {
     }
     
     func run() {
-        DDLogDebug("run")
         // Create a session configuration
         let configuration = ARWorldTrackingSessionConfiguration()
         configuration.planeDetection = .horizontal
