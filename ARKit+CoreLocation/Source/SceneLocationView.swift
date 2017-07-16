@@ -249,7 +249,7 @@ public class SceneLocationView: UIView {
         sceneNode?.addChildNode(locationNode)
     }
     
-    func confirmLocationOfDistantLocationNodes() {
+    private func confirmLocationOfDistantLocationNodes() {
         guard let currentPosition = currentScenePosition() else {
             return
         }
@@ -266,7 +266,7 @@ public class SceneLocationView: UIView {
         }
     }
     
-    func confirmLocationOfLocationNode(locationNode: LocationNode) {
+    private func confirmLocationOfLocationNode(locationNode: LocationNode) {
         if let bestLocationEstimate = bestLocationEstimate(),
             locationNode.location == nil ||
             bestLocationEstimate.location.horizontalAccuracy < locationNode.location!.horizontalAccuracy {
