@@ -40,7 +40,11 @@ public class LocationAnnotationNode: LocationNode {
         
         plane.firstMaterial!.diffuse.contents = image
         self.geometry = plane
-        self.constraints = [SCNBillboardConstraint()]
+        
+        let billboardConstraint = SCNBillboardConstraint()
+        billboardConstraint.freeAxes = SCNBillboardAxis.Y
+        
+        self.constraints = [billboardConstraint]
     }
     
     required public init?(coder aDecoder: NSCoder) {
