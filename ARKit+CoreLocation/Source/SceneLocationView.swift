@@ -28,9 +28,9 @@ public class SceneLocationView: UIView {
     
     private let sceneView = ARSCNView()
     
-    weak var delegate: SceneLocationViewDelegate?
+    public weak var delegate: SceneLocationViewDelegate?
     
-    let locationManager = LocationManager()
+    private let locationManager = LocationManager()
     
     private(set) var locationNodes = [LocationNode]()
     
@@ -79,7 +79,7 @@ public class SceneLocationView: UIView {
         sceneView.frame = self.bounds
     }
     
-    func run() {
+    public func run() {
         // Create a session configuration
         let configuration = ARWorldTrackingSessionConfiguration()
         configuration.planeDetection = .horizontal
@@ -92,13 +92,13 @@ public class SceneLocationView: UIView {
         updateEstimatesTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(SceneLocationView.updateLocationData), userInfo: nil, repeats: true)
     }
     
-    func pause() {
+    public func pause() {
         sceneView.session.pause()
         updateEstimatesTimer?.invalidate()
         updateEstimatesTimer = nil
     }
     
-    @objc func updateLocationData() {
+    @objc private func updateLocationData() {
         removeOldLocationEstimates()
         confirmLocationOfDistantLocationNodes()
         updatePositionOfLocationNodesWithConfirmedLocation()
@@ -117,7 +117,7 @@ public class SceneLocationView: UIView {
     }
     
     ///Adds a scene location estimate based on current time, camera position and location from location manager
-    func addSceneLocationEstimate(location: CLLocation) {
+    private func addSceneLocationEstimate(location: CLLocation) {
         if let position = currentScenePosition() {
             let sceneLocationEstimate = SceneLocationEstimate(location: location, position: position)
             self.sceneLocationEstimates.append(sceneLocationEstimate)
@@ -126,13 +126,13 @@ public class SceneLocationView: UIView {
         }
     }
     
-    func removeOldLocationEstimates() {
+    private func removeOldLocationEstimates() {
         if let currentScenePosition = currentScenePosition() {
             self.removeOldLocationEstimates(currentScenePosition: currentScenePosition)
         }
     }
     
-    func removeOldLocationEstimates(currentScenePosition: SCNVector3) {
+    private func removeOldLocationEstimates(currentScenePosition: SCNVector3) {
         let currentPoint = CGPoint.pointWithVector(vector: currentScenePosition)
         
         sceneLocationEstimates = sceneLocationEstimates.filter({
@@ -164,7 +164,7 @@ public class SceneLocationView: UIView {
         return sortedLocationEstimates.first
     }
     
-    func currentLocation() -> CLLocation? {
+    public func currentLocation() -> CLLocation? {
         guard let bestEstimate = self.bestLocationEstimate(),
             let position = currentScenePosition() else {
                 return nil
@@ -176,7 +176,7 @@ public class SceneLocationView: UIView {
     //MARK: LocationNodes
     
     ///Upon being added, a node's location, locationConfirmed and position will be modified and should not be changed externally.
-    func addLocationNodeForCurrentPosition(locationNode: LocationNode) {
+    public func addLocationNodeForCurrentPosition(locationNode: LocationNode) {
         guard let currentPosition = currentScenePosition(),
         let currentLocation = currentLocation(),
         let sceneNode = self.sceneNode else {
@@ -194,7 +194,7 @@ public class SceneLocationView: UIView {
     ///location not being nil, and locationConfirmed being true are required
     ///Upon being added, a node's position will be modified and should not be changed externally.
     ///location will not be modified, but taken as accurate.
-    func addLocationNodeWithConfirmedLocation(locationNode: LocationNode) {
+    public func addLocationNodeWithConfirmedLocation(locationNode: LocationNode) {
         if locationNode.location == nil || locationNode.locationConfirmed == false {
             return
         }
