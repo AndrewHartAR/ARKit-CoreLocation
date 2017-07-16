@@ -10,8 +10,9 @@ import UIKit
 import SceneKit
 import ARKit
 import MapKit
+import CocoaLumberjack
 
-class ViewController: UIViewController, MKMapViewDelegate {
+class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDelegate {
     let sceneLocationView = SceneLocationView()
     
     let mapView = MKMapView()
@@ -73,12 +74,14 @@ class ViewController: UIViewController, MKMapViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        DDLogDebug("run")
         sceneLocationView.run()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        DDLogDebug("pause")
         // Pause the view's session
         sceneLocationView.pause()
     }
@@ -115,6 +118,21 @@ class ViewController: UIViewController, MKMapViewDelegate {
     @objc func updateUserLocation() {
         if let currentLocation = sceneLocationView.currentLocation() {
             DispatchQueue.main.async {
+                
+                if let bestEstimate = self.sceneLocationView.bestLocationEstimate(),
+                    let position = self.sceneLocationView.currentScenePosition() {
+                    DDLogDebug("")
+                    DDLogDebug("Fetch current location")
+                    DDLogDebug("best location estimate, position: \(bestEstimate.position), location: \(bestEstimate.location.coordinate), accuracy: \(bestEstimate.location.horizontalAccuracy), date: \(bestEstimate.location.timestamp)")
+                    DDLogDebug("current position: \(position)")
+                    
+                    let translation = bestEstimate.translatedLocation(to: position)
+                    
+                    DDLogDebug("translation: \(translation)")
+                    DDLogDebug("translated location: \(currentLocation)")
+                    DDLogDebug("")
+                }
+                
                 if self.userAnnotation == nil {
                     self.userAnnotation = MKPointAnnotation()
                     self.mapView.addAnnotation(self.userAnnotation!)
@@ -209,6 +227,16 @@ class ViewController: UIViewController, MKMapViewDelegate {
         }
         
         return nil
+    }
+    
+    //MARK: SceneLocationViewDelegate
+    
+    func sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation) {
+        DDLogDebug("add scene location estimate, position: \(position), location: \(location.coordinate), accuracy: \(location.horizontalAccuracy), date: \(location.timestamp)")
+    }
+    
+    func sceneLocationViewDidRemoveSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation) {
+        DDLogDebug("remove scene location estimate, position: \(position), location: \(location.coordinate), accuracy: \(location.horizontalAccuracy), date: \(location.timestamp)")
     }
 }
 
