@@ -164,21 +164,7 @@ class SceneLocationView: UIView, ARSCNViewDelegate, LocationManagerDelegate {
                 return nil
         }
         
-        let translation = LocationTranslation(
-            latitudeTranslation: Double(bestEstimate.position.z - position.z),
-            longitudeTranslation: Double(position.x - bestEstimate.position.x))
-        
-        let translatedLocation = bestEstimate.location.translatedLocation(with: translation)
-        
-        DDLogDebug("")
-        DDLogDebug("Fetch current location")
-        DDLogDebug("best location estimate, position: \(bestEstimate.position), location: \(bestEstimate.location.coordinate), accuracy: \(bestEstimate.location.horizontalAccuracy), date: \(bestEstimate.location.timestamp)")
-        DDLogDebug("current position: \(position)")
-        DDLogDebug("translation: \(translation)")
-        DDLogDebug("translated location: \(translatedLocation)")
-        DDLogDebug("")
-        
-        return translatedLocation
+        return bestEstimate.translatedLocation(to: position)
     }
     
     //MARK: LocationNodes
