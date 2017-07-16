@@ -28,9 +28,9 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
     var centerMapOnUserLocation: Bool = true
     
     ///Whether to display some debugging data
-    ///Includes axes and info like the time, heading
+    ///This currently displays the coordinate of the best location estimate
     ///The initial value is respected
-    var displayDebugging = true
+    var displayDebugging = false
     
     var infoLabel = UILabel()
     
@@ -43,7 +43,7 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         //Checkout the comments in the property description on this,
         //it could use some improvement.
         
-        infoLabel.font = UIFont.systemFont(ofSize: 11)
+        infoLabel.font = UIFont.systemFont(ofSize: 10)
         infoLabel.textAlignment = .right
         infoLabel.textColor = UIColor.white
         sceneLocationView.addSubview(infoLabel)
@@ -173,14 +173,13 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
     }
     
     @objc func updateInfoLabel() {
-        
         if let position = sceneLocationView.currentScenePosition() {
             infoLabel.text = "x: \(String(format: "%.2f", position.x)), y: \(String(format: "%.2f", position.y)), z: \(String(format: "%.2f", position.z)), "
         }
         
         if let heading = sceneLocationView.locationManager.heading,
             let accuracy = sceneLocationView.locationManager.headingAccuracy {
-            infoLabel.text!.append("Heading: \(Int(round(heading)))º, Accuracy: \(Int(round(accuracy)))º, ")
+            infoLabel.text!.append("Heading: \(Int(round(heading)))º, Acc: \(Int(round(accuracy)))º, ")
         }
         
         let date = Date()
