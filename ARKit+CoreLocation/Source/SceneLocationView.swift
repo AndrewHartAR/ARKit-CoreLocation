@@ -93,9 +93,6 @@ public class SceneLocationView: UIView {
             sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         }
         
-        // Create a new scene
-        let scene = SCNScene()
-        sceneView.scene = scene
         addSubview(sceneView)
     }
     
