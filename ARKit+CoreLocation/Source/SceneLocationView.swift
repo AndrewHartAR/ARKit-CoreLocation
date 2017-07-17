@@ -319,12 +319,38 @@ public class SceneLocationView: UIView {
         //Position is set to a position coordinated via the current position
         let locationTranslation = currentLocation.translation(toLocation: locationNode.location!)
         
-        let position = SCNVector3(
-            x: currentPosition.x + Float(locationTranslation.longitudeTranslation),
-            y: currentPosition.y + Float(locationTranslation.altitudeTranslation),
-            z: currentPosition.z - Float(locationTranslation.longitudeTranslation))
+        //If the item is too far away, bring it closer and scale it down
         
-        locationNode.position = position
+        let distance = locationNode.location!.distance(from: currentLocation)
+        
+        var adjustedDistance = distance
+        
+        //TEMP: needs changing back to 10
+        if distance > 10 {
+            let distanceDivision = 10 / Float(distance)
+            
+            let adjustedTranslation = SCNVector3(
+                x: Float(locationTranslation.longitudeTranslation) * distanceDivision,
+                y: Float(locationTranslation.altitudeTranslation) * distanceDivision,
+                z: Float(locationTranslation.latitudeTranslation) * distanceDivision)
+            
+            let position = SCNVector3(
+                x: currentPosition.x + adjustedTranslation.x,
+                y: currentPosition.y + adjustedTranslation.y,
+                z: currentPosition.z - adjustedTranslation.z)
+            
+            locationNode.position = position
+            
+            locationNode.scale = SCNVector3(x: distanceDivision, y: distanceDivision, z: distanceDivision)
+        } else {
+            let position = SCNVector3(
+                x: currentPosition.x + Float(locationTranslation.longitudeTranslation),
+                y: currentPosition.y + Float(locationTranslation.altitudeTranslation),
+                z: currentPosition.z - Float(locationTranslation.latitudeTranslation))
+            
+            locationNode.position = position
+        }
+        
     }
 }
 
