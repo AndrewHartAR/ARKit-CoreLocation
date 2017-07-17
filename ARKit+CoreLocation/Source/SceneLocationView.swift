@@ -351,6 +351,16 @@ public class SceneLocationView: UIView {
             locationNode.position = position
         }
         
+        if locationNode is LocationAnnotationNode {
+            //Scale it to be an appropriate size so that it can be seen
+            let scale = Float(distance) * 0.181
+
+            locationNode.scale = SCNVector3(
+                x: locationNode.scale.x * scale,
+                y: locationNode.scale.y * scale,
+                z: locationNode.scale.z * scale)
+        }
+        
     }
 }
 
