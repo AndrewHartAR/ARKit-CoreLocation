@@ -204,8 +204,7 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
                     centerMapOnUserLocation = false
                 } else {
                     let image = UIImage(named: "pin")!
-                    let plane = SCNPlane(width: 1, height: 1)
-                    let annotationNode = LocationAnnotationNode(location: nil, image: image, plane: plane)
+                    let annotationNode = LocationAnnotationNode(location: nil, image: image)
                     
                     sceneLocationView.addLocationNodeForCurrentPosition(locationNode: annotationNode)
                 }

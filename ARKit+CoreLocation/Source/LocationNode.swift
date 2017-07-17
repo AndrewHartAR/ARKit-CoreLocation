@@ -33,10 +33,12 @@ public class LocationNode: SCNNode {
 public class LocationAnnotationNode: LocationNode {
     public let image: UIImage
     
-    public init(location: CLLocation?, image: UIImage, plane: SCNPlane) {
+    public init(location: CLLocation?, image: UIImage) {
         self.image = image
         
         super.init(location: location)
+        
+        let plane = SCNPlane(width: image.size.width / 100, height: image.size.height / 100)
         
         plane.firstMaterial!.diffuse.contents = image
         self.geometry = plane
