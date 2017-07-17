@@ -44,8 +44,9 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         //it could use some improvement.
         
         infoLabel.font = UIFont.systemFont(ofSize: 10)
-        infoLabel.textAlignment = .right
+        infoLabel.textAlignment = .left
         infoLabel.textColor = UIColor.white
+        infoLabel.numberOfLines = 0
         sceneLocationView.addSubview(infoLabel)
         
         updateInfoLabelTimer = Timer.scheduledTimer(
@@ -99,7 +100,7 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
             width: self.view.frame.size.width,
             height: self.view.frame.size.height)
         
-        infoLabel.frame = CGRect(x: 6, y: 0, width: self.view.frame.size.width - 12, height: 14)
+        infoLabel.frame = CGRect(x: 6, y: 0, width: self.view.frame.size.width - 12, height: 14 * 4)
         
         if showMapView {
             infoLabel.frame.origin.y = (self.view.frame.size.height / 2) - infoLabel.frame.size.height
@@ -178,12 +179,16 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
     
     @objc func updateInfoLabel() {
         if let position = sceneLocationView.currentScenePosition() {
-            infoLabel.text = "x: \(String(format: "%.2f", position.x)), y: \(String(format: "%.2f", position.y)), z: \(String(format: "%.2f", position.z)), "
+            infoLabel.text = "x: \(String(format: "%.2f", position.x)), y: \(String(format: "%.2f", position.y)), z: \(String(format: "%.2f", position.z))\n"
+        }
+        
+        if let eulerAngles = sceneLocationView.currentEulerAngles() {
+            infoLabel.text!.append("Euler x: \(String(format: "%.2f", eulerAngles.x)), y: \(String(format: "%.2f", eulerAngles.y)), z: \(String(format: "%.2f", eulerAngles.z))\n")
         }
         
         if let heading = sceneLocationView.locationManager.heading,
             let accuracy = sceneLocationView.locationManager.headingAccuracy {
-            infoLabel.text!.append("Heading: \(Int(round(heading)))º, Acc: \(Int(round(accuracy)))º, ")
+            infoLabel.text!.append("Heading: \(Int(round(heading)))º, accuracy: \(Int(round(accuracy)))º\n")
         }
         
         let date = Date()

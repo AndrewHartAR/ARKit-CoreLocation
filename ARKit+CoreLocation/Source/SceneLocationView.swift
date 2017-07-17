@@ -172,6 +172,10 @@ public class SceneLocationView: UIView {
         return sceneView.scene.rootNode.convertPosition(pointOfView.position, to: sceneNode)
     }
     
+    func currentEulerAngles() -> SCNVector3? {
+        return sceneView.pointOfView?.eulerAngles
+    }
+    
     ///Adds a scene location estimate based on current time, camera position and location from location manager
     private func addSceneLocationEstimate(location: CLLocation) {
         if let position = currentScenePosition() {
