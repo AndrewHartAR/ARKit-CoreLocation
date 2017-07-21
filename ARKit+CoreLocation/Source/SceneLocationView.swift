@@ -325,13 +325,15 @@ public class SceneLocationView: UIView {
         
         //If the item is too far away, bring it closer and scale it down
         
+        let adjustedDistance: CLLocationDistance
+        
         let distance = locationNode.location!.distance(from: currentLocation)
         
-        var adjustedDistance = distance
         
         //TEMP: needs changing back to 10
         if distance > 10 {
             let distanceDivision = 10 / Float(distance)
+            adjustedDistance = distance * Double(distanceDivision)
             
             let adjustedTranslation = SCNVector3(
                 x: Float(locationTranslation.longitudeTranslation) * distanceDivision,
@@ -347,6 +349,7 @@ public class SceneLocationView: UIView {
             
             locationNode.scale = SCNVector3(x: distanceDivision, y: distanceDivision, z: distanceDivision)
         } else {
+            adjustedDistance = distance
             let position = SCNVector3(
                 x: currentPosition.x + Float(locationTranslation.longitudeTranslation),
                 y: currentPosition.y + Float(locationTranslation.altitudeTranslation),
@@ -355,11 +358,15 @@ public class SceneLocationView: UIView {
             locationNode.position = position
         }
         
-        if locationNode is LocationAnnotationNode {
+        if let annotationNode = locationNode as? LocationAnnotationNode {
+            //The scale of a node with a billboard constraint applied is ignored
+            //The annotation subnode itself, as a subnode, has the scale applied to it
+            locationNode.scale = SCNVector3(x: 1, y: 1, z: 1)
+            
             //Scale it to be an appropriate size so that it can be seen
-            let scale = Float(distance) * 0.181
+            var scale: Float = Float(adjustedDistance) * 0.181
 
-            locationNode.scale = SCNVector3(
+            annotationNode.annotationNode.scale = SCNVector3(
                 x: locationNode.scale.x * scale,
                 y: locationNode.scale.y * scale,
                 z: locationNode.scale.z * scale)
