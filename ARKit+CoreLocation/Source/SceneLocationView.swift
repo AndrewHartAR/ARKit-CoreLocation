@@ -356,6 +356,7 @@ public class SceneLocationView: UIView {
                 z: currentPosition.z - Float(locationTranslation.latitudeTranslation))
             
             locationNode.position = position
+            locationNode.scale = SCNVector3(x: 1, y: 1, z: 1)
         }
         
         if let annotationNode = locationNode as? LocationAnnotationNode {
