@@ -14,7 +14,7 @@ import CoreLocation
 ///Location is not necessarily confirmed.
 ///When it isn't, the node's position should be used.
 ///Location can be changed and confirmed later.
-public class LocationNode: SCNNode {
+open class LocationNode: SCNNode {
     public var location: CLLocation?
     
     public var locationConfirmed = false
@@ -30,7 +30,7 @@ public class LocationNode: SCNNode {
     }
 }
 
-public class LocationAnnotationNode: LocationNode {
+open class LocationAnnotationNode: LocationNode {
     ///An image to use for the annotation
     ///When viewed from a distance, the annotation will be seen at the size provided
     ///e.g. if the size is 100x100px, the annotation will take up approx 100x100 points on screen.
