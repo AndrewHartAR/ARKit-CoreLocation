@@ -366,6 +366,10 @@ public class SceneLocationView: UIView {
             
             //Scale it to be an appropriate size so that it can be seen
             var scale: Float = Float(adjustedDistance) * 0.181
+            
+            if distance > 3000 {
+                scale = scale * 0.75
+            }
 
             annotationNode.annotationNode.scale = SCNVector3(
                 x: locationNode.scale.x * scale,
