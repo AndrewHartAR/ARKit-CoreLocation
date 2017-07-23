@@ -317,11 +317,9 @@ public class SceneLocationView: UIView {
         delegate?.sceneLocationViewDidConfirmLocationOfNode(sceneLocationView: self, node: locationNode)
     }
     
-    func updatePositionOfLocationNodesWithConfirmedLocation() {
+    func updatePositionOfLocationNodes() {
         for locationNode in locationNodes {
-            if locationNode.locationConfirmed {
-                updatePositionOfLocationNode(locationNode: locationNode)
-            }
+            updatePositionOfLocationNode(locationNode: locationNode)
         }
     }
     
