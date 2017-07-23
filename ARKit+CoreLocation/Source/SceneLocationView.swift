@@ -133,7 +133,7 @@ public class SceneLocationView: UIView {
     @objc private func updateLocationData() {
         removeOldLocationEstimates()
         confirmLocationOfDistantLocationNodes()
-        updatePositionOfLocationNodesWithConfirmedLocation()
+        updatePositionOfLocationNodes()
     }
     
     //MARK: True North
@@ -286,7 +286,7 @@ public class SceneLocationView: UIView {
                 let locationNodePoint = CGPoint.pointWithVector(vector: locationNode.position)
                 
                 if !currentPoint.radiusContainsPoint(radius: CGFloat(SceneLocationView.sceneLimit), point: locationNodePoint) {
-                    confirmLocationOfLocationNode(locationNode: locationNode)
+                    confirmLocationOfLocationNode(locationNode)
                 }
             }
         }
@@ -329,25 +329,27 @@ public class SceneLocationView: UIView {
             return
         }
         
+        let locationNodeLocation = locationOfLocationNode(locationNode)
+        
         //Position is set to a position coordinated via the current position
-        let locationTranslation = currentLocation.translation(toLocation: locationNode.location!)
+        let locationTranslation = currentLocation.translation(toLocation: locationNodeLocation)
         
         //If the item is too far away, bring it closer and scale it down
         
         let adjustedDistance: CLLocationDistance
         
-        let distance = locationNode.location!.distance(from: currentLocation)
+        let distance = locationNodeLocation.distance(from: currentLocation)
         
         
-        //TEMP: needs changing back to 10
-        if distance > 10 {
-            let distanceDivision = 10 / Float(distance)
-            adjustedDistance = distance * Double(distanceDivision)
+        if distance > 100 {
+            let scale = 100 / Float(distance)
+            
+            adjustedDistance = distance * Double(scale)
             
             let adjustedTranslation = SCNVector3(
-                x: Float(locationTranslation.longitudeTranslation) * distanceDivision,
-                y: Float(locationTranslation.altitudeTranslation) * distanceDivision,
-                z: Float(locationTranslation.latitudeTranslation) * distanceDivision)
+                x: Float(locationTranslation.longitudeTranslation) * scale,
+                y: Float(locationTranslation.altitudeTranslation) * scale,
+                z: Float(locationTranslation.latitudeTranslation) * scale)
             
             let position = SCNVector3(
                 x: currentPosition.x + adjustedTranslation.x,
@@ -356,7 +358,7 @@ public class SceneLocationView: UIView {
             
             locationNode.position = position
             
-            locationNode.scale = SCNVector3(x: distanceDivision, y: distanceDivision, z: distanceDivision)
+            locationNode.scale = SCNVector3(x: scale, y: scale, z: scale)
         } else {
             adjustedDistance = distance
             let position = SCNVector3(
