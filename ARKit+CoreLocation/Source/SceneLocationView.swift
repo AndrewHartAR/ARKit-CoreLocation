@@ -373,19 +373,27 @@ public class SceneLocationView: UIView {
         if let annotationNode = locationNode as? LocationAnnotationNode {
             //The scale of a node with a billboard constraint applied is ignored
             //The annotation subnode itself, as a subnode, has the scale applied to it
+            let appliedScale = locationNode.scale
             locationNode.scale = SCNVector3(x: 1, y: 1, z: 1)
             
-            //Scale it to be an appropriate size so that it can be seen
-            var scale: Float = Float(adjustedDistance) * 0.181
+            var scale: Float
             
-            if distance > 3000 {
-                scale = scale * 0.75
+            if annotationNode.scaleRelativeToDistance {
+                annotationNode.annotationNode.scale = appliedScale
+            } else {
+                //Scale it to be an appropriate size so that it can be seen
+                scale = Float(adjustedDistance) * 0.181
+                
+                if distance > 3000 {
+                    scale = scale * 0.75
+                }
+                
+                annotationNode.annotationNode.scale = SCNVector3(
+                    x: locationNode.scale.x * scale,
+                    y: locationNode.scale.y * scale,
+                    z: locationNode.scale.z * scale)
             }
 
-            annotationNode.annotationNode.scale = SCNVector3(
-                x: locationNode.scale.x * scale,
-                y: locationNode.scale.y * scale,
-                z: locationNode.scale.z * scale)
         }
         
     }
