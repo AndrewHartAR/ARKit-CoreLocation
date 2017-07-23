@@ -19,6 +19,8 @@ public protocol SceneLocationViewDelegate: class {
     ///it is later confirmed once the user moves far enough away from it.
     ///This update uses location data collected since the node was placed to give a more accurate location.
     func sceneLocationViewDidConfirmLocationOfNode(sceneLocationView: SceneLocationView, node: LocationNode)
+    
+    func sceneLocationViewDidSetupSceneNode(sceneLocationView: SceneLocationView, sceneNode: SCNNode)
 }
 
 ///Different methods which can be used when determining locations (such as the user's location).
@@ -51,12 +53,14 @@ public class SceneLocationView: UIView {
     
     private var sceneLocationEstimates = [SceneLocationEstimate]()
     
-    private var sceneNode: SCNNode? {
+    public private(set) var sceneNode: SCNNode? {
         didSet {
             if sceneNode != nil {
                 for locationNode in locationNodes {
                     sceneNode!.addChildNode(locationNode)
                 }
+                
+                delegate?.sceneLocationViewDidSetupSceneNode(sceneLocationView: self, sceneNode: sceneNode!)
             }
         }
     }
