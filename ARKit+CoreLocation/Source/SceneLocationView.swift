@@ -292,14 +292,25 @@ public class SceneLocationView: UIView {
         }
     }
     
-    private func confirmLocationOfLocationNode(locationNode: LocationNode) {
+    ///Gives the best estimate of the location of a node
+    func locationOfLocationNode(_ locationNode: LocationNode) -> CLLocation {
+        if locationNode.locationConfirmed {
+            return locationNode.location!
+        }
+        
         if let bestLocationEstimate = bestLocationEstimate(),
             locationNode.location == nil ||
-            bestLocationEstimate.location.horizontalAccuracy < locationNode.location!.horizontalAccuracy {
+                bestLocationEstimate.location.horizontalAccuracy < locationNode.location!.horizontalAccuracy {
             let translatedLocation = bestLocationEstimate.translatedLocation(to: locationNode.position)
             
-            locationNode.location = translatedLocation
+            return translatedLocation
+        } else {
+            return locationNode.location!
         }
+    }
+    
+    private func confirmLocationOfLocationNode(_ locationNode: LocationNode) {
+        locationNode.location = locationOfLocationNode(locationNode)
         
         locationNode.locationConfirmed = true
         
