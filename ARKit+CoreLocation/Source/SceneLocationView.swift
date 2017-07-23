@@ -345,32 +345,39 @@ public class SceneLocationView: UIView {
         let distance = locationNodeLocation.distance(from: currentLocation)
         
         
-        if distance > 100 {
-            let scale = 100 / Float(distance)
-            
-            adjustedDistance = distance * Double(scale)
-            
-            let adjustedTranslation = SCNVector3(
-                x: Float(locationTranslation.longitudeTranslation) * scale,
-                y: Float(locationTranslation.altitudeTranslation) * scale,
-                z: Float(locationTranslation.latitudeTranslation) * scale)
-            
-            let position = SCNVector3(
-                x: currentPosition.x + adjustedTranslation.x,
-                y: currentPosition.y + adjustedTranslation.y,
-                z: currentPosition.z - adjustedTranslation.z)
-            
-            locationNode.position = position
-            
-            locationNode.scale = SCNVector3(x: scale, y: scale, z: scale)
+        if locationNode.locationConfirmed {
+            if distance > 100 {
+                let scale = 100 / Float(distance)
+                
+                adjustedDistance = distance * Double(scale)
+                
+                let adjustedTranslation = SCNVector3(
+                    x: Float(locationTranslation.longitudeTranslation) * scale,
+                    y: Float(locationTranslation.altitudeTranslation) * scale,
+                    z: Float(locationTranslation.latitudeTranslation) * scale)
+                
+                let position = SCNVector3(
+                    x: currentPosition.x + adjustedTranslation.x,
+                    y: currentPosition.y + adjustedTranslation.y,
+                    z: currentPosition.z - adjustedTranslation.z)
+                
+                locationNode.position = position
+                
+                locationNode.scale = SCNVector3(x: scale, y: scale, z: scale)
+            } else {
+                adjustedDistance = distance
+                let position = SCNVector3(
+                    x: currentPosition.x + Float(locationTranslation.longitudeTranslation),
+                    y: currentPosition.y + Float(locationTranslation.altitudeTranslation),
+                    z: currentPosition.z - Float(locationTranslation.latitudeTranslation))
+                
+                locationNode.position = position
+                locationNode.scale = SCNVector3(x: 1, y: 1, z: 1)
+            }
         } else {
-            adjustedDistance = distance
-            let position = SCNVector3(
-                x: currentPosition.x + Float(locationTranslation.longitudeTranslation),
-                y: currentPosition.y + Float(locationTranslation.altitudeTranslation),
-                z: currentPosition.z - Float(locationTranslation.latitudeTranslation))
+            //Calculates distance based on the distance within the scene, as the location isn't yet confirmed
+            adjustedDistance = Double(currentPosition.distance(to: locationNode.position))
             
-            locationNode.position = position
             locationNode.scale = SCNVector3(x: 1, y: 1, z: 1)
         }
         
