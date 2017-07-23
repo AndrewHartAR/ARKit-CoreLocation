@@ -345,7 +345,8 @@ public class SceneLocationView: UIView {
         let distance = locationNodeLocation.distance(from: currentLocation)
         
         
-        if locationNode.locationConfirmed {
+        if locationNode.locationConfirmed &&
+            (distance > 100 || locationNode.continuallyAdjustNodePositionWhenWithinRange) {
             if distance > 100 {
                 let scale = 100 / Float(distance)
                 

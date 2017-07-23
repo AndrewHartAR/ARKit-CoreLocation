@@ -19,6 +19,17 @@ open class LocationNode: SCNNode {
     
     public var locationConfirmed = false
     
+    ///Whether a node's position should be adjusted on an ongoing basis
+    ///based on its' given location.
+    ///This only occurs when a node's location is within 100m of the user.
+    ///Adjustment doesn't apply to nodes without a confirmed location.
+    ///When this is set to false, the result is a smoother appearance.
+    ///When this is set to true, this means a node may appear to jump around
+    ///as the user's location estimates update,
+    ///but the position is generally more accurate.
+    ///Defaults to true.
+    public var continuallyAdjustNodePositionWhenWithinRange = true
+    
     public init(location: CLLocation?) {
         self.location = location
         self.locationConfirmed = location != nil
