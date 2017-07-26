@@ -125,7 +125,7 @@ public class SceneLocationView: UIView {
         sceneView.session.run(configuration)
         
         updateEstimatesTimer?.invalidate()
-        updateEstimatesTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(SceneLocationView.updateLocationData), userInfo: nil, repeats: true)
+        updateEstimatesTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(SceneLocationView.updateLocationData), userInfo: nil, repeats: true)
     }
     
     public func pause() {
@@ -137,7 +137,7 @@ public class SceneLocationView: UIView {
     @objc private func updateLocationData() {
         removeOldLocationEstimates()
         confirmLocationOfDistantLocationNodes()
-        updatePositionOfLocationNodes()
+        updatePositionAndScaleOfLocationNodes()
     }
     
     //MARK: True North
@@ -273,7 +273,7 @@ public class SceneLocationView: UIView {
             return
         }
         
-        updatePositionOfLocationNode(locationNode: locationNode)
+        updatePositionAndScaleOfLocationNode(locationNode: locationNode, initialSetup: true, animated: false)
         
         locationNodes.append(locationNode)
         sceneNode?.addChildNode(locationNode)
@@ -329,16 +329,24 @@ public class SceneLocationView: UIView {
         delegate?.sceneLocationViewDidConfirmLocationOfNode(sceneLocationView: self, node: locationNode)
     }
     
-    func updatePositionOfLocationNodes() {
+    func updatePositionAndScaleOfLocationNodes() {
         for locationNode in locationNodes {
-            updatePositionOfLocationNode(locationNode: locationNode)
+                updatePositionAndScaleOfLocationNode(locationNode: locationNode, animated: true)
         }
     }
     
-    func updatePositionOfLocationNode(locationNode: LocationNode) {
+    public func updatePositionAndScaleOfLocationNode(locationNode: LocationNode, initialSetup: Bool = false, animated: Bool = false, duration: TimeInterval = 0.1) {
         guard let currentPosition = currentScenePosition(),
             let currentLocation = currentLocation() else {
             return
+        }
+        
+        SCNTransaction.begin()
+        
+        if animated {
+            SCNTransaction.animationDuration = duration
+        } else {
+            SCNTransaction.animationDuration = 0
         }
         
         let locationNodeLocation = locationOfLocationNode(locationNode)
@@ -346,16 +354,15 @@ public class SceneLocationView: UIView {
         //Position is set to a position coordinated via the current position
         let locationTranslation = currentLocation.translation(toLocation: locationNodeLocation)
         
-        //If the item is too far away, bring it closer and scale it down
         
         let adjustedDistance: CLLocationDistance
         
         let distance = locationNodeLocation.distance(from: currentLocation)
         
-        
         if locationNode.locationConfirmed &&
-            (distance > 100 || locationNode.continuallyAdjustNodePositionWhenWithinRange) {
+            (distance > 100 || locationNode.continuallyAdjustNodePositionWhenWithinRange || initialSetup) {
             if distance > 100 {
+                //If the item is too far away, bring it closer and scale it down
                 let scale = 100 / Float(distance)
                 
                 adjustedDistance = distance * Double(scale)
@@ -413,9 +420,9 @@ public class SceneLocationView: UIView {
                     y: locationNode.scale.y * scale,
                     z: locationNode.scale.z * scale)
             }
-
         }
         
+        SCNTransaction.commit()
     }
 }
 
