@@ -15,8 +15,14 @@ import CoreLocation
 ///When it isn't, the node's position should be used.
 ///Location can be changed and confirmed later.
 open class LocationNode: SCNNode {
-    public var location: CLLocation?
+    ///Not required to be set, but will be set upon being added to a scene
+    public var location: CLLocation!
     
+    ///Whether the location of the node has been confirmed.
+    ///This is automatically set to true when you create a node using a location.
+    ///Otherwise, this is false, and becomes true once the user moves 100m away from the node,
+    ///except when the locationEstimateMethod is set to use Core Location data only,
+    ///as then it becomes true immediately.
     public var locationConfirmed = false
     
     ///Whether a node's position should be adjusted on an ongoing basis
