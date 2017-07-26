@@ -99,8 +99,6 @@ public class SceneLocationView: ARSCNView {
         if showFeaturePoints {
             debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         }
-        
-        motionManager.startDeviceMotionUpdates()
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -409,6 +407,7 @@ public class SceneLocationView: ARSCNView {
             var scale: Float
             
             if annotationNode.scaleRelativeToDistance {
+                scale = appliedScale.y
                 annotationNode.annotationNode.scale = appliedScale
             } else {
                 //Scale it to be an appropriate size so that it can be seen
@@ -418,11 +417,10 @@ public class SceneLocationView: ARSCNView {
                     scale = scale * 0.75
                 }
                 
-                annotationNode.annotationNode.scale = SCNVector3(
-                    x: locationNode.scale.x * scale,
-                    y: locationNode.scale.y * scale,
-                    z: locationNode.scale.z * scale)
+                annotationNode.annotationNode.scale = SCNVector3(x: scale, y: scale, z: scale)
             }
+            
+            annotationNode.pivot = SCNMatrix4MakeTranslation(0, -1.1 * scale, 0)
         }
         
         SCNTransaction.commit()

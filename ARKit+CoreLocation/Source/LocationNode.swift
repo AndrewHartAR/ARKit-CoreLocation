@@ -10,12 +10,11 @@ import Foundation
 import SceneKit
 import CoreLocation
 
-///Location, if available, is given with an appropriate accuracy.
-///Location is not necessarily confirmed.
-///When it isn't, the node's position should be used.
-///Location can be changed and confirmed later.
+///A location node can be added to a scene using a coordinate.
+///Its scale and position should not be adjusted, as these are used for scene layout purposes
+///To adjust the scale and position of items within a node, you can add them to a child node and adjust them there
 open class LocationNode: SCNNode {
-    ///Not required to be set, but will be set upon being added to a scene
+    ///Location can be changed and confirmed later by SceneLocationView.
     public var location: CLLocation!
     
     ///Whether the location of the node has been confirmed.
@@ -85,9 +84,7 @@ open class LocationAnnotationNode: LocationNode {
         billboardConstraint.freeAxes = SCNBillboardAxis.Y
         constraints = [billboardConstraint]
         
-        
         addChildNode(annotationNode)
-        
     }
     
     required public init?(coder aDecoder: NSCoder) {
