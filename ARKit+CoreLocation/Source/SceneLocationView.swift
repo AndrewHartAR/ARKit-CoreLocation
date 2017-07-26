@@ -306,7 +306,7 @@ public class SceneLocationView: UIView {
     
     ///Gives the best estimate of the location of a node
     func locationOfLocationNode(_ locationNode: LocationNode) -> CLLocation {
-        if locationNode.locationConfirmed {
+        if locationNode.locationConfirmed || locationEstimateMethod == .coreLocationDataOnly {
             return locationNode.location!
         }
         
