@@ -23,7 +23,7 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
     
     ///Whether to show a map view
     ///The initial value is respected
-    var showMapView: Bool = true
+    var showMapView: Bool = false
     
     var centerMapOnUserLocation: Bool = true
     
@@ -42,6 +42,9 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         //Set to true to display an arrow which points north.
         //Checkout the comments in the property description on this,
         //it could use some improvement.
+        
+//        sceneLocationView.locationEstimateMethod = .coreLocationDataOnly
+//        sceneLocationView.orientToTrueNorth = false
         
         sceneLocationView.locationDelegate = self
         
@@ -77,6 +80,13 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         if displayDebugging {
             sceneLocationView.showFeaturePoints = true
         }
+        
+        //Currently set to Canary Wharf
+        let pinCoordinate = CLLocationCoordinate2D(latitude: 51.504607, longitude: -0.019592)
+        let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 236)
+        let pinImage = UIImage(named: "pin")!
+        let pinLocationNode = LocationAnnotationNode(location: pinLocation, image: pinImage)
+        sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: pinLocationNode)
     }
     
     override func viewWillAppear(_ animated: Bool) {
