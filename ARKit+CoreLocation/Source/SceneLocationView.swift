@@ -279,6 +279,14 @@ public class SceneLocationView: UIView {
         sceneNode?.addChildNode(locationNode)
     }
     
+    public func removeLocationNode(locationNode: LocationNode) {
+        if let index = locationNodes.index(of: locationNode) {
+            locationNodes.remove(at: index)
+        }
+        
+        locationNode.removeFromParentNode()
+    }
+    
     private func confirmLocationOfDistantLocationNodes() {
         guard let currentPosition = currentScenePosition() else {
             return
