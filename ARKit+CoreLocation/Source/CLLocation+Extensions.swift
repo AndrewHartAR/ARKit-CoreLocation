@@ -16,7 +16,11 @@ struct LocationTranslation {
     var altitudeTranslation: Double
 }
 
-extension CLLocation {
+public extension CLLocation {
+    public convenience init(coordinate: CLLocationCoordinate2D, altitude: CLLocationDistance) {
+        self.init(coordinate: coordinate, altitude: altitude, horizontalAccuracy: 0, verticalAccuracy: 0, timestamp: Date())
+    }
+    
     ///Translates distance in meters between two locations.
     ///Returns the result as the distance in latitude and distance in longitude.
     func translation(toLocation location: CLLocation) -> LocationTranslation {
