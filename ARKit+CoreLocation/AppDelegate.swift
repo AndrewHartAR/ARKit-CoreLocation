@@ -26,6 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         DDLogDebug("NEW SESSION")
         
+        UIApplication.shared.isIdleTimerDisabled = true
+        
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
         self.window!.makeKeyAndVisible()
