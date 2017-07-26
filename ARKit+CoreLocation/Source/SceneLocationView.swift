@@ -34,14 +34,13 @@ public enum LocationEstimateMethod {
     case mostRelevantEstimate
 }
 
-public class SceneLocationView: UIView {
+//Should conform to delegate here, add in future commit
+public class SceneLocationView: ARSCNView {
     ///The limit to the scene, in terms of what data is considered reasonably accurate.
     ///Measured in meters.
     private static let sceneLimit = 100.0
     
-    private let sceneView = ARSCNView()
-    
-    public weak var delegate: SceneLocationViewDelegate?
+    public weak var locationDelegate: SceneLocationViewDelegate?
     
     ///The method to use for determining locations.
     ///Not advisable to change this as the scene is ongoing.
@@ -60,7 +59,7 @@ public class SceneLocationView: UIView {
                     sceneNode!.addChildNode(locationNode)
                 }
                 
-                delegate?.sceneLocationViewDidSetupSceneNode(sceneLocationView: self, sceneNode: sceneNode!)
+                locationDelegate?.sceneLocationViewDidSetupSceneNode(sceneLocationView: self, sceneNode: sceneNode!)
             }
         }
     }
@@ -83,21 +82,25 @@ public class SceneLocationView: UIView {
     public var orientToTrueNorth = true
     
     //MARK: Setup
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    public convenience init() {
+        self.init(frame: CGRect.zero, options: nil)
+    }
+    
+    public override init(frame: CGRect, options: [String : Any]? = nil) {
+        super.init(frame: frame, options: options)
         
         locationManager.delegate = self
         
-        sceneView.delegate = self
+        delegate = self
         
         // Show statistics such as fps and timing information
-        sceneView.showsStatistics = false
+        showsStatistics = false
         
         if showFeaturePoints {
-            sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
+            debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         }
         
-        addSubview(sceneView)
+        motionManager.startDeviceMotionUpdates()
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -106,8 +109,6 @@ public class SceneLocationView: UIView {
     
     override public func layoutSubviews() {
         super.layoutSubviews()
-        
-        sceneView.frame = self.bounds
     }
     
     public func run() {
@@ -122,14 +123,14 @@ public class SceneLocationView: UIView {
         }
         
         // Run the view's session
-        sceneView.session.run(configuration)
+        session.run(configuration)
         
         updateEstimatesTimer?.invalidate()
         updateEstimatesTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(SceneLocationView.updateLocationData), userInfo: nil, repeats: true)
     }
     
     public func pause() {
-        sceneView.session.pause()
+        session.pause()
         updateEstimatesTimer?.invalidate()
         updateEstimatesTimer = nil
     }
@@ -169,15 +170,15 @@ public class SceneLocationView: UIView {
     //MARK: Scene location estimates
     
     func currentScenePosition() -> SCNVector3? {
-        guard let pointOfView = sceneView.pointOfView else {
+        guard let pointOfView = pointOfView else {
             return nil
         }
         
-        return sceneView.scene.rootNode.convertPosition(pointOfView.position, to: sceneNode)
+        return scene.rootNode.convertPosition(pointOfView.position, to: sceneNode)
     }
     
     func currentEulerAngles() -> SCNVector3? {
-        return sceneView.pointOfView?.eulerAngles
+        return pointOfView?.eulerAngles
     }
     
     ///Adds a scene location estimate based on current time, camera position and location from location manager
@@ -186,7 +187,7 @@ public class SceneLocationView: UIView {
             let sceneLocationEstimate = SceneLocationEstimate(location: location, position: position)
             self.sceneLocationEstimates.append(sceneLocationEstimate)
             
-            delegate?.sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: self, position: position, location: location)
+            locationDelegate?.sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: self, position: position, location: location)
         }
     }
     
@@ -205,7 +206,7 @@ public class SceneLocationView: UIView {
             let radiusContainsPoint = currentPoint.radiusContainsPoint(radius: CGFloat(SceneLocationView.sceneLimit), point: point)
             
             if !radiusContainsPoint {
-                delegate?.sceneLocationViewDidRemoveSceneLocationEstimate(sceneLocationView: self, position: $0.position, location: $0.location)
+                locationDelegate?.sceneLocationViewDidRemoveSceneLocationEstimate(sceneLocationView: self, position: $0.position, location: $0.location)
             }
             
             return radiusContainsPoint
@@ -326,7 +327,7 @@ public class SceneLocationView: UIView {
         
         locationNode.locationConfirmed = true
         
-        delegate?.sceneLocationViewDidConfirmLocationOfNode(sceneLocationView: self, node: locationNode)
+        locationDelegate?.sceneLocationViewDidConfirmLocationOfNode(sceneLocationView: self, node: locationNode)
     }
     
     func updatePositionAndScaleOfLocationNodes() {
@@ -444,7 +445,7 @@ extension SceneLocationView: ARSCNViewDelegate {
     public func renderer(_ renderer: SCNSceneRenderer, didRenderScene scene: SCNScene, atTime time: TimeInterval) {
         if sceneNode == nil {
             sceneNode = SCNNode()
-            sceneView.scene.rootNode.addChildNode(sceneNode!)
+            scene.rootNode.addChildNode(sceneNode!)
             
             let axesNode = SCNNode.axesNode(quiverLength: 0.1, quiverThickness: 0.5)
             sceneNode?.addChildNode(axesNode)
@@ -452,7 +453,7 @@ extension SceneLocationView: ARSCNViewDelegate {
         
         if !didFetchInitialLocation {
             //Current frame and current location are required for this to be successful
-            if sceneView.session.currentFrame != nil,
+            if session.currentFrame != nil,
                 let currentLocation = self.locationManager.currentLocation {
                 didFetchInitialLocation = true
                 

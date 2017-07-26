@@ -43,6 +43,8 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         //Checkout the comments in the property description on this,
         //it could use some improvement.
         
+        sceneLocationView.locationDelegate = self
+        
         infoLabel.font = UIFont.systemFont(ofSize: 10)
         infoLabel.textAlignment = .left
         infoLabel.textColor = UIColor.white
