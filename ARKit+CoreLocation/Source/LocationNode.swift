@@ -30,6 +30,11 @@ open class LocationNode: SCNNode {
     ///Defaults to true.
     public var continuallyAdjustNodePositionWhenWithinRange = true
     
+    ///Whether a node's position and scale should be updated automatically on a continual basis.
+    ///This should only be set to false if you plan to manually update position and scale
+    ///at regular intervals. You can do this with `SceneLocationView`'s `updatePositionOfLocationNode`.
+    public var continuallyUpdatePositionAndScale = true
+    
     public init(location: CLLocation?) {
         self.location = location
         self.locationConfirmed = location != nil

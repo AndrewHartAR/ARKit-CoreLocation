@@ -331,7 +331,9 @@ public class SceneLocationView: UIView {
     
     func updatePositionAndScaleOfLocationNodes() {
         for locationNode in locationNodes {
+            if locationNode.continuallyUpdatePositionAndScale {
                 updatePositionAndScaleOfLocationNode(locationNode: locationNode, animated: true)
+            }
         }
     }
     
