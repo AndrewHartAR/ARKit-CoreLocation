@@ -426,22 +426,11 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         }
         
         SCNTransaction.commit()
-    }
-}
-
-//MARK: LocationManager
-extension SceneLocationView: LocationManagerDelegate {
-    func locationManagerDidUpdateLocation(_ locationManager: LocationManager, location: CLLocation) {
-        self.addSceneLocationEstimate(location: location)
-    }
-    
-    func locationManagerDidUpdateHeading(_ locationManager: LocationManager, heading: CLLocationDirection, accuracy: CLLocationAccuracy) {
         
     }
-}
-
-//MARK: ARSceneViewDelegate
-extension SceneLocationView: ARSCNViewDelegate {
+    
+    //MARK: ARSCNViewDelegate
+    
     public func renderer(_ renderer: SCNSceneRenderer, didRenderScene scene: SCNScene, atTime time: TimeInterval) {
         if sceneNode == nil {
             sceneNode = SCNNode()
@@ -490,5 +479,16 @@ extension SceneLocationView: ARSCNViewDelegate {
         } else if case ARCamera.TrackingState.notAvailable = camera.trackingState {
             print("camera did change tracking state: not available")
         }
+    }
+}
+
+//MARK: LocationManager
+extension SceneLocationView: LocationManagerDelegate {
+    func locationManagerDidUpdateLocation(_ locationManager: LocationManager, location: CLLocation) {
+        self.addSceneLocationEstimate(location: location)
+    }
+    
+    func locationManagerDidUpdateHeading(_ locationManager: LocationManager, heading: CLLocationDirection, accuracy: CLLocationAccuracy) {
+        
     }
 }
