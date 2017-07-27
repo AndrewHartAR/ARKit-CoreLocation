@@ -47,6 +47,8 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     public var locationEstimateMethod: LocationEstimateMethod = .mostRelevantEstimate
     
     let locationManager = LocationManager()
+    ///When set to true, displays an axes node at the start of the scene
+    public var showAxesNode = false
     
     private(set) var locationNodes = [LocationNode]()
     
@@ -445,8 +447,10 @@ extension SceneLocationView: ARSCNViewDelegate {
             sceneNode = SCNNode()
             scene.rootNode.addChildNode(sceneNode!)
             
-            let axesNode = SCNNode.axesNode(quiverLength: 0.1, quiverThickness: 0.5)
-            sceneNode?.addChildNode(axesNode)
+            if showAxesNode {
+                let axesNode = SCNNode.axesNode(quiverLength: 0.1, quiverThickness: 0.5)
+                sceneNode?.addChildNode(axesNode)
+            }
         }
         
         if !didFetchInitialLocation {
