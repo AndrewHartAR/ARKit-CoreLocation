@@ -169,7 +169,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     
     //MARK: Scene location estimates
     
-    func currentScenePosition() -> SCNVector3? {
+    public func currentScenePosition() -> SCNVector3? {
         guard let pointOfView = pointOfView else {
             return nil
         }
@@ -177,7 +177,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         return scene.rootNode.convertPosition(pointOfView.position, to: sceneNode)
     }
     
-    func currentEulerAngles() -> SCNVector3? {
+    public func currentEulerAngles() -> SCNVector3? {
         return pointOfView?.eulerAngles
     }
     
