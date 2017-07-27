@@ -277,6 +277,13 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
     }
     
     func sceneLocationViewDidConfirmLocationOfNode(sceneLocationView: SceneLocationView, node: LocationNode) {
+    }
+    
+    func sceneLocationViewDidSetupSceneNode(sceneLocationView: SceneLocationView, sceneNode: SCNNode) {
+        
+    }
+    
+    func sceneLocationViewDidUpdateLocationAndScaleOfLocationNode(sceneLocationView: SceneLocationView, locationNode: LocationNode) {
         
     }
 }
