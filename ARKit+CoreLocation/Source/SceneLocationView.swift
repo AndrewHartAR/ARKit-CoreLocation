@@ -21,6 +21,8 @@ public protocol SceneLocationViewDelegate: class {
     func sceneLocationViewDidConfirmLocationOfNode(sceneLocationView: SceneLocationView, node: LocationNode)
     
     func sceneLocationViewDidSetupSceneNode(sceneLocationView: SceneLocationView, sceneNode: SCNNode)
+    
+    func sceneLocationViewDidUpdateLocationAndScaleOfLocationNode(sceneLocationView: SceneLocationView, locationNode: LocationNode)
 }
 
 ///Different methods which can be used when determining locations (such as the user's location).
@@ -427,6 +429,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         
         SCNTransaction.commit()
         
+        locationDelegate?.sceneLocationViewDidUpdateLocationAndScaleOfLocationNode(sceneLocationView: self, locationNode: locationNode)
     }
     
     //MARK: ARSCNViewDelegate
