@@ -469,17 +469,18 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     }
     
     public func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
-        if case ARCamera.TrackingState.limited(.insufficientFeatures) = camera.trackingState {
+        switch camera.trackingState {
+        case .limited(.insufficientFeatures):
             print("camera did change tracking state: limited, insufficient features")
-        } else if case ARCamera.TrackingState.limited(.excessiveMotion) = camera.trackingState {
+        case .limited(.excessiveMotion):
             print("camera did change tracking state: limited, excessive motion")
-        } else if case ARCamera.TrackingState.limited(.none) = camera.trackingState {
+        case .limited(.none):
             print("camera did change tracking state: limited, no reason")
-        } else if case ARCamera.TrackingState.limited(.initializing) = camera.trackingState {
+        case .limited(.initializing):
             print("camera did change tracking state: limited, initializing")
-        } else if case ARCamera.TrackingState.normal = camera.trackingState {
+        case .normal:
             print("camera did change tracking state: normal")
-        } else if case ARCamera.TrackingState.notAvailable = camera.trackingState {
+        case .notAvailable:
             print("camera did change tracking state: not available")
         }
     }
