@@ -7,6 +7,7 @@
 **ARKit + CoreLocation**: Combines the high accuracy of AR with the scale of GPS data.
 
 ![Points of interest demo](https://github.com/ProjectDent/ARKit-CoreLocation/blob/master/giphy-1.gif) ![Navigation demo](https://github.com/ProjectDent/ARKit-CoreLocation/blob/master/giphy-2.gif)
+
 The potential for combining these technologies is huge, with so many potential applications across many different areas. This library comes with two major features:
 - Allow items to be placed within the AR world using real-world coordinates.
 - Dramatically improved location accuracy, using recent location data points combined with knowledge about movement through the AR world.
