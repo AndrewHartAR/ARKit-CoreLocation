@@ -35,7 +35,7 @@ public enum LocationEstimateMethod {
 }
 
 //Should conform to delegate here, add in future commit
-public class SceneLocationView: ARSCNView {
+public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     ///The limit to the scene, in terms of what data is considered reasonably accurate.
     ///Measured in meters.
     private static let sceneLimit = 100.0
@@ -457,6 +457,34 @@ extension SceneLocationView: ARSCNViewDelegate {
                 
                 self.addSceneLocationEstimate(location: currentLocation)
             }
+        }
+    }
+    
+    public func sessionWasInterrupted(_ session: ARSession) {
+        print("session was interrupted")
+    }
+    
+    public func sessionInterruptionEnded(_ session: ARSession) {
+        print("session interruption ended")
+    }
+    
+    public func session(_ session: ARSession, didFailWithError error: Error) {
+        print("session did fail with error: \(error)")
+    }
+    
+    public func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
+        if case ARCamera.TrackingState.limited(.insufficientFeatures) = camera.trackingState {
+            print("camera did change tracking state: limited, insufficient features")
+        } else if case ARCamera.TrackingState.limited(.excessiveMotion) = camera.trackingState {
+            print("camera did change tracking state: limited, excessive motion")
+        } else if case ARCamera.TrackingState.limited(.none) = camera.trackingState {
+            print("camera did change tracking state: limited, no reason")
+        } else if case ARCamera.TrackingState.limited(.initializing) = camera.trackingState {
+            print("camera did change tracking state: limited, initializing")
+        } else if case ARCamera.TrackingState.normal = camera.trackingState {
+            print("camera did change tracking state: normal")
+        } else if case ARCamera.TrackingState.notAvailable = camera.trackingState {
+            print("camera did change tracking state: not available")
         }
     }
 }
