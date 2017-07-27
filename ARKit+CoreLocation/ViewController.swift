@@ -41,15 +41,6 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Set to true to display an arrow which points north.
-        //Checkout the comments in the property description on this,
-        //it could use some improvement.
-        
-//        sceneLocationView.locationEstimateMethod = .coreLocationDataOnly
-//        sceneLocationView.orientToTrueNorth = false
-        
-        sceneLocationView.locationDelegate = self
-        
         infoLabel.font = UIFont.systemFont(ofSize: 10)
         infoLabel.textAlignment = .left
         infoLabel.textColor = UIColor.white
@@ -62,6 +53,25 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
             selector: #selector(ViewController.updateInfoLabel),
             userInfo: nil,
             repeats: true)
+        
+        //Set to true to display an arrow which points north.
+        //Checkout the comments in the property description and on the readme on this.
+//        sceneLocationView.orientToTrueNorth = false
+        
+//        sceneLocationView.locationEstimateMethod = .coreLocationDataOnly
+        sceneLocationView.showAxesNode = true
+        sceneLocationView.locationDelegate = self
+        
+        if displayDebugging {
+            sceneLocationView.showFeaturePoints = true
+        }
+        
+        //Currently set to Canary Wharf
+        let pinCoordinate = CLLocationCoordinate2D(latitude: 51.504607, longitude: -0.019592)
+        let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 236)
+        let pinImage = UIImage(named: "pin")!
+        let pinLocationNode = LocationAnnotationNode(location: pinLocation, image: pinImage)
+        sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: pinLocationNode)
         
         view.addSubview(sceneLocationView)
         
@@ -79,16 +89,6 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
                 repeats: true)
         }
         
-        if displayDebugging {
-            sceneLocationView.showFeaturePoints = true
-        }
-        
-        //Currently set to Canary Wharf
-        let pinCoordinate = CLLocationCoordinate2D(latitude: 51.504607, longitude: -0.019592)
-        let pinLocation = CLLocation(coordinate: pinCoordinate, altitude: 236)
-        let pinImage = UIImage(named: "pin")!
-        let pinLocationNode = LocationAnnotationNode(location: pinLocation, image: pinImage)
-        sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: pinLocationNode)
     }
     
     override func viewWillAppear(_ animated: Bool) {
