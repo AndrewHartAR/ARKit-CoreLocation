@@ -39,7 +39,9 @@ This library contains the ARKit + CoreLocation framework, as well as a demo appl
 
 2. In Terminal, navigate to your project folder, then:
 
-`pod install`.
+`pod update`
+
+`pod install`
 
 3. Add `NSCameraUsageDescription` and `NSLocationWhenInUseUsageDescription` to plist with a brief explanation (see demo project for an example)
 
