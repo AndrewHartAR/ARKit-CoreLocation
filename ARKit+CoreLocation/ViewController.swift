@@ -7,8 +7,7 @@
 //
 
 import UIKit
-import SceneKit
-import ARKit
+import SceneKit 
 import MapKit
 import CocoaLumberjack
 
@@ -202,14 +201,14 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         
         if let heading = sceneLocationView.locationManager.heading,
             let accuracy = sceneLocationView.locationManager.headingAccuracy {
-            infoLabel.text!.append("Heading: \(Int(round(heading)))º, accuracy: \(Int(round(accuracy)))º\n")
+            infoLabel.text!.append("Heading: \(heading)º, accuracy: \(Int(round(accuracy)))º\n")
         }
         
         let date = Date()
-        let comp = Calendar.current.dateComponents([.hour, .minute, .second], from: date)
+        let comp = Calendar.current.dateComponents([.hour, .minute, .second, .nanosecond], from: date)
         
-        if let hour = comp.hour, let minute = comp.minute, let second = comp.second {
-            infoLabel.text!.append("\(String(format: "%02d", hour)):\(String(format: "%02d", minute)):\(String(format: "%02d", second))")
+        if let hour = comp.hour, let minute = comp.minute, let second = comp.second, let nanosecond = comp.nanosecond {
+            infoLabel.text!.append("\(String(format: "%02d", hour)):\(String(format: "%02d", minute)):\(String(format: "%02d", second)):\(String(format: "%03d", nanosecond / 1000000))")
         }
     }
     
