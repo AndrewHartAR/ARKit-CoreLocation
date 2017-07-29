@@ -67,8 +67,7 @@ class ViewController: UIViewController {
 You should call `sceneLocationView.run()` whenever it’s in focus, and `sceneLocationView.pause()` if it’s interrupted, such as by moving to a different view or by leaving the app.
 
 ```
-func viewDidLoad() {
-  override func viewDidLoad() 
+override func viewDidLoad() {
   super.viewDidLoad()
 
   sceneLocationView.run()
