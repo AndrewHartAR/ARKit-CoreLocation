@@ -184,7 +184,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     }
     
     ///Adds a scene location estimate based on current time, camera position and location from location manager
-    private func addSceneLocationEstimate(location: CLLocation) {
+    fileprivate func addSceneLocationEstimate(location: CLLocation) {
         if let position = currentScenePosition() {
             let sceneLocationEstimate = SceneLocationEstimate(location: location, position: position)
             self.sceneLocationEstimates.append(sceneLocationEstimate)
@@ -488,7 +488,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
 //MARK: LocationManager
 extension SceneLocationView: LocationManagerDelegate {
     func locationManagerDidUpdateLocation(_ locationManager: LocationManager, location: CLLocation) {
-        self.addSceneLocationEstimate(location: location)
+        addSceneLocationEstimate(location: location)
     }
     
     func locationManagerDidUpdateHeading(_ locationManager: LocationManager, heading: CLLocationDirection, accuracy: CLLocationAccuracy) {
