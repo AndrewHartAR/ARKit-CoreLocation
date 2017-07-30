@@ -36,7 +36,9 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
     var updateInfoLabelTimer: Timer?
     
     var adjustNorthByTappingSidesOfScreen = false
-    
+  
+    fileprivate var coordinatesInPress = [CLLocationCoordinate2D]()
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -79,6 +81,11 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
             mapView.showsUserLocation = true
             mapView.alpha = 0.8
             view.addSubview(mapView)
+          
+            // Long press on map to add an annotation (long press + release)
+            // or a polyline (long press + drag + release)
+            let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+            mapView.addGestureRecognizer(longPress)
             
             updateUserLocationTimer = Timer.scheduledTimer(
                 timeInterval: 0.5,
@@ -240,6 +247,39 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
             }
         }
     }
+  
+    @objc func handleLongPress(_ recognizer: UILongPressGestureRecognizer) {
+        let point = recognizer.location(in: mapView)
+        let coordinate: CLLocationCoordinate2D = mapView.convert(point, toCoordinateFrom: mapView)
+      
+        switch recognizer.state {
+        case .possible: break
+        case .began:    coordinatesInPress = [coordinate]
+        case .changed:  coordinatesInPress.append(coordinate)
+        case .ended:    flushCoordinates()
+        case .cancelled, .failed: coordinatesInPress = []
+        }
+    }
+  
+    private func flushCoordinates() {
+      
+        switch coordinatesInPress.count {
+        case 0:
+            return
+        case 1:
+            let annotation = MKPointAnnotation()
+            let coordinate = coordinatesInPress.first!
+            annotation.coordinate = coordinate
+            annotation.title = "Dropped Location"
+            mapView.addAnnotation(annotation)
+            sceneLocationView.addAnnotation(annotation)
+        default:
+            let polyline = MKPolyline(coordinates: coordinatesInPress, count: coordinatesInPress.count)
+            mapView.add(polyline)
+            sceneLocationView.addPolyline(polyline)
+        }
+      
+    }
     
     //MARK: MKMapViewDelegate
     
@@ -265,6 +305,20 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         
         return nil
     }
+  
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        if let polyline = overlay as? MKPolyline {
+            let renderer = MKPolylineRenderer(polyline: polyline)
+            renderer.lineWidth = 10
+            renderer.strokeColor = .blue
+            renderer.fillColor = .blue
+            return renderer
+            
+        } else {
+            return MKOverlayRenderer(overlay: overlay)
+        }
+    }
+    
     
     //MARK: SceneLocationViewDelegate
     
