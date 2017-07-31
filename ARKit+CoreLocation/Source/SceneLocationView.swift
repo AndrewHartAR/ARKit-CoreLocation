@@ -68,7 +68,9 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         }
     }
     
-    private var updateEstimatesTimer: Timer?
+    // using the display refresh rate to update positions instead of a Timer
+    // see Session 236 from WWDC 2014: https://developer.apple.com/videos/play/wwdc2014/236/
+    private var updateEstimatesDisplayLink: CADisplayLink?
     
     private var didFetchInitialLocation = false
     
@@ -127,14 +129,15 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         // Run the view's session
         session.run(configuration)
         
-        updateEstimatesTimer?.invalidate()
-        updateEstimatesTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(SceneLocationView.updateLocationData), userInfo: nil, repeats: true)
+        updateEstimatesDisplayLink?.invalidate()
+        updateEstimatesDisplayLink = CADisplayLink(target: self, selector: #selector(SceneLocationView.updateLocationData))
+        updateEstimatesDisplayLink?.add(to: RunLoop.current, forMode: .defaultRunLoopMode)
     }
     
     public func pause() {
         session.pause()
-        updateEstimatesTimer?.invalidate()
-        updateEstimatesTimer = nil
+        updateEstimatesDisplayLink?.invalidate()
+        updateEstimatesDisplayLink = nil
     }
     
     @objc private func updateLocationData() {
@@ -248,9 +251,9 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     ///upon being added, a node's location, locationConfirmed and position may be modified and should not be changed externally.
     public func addLocationNodeForCurrentPosition(locationNode: LocationNode) {
         guard let currentPosition = currentScenePosition(),
-        let currentLocation = currentLocation(),
-        let sceneNode = self.sceneNode else {
-            return
+            let currentLocation = currentLocation(),
+            let sceneNode = self.sceneNode else {
+                return
         }
         
         locationNode.location = currentLocation
@@ -343,7 +346,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     public func updatePositionAndScaleOfLocationNode(locationNode: LocationNode, initialSetup: Bool = false, animated: Bool = false, duration: TimeInterval = 0.1) {
         guard let currentPosition = currentScenePosition(),
             let currentLocation = currentLocation() else {
-            return
+                return
         }
         
         SCNTransaction.begin()
@@ -496,3 +499,4 @@ extension SceneLocationView: LocationManagerDelegate {
         
     }
 }
+
