@@ -1,5 +1,5 @@
 //
-//  SceneAnnotation.swift
+//  LocationNode.swift
 //  ARKit+CoreLocation
 //
 //  Created by Andrew Hart on 02/07/2017.
