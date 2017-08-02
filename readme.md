@@ -70,6 +70,7 @@ You should call `sceneLocationView.run()` whenever it’s in focus, and `sceneLo
 override func viewDidLoad() {
   super.viewDidLoad()
 
+  sceneLocationView.frame = self.view.bounds
   sceneLocationView.run()
   view.addSubview(sceneLocationView)
 }
