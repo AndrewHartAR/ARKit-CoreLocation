@@ -73,6 +73,12 @@ override func viewDidLoad() {
   sceneLocationView.run()
   view.addSubview(sceneLocationView)
 }
+
+override func viewDidLayoutSubviews() {
+  super.viewDidLayoutSubviews()
+  
+  sceneLocationView.frame = view.bounds
+}
 ```
 
 After we’ve called `run()`, we can add our coordinate. ARCL comes with a class called `LocationNode` - an object within the 3D scene which has a real-world location along with a few other properties which allow it to be displayed appropriately within the world. `LocationNode` is a subclass of SceneKit’s `SCNNode`, and can also be subclassed further. For this example we’re going to use a subclass called `LocationAnnotationNode`, which we use to display a 2D image within the world, which always faces us:
@@ -120,6 +126,8 @@ My recommendation would be to fine a nearby landmark which is directly True Nort
 CoreLocation can deliver location updates anywhere from every 1-15 seconds, with accuracies which vary from 150m down to 4m. Occasionally, you’ll receive a far more accurate reading, like 4m or 8m, before returning to more inaccurate readings. At the same time, AR uses motion and camera data to create a map of the local world.
 
 A user may receive a location reading accurate to 4m, then they walk 10m north and receive another location reading accurate to 65m. This 65m-accurate reading is the best that CoreLocation can offer, but knowing the user’s position within the AR scene when they got that 4m reading, and the fact that they’ve walked 10m north through the scene since then, we can translate that data to give them a new coordinate with about 4m of accuracy. This is accurate up to about 100m.
+
+[There is more detail on this on the wiki](https://github.com/ProjectDent/ARKit-CoreLocation/wiki/Current-Location-Accuracy).
 
 ### Issues
 I mentioned this was experimental - currently, ARKit occasionally gets confused as the user is walking through a scene, and may change their position inaccurately. This issue also seems to affect the “euler angles”, or directional information about the device, so after a short distance it may think you’re walking in a different direction.
