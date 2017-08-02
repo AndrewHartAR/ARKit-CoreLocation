@@ -139,6 +139,11 @@ There are further optimisations to determining a user’s location which can be 
 
 For example, one technique could be to look at recent location data, translate each data point using the user’s travel since then, and use the overlap between the data points to more narrowly determine the user’s possible location.
 
+[There is more detail on this on the wiki](https://github.com/ProjectDent/ARKit-CoreLocation/wiki/Current-Location-Accuracy).
+
+## Going Forward
+
+We have some Milestones and Issues related to them - anyone is welcome to discuss and contribute to them. Pull requests are welcomed. You can discuss new features/enhancements/bugs either by adding a new Issue or via [the Slack community](https://join.slack.com/t/arcl-dev/shared_invite/MjE4NTQ3NzE3MzgxLTE1MDExNTAzMTUtMTIyMmNlMTkyYg).
 
 ## Thanks
 Library created by [@AndrewProjDent](https://twitter.com/andrewprojdent), but a community effort from here on.
