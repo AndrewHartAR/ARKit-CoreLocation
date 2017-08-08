@@ -63,7 +63,7 @@ public class SceneLocationView: ARSCNView {
 
     private var sceneLocationEstimates = [SceneLocationEstimate]()
 
-    public private(set) var sceneNode: SCNNode? {
+    public internal(set) var sceneNode: SCNNode? {
         didSet {
             guard sceneNode != nil else { return }
 
@@ -75,7 +75,7 @@ public class SceneLocationView: ARSCNView {
 
     private var updateEstimatesTimer: Timer?
 
-    private var didFetchInitialLocation = false
+    internal var didFetchInitialLocation = false
 
     ///Whether debugging feature points should be displayed.
     ///Defaults to false
@@ -92,7 +92,7 @@ public class SceneLocationView: ARSCNView {
 
     // MARK: Setup
     public convenience init() {
-        self.init(frame: CGRect.zero, options: nil)
+        self.init(frame: .zero, options: nil)
     }
 
     public override init(frame: CGRect, options: [String: Any]? = nil) {
@@ -126,12 +126,7 @@ public class SceneLocationView: ARSCNView {
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .horizontal
-
-        if orientToTrueNorth {
-            configuration.worldAlignment = .gravityAndHeading
-        } else {
-            configuration.worldAlignment = .gravity
-        }
+        configuration.worldAlignment = orientToTrueNorth ? .gravityAndHeading : .gravity
 
         // Run the view's session
         session.run(configuration)
@@ -195,9 +190,9 @@ public class SceneLocationView: ARSCNView {
     }
 
     ///Adds a scene location estimate based on current time, camera position and location from location manager
-    fileprivate func addSceneLocationEstimate(location: CLLocation) {
+    internal func addSceneLocationEstimate(location: CLLocation) {
         guard let position = currentScenePosition() else { return }
-        
+
         let sceneLocationEstimate = SceneLocationEstimate(location: location, position: position)
         self.sceneLocationEstimates.append(sceneLocationEstimate)
 
@@ -247,9 +242,7 @@ public class SceneLocationView: ARSCNView {
     }
 
     public func currentLocation() -> CLLocation? {
-        if locationEstimateMethod == .coreLocationDataOnly {
-            return locationManager.currentLocation
-        }
+        if locationEstimateMethod == .coreLocationDataOnly { return locationManager.currentLocation }
 
         guard let bestEstimate = self.bestLocationEstimate(),
             let position = currentScenePosition() else {
@@ -399,27 +392,18 @@ public class SceneLocationView: ARSCNView {
 
                 adjustedDistance = distance * Double(scale)
 
-                let adjustedTranslation = SCNVector3(
-                    x: Float(locationTranslation.longitudeTranslation) * scale,
-                    y: Float(locationTranslation.altitudeTranslation) * scale,
-                    z: Float(locationTranslation.latitudeTranslation) * scale)
-
-                let position = SCNVector3(
-                    x: currentPosition.x + adjustedTranslation.x,
-                    y: currentPosition.y + adjustedTranslation.y,
-                    z: currentPosition.z - adjustedTranslation.z)
-
-                locationNode.position = position
-
+                let adjustedTranslation = SCNVector3( x: Float(locationTranslation.longitudeTranslation) * scale,
+                                                      y: Float(locationTranslation.altitudeTranslation) * scale,
+                                                      z: Float(locationTranslation.latitudeTranslation) * scale)
+                locationNode.position = SCNVector3( x: currentPosition.x + adjustedTranslation.x,
+                                                    y: currentPosition.y + adjustedTranslation.y,
+                                                    z: currentPosition.z - adjustedTranslation.z)
                 locationNode.scale = SCNVector3(x: scale, y: scale, z: scale)
             } else {
                 adjustedDistance = distance
-                let position = SCNVector3(
-                    x: currentPosition.x + Float(locationTranslation.longitudeTranslation),
-                    y: currentPosition.y + Float(locationTranslation.altitudeTranslation),
-                    z: currentPosition.z - Float(locationTranslation.latitudeTranslation))
-
-                locationNode.position = position
+                locationNode.position = SCNVector3( x: currentPosition.x + Float(locationTranslation.longitudeTranslation),
+                                                    y: currentPosition.y + Float(locationTranslation.altitudeTranslation),
+                                                    z: currentPosition.z - Float(locationTranslation.latitudeTranslation))
                 locationNode.scale = SCNVector3(x: 1, y: 1, z: 1)
             }
         } else {
@@ -444,9 +428,7 @@ public class SceneLocationView: ARSCNView {
                 //Scale it to be an appropriate size so that it can be seen
                 scale = Float(adjustedDistance) * 0.181
 
-                if distance > 3_000 {
-                    scale *=  0.75
-                }
+                if distance > 3_000 { scale *=  0.75 }
 
                 annotationNode.annotationNode.scale = SCNVector3(x: scale, y: scale, z: scale)
             }
