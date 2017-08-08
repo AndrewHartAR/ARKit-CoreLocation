@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         DDLog.add(DDTTYLogger.sharedInstance) // TTY = Xcode console
         let fileLogger: DDFileLogger = DDFileLogger() // File Logger
-        fileLogger.rollingFrequency = TimeInterval(60*60*24)  // 24 hours
+        fileLogger.rollingFrequency = TimeInterval(60 * 60 * 24)  // 24 hours
         fileLogger.logFileManager.maximumNumberOfLogFiles = 7
         DDLog.add(fileLogger)
 
@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let vc = ViewController()
 
-        self.window!.rootViewController = vc
+        self.window?.rootViewController = vc
 
         return true
     }

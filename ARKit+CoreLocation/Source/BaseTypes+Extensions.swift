@@ -8,6 +8,16 @@
 
 import Foundation
 
+extension Double {
+    func metersToLatitude() -> Double {
+        return self / (6_360_500.0)
+    }
+
+    func metersToLongitude() -> Double {
+        return self / (5_602_900.0)
+    }
+}
+
 extension Float {
     var short: String { return String(format: "%.2f", self) }
 }
