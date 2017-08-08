@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		128F72A11F39BE2F00AC6E4C /* BaseTypes+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128F72A01F39BE2F00AC6E4C /* BaseTypes+Extensions.swift */; };
+		36F4F209221B14F9004BE1E6 /* BaseTypes+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128F72A01F39BE2F00AC6E4C /* BaseTypes+Extensions.swift */; };
 		3D16C296C513125F6AFC405E /* Pods_ARKit_CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C10523EF85AA6B7CDF962AD /* Pods_ARKit_CoreLocation.framework */; };
 		49099E391F24BAE5007B76FD /* SCNVector3+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49099E381F24BAE5007B76FD /* SCNVector3+Extensions.swift */; };
 		49A3FBDC1F09988100AA59C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A3FBDB1F09988100AA59C8 /* AppDelegate.swift */; };
@@ -446,7 +446,6 @@
 			files = (
 				D8C205D11F5B197200675E6E /* NotSupportedViewController.swift in Sources */,
 				49099E391F24BAE5007B76FD /* SCNVector3+Extensions.swift in Sources */,
-				128F72A11F39BE2F00AC6E4C /* BaseTypes+Extensions.swift in Sources */,
 				49A3FBE01F09988100AA59C8 /* ViewController.swift in Sources */,
 				49A3FBDC1F09988100AA59C8 /* AppDelegate.swift in Sources */,
 			);
@@ -457,6 +456,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				932EF26320BE83A80052210C /* SceneLocationEstimate.swift in Sources */,
+				36F4F209221B14F9004BE1E6 /* BaseTypes+Extensions.swift in Sources */,
 				932EF26820BE83A80052210C /* FloatingPoint+Radians.swift in Sources */,
 				932EF26620BE83A80052210C /* CLLocation+Extensions.swift in Sources */,
 				932EF26220BE83A80052210C /* LocationNode.swift in Sources */,

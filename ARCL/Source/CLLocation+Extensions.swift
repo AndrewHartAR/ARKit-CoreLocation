@@ -14,12 +14,6 @@ public struct LocationTranslation {
     public var latitudeTranslation: Double
     public var longitudeTranslation: Double
     public var altitudeTranslation: Double
-
-    public init(latitudeTranslation: Double, longitudeTranslation: Double, altitudeTranslation: Double) {
-        self.latitudeTranslation = latitudeTranslation
-        self.longitudeTranslation = longitudeTranslation
-        self.altitudeTranslation = altitudeTranslation
-    }
 }
 
 public extension CLLocation {
@@ -34,30 +28,19 @@ public extension CLLocation {
 
         let distanceLatitude = location.distance(from: inbetweenLocation)
 
-        let latitudeTranslation: Double
+        let latitudeTranslation = location.coordinate.latitude > inbetweenLocation.coordinate.latitude ? distanceLatitude
+                                                                                                        : -distanceLatitude
 
-        if location.coordinate.latitude > inbetweenLocation.coordinate.latitude {
-            latitudeTranslation = distanceLatitude
-        } else {
-            latitudeTranslation = 0 - distanceLatitude
-        }
+        let distanceLongitude = distance(from: inbetweenLocation)
 
-        let distanceLongitude = self.distance(from: inbetweenLocation)
-
-        let longitudeTranslation: Double
-
-        if self.coordinate.longitude > inbetweenLocation.coordinate.longitude {
-            longitudeTranslation = 0 - distanceLongitude
-        } else {
-            longitudeTranslation = distanceLongitude
-        }
+        let longitudeTranslation = coordinate.longitude > inbetweenLocation.coordinate.longitude ? -distanceLongitude
+                                                                                                    : distanceLongitude
 
         let altitudeTranslation = location.altitude - self.altitude
 
-        return LocationTranslation(
-            latitudeTranslation: latitudeTranslation,
-            longitudeTranslation: longitudeTranslation,
-            altitudeTranslation: altitudeTranslation)
+        return LocationTranslation( latitudeTranslation: latitudeTranslation,
+                                    longitudeTranslation: longitudeTranslation,
+                                    altitudeTranslation: altitudeTranslation)
     }
 
     public func translatedLocation(with translation: LocationTranslation) -> CLLocation {
@@ -67,9 +50,7 @@ public extension CLLocation {
         let longitudeCoordinate = self.coordinate.coordinateWithBearing(bearing: 90,
                                                                         distanceMeters: translation.longitudeTranslation)
 
-        let coordinate = CLLocationCoordinate2D(
-            latitude: latitudeCoordinate.latitude,
-            longitude: longitudeCoordinate.longitude)
+        let coordinate = CLLocationCoordinate2D( latitude: latitudeCoordinate.latitude, longitude: longitudeCoordinate.longitude)
 
         let altitude = self.altitude + translation.altitudeTranslation
 
@@ -81,23 +62,20 @@ public extension CLLocation {
     }
 }
 
-extension Double {
-    func metersToLatitude() -> Double {
-        return self / (6360500.0)
-    }
-
-    func metersToLongitude() -> Double {
-        return self / (5602900.0)
+public extension CLLocation {
+    var debugLog: String {
+        return "location: \(self.coordinate), accuracy: \(self.horizontalAccuracy), date: \(self.timestamp)"
     }
 }
 
 public extension CLLocationCoordinate2D {
+
     public func coordinateWithBearing(bearing: Double, distanceMeters: Double) -> CLLocationCoordinate2D {
         //The numbers for earth radius may be _off_ here
         //but this gives a reasonably accurate result..
         //Any correction here is welcome.
-        let distRadiansLat = distanceMeters.metersToLatitude() // earth radius in meters latitude
-        let distRadiansLong = distanceMeters.metersToLongitude() // earth radius in meters longitude
+        let distRadiansLat = distanceMeters.metersToLatitude // earth radius in meters latitude
+        let distRadiansLong = distanceMeters.metersToLongitude // earth radius in meters longitude
 
         let lat1 = self.latitude * Double.pi / 180
         let lon1 = self.longitude * Double.pi / 180

@@ -13,7 +13,7 @@ import CocoaLumberjack
 import ARCL
 
 @available(iOS 11.0, *)
-class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDelegate {
+class ViewController: UIViewController {
     let sceneLocationView = SceneLocationView()
 
     let mapView = MKMapView()
@@ -235,15 +235,17 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         return nodes
     }
 
-    func buildNode(latitude: CLLocationDegrees, longitude: CLLocationDegrees, altitude: CLLocationDistance, imageName: String) -> LocationAnnotationNode {
+    func buildNode(latitude: CLLocationDegrees, longitude: CLLocationDegrees,
+                   altitude: CLLocationDistance, imageName: String) -> LocationAnnotationNode {
         let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let location = CLLocation(coordinate: coordinate, altitude: altitude)
         let image = UIImage(named: imageName)!
         return LocationAnnotationNode(location: location, image: image)
     }
+}
 
-    // MARK: MKMapViewDelegate
-
+@available(iOS 11.0, *)
+extension ViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard !(annotation is MKUserLocation),
            let pointAnnotation = annotation as? MKPointAnnotation else { return nil }
@@ -261,19 +263,20 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
 
         return marker
     }
+}
 
-    // MARK: SceneLocationViewDelegate
-
+@available(iOS 11.0, *)
+extension ViewController: SceneLocationViewDelegate {
     func sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: SceneLocationView,
                                                       position: SCNVector3,
                                                       location: CLLocation) {
-        DDLogDebug("add scene location estimate, position: \(position), location: \(location.coordinate), accuracy: \(location.horizontalAccuracy), date: \(location.timestamp)")
+        DDLogDebug("add scene location estimate, position: \(position), \(location.debugLog)")
     }
 
     func sceneLocationViewDidRemoveSceneLocationEstimate(sceneLocationView: SceneLocationView,
                                                          position: SCNVector3,
                                                          location: CLLocation) {
-        DDLogDebug("remove scene location estimate, position: \(position), location: \(location.coordinate), accuracy: \(location.horizontalAccuracy), date: \(location.timestamp)")
+        DDLogDebug("remove scene location estimate, position: \(position), \(location.debugLog)")
     }
 
     func sceneLocationViewDidConfirmLocationOfNode(sceneLocationView: SceneLocationView, node: LocationNode) {
