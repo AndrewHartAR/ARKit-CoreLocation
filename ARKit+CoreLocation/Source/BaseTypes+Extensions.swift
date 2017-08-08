@@ -9,12 +9,12 @@
 import Foundation
 
 extension Double {
-    func metersToLatitude() -> Double {
-        return self / (6_360_500.0)
+    var metersToLatitude: Double {
+        return self / 6_360_500.0
     }
 
-    func metersToLongitude() -> Double {
-        return self / (5_602_900.0)
+    var metersToLongitude: Double {
+        return self / 5_602_900.0
     }
 }
 

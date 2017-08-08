@@ -22,7 +22,7 @@ class ViewController: UIViewController {
 
     ///Whether to show a map view
     ///The initial value is respected
-    var showMapView: Bool = false
+    var showMapView: Bool = true
 
     var centerMapOnUserLocation: Bool = true
 
@@ -60,9 +60,7 @@ class ViewController: UIViewController {
         sceneLocationView.showAxesNode = true
         sceneLocationView.locationDelegate = self
 
-        if displayDebugging {
-            sceneLocationView.showFeaturePoints = true
-        }
+        sceneLocationView.showFeaturePoints = displayDebugging
 
         //Currently set to Canary Wharf
         let pinCoordinate = CLLocationCoordinate2D(latitude: 51.504607, longitude: -0.019592)
