@@ -115,7 +115,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     
     public func run() {
         // Create a session configuration
-        let configuration = ARWorldTrackingSessionConfiguration()
+		let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .horizontal
         
         if orientToTrueNorth {
