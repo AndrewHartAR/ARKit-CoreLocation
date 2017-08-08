@@ -474,8 +474,6 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
             print("camera did change tracking state: limited, insufficient features")
         case .limited(.excessiveMotion):
             print("camera did change tracking state: limited, excessive motion")
-        case .limited(.none):
-            print("camera did change tracking state: limited, no reason")
         case .limited(.initializing):
             print("camera did change tracking state: limited, initializing")
         case .normal:
