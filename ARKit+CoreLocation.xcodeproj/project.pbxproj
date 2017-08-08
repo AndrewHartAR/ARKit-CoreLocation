@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		128F72A11F39BE2F00AC6E4C /* BaseTypes+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128F72A01F39BE2F00AC6E4C /* BaseTypes+Extensions.swift */; };
+		4901EF051F1B7D560067870D /* SceneLocationEstimate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4901EF041F1B7D560067870D /* SceneLocationEstimate+Extensions.swift */; };
+		49099E391F24BAE5007B76FD /* SCNVector3+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49099E381F24BAE5007B76FD /* SCNVector3+Extensions.swift */; };
 		49A3FBDC1F09988100AA59C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A3FBDB1F09988100AA59C8 /* AppDelegate.swift */; };
 		49A3FBE01F09988100AA59C8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A3FBDF1F09988100AA59C8 /* ViewController.swift */; };
 		49A3FBE51F09988100AA59C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49A3FBE41F09988100AA59C8 /* Assets.xcassets */; };
@@ -68,6 +71,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		128F72A01F39BE2F00AC6E4C /* BaseTypes+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BaseTypes+Extensions.swift"; sourceTree = "<group>"; };
+		38104A8494954E9B79241EAE /* Pods-ARKit+CoreLocation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARKit+CoreLocation.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ARKit+CoreLocation/Pods-ARKit+CoreLocation.debug.xcconfig"; sourceTree = "<group>"; };
 		4901EF041F1B7D560067870D /* SceneLocationEstimate+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SceneLocationEstimate+Extensions.swift"; sourceTree = "<group>"; };
 		49099E381F24BAE5007B76FD /* SCNVector3+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+Extensions.swift"; sourceTree = "<group>"; };
 		49A3FBD81F09988100AA59C8 /* ARKit+CoreLocation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ARKit+CoreLocation.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -167,6 +172,7 @@
 				49099E381F24BAE5007B76FD /* SCNVector3+Extensions.swift */,
 				49A3FC021F09BADB00AA59C8 /* FloatingPoint+Radians.swift */,
 				49A3FC041F0A423800AA59C8 /* CGPoint+Extensions.swift */,
+				128F72A01F39BE2F00AC6E4C /* BaseTypes+Extensions.swift */,
 				49D206F21F124BDD00D7D622 /* SCNNode+Extensions.swift */,
 			);
 			path = Source;
@@ -220,8 +226,9 @@
 				49A3FBD41F09988100AA59C8 /* Sources */,
 				49A3FBD51F09988100AA59C8 /* Frameworks */,
 				49A3FBD61F09988100AA59C8 /* Resources */,
-				935FB3C020BD304200F6A081 /* Swiftlint */,
-				932EF23E20BE7E6E0052210C /* Embed Frameworks */,
+				B912B23DE2753A7230AC73FF /* [CP] Embed Pods Frameworks */,
+				3B65648ABF0CBE46120C6ABF /* [CP] Copy Pods Resources */,
+				128F729F1F39B73C00AC6E4C /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -341,15 +348,65 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		935FB3C020BD304200F6A081 /* Swiftlint */ = {
+		128F729F1F39B73C00AC6E4C /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+		3B65648ABF0CBE46120C6ABF /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ARKit+CoreLocation/Pods-ARKit+CoreLocation-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		63B0FABA6912CCD1470FF302 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ARKit+CoreLocation-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B912B23DE2753A7230AC73FF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ARKit+CoreLocation/Pods-ARKit+CoreLocation-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
+			);
 			name = Swiftlint;
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -363,6 +420,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8C205D11F5B197200675E6E /* NotSupportedViewController.swift in Sources */,
+				49099E391F24BAE5007B76FD /* SCNVector3+Extensions.swift in Sources */,
+				128F72A11F39BE2F00AC6E4C /* BaseTypes+Extensions.swift in Sources */,
+				49A3FBF71F099C8100AA59C8 /* SceneLocationView.swift in Sources */,
+				49A3FC031F09BADB00AA59C8 /* FloatingPoint+Radians.swift in Sources */,
+				49A3FBFF1F09B1D200AA59C8 /* LocationNode.swift in Sources */,
+				49A3FBFD1F09B00400AA59C8 /* CLLocation+Extensions.swift in Sources */,
+				49A3FC051F0A423800AA59C8 /* CGPoint+Extensions.swift in Sources */,
 				49A3FBE01F09988100AA59C8 /* ViewController.swift in Sources */,
 				49A3FBDC1F09988100AA59C8 /* AppDelegate.swift in Sources */,
 			);
@@ -544,7 +608,7 @@
 				DEVELOPMENT_TEAM = Q6W7LYC48G;
 				INFOPLIST_FILE = "ARKit+CoreLocation/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "ProjectDent.ARKit-CoreLocation";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.maaap.ProjectDent.ARKit-CoreLocation";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -559,7 +623,7 @@
 				DEVELOPMENT_TEAM = Q6W7LYC48G;
 				INFOPLIST_FILE = "ARKit+CoreLocation/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "ProjectDent.ARKit-CoreLocation";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.maaap.ProjectDent.ARKit-CoreLocation";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -10,8 +10,11 @@ import Foundation
 import CoreLocation
 
 protocol LocationManagerDelegate: class {
-    func locationManagerDidUpdateLocation(_ locationManager: LocationManager, location: CLLocation)
-    func locationManagerDidUpdateHeading(_ locationManager: LocationManager, heading: CLLocationDirection, accuracy: CLLocationDirection)
+    func locationManagerDidUpdateLocation(_ locationManager: LocationManager,
+                                          location: CLLocation)
+    func locationManagerDidUpdateHeading(_ locationManager: LocationManager,
+                                         heading: CLLocationDirection,
+                                         accuracy: CLLocationDirection)
 }
 
 ///Handles retrieving the location and heading from CoreLocation

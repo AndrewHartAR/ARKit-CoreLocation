@@ -9,8 +9,6 @@
 import Foundation
 import CoreLocation
 
-let EARTH_RADIUS = 6371000.0
-
 ///Translation in meters between 2 locations
 public struct LocationTranslation {
     public var latitudeTranslation: Double
@@ -63,9 +61,11 @@ public extension CLLocation {
     }
 
     public func translatedLocation(with translation: LocationTranslation) -> CLLocation {
-        let latitudeCoordinate = self.coordinate.coordinateWithBearing(bearing: 0, distanceMeters: translation.latitudeTranslation)
+        let latitudeCoordinate = self.coordinate.coordinateWithBearing(bearing: 0,
+                                                                       distanceMeters: translation.latitudeTranslation)
 
-        let longitudeCoordinate = self.coordinate.coordinateWithBearing(bearing: 90, distanceMeters: translation.longitudeTranslation)
+        let longitudeCoordinate = self.coordinate.coordinateWithBearing(bearing: 90,
+                                                                        distanceMeters: translation.longitudeTranslation)
 
         let coordinate = CLLocationCoordinate2D(
             latitude: latitudeCoordinate.latitude,
@@ -73,34 +73,37 @@ public extension CLLocation {
 
         let altitude = self.altitude + translation.altitudeTranslation
 
-        return CLLocation(coordinate: coordinate, altitude: altitude, horizontalAccuracy: self.horizontalAccuracy, verticalAccuracy: self.verticalAccuracy, timestamp: self.timestamp)
+        return CLLocation(coordinate: coordinate,
+                          altitude: altitude,
+                          horizontalAccuracy: self.horizontalAccuracy,
+                          verticalAccuracy: self.verticalAccuracy,
+                          timestamp: self.timestamp)
+    }
+}
+
+extension Double {
+    func metersToLatitude() -> Double {
+        return self / (6360500.0)
+    }
+
+    func metersToLongitude() -> Double {
+        return self / (5602900.0)
     }
 }
 
 public extension CLLocationCoordinate2D {
     public func coordinateWithBearing(bearing: Double, distanceMeters: Double) -> CLLocationCoordinate2D {
-		// formula by http://www.movable-type.co.uk/scripts/latlong.html
-		let lat1 = self.latitude * Double.pi / 180
-		let lon1 = self.longitude * Double.pi / 180
+        //The numbers for earth radius may be _off_ here
+        //but this gives a reasonably accurate result..
+        //Any correction here is welcome.
+        let distRadiansLat = distanceMeters.metersToLatitude() // earth radius in meters latitude
+        let distRadiansLong = distanceMeters.metersToLongitude() // earth radius in meters longitude
 
-		let distance = distanceMeters / EARTH_RADIUS
-		let angularBearing = bearing * Double.pi / 180
+        let lat1 = self.latitude * Double.pi / 180
+        let lon1 = self.longitude * Double.pi / 180
 
-		var lat2 = lat1 + distance * cos(angularBearing)
-		let dLat = lat2 - lat1
-		let dPhi = log(tan(lat2 / 2 + Double.pi/4) / tan(lat1 / 2 + Double.pi/4))
-		let q = (dPhi != 0) ? dLat/dPhi : cos(lat1)  // E-W line gives dPhi=0
-		let dLon = distance * sin(angularBearing) / q
-
-		// check for some daft bugger going past the pole
-		if fabs(lat2) > Double.pi/2 {
-			lat2 = lat2 > 0 ? Double.pi - lat2 : -(Double.pi - lat2)
-		}
-		var lon2 = lon1 + dLon + 3 * Double.pi
-		while lon2 > 2 * Double.pi {
-			lon2 -= 2 * Double.pi
-		}
-		lon2 -= Double.pi
+        let lat2 = asin(sin(lat1) * cos(distRadiansLat) + cos(lat1) * sin(distRadiansLat) * cos(bearing))
+        let lon2 = lon1 + atan2(sin(bearing) * sin(distRadiansLong) * cos(lat1), cos(distRadiansLong) - sin(lat1) * sin(lat2))
 
         return CLLocationCoordinate2D(latitude: lat2 * 180 / Double.pi, longitude: lon2 * 180 / Double.pi)
     }
