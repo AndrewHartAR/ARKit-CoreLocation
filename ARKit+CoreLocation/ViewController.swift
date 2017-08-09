@@ -14,39 +14,29 @@ import ARCL
 
 @available(iOS 11.0, *)
 class ViewController: UIViewController {
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var infoLabel: UILabel!
+
+    @IBOutlet weak var contentView: UIView!
     let sceneLocationView = SceneLocationView()
 
-    let mapView = MKMapView()
     var userAnnotation: MKPointAnnotation?
     var locationEstimateAnnotation: MKPointAnnotation?
 
     var updateUserLocationTimer: Timer?
-
-    ///Whether to show a map view
-    ///The initial value is respected
-    var showMapView: Bool = true
+    var updateInfoLabelTimer: Timer?
 
     var centerMapOnUserLocation: Bool = true
 
     ///Whether to display some debugging data
     ///This currently displays the coordinate of the best location estimate
     ///The initial value is respected
-    var displayDebugging = false
+    let displayDebugging = false
 
-    var infoLabel = UILabel()
-
-    var updateInfoLabelTimer: Timer?
-
-    var adjustNorthByTappingSidesOfScreen = false
+    let adjustNorthByTappingSidesOfScreen = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        infoLabel.font = UIFont.systemFont(ofSize: 10)
-        infoLabel.textAlignment = .left
-        infoLabel.textColor = UIColor.white
-        infoLabel.numberOfLines = 0
-        sceneLocationView.addSubview(infoLabel)
 
         updateInfoLabelTimer = Timer.scheduledTimer(timeInterval: 0.1,
                                                     target: self,
@@ -66,21 +56,16 @@ class ViewController: UIViewController {
 
         buildDemoData().forEach { sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: $0) }
 
-        view.addSubview(sceneLocationView)
+        contentView.addSubview(sceneLocationView)
+        sceneLocationView.frame = contentView.bounds
 
-        if showMapView {
-            mapView.delegate = self
-            mapView.showsUserLocation = true
-            mapView.alpha = 0.8
-            view.addSubview(mapView)
-
+        if !mapView.isHidden {
             updateUserLocationTimer = Timer.scheduledTimer(timeInterval: 0.5,
                                                            target: self,
                                                            selector: #selector(ViewController.updateUserLocation),
                                                            userInfo: nil,
                                                            repeats: true)
         }
-
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -99,16 +84,7 @@ class ViewController: UIViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-
-        sceneLocationView.frame = CGRect( x: 0, y: 0,
-                                          width: self.view.frame.size.width, height: self.view.frame.size.height)
-        infoLabel.frame = CGRect(x: 6, y: 0,
-                                 width: self.view.frame.size.width - 12, height: 14 * 4)
-
-        infoLabel.frame.origin.y = showMapView ? self.view.frame.height / 2 - infoLabel.frame.height
-                                                : self.view.frame.height - infoLabel.frame.height
-        mapView.frame = CGRect(x: 0, y: self.view.frame.height / 2,
-                               width: self.view.frame.width, height: self.view.frame.height / 2)
+        sceneLocationView.frame = contentView.bounds
     }
 
     @objc func updateUserLocation() {
@@ -182,9 +158,7 @@ class ViewController: UIViewController {
             infoLabel.text!.append("Heading: \(heading)º, accuracy: \(Int(round(accuracy)))º\n")
         }
 
-        let date = Date()
-        let comp = Calendar.current.dateComponents([.hour, .minute, .second, .nanosecond], from: date)
-
+        let comp = Calendar.current.dateComponents([.hour, .minute, .second, .nanosecond], from: Date())
         if let hour = comp.hour, let minute = comp.minute, let second = comp.second, let nanosecond = comp.nanosecond {
             infoLabel.text!.append("\(hour.short):\(minute.short):\(second.short):\(nanosecond.short3)")
         }

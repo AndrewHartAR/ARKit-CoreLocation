@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		36F4F20C221B279C004BE1E6 /* BaseTypes+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128F72A01F39BE2F00AC6E4C /* BaseTypes+Extensions.swift */; };
-		36F4F20D221B27A0004BE1E6 /* SceneLocationViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EA6A111F3B2EE800B4BD1D /* SceneLocationViewDelegate.swift */; };
-		36F4F20E221B27A3004BE1E6 /* SceneLocationView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128F72A21F39C56200AC6E4C /* SceneLocationView+Extensions.swift */; };
-		3D16C296C513125F6AFC405E /* Pods_ARKit_CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C10523EF85AA6B7CDF962AD /* Pods_ARKit_CoreLocation.framework */; };
+		12318E3B1F3B444400ACAD16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 12318E391F3B444400ACAD16 /* Main.storyboard */; };
+		12318E3D1F3B457200ACAD16 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12318E3C1F3B457200ACAD16 /* Utils.swift */; };
+		128F72A11F39BE2F00AC6E4C /* BaseTypes+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128F72A01F39BE2F00AC6E4C /* BaseTypes+Extensions.swift */; };
+		128F72A31F39C56200AC6E4C /* SceneLocationView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128F72A21F39C56200AC6E4C /* SceneLocationView+Extensions.swift */; };
+		12EA6A121F3B2EE800B4BD1D /* SceneLocationViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EA6A111F3B2EE800B4BD1D /* SceneLocationViewDelegate.swift */; };
+		4901EF051F1B7D560067870D /* SceneLocationEstimate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4901EF041F1B7D560067870D /* SceneLocationEstimate+Extensions.swift */; };
+		49099E391F24BAE5007B76FD /* SCNVector3+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49099E381F24BAE5007B76FD /* SCNVector3+Extensions.swift */; };
 		49A3FBDC1F09988100AA59C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A3FBDB1F09988100AA59C8 /* AppDelegate.swift */; };
 		49A3FBE01F09988100AA59C8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A3FBDF1F09988100AA59C8 /* ViewController.swift */; };
 		49A3FBE51F09988100AA59C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49A3FBE41F09988100AA59C8 /* Assets.xcassets */; };
@@ -57,7 +60,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0BB91C943796356004210093 /* Pods-ARKit+CoreLocation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARKit+CoreLocation.release.xcconfig"; path = "Pods/Target Support Files/Pods-ARKit+CoreLocation/Pods-ARKit+CoreLocation.release.xcconfig"; sourceTree = "<group>"; };
+		12318E3A1F3B444400ACAD16 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		12318E3C1F3B457200ACAD16 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		128F72A01F39BE2F00AC6E4C /* BaseTypes+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BaseTypes+Extensions.swift"; sourceTree = "<group>"; };
 		128F72A21F39C56200AC6E4C /* SceneLocationView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SceneLocationView+Extensions.swift"; sourceTree = "<group>"; };
 		12EA6A111F3B2EE800B4BD1D /* SceneLocationViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneLocationViewDelegate.swift; sourceTree = "<group>"; };
@@ -151,10 +155,12 @@
 			isa = PBXGroup;
 			children = (
 				49A3FBDB1F09988100AA59C8 /* AppDelegate.swift */,
+				12318E3C1F3B457200ACAD16 /* Utils.swift */,
 				49A3FBDF1F09988100AA59C8 /* ViewController.swift */,
 				D8C205D01F5B197200675E6E /* NotSupportedViewController.swift */,
 				49A3FBE41F09988100AA59C8 /* Assets.xcassets */,
 				49A3FBE61F09988100AA59C8 /* LaunchScreen.storyboard */,
+				12318E391F3B444400ACAD16 /* Main.storyboard */,
 				49A3FBE91F09988100AA59C8 /* Info.plist */,
 			);
 			path = "ARKit+CoreLocation";
@@ -330,6 +336,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12318E3B1F3B444400ACAD16 /* Main.storyboard in Resources */,
 				49A3FBE81F09988100AA59C8 /* LaunchScreen.storyboard in Resources */,
 				49A3FBE51F09988100AA59C8 /* Assets.xcassets in Resources */,
 			);
@@ -449,6 +456,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				128F72A31F39C56200AC6E4C /* SceneLocationView+Extensions.swift in Sources */,
+				49099E391F24BAE5007B76FD /* SCNVector3+Extensions.swift in Sources */,
+				128F72A11F39BE2F00AC6E4C /* BaseTypes+Extensions.swift in Sources */,
+				49A3FBF71F099C8100AA59C8 /* SceneLocationView.swift in Sources */,
+				49A3FC031F09BADB00AA59C8 /* FloatingPoint+Radians.swift in Sources */,
+				49A3FBFF1F09B1D200AA59C8 /* LocationNode.swift in Sources */,
+				49A3FBFD1F09B00400AA59C8 /* CLLocation+Extensions.swift in Sources */,
+				12318E3D1F3B457200ACAD16 /* Utils.swift in Sources */,
+				49A3FC051F0A423800AA59C8 /* CGPoint+Extensions.swift in Sources */,
 				D8C205D11F5B197200675E6E /* NotSupportedViewController.swift in Sources */,
 				49A3FBE01F09988100AA59C8 /* ViewController.swift in Sources */,
 				49A3FBDC1F09988100AA59C8 /* AppDelegate.swift in Sources */,
@@ -504,6 +520,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		12318E391F3B444400ACAD16 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				12318E3A1F3B444400ACAD16 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 		49A3FBE61F09988100AA59C8 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
