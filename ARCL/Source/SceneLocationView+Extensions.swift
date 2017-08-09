@@ -11,6 +11,7 @@ import ARKit
 import CoreLocation
 import MapKit
 
+@available(iOS 11.0, *)
 extension SceneLocationView: ARSCNViewDelegate {
     public func renderer(_ renderer: SCNSceneRenderer, didRenderScene scene: SCNScene, atTime time: TimeInterval) {
         if sceneNode == nil {
@@ -58,19 +59,29 @@ extension SceneLocationView: ARSCNViewDelegate {
             print("camera did change tracking state: normal")
         case .notAvailable:
             print("camera did change tracking state: not available")
+        case .limited(.relocalizing):
+            print("camera did change tracking state: limited, relocalizing")
         }
     }
 }
 
-// MARK: LocationManager
+// MARK: - LocationManager
+
+@available(iOS 11.0, *)
 extension SceneLocationView: LocationManagerDelegate {
     func locationManagerDidUpdateLocation(_ locationManager: LocationManager, location: CLLocation) {
         addSceneLocationEstimate(location: location)
     }
 
-    func locationManagerDidUpdateHeading(_ locationManager: LocationManager,
-                                         heading: CLLocationDirection,
-                                         accuracy: CLLocationAccuracy) {
+    func locationManagerDidUpdateHeading(_ locationManager: LocationManager, heading: CLLocationDirection, accuracy: CLLocationAccuracy) {
+        // negative value means the heading will equal the `magneticHeading`, and we're interested in the `trueHeading`
+        if accuracy < 0 {
+            return
+        }
 
+        // heading of 0º means its pointing to the geographic North
+        if heading == 0 {
+            resetSceneHeading()
+        }
     }
 }
