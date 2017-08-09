@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3KC-3P-dav">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13156.2"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="qZh-iV-uI7">
+            <objects>
+                <viewController storyboardIdentifier="ViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3KC-3P-dav" customClass="ViewController" customModule="ARKit_CoreLocation" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gCK-bC-QrS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kl5-Tp-V6Z">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </view>
+                            <mapView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.69999999999999996" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sCb-Qx-mm5">
+                                <rect key="frame" x="0.0" y="333" width="375" height="333.5"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="delegate" destination="3KC-3P-dav" id="FKR-r8-hhE"/>
+                                </connections>
+                            </mapView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nn6-MP-ups">
+                                <rect key="frame" x="16" y="591" width="343" height="56"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="xET-RT-kxh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="nn6-MP-ups" firstAttribute="leading" secondItem="sEp-9D-JQy" secondAttribute="leading" constant="16" id="12D-5A-4sL"/>
+                            <constraint firstItem="sEp-9D-JQy" firstAttribute="bottom" secondItem="nn6-MP-ups" secondAttribute="bottom" constant="20" id="8f2-YW-y9Y"/>
+                            <constraint firstItem="Kl5-Tp-V6Z" firstAttribute="top" secondItem="gCK-bC-QrS" secondAttribute="top" id="ATf-fY-lLg"/>
+                            <constraint firstItem="sCb-Qx-mm5" firstAttribute="height" secondItem="gCK-bC-QrS" secondAttribute="height" multiplier="1/2" id="MpC-Pj-7Ia"/>
+                            <constraint firstItem="sCb-Qx-mm5" firstAttribute="leading" secondItem="sEp-9D-JQy" secondAttribute="leading" id="R3k-o9-o2b"/>
+                            <constraint firstItem="sCb-Qx-mm5" firstAttribute="bottom" secondItem="sEp-9D-JQy" secondAttribute="bottom" id="RNP-sU-rP9"/>
+                            <constraint firstItem="sCb-Qx-mm5" firstAttribute="trailing" secondItem="sEp-9D-JQy" secondAttribute="trailing" id="VF7-X8-HhB"/>
+                            <constraint firstItem="Kl5-Tp-V6Z" firstAttribute="leading" secondItem="sEp-9D-JQy" secondAttribute="leading" id="Ym8-Yz-9Cl"/>
+                            <constraint firstItem="sEp-9D-JQy" firstAttribute="trailing" secondItem="nn6-MP-ups" secondAttribute="trailing" constant="16" id="q2e-Lg-EQD"/>
+                            <constraint firstItem="sEp-9D-JQy" firstAttribute="trailing" secondItem="Kl5-Tp-V6Z" secondAttribute="trailing" id="vaL-m1-mwa"/>
+                            <constraint firstItem="Kl5-Tp-V6Z" firstAttribute="bottom" secondItem="sEp-9D-JQy" secondAttribute="bottom" id="xrS-96-2ok"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="sEp-9D-JQy"/>
+                    </view>
+                    <connections>
+                        <outlet property="contentView" destination="Kl5-Tp-V6Z" id="YrQ-Bj-4cv"/>
+                        <outlet property="infoLabel" destination="nn6-MP-ups" id="SAV-p6-BZs"/>
+                        <outlet property="mapView" destination="sCb-Qx-mm5" id="pFe-Rm-W4T"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FY5-gG-mbm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-639.20000000000005" y="-43.628185907046479"/>
+        </scene>
+    </scenes>
+</document>

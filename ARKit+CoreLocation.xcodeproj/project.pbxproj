@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		12318E3B1F3B444400ACAD16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 12318E391F3B444400ACAD16 /* Main.storyboard */; };
+		12318E3D1F3B457200ACAD16 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12318E3C1F3B457200ACAD16 /* Utils.swift */; };
 		128F72A11F39BE2F00AC6E4C /* BaseTypes+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128F72A01F39BE2F00AC6E4C /* BaseTypes+Extensions.swift */; };
 		128F72A31F39C56200AC6E4C /* SceneLocationView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128F72A21F39C56200AC6E4C /* SceneLocationView+Extensions.swift */; };
 		12EA6A121F3B2EE800B4BD1D /* SceneLocationViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EA6A111F3B2EE800B4BD1D /* SceneLocationViewDelegate.swift */; };
@@ -28,6 +30,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		12318E3A1F3B444400ACAD16 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		12318E3C1F3B457200ACAD16 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		128F72A01F39BE2F00AC6E4C /* BaseTypes+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BaseTypes+Extensions.swift"; sourceTree = "<group>"; };
 		128F72A21F39C56200AC6E4C /* SceneLocationView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SceneLocationView+Extensions.swift"; sourceTree = "<group>"; };
 		12EA6A111F3B2EE800B4BD1D /* SceneLocationViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneLocationViewDelegate.swift; sourceTree = "<group>"; };
@@ -87,9 +91,11 @@
 			children = (
 				49A3FBF31F099A4A00AA59C8 /* Source */,
 				49A3FBDB1F09988100AA59C8 /* AppDelegate.swift */,
+				12318E3C1F3B457200ACAD16 /* Utils.swift */,
 				49A3FBDF1F09988100AA59C8 /* ViewController.swift */,
 				49A3FBE41F09988100AA59C8 /* Assets.xcassets */,
 				49A3FBE61F09988100AA59C8 /* LaunchScreen.storyboard */,
+				12318E391F3B444400ACAD16 /* Main.storyboard */,
 				49A3FBE91F09988100AA59C8 /* Info.plist */,
 			);
 			path = "ARKit+CoreLocation";
@@ -194,6 +200,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12318E3B1F3B444400ACAD16 /* Main.storyboard in Resources */,
 				49A3FBE81F09988100AA59C8 /* LaunchScreen.storyboard in Resources */,
 				49A3FBE51F09988100AA59C8 /* Assets.xcassets in Resources */,
 			);
@@ -281,6 +288,7 @@
 				49A3FC031F09BADB00AA59C8 /* FloatingPoint+Radians.swift in Sources */,
 				49A3FBFF1F09B1D200AA59C8 /* LocationNode.swift in Sources */,
 				49A3FBFD1F09B00400AA59C8 /* CLLocation+Extensions.swift in Sources */,
+				12318E3D1F3B457200ACAD16 /* Utils.swift in Sources */,
 				49A3FC051F0A423800AA59C8 /* CGPoint+Extensions.swift in Sources */,
 				49A3FBE01F09988100AA59C8 /* ViewController.swift in Sources */,
 				4901EF051F1B7D560067870D /* SceneLocationEstimate+Extensions.swift in Sources */,
@@ -295,6 +303,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		12318E391F3B444400ACAD16 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				12318E3A1F3B444400ACAD16 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 		49A3FBE61F09988100AA59C8 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
