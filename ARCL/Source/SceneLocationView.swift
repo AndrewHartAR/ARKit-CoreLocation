@@ -31,7 +31,7 @@ public protocol SceneLocationViewDelegate: class {
                                                                   locationNode: LocationNode)
 }
 
-extension SceneLocationViewDelegate {
+public extension SceneLocationViewDelegate {
     func sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: SceneLocationView,
                                                       position: SCNVector3,
                                                       location: CLLocation) { }
