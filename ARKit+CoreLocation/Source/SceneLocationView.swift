@@ -30,6 +30,21 @@ public protocol SceneLocationViewDelegate: class {
                                                                   locationNode: LocationNode)
 }
 
+extension SceneLocationViewDelegate {
+    func sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: SceneLocationView,
+                                                      position: SCNVector3,
+                                                      location: CLLocation) { }
+    func sceneLocationViewDidRemoveSceneLocationEstimate(sceneLocationView: SceneLocationView,
+                                                         position: SCNVector3,
+                                                         location: CLLocation) { }
+
+    func sceneLocationViewDidConfirmLocationOfNode(sceneLocationView: SceneLocationView, node: LocationNode) { }
+    func sceneLocationViewDidSetupSceneNode(sceneLocationView: SceneLocationView, sceneNode: SCNNode) { }
+
+    func sceneLocationViewDidUpdateLocationAndScaleOfLocationNode(sceneLocationView: SceneLocationView,
+                                                                  locationNode: LocationNode) { }
+}
+
 ///Different methods which can be used when determining locations (such as the user's location).
 public enum LocationEstimateMethod {
     ///Only uses core location data.

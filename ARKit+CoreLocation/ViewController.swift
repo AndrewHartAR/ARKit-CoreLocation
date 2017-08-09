@@ -258,18 +258,6 @@ extension ViewController: SceneLocationViewDelegate {
                                                          location: CLLocation) {
         DDLogDebug("remove scene location estimate, position: \(position), \(location.debugLog)")
     }
-
-    func sceneLocationViewDidConfirmLocationOfNode(sceneLocationView: SceneLocationView, node: LocationNode) {
-    }
-
-    func sceneLocationViewDidSetupSceneNode(sceneLocationView: SceneLocationView, sceneNode: SCNNode) {
-
-    }
-
-    func sceneLocationViewDidUpdateLocationAndScaleOfLocationNode(sceneLocationView: SceneLocationView,
-                                                                  locationNode: LocationNode) {
-
-    }
 }
 
 extension DispatchQueue {
