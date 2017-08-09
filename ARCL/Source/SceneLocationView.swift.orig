@@ -11,44 +11,6 @@ import ARKit
 import CoreLocation
 import MapKit
 
-<<<<<<< HEAD:ARCL/Source/SceneLocationView.swift
-@available(iOS 11.0, *)
-public protocol SceneLocationViewDelegate: class {
-    func sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: SceneLocationView,
-                                                      position: SCNVector3,
-                                                      location: CLLocation)
-    func sceneLocationViewDidRemoveSceneLocationEstimate(sceneLocationView: SceneLocationView,
-                                                         position: SCNVector3,
-                                                         location: CLLocation)
-
-    ///After a node's location is initially set based on current location,
-    ///it is later confirmed once the user moves far enough away from it.
-    ///This update uses location data collected since the node was placed to give a more accurate location.
-    func sceneLocationViewDidConfirmLocationOfNode(sceneLocationView: SceneLocationView, node: LocationNode)
-
-    func sceneLocationViewDidSetupSceneNode(sceneLocationView: SceneLocationView, sceneNode: SCNNode)
-
-    func sceneLocationViewDidUpdateLocationAndScaleOfLocationNode(sceneLocationView: SceneLocationView,
-                                                                  locationNode: LocationNode)
-}
-
-public extension SceneLocationViewDelegate {
-    func sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: SceneLocationView,
-                                                      position: SCNVector3,
-                                                      location: CLLocation) { }
-    func sceneLocationViewDidRemoveSceneLocationEstimate(sceneLocationView: SceneLocationView,
-                                                         position: SCNVector3,
-                                                         location: CLLocation) { }
-
-    func sceneLocationViewDidConfirmLocationOfNode(sceneLocationView: SceneLocationView, node: LocationNode) { }
-    func sceneLocationViewDidSetupSceneNode(sceneLocationView: SceneLocationView, sceneNode: SCNNode) { }
-
-    func sceneLocationViewDidUpdateLocationAndScaleOfLocationNode(sceneLocationView: SceneLocationView,
-                                                                  locationNode: LocationNode) { }
-}
-
-=======
->>>>>>> de4922c... move SceneLocationViewDelegate to dedicated file:ARKit+CoreLocation/Source/SceneLocationView.swift
 ///Different methods which can be used when determining locations (such as the user's location).
 public enum LocationEstimateMethod {
     ///Only uses core location data.
@@ -73,7 +35,12 @@ public class SceneLocationView: ARSCNView {
     ///Not advisable to change this as the scene is ongoing.
     public var locationEstimateMethod: LocationEstimateMethod = .mostRelevantEstimate
 
+<<<<<<< HEAD:ARCL/Source/SceneLocationView.swift
     public let locationManager = LocationManager()
+=======
+    let locationManager = LocationManager()
+
+>>>>>>> d0478e8... add/remove arrays of nodes:ARKit+CoreLocation/Source/SceneLocationView.swift
     ///When set to true, displays an axes node at the start of the scene
     public var showAxesNode = false
 
@@ -287,6 +254,9 @@ public class SceneLocationView: ARSCNView {
         locationNodes.append(locationNode)
         sceneNode.addChildNode(locationNode)
     }
+    public func addLocationNodesForCurrentPosition(locationNodes: [LocationNode]) {
+        locationNodes.forEach { addLocationNodeForCurrentPosition(locationNode: $0) }
+    }
 
     ///location not being nil, and locationConfirmed being true are required
     ///Upon being added, a node's position will be modified and should not be changed externally.
@@ -298,6 +268,9 @@ public class SceneLocationView: ARSCNView {
 
         locationNodes.append(locationNode)
         sceneNode?.addChildNode(locationNode)
+    }
+    public func addLocationNodesWithConfirmedLocation(locationNodes: [LocationNode]) {
+        locationNodes.forEach { addLocationNodeWithConfirmedLocation(locationNode: $0) }
     }
 
     public func removeAllNodes() {
@@ -334,6 +307,9 @@ public class SceneLocationView: ARSCNView {
         }
 
         locationNode.removeFromParentNode()
+    }
+    public func removeLocationNodes(locationNodes: [LocationNode]) {
+        locationNodes.forEach { removeLocationNode(locationNode: $0) }
     }
 
     private func confirmLocationOfDistantLocationNodes() {
@@ -458,79 +434,5 @@ public class SceneLocationView: ARSCNView {
 
         locationDelegate?.sceneLocationViewDidUpdateLocationAndScaleOfLocationNode(sceneLocationView: self,
                                                                                    locationNode: locationNode)
-    }
-}
-
-@available(iOS 11.0, *)
-extension SceneLocationView: ARSCNViewDelegate {
-    public func renderer(_ renderer: SCNSceneRenderer, didRenderScene scene: SCNScene, atTime time: TimeInterval) {
-        if sceneNode == nil {
-            sceneNode = SCNNode()
-            scene.rootNode.addChildNode(sceneNode!)
-
-            if showAxesNode {
-                let axesNode = SCNNode.axesNode(quiverLength: 0.1, quiverThickness: 0.5)
-                sceneNode?.addChildNode(axesNode)
-            }
-        }
-
-        if !didFetchInitialLocation {
-            //Current frame and current location are required for this to be successful
-            if session.currentFrame != nil,
-                let currentLocation = self.locationManager.currentLocation {
-                didFetchInitialLocation = true
-
-                self.addSceneLocationEstimate(location: currentLocation)
-            }
-        }
-    }
-
-    public func sessionWasInterrupted(_ session: ARSession) {
-        print("session was interrupted")
-    }
-
-    public func sessionInterruptionEnded(_ session: ARSession) {
-        print("session interruption ended")
-    }
-
-    public func session(_ session: ARSession, didFailWithError error: Error) {
-        print("session did fail with error: \(error)")
-    }
-
-    public func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
-        switch camera.trackingState {
-        case .limited(.insufficientFeatures):
-            print("camera did change tracking state: limited, insufficient features")
-        case .limited(.excessiveMotion):
-            print("camera did change tracking state: limited, excessive motion")
-        case .limited(.initializing):
-            print("camera did change tracking state: limited, initializing")
-        case .normal:
-            print("camera did change tracking state: normal")
-        case .notAvailable:
-            print("camera did change tracking state: not available")
-        case .limited(.relocalizing):
-            print("camera did change tracking state: limited, relocalizing")
-        }
-    }
-}
-
-// MARK: - LocationManager
-@available(iOS 11.0, *)
-extension SceneLocationView: LocationManagerDelegate {
-    func locationManagerDidUpdateLocation(_ locationManager: LocationManager, location: CLLocation) {
-        addSceneLocationEstimate(location: location)
-    }
-
-    func locationManagerDidUpdateHeading(_ locationManager: LocationManager, heading: CLLocationDirection, accuracy: CLLocationAccuracy) {
-        // negative value means the heading will equal the `magneticHeading`, and we're interested in the `trueHeading`
-        if accuracy < 0 {
-            return
-        }
-        
-        // heading of 0º means its pointing to the geographic North
-        if heading == 0 {
-            resetSceneHeading()
-        }
     }
 }

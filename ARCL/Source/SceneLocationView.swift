@@ -249,6 +249,9 @@ public class SceneLocationView: ARSCNView {
         locationNodes.append(locationNode)
         sceneNode.addChildNode(locationNode)
     }
+    public func addLocationNodesForCurrentPosition(locationNodes: [LocationNode]) {
+        locationNodes.forEach { addLocationNodeForCurrentPosition(locationNode: $0) }
+    }
 
     ///location not being nil, and locationConfirmed being true are required
     ///Upon being added, a node's position will be modified and should not be changed externally.
@@ -260,6 +263,9 @@ public class SceneLocationView: ARSCNView {
 
         locationNodes.append(locationNode)
         sceneNode?.addChildNode(locationNode)
+    }
+    public func addLocationNodesWithConfirmedLocation(locationNodes: [LocationNode]) {
+        locationNodes.forEach { addLocationNodeWithConfirmedLocation(locationNode: $0) }
     }
 
     public func removeAllNodes() {
@@ -296,6 +302,9 @@ public class SceneLocationView: ARSCNView {
         }
 
         locationNode.removeFromParentNode()
+    }
+    public func removeLocationNodes(locationNodes: [LocationNode]) {
+        locationNodes.forEach { removeLocationNode(locationNode: $0) }
     }
 
     private func confirmLocationOfDistantLocationNodes() {
