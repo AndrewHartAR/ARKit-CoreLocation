@@ -48,7 +48,7 @@ class ViewController: UIViewController {
 
 //        sceneLocationView.locationEstimateMethod = .coreLocationDataOnly
         sceneLocationView.showAxesNode = true
-        sceneLocationView.locationDelegate = self
+        sceneLocationView.locationViewDelegate = self
 
         sceneLocationView.showFeaturePoints = displayDebugging
 
@@ -91,77 +91,76 @@ class ViewController: UIViewController {
     }
 
     @objc func updateUserLocation() {
-        if let currentLocation = sceneLocationView.currentLocation() {
-            DispatchQueue.main.async {
-
-                if let bestEstimate = self.sceneLocationView.bestLocationEstimate(),
-                    let position = self.sceneLocationView.currentScenePosition() {
-                    DDLogDebug("")
-                    DDLogDebug("Fetch current location")
-                    DDLogDebug("best location estimate, position: \(bestEstimate.position), \(bestEstimate.location.debugLog)")
-                    DDLogDebug("current position: \(position)")
-
-                    let translation = bestEstimate.translatedLocation(to: position)
-
-                    DDLogDebug("translation: \(translation)")
-                    DDLogDebug("translated location: \(currentLocation)")
-                    DDLogDebug("")
-                }
-
-                if self.userAnnotation == nil {
-                    self.userAnnotation = MKPointAnnotation()
-                    self.mapView.addAnnotation(self.userAnnotation!)
-                }
-
-                UIView.animate(withDuration: 0.5, delay: 0, options: .allowUserInteraction, animations: {
-                    self.userAnnotation?.coordinate = currentLocation.coordinate
-                }, completion: nil)
-
-                if self.centerMapOnUserLocation {
-                    UIView.animate(withDuration: 0.45,
-                                   delay: 0,
-                                   options: .allowUserInteraction,
-                                   animations: {
-                        self.mapView.setCenter(self.userAnnotation!.coordinate, animated: false)
-                    }, completion: { _ in
-                        self.mapView.region.span = MKCoordinateSpan(latitudeDelta: 0.0005, longitudeDelta: 0.0005)
-                    })
-                }
-
-                if self.displayDebugging {
-                    let bestLocationEstimate = self.sceneLocationView.bestLocationEstimate()
-
-                    if bestLocationEstimate != nil {
-                        if self.locationEstimateAnnotation == nil {
-                            self.locationEstimateAnnotation = MKPointAnnotation()
-                            self.mapView.addAnnotation(self.locationEstimateAnnotation!)
-                        }
-
-                        self.locationEstimateAnnotation!.coordinate = bestLocationEstimate!.location.coordinate
-                    } else {
-                        if self.locationEstimateAnnotation != nil {
-                            self.mapView.removeAnnotation(self.locationEstimateAnnotation!)
-                            self.locationEstimateAnnotation = nil
-                        }
-                    }
-                }
-            }
-        }
+//        guard let currentLocation = sceneLocationView.currentLocation else { return }
+//
+//        DispatchQueue.main.async {
+//            if let bestEstimate = self.sceneLocationView.bestLocationEstimate,
+//                let position = self.sceneLocationView.currentScenePosition {
+//                DDLogDebug("")
+//                DDLogDebug("Fetch current location")
+//                DDLogDebug("best location estimate, position: \(bestEstimate.position), \(bestEstimate.location.debugLog)")
+//                DDLogDebug("current position: \(position)")
+//
+//                let translation = bestEstimate.translatedLocation(to: position)
+//
+//                DDLogDebug("translation: \(translation)")
+//                DDLogDebug("translated location: \(currentLocation)")
+//                DDLogDebug("")
+//            }
+//
+//            if self.userAnnotation == nil {
+//                self.userAnnotation = MKPointAnnotation()
+//                self.mapView.addAnnotation(self.userAnnotation!)
+//            }
+//
+//            UIView.animate(withDuration: 0.5, delay: 0, options: .allowUserInteraction, animations: {
+//                self.userAnnotation?.coordinate = currentLocation.coordinate
+//            }, completion: nil)
+//
+//            if self.centerMapOnUserLocation {
+//                UIView.animate(withDuration: 0.45,
+//                               delay: 0,
+//                               options: .allowUserInteraction,
+//                               animations: {
+//                    self.mapView.setCenter(self.userAnnotation!.coordinate, animated: false)
+//                }, completion: { _ in
+//                    self.mapView.region.span = MKCoordinateSpan(latitudeDelta: 0.0005, longitudeDelta: 0.0005)
+//                })
+//            }
+//
+//            if self.displayDebugging {
+//                let bestLocationEstimate = self.sceneLocationView.bestLocationEstimate
+//
+//                if bestLocationEstimate != nil {
+//                    if self.locationEstimateAnnotation == nil {
+//                        self.locationEstimateAnnotation = MKPointAnnotation()
+//                        self.mapView.addAnnotation(self.locationEstimateAnnotation!)
+//                    }
+//
+//                    self.locationEstimateAnnotation!.coordinate = bestLocationEstimate!.location.coordinate
+//                } else {
+//                    if self.locationEstimateAnnotation != nil {
+//                        self.mapView.removeAnnotation(self.locationEstimateAnnotation!)
+//                        self.locationEstimateAnnotation = nil
+//                    }
+//                }
+//            }
+//        }
     }
 
     @objc func updateInfoLabel() {
-        if let position = sceneLocationView.currentScenePosition() {
+        if let position = sceneLocationView.currentScenePosition {
             infoLabel.text = "x: \(position.x.short), y: \(position.y.short), z: \(position.z.short)\n"
         }
 
-        if let eulerAngles = sceneLocationView.currentEulerAngles() {
+        if let eulerAngles = sceneLocationView.currentEulerAngles {
             infoLabel.text!.append("Euler x: \(eulerAngles.x.short), y: \(eulerAngles.y.short), z: \(eulerAngles.z.short)\n")
         }
 
-        if let heading = sceneLocationView.locationManager.heading,
-            let accuracy = sceneLocationView.locationManager.headingAccuracy {
-            infoLabel.text!.append("Heading: \(heading)º, accuracy: \(Int(round(accuracy)))º\n")
-        }
+//        if let heading = sceneLocationView.locationManager.heading,
+//            let accuracy = sceneLocationView.locationManager.headingAccuracy {
+//            infoLabel.text!.append("Heading: \(heading)º, accuracy: \(Int(round(accuracy)))º\n")
+//        }
 
         let comp = Calendar.current.dateComponents([.hour, .minute, .second, .nanosecond], from: Date())
         if let hour = comp.hour, let minute = comp.minute, let second = comp.second, let nanosecond = comp.nanosecond {

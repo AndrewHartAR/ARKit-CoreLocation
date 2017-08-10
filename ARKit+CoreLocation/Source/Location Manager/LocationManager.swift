@@ -17,12 +17,21 @@ protocol LocationManagerDelegate: class {
                                          accuracy: CLLocationDirection)
 }
 
+extension LocationManagerDelegate {
+    func locationManagerDidUpdateLocation(_ locationManager: LocationManager,
+                                          location: CLLocation) { }
+
+    func locationManagerDidUpdateHeading(_ locationManager: LocationManager,
+                                         heading: CLLocationDirection,
+                                         accuracy: CLLocationDirection) { }
+}
+
 ///Handles retrieving the location and heading from CoreLocation
 ///Does not contain anything related to ARKit or advanced location
 class LocationManager: NSObject {
     weak var delegate: LocationManagerDelegate?
 
-    private var locationManager: CLLocationManager?
+    private let locationManager = CLLocationManager()
 
     var currentLocation: CLLocation?
 
@@ -32,18 +41,16 @@ class LocationManager: NSObject {
     override init() {
         super.init()
 
-        self.locationManager = CLLocationManager()
-        self.locationManager!.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-        self.locationManager!.distanceFilter = kCLDistanceFilterNone
-        self.locationManager!.headingFilter = kCLHeadingFilterNone
-        self.locationManager!.pausesLocationUpdatesAutomatically = false
-        self.locationManager!.delegate = self
-        self.locationManager!.startUpdatingHeading()
-        self.locationManager!.startUpdatingLocation()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+        locationManager.distanceFilter = kCLDistanceFilterNone
+        locationManager.headingFilter = kCLHeadingFilterNone
+        locationManager.pausesLocationUpdatesAutomatically = false
+        locationManager.delegate = self
+        locationManager.startUpdatingHeading()
+        locationManager.startUpdatingLocation()
+        locationManager.requestWhenInUseAuthorization()
 
-        self.locationManager!.requestWhenInUseAuthorization()
-
-        self.currentLocation = self.locationManager!.location
+        self.currentLocation = locationManager.location
     }
 
     func requestAuthorization() {
@@ -57,21 +64,14 @@ class LocationManager: NSObject {
             return
         }
 
-        locationManager?.requestWhenInUseAuthorization()
+        locationManager.requestWhenInUseAuthorization()
     }
 }
 
 extension LocationManager: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-
-    }
-
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        locations.forEach {
-            delegate?.locationManagerDidUpdateLocation(self, location: $0)
-        }
-
-        self.currentLocation = manager.location
+        locations.forEach { delegate?.locationManagerDidUpdateLocation(self, location: $0) }
+        currentLocation = manager.location
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
