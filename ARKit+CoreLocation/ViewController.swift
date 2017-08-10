@@ -49,7 +49,6 @@ class ViewController: UIViewController {
 
 //        sceneLocationView.locationEstimateMethod = .coreLocationDataOnly
         sceneLocationView.showAxesNode = true
-        sceneLocationView.locationViewDelegate = self
 
         sceneLocationView.showFeaturePoints = displayDebugging
 
@@ -234,21 +233,6 @@ extension ViewController: MKMapViewDelegate {
         }
 
         return marker
-    }
-}
-
-@available(iOS 11.0, *)
-extension ViewController: SceneLocationViewDelegate {
-    func sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: SceneLocationView,
-                                                      position: SCNVector3,
-                                                      location: CLLocation) {
-        print("add scene location estimate, position: \(position), \(location.debugLog)")
-    }
-
-    func sceneLocationViewDidRemoveSceneLocationEstimate(sceneLocationView: SceneLocationView,
-                                                         position: SCNVector3,
-                                                         location: CLLocation) {
-        print("remove scene location estimate, position: \(position), \(location.debugLog)")
     }
 }
 

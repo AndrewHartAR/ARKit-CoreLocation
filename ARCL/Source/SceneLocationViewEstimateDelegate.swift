@@ -12,10 +12,23 @@ import CoreLocation
 import MapKit
 
 @available(iOS 11.0, *)
-public protocol SceneLocationViewDelegate: class {
+public protocol SceneLocationViewEstimateDelegate: class {
     func didAddSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation)
     func didRemoveSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation)
+}
 
+@available(iOS 11.0, *)
+public extension SceneLocationViewEstimateDelegate {
+    func didAddSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation) {
+        //
+    }
+    func didRemoveSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation) {
+        //
+    }
+}
+
+@available(iOS 11.0, *)
+public protocol SceneLocationViewDelegate: class {
     ///After a node's location is initially set based on current location,
     ///it is later confirmed once the user moves far enough away from it.
     ///This update uses location data collected since the node was placed to give a more accurate location.

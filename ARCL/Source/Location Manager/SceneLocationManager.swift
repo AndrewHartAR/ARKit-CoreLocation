@@ -27,6 +27,9 @@ protocol SceneLocationManagerDelegate: class {
 
     func confirmLocationOfDistantLocationNodes()
     func updatePositionAndScaleOfLocationNodes()
+
+    func didAddSceneLocationEstimate(position: SCNVector3, location: CLLocation)
+    func didRemoveSceneLocationEstimate(position: SCNVector3, location: CLLocation)
 }
 
 final class SceneLocationManager {
@@ -85,9 +88,7 @@ final class SceneLocationManager {
 
         sceneLocationEstimates.append(SceneLocationEstimate(location: location, position: position))
 
-//        locationDelegate?.sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: self,
-//                                                                       position: position,
-//                                                                       location: location)
+        sceneLocationDelegate?.didAddSceneLocationEstimate(position: position, location: location)
     }
 
     private func removeOldLocationEstimates() {
@@ -100,12 +101,14 @@ final class SceneLocationManager {
 
         sceneLocationEstimates = sceneLocationEstimates.filter {
             if #available(iOS 11.0, *) {
-                let radiusContainsPoint = currentPoint.radiusContainsPoint(radius: CGFloat(SceneLocationView.sceneLimit),
-                                                                           point: CGPoint.pointWithVector(vector: $0.position))
+                let radiusContainsPoint = currentPoint.radiusContainsPoint(
+                    radius: CGFloat(SceneLocationView.sceneLimit),
+                    point: CGPoint.pointWithVector(vector: $0.position))
 
-//                if !radiusContainsPoint {
-//                    locationDelegate?.sceneLocationViewDidRemoveSceneLocationEstimate(sceneLocationView: self, position: $0.position, location: $0.location)
-//                }
+                if !radiusContainsPoint {
+                    sceneLocationDelegate?.didRemoveSceneLocationEstimate(position: $0.position, location: $0.location)
+                }
+
                 return radiusContainsPoint
             } else {
                 return false
