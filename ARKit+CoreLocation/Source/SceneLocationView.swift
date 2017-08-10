@@ -18,6 +18,7 @@ public class SceneLocationView: ARSCNView {
     static let sceneLimit = 100.0
 
     public weak var locationViewDelegate: SceneLocationViewDelegate?
+    public weak var locationEstimateDelegate: SceneLocationViewEstimateDelegate?
 
     ///The method to use for determining locations.
     ///Not advisable to change this as the scene is ongoing.
@@ -238,6 +239,14 @@ extension SceneLocationView: SceneLocationManagerDelegate {
             }
         }
     }
+
+    func didAddSceneLocationEstimate(position: SCNVector3, location: CLLocation) {
+        locationEstimateDelegate?.didAddSceneLocationEstimate(sceneLocationView: self, position: position, location: location)
+    }
+
+    func didRemoveSceneLocationEstimate(position: SCNVector3, location: CLLocation) {
+        locationEstimateDelegate?.didRemoveSceneLocationEstimate(sceneLocationView: self, position: position, location: location)
+    }
 }
 
 extension SceneLocationView: ARSCNViewDelegate {
@@ -259,33 +268,6 @@ extension SceneLocationView: ARSCNViewDelegate {
                 didFetchInitialLocation = true
                 sceneLocationManager.addSceneLocationEstimate(location: currentLocation)
             }
-        }
-    }
-
-    public func sessionWasInterrupted(_ session: ARSession) {
-        print("session was interrupted")
-    }
-
-    public func sessionInterruptionEnded(_ session: ARSession) {
-        print("session interruption ended")
-    }
-
-    public func session(_ session: ARSession, didFailWithError error: Error) {
-        print("session did fail with error: \(error)")
-    }
-
-    public func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
-        switch camera.trackingState {
-        case .limited(.insufficientFeatures):
-            print("camera did change tracking state: limited, insufficient features")
-        case .limited(.excessiveMotion):
-            print("camera did change tracking state: limited, excessive motion")
-        case .limited(.initializing):
-            print("camera did change tracking state: limited, initializing")
-        case .normal:
-            print("camera did change tracking state: normal")
-        case .notAvailable:
-            print("camera did change tracking state: not available")
         }
     }
 }
