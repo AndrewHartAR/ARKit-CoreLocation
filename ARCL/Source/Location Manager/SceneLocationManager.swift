@@ -37,10 +37,10 @@ final class SceneLocationManager {
 
     var locationEstimateMethod: LocationEstimateMethod = .mostRelevantEstimate
 
-    private let locationManager = LocationManager()
-    private var sceneLocationEstimates = [SceneLocationEstimate]()
+    internal let locationManager = LocationManager()
+    internal var sceneLocationEstimates = [SceneLocationEstimate]()
 
-    private var updateEstimatesTimer: Timer?
+    internal var updateEstimatesTimer: Timer?
 
     ///The best estimation of location that has been taken
     ///This takes into account horizontal accuracy, and the time at which the estimation was taken
@@ -58,7 +58,7 @@ final class SceneLocationManager {
         return sortedLocationEstimates.first
     }
 
-    public var currentLocation: CLLocation? {
+    var currentLocation: CLLocation? {
         if locationEstimateMethod == .coreLocationDataOnly { return locationManager.currentLocation }
 
         guard let bestEstimate = bestLocationEstimate,
@@ -75,7 +75,7 @@ final class SceneLocationManager {
         pause()
     }
 
-    @objc private func updateLocationData() {
+    @objc internal func updateLocationData() {
         removeOldLocationEstimates()
 
         sceneLocationDelegate?.confirmLocationOfDistantLocationNodes()
@@ -91,12 +91,12 @@ final class SceneLocationManager {
         sceneLocationDelegate?.didAddSceneLocationEstimate(position: position, location: location)
     }
 
-    private func removeOldLocationEstimates() {
+    internal func removeOldLocationEstimates() {
         guard let currentScenePosition = sceneLocationDelegate?.scenePosition else { return }
         removeOldLocationEstimates(currentScenePosition: currentScenePosition)
     }
 
-    private func removeOldLocationEstimates(currentScenePosition: SCNVector3) {
+    internal func removeOldLocationEstimates(currentScenePosition: SCNVector3) {
         let currentPoint = CGPoint.pointWithVector(vector: currentScenePosition)
 
         sceneLocationEstimates = sceneLocationEstimates.filter {

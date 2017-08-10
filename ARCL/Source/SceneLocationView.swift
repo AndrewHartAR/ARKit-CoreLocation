@@ -69,10 +69,11 @@ public class SceneLocationView: ARSCNView {
 
     public var currentEulerAngles: SCNVector3? { return pointOfView?.eulerAngles }
 
-    public private(set) var locationNodes = [LocationNode]()
+    public internal(set) var locationNodes = [LocationNode]()
 
-    var didFetchInitialLocation = false
-    let sceneLocationManager = SceneLocationManager()
+    // MARK: Internal desclarations
+    internal var didFetchInitialLocation = false
+    internal let sceneLocationManager = SceneLocationManager()
 
     // MARK: Setup
     public convenience init() {
@@ -105,11 +106,11 @@ public class SceneLocationView: ARSCNView {
     }
 
     ///Resets the scene heading to 0
-    private func resetSceneHeading() {
+    internal func resetSceneHeading() {
         sceneNode?.eulerAngles.y = 0
     }
 
-    private func confirmLocationOfLocationNode(_ locationNode: LocationNode) {
+    internal func confirmLocationOfLocationNode(_ locationNode: LocationNode) {
         locationNode.location = locationOfLocationNode(locationNode)
 
         locationNode.locationConfirmed = true
@@ -118,7 +119,7 @@ public class SceneLocationView: ARSCNView {
     }
 
     ///Gives the best estimate of the location of a node
-    private func locationOfLocationNode(_ locationNode: LocationNode) -> CLLocation {
+    internal func locationOfLocationNode(_ locationNode: LocationNode) -> CLLocation {
         if locationNode.locationConfirmed || locationEstimateMethod == .coreLocationDataOnly {
             return locationNode.location!
         }
