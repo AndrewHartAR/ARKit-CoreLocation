@@ -17,6 +17,15 @@ protocol LocationManagerDelegate: class {
                                          accuracy: CLLocationDirection)
 }
 
+extension LocationManagerDelegate {
+    func locationManagerDidUpdateLocation(_ locationManager: LocationManager,
+                                          location: CLLocation) { }
+
+    func locationManagerDidUpdateHeading(_ locationManager: LocationManager,
+                                         heading: CLLocationDirection,
+                                         accuracy: CLLocationDirection) { }
+}
+
 /// Handles retrieving the location and heading from CoreLocation
 /// Does not contain anything related to ARKit or advanced location
 public class LocationManager: NSObject {
