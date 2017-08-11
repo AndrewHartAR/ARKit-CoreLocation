@@ -52,7 +52,9 @@ class ViewController: UIViewController {
 
         sceneLocationView.showFeaturePoints = displayDebugging
 
-        buildDemoData().forEach { sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: $0) }
+        buildDemoData().forEach {
+            sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: $0)
+        }
 
         contentView.addSubview(sceneLocationView)
         sceneLocationView.frame = contentView.bounds
