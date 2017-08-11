@@ -13,7 +13,7 @@ import MapKit
 public class PolylineNode {
     var locationNodes = [LocationNode]()
 
-    private let polyline: MKPolyline
+    let polyline: MKPolyline
     private let altitude: CLLocationDistance
 
     private let lightNode: SCNNode = {
@@ -48,6 +48,11 @@ public class PolylineNode {
         self.altitude = altitude
 
         contructNodes()
+    }
+
+    deinit {
+        locationNodes.forEach { $0.removeFromParentNode() }
+        locationNodes.removeAll()
     }
 
     fileprivate func contructNodes() {

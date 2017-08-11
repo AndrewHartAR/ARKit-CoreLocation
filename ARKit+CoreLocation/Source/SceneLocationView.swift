@@ -226,14 +226,21 @@ public extension SceneLocationView {
         polylineNodes.append(contentsOf: polyNodes)
         polyNodes.forEach {
             $0.locationNodes.forEach {
-                $0.updatePositionAndScale(setup: true, scenePosition: currentScenePosition, locationManager: sceneLocationManager, onCompletion: {})
+                $0.updatePositionAndScale(setup: true,
+                                          scenePosition: currentScenePosition,
+                                          locationManager: sceneLocationManager,
+                                          onCompletion: {})
                 sceneNode?.addChildNode($0)
             }
         }
     }
 
     public func removeRoutes(routes: [MKRoute]) {
-        //
+        routes.forEach { route in
+            if let index = polylineNodes.index(where: { $0.polyline == route.polyline }) {
+                polylineNodes.remove(at: index)
+            }
+        }
     }
 }
 
