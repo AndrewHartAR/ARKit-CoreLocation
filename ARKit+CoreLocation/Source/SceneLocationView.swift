@@ -296,7 +296,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         guard tag.isEmpty == false  else {
             return false
         }
-        return locationNodes.map({$0.tag! == tag }).first ?? false
+        return locationNodes.map({$0.tag == tag }).first ?? false
     }
 
     
