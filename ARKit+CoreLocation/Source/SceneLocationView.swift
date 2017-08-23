@@ -288,6 +288,18 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         sceneNode?.addChildNode(locationNode)
     }
     
+    /// determine if scene contains a node with the specified tag
+    ///
+    /// - Parameter tag: tag text
+    /// - Returns: true if a LocationNode with the tag exists; false otherwise
+    public func sceneContainsNodeWithTag(_ tag: String) -> Bool {
+        guard tag.isEmpty == false  else {
+            return false
+        }
+        return locationNodes.map({$0.tag! == tag }).first ?? false
+    }
+
+    
     public func removeLocationNode(locationNode: LocationNode) {
         if let index = locationNodes.index(of: locationNode) {
             locationNodes.remove(at: index)
