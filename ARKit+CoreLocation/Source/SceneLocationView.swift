@@ -92,21 +92,25 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     
     public override init(frame: CGRect, options: [String : Any]? = nil) {
         super.init(frame: frame, options: options)
-        
+        finishInitialization()
+    }
+
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        finishInitialization()
+    }
+
+    private func finishInitialization() {
         locationManager.delegate = self
-        
+
         delegate = self
-        
+
         // Show statistics such as fps and timing information
         showsStatistics = false
-        
+
         if showFeaturePoints {
             debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         }
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
     }
     
     override public func layoutSubviews() {
