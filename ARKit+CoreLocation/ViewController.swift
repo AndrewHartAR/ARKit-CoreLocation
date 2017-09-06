@@ -11,6 +11,7 @@ import SceneKit
 import MapKit
 import CocoaLumberjack
 
+@available(iOS 11.0, *)
 class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDelegate {
     let sceneLocationView = SceneLocationView()
     
