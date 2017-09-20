@@ -11,6 +11,7 @@ import ARKit
 import CoreLocation
 import MapKit
 
+@available(iOS 11.0, *)
 public protocol SceneLocationViewDelegate: class {
     func sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation)
     func sceneLocationViewDidRemoveSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation)
@@ -37,6 +38,7 @@ public enum LocationEstimateMethod {
 }
 
 //Should conform to delegate here, add in future commit
+@available(iOS 11.0, *)
 public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     ///The limit to the scene, in terms of what data is considered reasonably accurate.
     ///Measured in meters.
@@ -94,21 +96,25 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     
     public override init(frame: CGRect, options: [String : Any]? = nil) {
         super.init(frame: frame, options: options)
-        
+        finishInitialization()
+    }
+
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        finishInitialization()
+    }
+
+    private func finishInitialization() {
         locationManager.delegate = self
-        
+
         delegate = self
-        
+
         // Show statistics such as fps and timing information
         showsStatistics = false
-        
+
         if showFeaturePoints {
             debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         }
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
     }
     
     override public func layoutSubviews() {
@@ -117,7 +123,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     
     public func run() {
         // Create a session configuration
-        let configuration = ARWorldTrackingSessionConfiguration()
+		let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .horizontal
         
         if orientToTrueNorth {
@@ -477,8 +483,6 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
             print("camera did change tracking state: limited, insufficient features")
         case .limited(.excessiveMotion):
             print("camera did change tracking state: limited, excessive motion")
-        case .limited(.none):
-            print("camera did change tracking state: limited, no reason")
         case .limited(.initializing):
             print("camera did change tracking state: limited, initializing")
         case .normal:
@@ -490,6 +494,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
 }
 
 //MARK: LocationManager
+@available(iOS 11.0, *)
 extension SceneLocationView: LocationManagerDelegate {
     func locationManagerDidUpdateLocation(_ locationManager: LocationManager, location: CLLocation) {
         addSceneLocationEstimate(location: location)
