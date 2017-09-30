@@ -51,6 +51,7 @@ open class LocationNode: SCNNode {
     }
 }
 
+@available(iOS 10.0, *)
 open class LocationAnnotationNode: LocationNode {
     /// Whether the node should be scaled relative to its distance from the camera
     /// Default value (false) scales it to visually appear at the same size no matter the distance
@@ -85,17 +86,38 @@ open class LocationAnnotationNode: LocationNode {
         if uiView.superview != nil {
             guard let uiViewCopy = NSKeyedUnarchiver.unarchiveObject(
                 with: NSKeyedArchiver.archivedData(withRootObject: uiView)
-            ) as? UIView else { return nil }
+                ) as? UIView else { return nil }
             
             view = uiViewCopy
         }
-     
+        
         // Just in case
         view.removeFromSuperview()
         
         self.init(
             location: location,
             layer: view.layer
+        )
+    }
+    
+    /// Creates a new location node displaying a UIView. This will explicitly convert the
+    /// view to a UIImage before displaying which might provide more consistent results
+    /// than LocationAnnotationNode(location:uiView:)
+    ///
+    /// - Parameters:
+    ///   - location: `CLLocation` object with location of node or nil
+    ///   - rasterizedUiView: UIView to display.
+    public convenience init?(location: CLLocation?, rasterizedUiView: UIView) {
+        let rendererFormat = UIGraphicsImageRendererFormat.default()
+        rendererFormat.scale = rasterizedUiView.layer.contentsScale
+        rendererFormat.opaque = rasterizedUiView.isOpaque
+        let renderer = UIGraphicsImageRenderer(size: rasterizedUiView.bounds.size, format: rendererFormat)
+        
+        self.init(
+            location: location,
+            image: renderer.image(actions: { _ in
+                rasterizedUiView.drawHierarchy(in: rasterizedUiView.bounds, afterScreenUpdates: false)
+            })
         )
     }
     
@@ -110,6 +132,28 @@ open class LocationAnnotationNode: LocationNode {
             location: location,
             geometry: SCNPlane(width: layer.bounds.width, height: layer.bounds.height),
             content: layer
+        )
+    }
+    
+    /// Creates a new location node displaying a CALayer. This converts the CALayer to a UIImage compared
+    /// LocationAnnotationNode()
+    ///
+    /// - Parameters:
+    ///   - location: `CLLocation` object with location of node or nil
+    ///   - rasterizedLayer: CALayer to display.
+    public convenience init(location: CLLocation?, rasterizedLayer: CALayer) {
+        rasterizedLayer.contentsScale = UIScreen.main.scale
+        
+        let rendererFormat = UIGraphicsImageRendererFormat.default()
+        rendererFormat.scale = rasterizedLayer.contentsScale
+        rendererFormat.opaque = rasterizedLayer.isOpaque
+        let renderer = UIGraphicsImageRenderer(size: rasterizedLayer.bounds.size, format: rendererFormat)
+        
+        self.init(
+            location: location,
+            image: renderer.image(actions: { context in
+                rasterizedLayer.render(in: context.cgContext)
+            })
         )
     }
     
