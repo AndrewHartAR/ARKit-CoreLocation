@@ -21,10 +21,10 @@ public class LocationManager: NSObject, CLLocationManagerDelegate {
     
     private var locationManager: CLLocationManager?
     
-    var currentLocation: CLLocation?
+    public var currentLocation: CLLocation?
     
-    var heading: CLLocationDirection?
-    var headingAccuracy: CLLocationDegrees?
+    public var heading: CLLocationDirection?
+    public var headingAccuracy: CLLocationDegrees?
     
     override init() {
         super.init()

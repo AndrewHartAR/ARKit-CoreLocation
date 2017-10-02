@@ -11,8 +11,8 @@ import CoreLocation
 import SceneKit
 
 public class SceneLocationEstimate {
-    let location: CLLocation
-    let position: SCNVector3
+    public let location: CLLocation
+    public let position: SCNVector3
     
     init(location: CLLocation, position: SCNVector3) {
         self.location = location
