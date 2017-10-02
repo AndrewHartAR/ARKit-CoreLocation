@@ -10,7 +10,7 @@ import Foundation
 import CoreLocation
 import SceneKit
 
-class SceneLocationEstimate {
+public class SceneLocationEstimate {
     let location: CLLocation
     let position: SCNVector3
     
