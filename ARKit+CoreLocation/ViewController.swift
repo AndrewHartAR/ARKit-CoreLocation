@@ -9,7 +9,7 @@
 import UIKit
 import SceneKit 
 import MapKit
-import CocoaLumberjack
+import CocoaLumberjackSwift
 
 @available(iOS 11.0, *)
 class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDelegate {
