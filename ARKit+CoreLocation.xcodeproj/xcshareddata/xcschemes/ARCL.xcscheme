@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "49A3FBD71F09988100AA59C8"
-               BuildableName = "ARKit+CoreLocation.app"
-               BlueprintName = "ARKit+CoreLocation"
+               BlueprintIdentifier = "74C058E31F8786B700146C2D"
+               BuildableName = "ARCL.framework"
+               BlueprintName = "ARCL"
                ReferencedContainer = "container:ARKit+CoreLocation.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -30,15 +30,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "49A3FBD71F09988100AA59C8"
-            BuildableName = "ARKit+CoreLocation.app"
-            BlueprintName = "ARKit+CoreLocation"
-            ReferencedContainer = "container:ARKit+CoreLocation.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -53,16 +44,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "49A3FBD71F09988100AA59C8"
-            BuildableName = "ARKit+CoreLocation.app"
-            BlueprintName = "ARKit+CoreLocation"
+            BlueprintIdentifier = "74C058E31F8786B700146C2D"
+            BuildableName = "ARCL.framework"
+            BlueprintName = "ARCL"
             ReferencedContainer = "container:ARKit+CoreLocation.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -72,16 +62,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "49A3FBD71F09988100AA59C8"
-            BuildableName = "ARKit+CoreLocation.app"
-            BlueprintName = "ARKit+CoreLocation"
+            BlueprintIdentifier = "74C058E31F8786B700146C2D"
+            BuildableName = "ARCL.framework"
+            BlueprintName = "ARCL"
             ReferencedContainer = "container:ARKit+CoreLocation.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
