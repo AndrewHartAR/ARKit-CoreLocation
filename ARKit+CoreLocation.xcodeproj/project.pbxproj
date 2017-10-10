@@ -22,7 +22,6 @@
 		49A3FC051F0A423800AA59C8 /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A3FC041F0A423800AA59C8 /* CGPoint+Extensions.swift */; };
 		49D206F31F124BDD00D7D622 /* SCNNode+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D206F21F124BDD00D7D622 /* SCNNode+Extensions.swift */; };
 		71B6A9EDA814C7F42DF123D9 /* Pods_ARKit_CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C10523EF85AA6B7CDF962AD /* Pods_ARKit_CoreLocation.framework */; };
-		74F7B0E11F8CC1F600D6F8BB /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74F7B0E01F8CC1EF00D6F8BB /* CocoaLumberjackSwift.framework */; };
 		74F7B0F01F8CC30C00D6F8BB /* ARLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74F7B0E71F8CC30B00D6F8BB /* ARLocation.framework */; };
 		74F7B0F51F8CC30C00D6F8BB /* ARLocationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F7B0F41F8CC30C00D6F8BB /* ARLocationTests.swift */; };
 		74F7B0F71F8CC30C00D6F8BB /* ARLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 74F7B0E91F8CC30B00D6F8BB /* ARLocation.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -68,7 +67,6 @@
 		49A3FC041F0A423800AA59C8 /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
 		49D206F21F124BDD00D7D622 /* SCNNode+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNNode+Extensions.swift"; sourceTree = "<group>"; };
 		6C10523EF85AA6B7CDF962AD /* Pods_ARKit_CoreLocation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ARKit_CoreLocation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		74F7B0E01F8CC1EF00D6F8BB /* CocoaLumberjackSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjackSwift.framework; path = Carthage/Build/iOS/CocoaLumberjackSwift.framework; sourceTree = "<group>"; };
 		74F7B0E71F8CC30B00D6F8BB /* ARLocation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ARLocation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		74F7B0E91F8CC30B00D6F8BB /* ARLocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARLocation.h; sourceTree = "<group>"; };
 		74F7B0EA1F8CC30B00D6F8BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -84,7 +82,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74F7B0E11F8CC1F600D6F8BB /* CocoaLumberjackSwift.framework in Frameworks */,
 				71B6A9EDA814C7F42DF123D9 /* Pods_ARKit_CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -190,7 +187,6 @@
 		F2E2E005FD78BDD52B0F8A94 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				74F7B0E01F8CC1EF00D6F8BB /* CocoaLumberjackSwift.framework */,
 				6C10523EF85AA6B7CDF962AD /* Pods_ARKit_CoreLocation.framework */,
 			);
 			name = Frameworks;
@@ -220,7 +216,6 @@
 				49A3FBD61F09988100AA59C8 /* Resources */,
 				B912B23DE2753A7230AC73FF /* [CP] Embed Pods Frameworks */,
 				3B65648ABF0CBE46120C6ABF /* [CP] Copy Pods Resources */,
-				74F7B0FE1F8CC34500D6F8BB /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -364,23 +359,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
-		};
-		74F7B0FE1F8CC34500D6F8BB /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/CocoaLumberjackSwift.framework",
-			);
-			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/CocoaLumberjackSwift.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
 		B912B23DE2753A7230AC73FF /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
