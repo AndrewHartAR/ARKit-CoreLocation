@@ -16,7 +16,7 @@ The improved location accuracy is currently in an “experimental” phase, but 
 
 Because there’s still work to be done there, and in other areas, this project will best be served by an open community, more than what GitHub Issues would allow us. So I’m opening up a Slack group that anyone can join, to discuss the library, improvements to it, and their own work.
 
-**[Join the Slack community](https://join.slack.com/t/arcl-dev/shared_invite/enQtMjY3NTUyNTUxMDI5LWFhZDM0M2NhZGM5MTFhYjNiOWFhZmIyMmIyNzRjMTkzNjI5ZjQxZTA5MDUwNThjNTEyM2MzODY4NDRiZjBkYWE)**
+**[Join the Slack community](https://join.slack.com/t/arcl-dev/shared_invite/enQtMjgzNTcxMDE1NTA0LTZjNDI0MjA3YmFhYjFiNGY4MWY5ZThhZGYzMzcyNTFjNzQzZGVlNmYwOGQ1Y2I5NmJmYTc2MTNjMTZhZTI5ZjU)**
 
 ## Requirements
 ARKit requires iOS 11, and supports the following devices:
@@ -143,7 +143,7 @@ For example, one technique could be to look at recent location data, translate e
 
 ## Going Forward
 
-We have some Milestones and Issues related to them - anyone is welcome to discuss and contribute to them. Pull requests are welcomed. You can discuss new features/enhancements/bugs either by adding a new Issue or via [the Slack community](https://join.slack.com/t/arcl-dev/shared_invite/enQtMjY3NTUyNTUxMDI5LWFhZDM0M2NhZGM5MTFhYjNiOWFhZmIyMmIyNzRjMTkzNjI5ZjQxZTA5MDUwNThjNTEyM2MzODY4NDRiZjBkYWE).
+We have some Milestones and Issues related to them - anyone is welcome to discuss and contribute to them. Pull requests are welcomed. You can discuss new features/enhancements/bugs either by adding a new Issue or via [the Slack community](https://join.slack.com/t/arcl-dev/shared_invite/enQtMjgzNTcxMDE1NTA0LTZjNDI0MjA3YmFhYjFiNGY4MWY5ZThhZGYzMzcyNTFjNzQzZGVlNmYwOGQ1Y2I5NmJmYTc2MTNjMTZhZTI5ZjU).
 
 ## Thanks
 Library created by [@AndrewProjDent](https://twitter.com/andrewprojdent), but a community effort from here on.
