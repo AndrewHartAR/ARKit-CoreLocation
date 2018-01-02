@@ -23,7 +23,7 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
     
     ///Whether to show a map view
     ///The initial value is respected
-    var showMapView: Bool = false
+    var showMapView: Bool = true
     
     var centerMapOnUserLocation: Bool = true
     
