@@ -225,7 +225,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     ///This takes into account horizontal accuracy, and the time at which the estimation was taken
     ///favouring the most accurate, and then the most recent result.
     ///This doesn't indicate where the user currently is.
-    func bestLocationEstimate() -> SceneLocationEstimate? {
+    public func bestLocationEstimate() -> SceneLocationEstimate? {
         let sortedLocationEstimates = sceneLocationEstimates.sorted(by: {
             if $0.location.horizontalAccuracy == $1.location.horizontalAccuracy {
                 return $0.location.timestamp > $1.location.timestamp
