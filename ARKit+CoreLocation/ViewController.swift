@@ -242,7 +242,7 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         }
     }
     
-    //MARK: MKMapViewDelegate
+    // Mark: MKMapViewDelegate
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
@@ -267,7 +267,7 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         return nil
     }
     
-    //MARK: SceneLocationViewDelegate
+    // Mark: SceneLocationViewDelegate
     
     func sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation) {
         DDLogDebug("add scene location estimate, position: \(position), location: \(location.coordinate), accuracy: \(location.horizontalAccuracy), date: \(location.timestamp)")

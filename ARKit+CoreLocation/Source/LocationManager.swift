@@ -26,6 +26,14 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     var heading: CLLocationDirection?
     var headingAccuracy: CLLocationDegrees?
     
+    // Used for True North Correction
+    public var courseAvgX: Double = 0
+    public var courseAvgY: Double = 0
+    public var course: Double = 0
+    public var avgCourse: Double = 0
+    public var courseAngle: Double = 0
+    public var northAngle: Double = 0
+    
     override init() {
         super.init()
         
@@ -57,7 +65,37 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         self.locationManager?.requestWhenInUseAuthorization()
     }
     
-    //MARK: - CLLocationManagerDelegate
+    // MARK: - True North Correction from ARCL Slack
+    func getVectorAvg(latestReading: Double) -> Double {
+        
+        let deg2Rad = 180 / Double.pi
+        // convert reading to radians
+        let theta = latestReading / deg2Rad
+        
+        // running average
+        courseAvgX = courseAvgX * 0.5 + cos(theta) * 0.5;
+        courseAvgY = courseAvgY * 0.5 + sin(theta) * 0.5;
+        
+        // get the result in degrees
+        var avgAngleDeg =  atan2(courseAvgY, courseAvgX) * deg2Rad;
+        
+        // result is -180 to 180. change this to 0-360.
+        if(avgAngleDeg < 0){ avgAngleDeg = avgAngleDeg + 360}
+        
+        return avgAngleDeg;
+    }
+    
+    func updateVectorAverage(location: CLLocation) {
+        self.course = location.course
+        print("location.course: \(course)" )
+        self.avgCourse = getVectorAvg(latestReading: course)
+        print("avgCourse: \(avgCourse)")
+        
+        self.courseAngle = (360.0 - avgCourse + course) * -1.0
+        self.northAngle = (360.0 - course) * -1.0
+    }
+    
+    // MARK: - CLLocationManagerDelegate
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         
@@ -69,6 +107,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         }
         
         self.currentLocation = manager.location
+        updateVectorAverage(location: manager.location)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {

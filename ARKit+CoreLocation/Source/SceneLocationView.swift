@@ -87,7 +87,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     ///The initial value of this property is respected.
     public var orientToTrueNorth = true
 
-    //MARK: Setup
+    // Mark: Setup
     public convenience init() {
         self.init(frame: CGRect.zero, options: nil)
     }
@@ -149,7 +149,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         updatePositionAndScaleOfLocationNodes()
     }
 
-    //MARK: True North
+    // Mark: True North
     ///iOS can be inaccurate when setting true north
     ///The scene is oriented to true north, and will update its heading when it gets a more accurate reading
     ///You can disable this through setting the
@@ -175,7 +175,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         sceneNode?.eulerAngles.y = 0
     }
 
-    //MARK: Scene location estimates
+    // Mark: Scene location estimates
 
     public func currentScenePosition() -> SCNVector3? {
         guard let pointOfView = pointOfView else {
@@ -250,7 +250,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         return bestEstimate.translatedLocation(to: position)
     }
 
-    //MARK: LocationNodes
+    // Mark: LocationNodes
     ///upon being added, a node's location, locationConfirmed and position may be modified and should not be changed externally.
     public func addLocationNodeForCurrentPosition(locationNode: LocationNode) {
         guard let currentPosition = currentScenePosition(),
@@ -437,7 +437,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         locationDelegate?.sceneLocationViewDidUpdateLocationAndScaleOfLocationNode(sceneLocationView: self, locationNode: locationNode)
     }
 
-    //MARK: ARSCNViewDelegate
+    // Mark: ARSCNViewDelegate
 
     public func renderer(_ renderer: SCNSceneRenderer, didRenderScene scene: SCNScene, atTime time: TimeInterval) {
         if sceneNode == nil {
@@ -489,7 +489,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     }
 }
 
-//MARK: LocationManager
+// Mark: LocationManager
 @available(iOS 11.0, *)
 extension SceneLocationView: LocationManagerDelegate {
     func locationManagerDidUpdateLocation(_ locationManager: LocationManager, location: CLLocation) {
