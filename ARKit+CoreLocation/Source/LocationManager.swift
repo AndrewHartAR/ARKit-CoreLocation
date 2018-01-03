@@ -107,7 +107,9 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         }
         
         self.currentLocation = manager.location
-        updateVectorAverage(location: manager.location)
+        if let location = manager.location {
+            updateVectorAverage(location: location)
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
