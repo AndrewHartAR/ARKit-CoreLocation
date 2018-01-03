@@ -72,6 +72,8 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         // convert reading to radians
         let theta = latestReading / deg2Rad
         
+        print("theta \(theta), latestReading \(latestReading)")
+        
         // running average
         courseAvgX = courseAvgX * 0.5 + cos(theta) * 0.5;
         courseAvgY = courseAvgY * 0.5 + sin(theta) * 0.5;
@@ -86,13 +88,21 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     }
     
     func updateVectorAverage(location: CLLocation) {
+        guard (location.course >= 0) else {
+            return
+        }
         self.course = location.course
         print("location.course: \(course)" )
         self.avgCourse = getVectorAvg(latestReading: course)
         print("avgCourse: \(avgCourse)")
         
-        self.courseAngle = (360.0 - avgCourse + course) * -1.0
-        self.northAngle = (360.0 - course) * -1.0
+        if (course > 180) {
+            self.courseAngle = (360.0 - avgCourse + course)
+            self.northAngle = (360.0 - course)
+        } else {
+            self.courseAngle = (0.0 + course - avgCourse) * -1.0
+            self.northAngle = (0.0 + course) * -1.0
+        }
     }
     
     // MARK: - CLLocationManagerDelegate

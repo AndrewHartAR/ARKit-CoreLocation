@@ -114,7 +114,7 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
             width: self.view.frame.size.width,
             height: self.view.frame.size.height)
         
-        infoLabel.frame = CGRect(x: 6, y: 0, width: self.view.frame.size.width - 12, height: 14 * 4)
+        infoLabel.frame = CGRect(x: 6, y: 0, width: self.view.frame.size.width - 12, height: 14 * 6)
         
         if showMapView {
             infoLabel.frame.origin.y = (self.view.frame.size.height / 2) - infoLabel.frame.size.height
@@ -204,6 +204,15 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
             let accuracy = sceneLocationView.locationManager.headingAccuracy {
             infoLabel.text!.append("Heading: \(heading)º, accuracy: \(Int(round(accuracy)))º\n")
         }
+        
+        // course / avgCourse values
+        infoLabel.text!.append("avgCourse: \(String(format: "%.8f", sceneLocationView.locationManager.avgCourse)), course: \(String(format: "%.8f", sceneLocationView.locationManager.course)), course - avgCourse: \(String(format: "%.8f", sceneLocationView.locationManager.course - sceneLocationView.locationManager.avgCourse))\n")
+        
+        // courseAngle / northAngle values
+        infoLabel.text!.append("courseAngle: \(String(format: "%.8f", sceneLocationView.locationManager.courseAngle)), northAngle: \(String(format: "%.8f", sceneLocationView.locationManager.northAngle))\n")
+        
+        // courseAvg X/Y values
+        infoLabel.text!.append("courseAvgX: \(String(format: "%.8f", sceneLocationView.locationManager.courseAvgX)), courseAvgY: \(String(format: "%.8f", sceneLocationView.locationManager.courseAvgY))\n")
         
         let date = Date()
         let comp = Calendar.current.dateComponents([.hour, .minute, .second, .nanosecond], from: date)
