@@ -23,8 +23,8 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     
     var currentLocation: CLLocation?
     
-    var heading: CLLocationDirection?
-    var headingAccuracy: CLLocationDegrees?
+    public var heading: CLLocationDirection?
+    public var headingAccuracy: CLLocationDegrees?
     
     // Used for True North Correction
     public var courseAvgX: Double = 0
