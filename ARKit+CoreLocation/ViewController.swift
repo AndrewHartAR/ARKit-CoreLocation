@@ -23,7 +23,7 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
     
     ///Whether to show a map view
     ///The initial value is respected
-    var showMapView: Bool = false
+    var showMapView: Bool = true
     
     var centerMapOnUserLocation: Bool = true
     
@@ -114,7 +114,7 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
             width: self.view.frame.size.width,
             height: self.view.frame.size.height)
         
-        infoLabel.frame = CGRect(x: 6, y: 0, width: self.view.frame.size.width - 12, height: 14 * 4)
+        infoLabel.frame = CGRect(x: 6, y: 0, width: self.view.frame.size.width - 12, height: 14 * 6)
         
         if showMapView {
             infoLabel.frame.origin.y = (self.view.frame.size.height / 2) - infoLabel.frame.size.height
@@ -205,6 +205,15 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
             infoLabel.text!.append("Heading: \(heading)º, accuracy: \(Int(round(accuracy)))º\n")
         }
         
+        // course / avgCourse values
+        infoLabel.text!.append("avgCourse: \(String(format: "%.8f", sceneLocationView.locationManager.avgCourse)), course: \(String(format: "%.8f", sceneLocationView.locationManager.course)), course - avgCourse: \(String(format: "%.8f", sceneLocationView.locationManager.course - sceneLocationView.locationManager.avgCourse))\n")
+        
+        // courseAngle / northAngle values
+        infoLabel.text!.append("courseAngle: \(String(format: "%.8f", sceneLocationView.locationManager.courseAngle)), northAngle: \(String(format: "%.8f", sceneLocationView.locationManager.northAngle))\n")
+        
+        // courseAvg X/Y values
+        infoLabel.text!.append("courseAvgX: \(String(format: "%.8f", sceneLocationView.locationManager.courseAvgX)), courseAvgY: \(String(format: "%.8f", sceneLocationView.locationManager.courseAvgY))\n")
+        
         let date = Date()
         let comp = Calendar.current.dateComponents([.hour, .minute, .second, .nanosecond], from: date)
         
@@ -242,7 +251,7 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         }
     }
     
-    //MARK: MKMapViewDelegate
+    // Mark: MKMapViewDelegate
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
@@ -267,7 +276,7 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         return nil
     }
     
-    //MARK: SceneLocationViewDelegate
+    // Mark: SceneLocationViewDelegate
     
     func sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation) {
         DDLogDebug("add scene location estimate, position: \(position), location: \(location.coordinate), accuracy: \(location.horizontalAccuracy), date: \(location.timestamp)")
