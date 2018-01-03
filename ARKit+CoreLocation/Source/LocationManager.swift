@@ -57,7 +57,8 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         self.locationManager?.requestWhenInUseAuthorization()
     }
     
-    //MARK: - CLLocationManagerDelegate
+    // MARK: - True North Correction from ARCL Slack
+    // MARK: - CLLocationManagerDelegate
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         
