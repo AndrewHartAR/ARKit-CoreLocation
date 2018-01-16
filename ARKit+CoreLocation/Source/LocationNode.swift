@@ -10,6 +10,56 @@ import Foundation
 import SceneKit
 import CoreLocation
 
+public enum ScalingScheme {
+
+    case normal
+    case tiered
+
+    public static let all: [ScalingScheme] = [
+        .normal,
+        .tiered
+    ]
+
+    public static func scalingFor(string: String?) -> ScalingScheme {
+
+        guard let schemeString = string?.lowercased() else{
+            return .normal
+        }
+
+        switch schemeString {
+        case "normal":
+                return .normal
+        case "tiered":
+                return .tiered
+        default:
+            print("LocationNode: scaling for string '\(schemeString)' not found. Available values are: tiered, normal")
+            return .normal
+        }
+
+    }
+
+    public func getScheme() -> ( (_ distance: Double) -> Float ) {
+
+        switch self {
+        case .tiered:
+            return { (distance) in
+                if distance < 500.0 {
+                    return 2.0
+                }else{
+                    return 1.0
+                }
+            }
+        default:
+            return { (_) in
+                return 1.0
+            }
+        }
+
+
+    }
+
+}
+
 ///A location node can be added to a scene using a coordinate.
 ///Its scale and position should not be adjusted, as these are used for scene layout purposes
 ///To adjust the scale and position of items within a node, you can add them to a child node and adjust them there
@@ -39,6 +89,8 @@ open class LocationNode: SCNNode {
     ///This should only be set to false if you plan to manually update position and scale
     ///at regular intervals. You can do this with `SceneLocationView`'s `updatePositionOfLocationNode`.
     public var continuallyUpdatePositionAndScale = true
+
+    public var scalingScheme: ScalingScheme = .normal
     
     public init(location: CLLocation?) {
         self.location = location

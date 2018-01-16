@@ -417,8 +417,17 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
             var scale: Float
             
             if annotationNode.scaleRelativeToDistance {
-                scale = appliedScale.y
-                annotationNode.annotationNode.scale = appliedScale
+                switch annotationNode.scalingScheme {
+                case .tiered:
+                    let scaleFunction = annotationNode.scalingScheme.getScheme()
+                    scale = scaleFunction(distance)
+                    annotationNode.annotationNode.scale = SCNVector3(x: scale, y: scale, z: scale)
+                default:
+                    scale = appliedScale.y
+                    annotationNode.annotationNode.scale = appliedScale
+                }
+
+
             } else {
                 //Scale it to be an appropriate size so that it can be seen
                 scale = Float(adjustedDistance) * 0.181
