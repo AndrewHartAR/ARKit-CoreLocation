@@ -235,6 +235,7 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
                         let image = UIImage(named: "pin")!
                         let annotationNode = LocationAnnotationNode(location: nil, image: image)
                         annotationNode.scaleRelativeToDistance = true
+                        annotationNode.scalingScheme = .tiered
                         sceneLocationView.addLocationNodeForCurrentPosition(locationNode: annotationNode)
                     }
                 }

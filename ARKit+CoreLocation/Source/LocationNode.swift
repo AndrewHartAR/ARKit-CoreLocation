@@ -38,20 +38,25 @@ public enum ScalingScheme {
 
     }
 
-    public func getScheme() -> ( (_ distance: Double) -> Float ) {
+    public func getScheme() -> ( (_ distance: Double, _ adjustedDistance: Double) -> Float ) {
 
         switch self {
         case .tiered:
-            return { (distance) in
-                if distance < 500.0 {
-                    return 2.0
+            return { (distance, adjustedDistance) in
+                if adjustedDistance < 2.0 {
+                    return 0.2
                 }else{
                     return 1.0
                 }
             }
         default:
-            return { (_) in
-                return 1.0
+            return { (distance, adjustedDistance) in
+                //Scale it to be an appropriate size so that it can be seen
+                var scale = Float(adjustedDistance) * 0.181
+                if distance > 3000 {
+                    scale = scale * 0.75
+                }
+                return scale
             }
         }
 
