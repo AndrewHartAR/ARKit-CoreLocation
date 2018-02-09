@@ -415,6 +415,8 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
             locationNode.scale = SCNVector3(x: 1, y: 1, z: 1)
             
             var scale: Float
+
+
             
             if annotationNode.scaleRelativeToDistance {
                 scale = appliedScale.y
@@ -426,24 +428,26 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
                     if distance > 5 {
                         scale = scale * 0.5
                     }
-                    annotationNode.annotationNode.scale = SCNVector3(x: scale, y: scale, z: scale)
+                case .doubleTiered:
+                    let scaleFunc = annotationNode.scalingScheme.getScheme()
+                    scale = scaleFunc(distance, adjustedDistance)
+                case .linear:
+                    let scaleFunc = annotationNode.scalingScheme.getScheme()
+                    scale = scaleFunc(distance, adjustedDistance)
+                case .linearBuffer:
+                    let scaleFunc = annotationNode.scalingScheme.getScheme()
+                    scale = scaleFunc(distance, adjustedDistance)
                 default:
                     //Scale it to be an appropriate size so that it can be seen
                     scale = Float(adjustedDistance) * 0.181
                     if distance > 3000 {
                         scale = scale * 0.75
                     }
-                }
 
-                //Scale it to be an appropriate size so that it can be seen
-                scale = Float(adjustedDistance) * 0.181
-                if distance > 3000 {
-                    scale = scale * 0.75
                 }
-                
                 annotationNode.annotationNode.scale = SCNVector3(x: scale, y: scale, z: scale)
             }
-            
+
             annotationNode.pivot = SCNMatrix4MakeTranslation(0, -1.1 * scale, 0)
         }
         
