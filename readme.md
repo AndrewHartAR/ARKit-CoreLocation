@@ -55,7 +55,7 @@ To place a pin over a building, for example Canary Wharf in London, we’ll use 
 
 First, import ARCL and CoreLocation, then declare SceneLocationView as a property:
 
-```
+```swift
 import ARCL
 import CoreLocation
 
@@ -66,7 +66,7 @@ class ViewController: UIViewController {
 
 You should call `sceneLocationView.run()` whenever it’s in focus, and `sceneLocationView.pause()` if it’s interrupted, such as by moving to a different view or by leaving the app.
 
-```
+```swift
 override func viewDidLoad() {
   super.viewDidLoad()
 
@@ -83,7 +83,7 @@ override func viewDidLayoutSubviews() {
 
 After we’ve called `run()`, we can add our coordinate. ARCL comes with a class called `LocationNode` - an object within the 3D scene which has a real-world location along with a few other properties which allow it to be displayed appropriately within the world. `LocationNode` is a subclass of SceneKit’s `SCNNode`, and can also be subclassed further. For this example we’re going to use a subclass called `LocationAnnotationNode`, which we use to display a 2D image within the world, which always faces us:
 
-```
+```swift
 let coordinate = CLLocationCoordinate2D(latitude: 51.504571, longitude: -0.019717)
 let location = CLLocation(coordinate: coordinate, altitude: 300)
 let image = UIImage(named: "pin")!
@@ -93,7 +93,7 @@ let annotationNode = LocationAnnotationNode(location: location, image: image)
 
 By default, the image you set should always appear at the size it was given, for example if you give a 100x100 image, it would appear at 100x100 on the screen. This means distant annotation nodes can always be seen at the same size as nearby ones. If you’d rather they scale relative to their distance, you can set LocationAnnotationNode’s `scaleRelativeToDistance` to `true`.
 
-```
+```swift
 sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: annotationNode)
 ```
 
