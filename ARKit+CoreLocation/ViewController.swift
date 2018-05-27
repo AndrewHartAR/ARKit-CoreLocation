@@ -9,7 +9,6 @@
 import UIKit
 import SceneKit 
 import MapKit
-import CocoaLumberjack
 
 @available(iOS 11.0, *)
 class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDelegate {
@@ -93,14 +92,14 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        DDLogDebug("run")
+        print("run")
         sceneLocationView.run()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        DDLogDebug("pause")
+        print("pause")
         // Pause the view's session
         sceneLocationView.pause()
     }
@@ -140,16 +139,16 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
                 
                 if let bestEstimate = self.sceneLocationView.bestLocationEstimate(),
                     let position = self.sceneLocationView.currentScenePosition() {
-                    DDLogDebug("")
-                    DDLogDebug("Fetch current location")
-                    DDLogDebug("best location estimate, position: \(bestEstimate.position), location: \(bestEstimate.location.coordinate), accuracy: \(bestEstimate.location.horizontalAccuracy), date: \(bestEstimate.location.timestamp)")
-                    DDLogDebug("current position: \(position)")
+                    print("")
+                    print("Fetch current location")
+                    print("best location estimate, position: \(bestEstimate.position), location: \(bestEstimate.location.coordinate), accuracy: \(bestEstimate.location.horizontalAccuracy), date: \(bestEstimate.location.timestamp)")
+                    print("current position: \(position)")
                     
                     let translation = bestEstimate.translatedLocation(to: position)
                     
-                    DDLogDebug("translation: \(translation)")
-                    DDLogDebug("translated location: \(currentLocation)")
-                    DDLogDebug("")
+                    print("translation: \(translation)")
+                    print("translated location: \(currentLocation)")
+                    print("")
                 }
                 
                 if self.userAnnotation == nil {
@@ -270,11 +269,11 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
     //MARK: SceneLocationViewDelegate
     
     func sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation) {
-        DDLogDebug("add scene location estimate, position: \(position), location: \(location.coordinate), accuracy: \(location.horizontalAccuracy), date: \(location.timestamp)")
+        print("add scene location estimate, position: \(position), location: \(location.coordinate), accuracy: \(location.horizontalAccuracy), date: \(location.timestamp)")
     }
     
     func sceneLocationViewDidRemoveSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation) {
-        DDLogDebug("remove scene location estimate, position: \(position), location: \(location.coordinate), accuracy: \(location.horizontalAccuracy), date: \(location.timestamp)")
+        print("remove scene location estimate, position: \(position), location: \(location.coordinate), accuracy: \(location.horizontalAccuracy), date: \(location.timestamp)")
     }
     
     func sceneLocationViewDidConfirmLocationOfNode(sceneLocationView: SceneLocationView, node: LocationNode) {
