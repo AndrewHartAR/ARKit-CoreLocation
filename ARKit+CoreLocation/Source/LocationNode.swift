@@ -14,9 +14,12 @@ import CoreLocation
 ///Its scale and position should not be adjusted, as these are used for scene layout purposes
 ///To adjust the scale and position of items within a node, you can add them to a child node and adjust them there
 open class LocationNode: SCNNode {
-    ///Location can be changed and confirmed later by SceneLocationView.
+    /// Location can be changed and confirmed later by SceneLocationView.
     public var location: CLLocation!
     
+    /// A general purpose tag that can be used to find nodes already added to a SceneLocationView
+    public var tag: String?
+
     ///Whether the location of the node has been confirmed.
     ///This is automatically set to true when you create a node using a location.
     ///Otherwise, this is false, and becomes true once the user moves 100m away from the node,
