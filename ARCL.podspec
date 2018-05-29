@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "ARCL"
-  s.version      = "1.0.2"
+  s.version      = "1.0.3"
   s.summary      = "ARKit + CoreLocation combines the high accuracy of AR with the scale of GPS data."
   s.homepage     = "https://github.com/ProjectDent/arkit-corelocation"
   s.author       = { "Andrew Hart" => "Andrew@ProjectDent.com" }
