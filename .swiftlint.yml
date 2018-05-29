@@ -1,0 +1,7 @@
+disabled_rules:
+    - file_length
+    - identifier_name
+    - line_length
+    - shorthand_operator
+    - type_body_length
+function_body_length: 70
