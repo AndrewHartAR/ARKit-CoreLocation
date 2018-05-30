@@ -50,7 +50,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     ///Not advisable to change this as the scene is ongoing.
     public var locationEstimateMethod: LocationEstimateMethod = .mostRelevantEstimate
 
-    let locationManager = LocationManager()
+    public let locationManager = LocationManager()
     ///When set to true, displays an axes node at the start of the scene
     public var showAxesNode = false
 
@@ -76,7 +76,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
 
     ///Whether debugging feature points should be displayed.
     ///Defaults to false
-    var showFeaturePoints = false
+    public var showFeaturePoints = false
 
     ///Only to be overrided if you plan on manually setting True North.
     ///When true, sets up the scene to face what the device considers to be True North.
@@ -225,7 +225,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     ///This takes into account horizontal accuracy, and the time at which the estimation was taken
     ///favouring the most accurate, and then the most recent result.
     ///This doesn't indicate where the user currently is.
-    func bestLocationEstimate() -> SceneLocationEstimate? {
+    public func bestLocationEstimate() -> SceneLocationEstimate? {
         let sortedLocationEstimates = sceneLocationEstimates.sorted(by: {
             if $0.location.horizontalAccuracy == $1.location.horizontalAccuracy {
                 return $0.location.timestamp > $1.location.timestamp
