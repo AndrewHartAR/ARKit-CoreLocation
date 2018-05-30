@@ -1,5 +1,20 @@
 ![ARKit + CoreLocation](https://github.com/ProjectDent/ARKit-CoreLocation/blob/master/arkit.png)
 
+<p align="center">
+    <a href="https://opensource.org/licenses/MIT">
+        <img src="https://img.shields.io/github/license/ProjectDent/ARKit-CoreLocation.svg"
+             alt="MIT License">
+    </a>
+    <a href="https://cocoapods.org/pods/ARCL">
+        <img src="https://img.shields.io/cocoapods/v/ARCL.svg?style=flat"
+             alt="Pods Version">
+    </a>
+    <a href="https://github.com/Carthage/Carthage">
+        <img src="https://img.shields.io/badge/Carthage-compatible-brightgreen.svg?style=flat"
+             alt="Carthage Compatible">
+    </a>
+</p>
+
 **ARKit**: Uses camera and motion data to map out the local world as you move around.
 
 **CoreLocation**: Uses wifi and GPS data to determine your global location, with a low degree of accuracy.
