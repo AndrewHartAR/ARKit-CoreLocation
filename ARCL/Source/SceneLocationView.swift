@@ -290,7 +290,8 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
 
     public func removeAllNodes() {
         locationNodes.removeAll()
-        for node in (sceneNode?.childNodes)! {
+        guard let childNodes = sceneNode?.childNodes else { return }
+        for node in childNodes {
             node.removeFromParentNode()
         }
     }
