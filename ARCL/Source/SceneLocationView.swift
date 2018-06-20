@@ -288,6 +288,13 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         sceneNode?.addChildNode(locationNode)
     }
 
+    public func removeAllNodes() {
+        locationNodes.removeAll()
+        for node in (sceneNode?.childNodes)! {
+            node.removeFromParentNode()
+        }
+    }
+	
     /// Determine if scene contains a node with the specified tag
     ///
     /// - Parameter tag: tag text
