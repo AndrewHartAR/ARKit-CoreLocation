@@ -416,36 +416,34 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
 
             locationNode.scale = SCNVector3(x: 1, y: 1, z: 1)
         }
-
-        if let annotationNode = locationNode as? LocationAnnotationNode {
-            //The scale of a node with a billboard constraint applied is ignored
-            //The annotation subnode itself, as a subnode, has the scale applied to it
-            let appliedScale = locationNode.scale
-            locationNode.scale = SCNVector3(x: 1, y: 1, z: 1)
-
-            var scale: Float
-
-            if annotationNode.scaleRelativeToDistance {
-                scale = appliedScale.y
-                for childnode in annotationNode.childNodes {
-                    childnode.scale = appliedScale
-                }
-            } else {
-                //Scale it to be an appropriate size so that it can be seen
-                scale = Float(adjustedDistance) * 0.181
-
-                if distance > 3000 {
-                    scale = scale * 0.75
-                }
-
-                for childnode in annotationNode.childNodes {
-                    childnode.scale = SCNVector3(x: scale, y: scale, z: scale)
-                }
+        
+        //The scale of a node with a billboard constraint applied is ignored
+        //The annotation subnode itself, as a subnode, has the scale applied to it
+        let appliedScale = locationNode.scale
+        locationNode.scale = SCNVector3(x: 1, y: 1, z: 1)
+        
+        var scale: Float
+        
+        if locationNode.scaleRelativeToDistance {
+            scale = appliedScale.y
+            for childnode in locationNode.childNodes {
+                childnode.scale = appliedScale
             }
-
-            annotationNode.pivot = SCNMatrix4MakeTranslation(0, -1.1 * scale, 0)
+        } else {
+            //Scale it to be an appropriate size so that it can be seen
+            scale = Float(adjustedDistance) * 0.181
+            
+            if distance > 3000 {
+                scale = scale * 0.75
+            }
+            
+            for childnode in locationNode.childNodes {
+                childnode.scale = SCNVector3(x: scale, y: scale, z: scale)
+            }
         }
-
+        
+        locationNode.pivot = SCNMatrix4MakeTranslation(0, -1.1 * scale, 0)
+        
         SCNTransaction.commit()
 
         locationDelegate?.sceneLocationViewDidUpdateLocationAndScaleOfLocationNode(sceneLocationView: self, locationNode: locationNode)
