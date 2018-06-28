@@ -59,6 +59,8 @@ open class LocationAnnotationNode: LocationNode {
     ///When viewed from a distance, the annotation will be seen at the size provided
     ///e.g. if the size is 100x100px, the annotation will take up approx 100x100 points on screen.
     public let image: UIImage
+    public let annotaionView: UIView
+    public let imageName: String
 
     ///Subnodes and adjustments should be applied to this subnode
     ///Required to allow scaling at the same time as having a 2D 'billboard' appearance
@@ -73,20 +75,44 @@ open class LocationAnnotationNode: LocationNode {
 
     public init(location: CLLocation?, image: UIImage) {
         self.image = image
-
+        self.imageName = ""
+        
         let plane = SCNPlane(width: image.size.width / 100, height: image.size.height / 100)
         plane.firstMaterial!.diffuse.contents = image
         plane.firstMaterial!.lightingModel = .constant
 
         annotationNode = SCNNode()
         annotationNode.geometry = plane
-
+        annotaionView = UIView()
         super.init(location: location)
 
         let billboardConstraint = SCNBillboardConstraint()
         billboardConstraint.freeAxes = SCNBillboardAxis.Y
         constraints = [billboardConstraint]
 
+        addChildNode(annotationNode)
+    }
+    
+    public init(location: CLLocation?, userFrame: UIView) {
+        self.annotaionView = userFrame
+        self.image = UIImage()
+        self.imageName = ""
+        
+        let plane = SCNPlane(width: self.annotaionView.frame.size.width / 100,
+                             height: self.annotaionView.frame.size.height / 100)
+        
+        plane.firstMaterial!.diffuse.contents = self.annotaionView
+        plane.firstMaterial!.lightingModel = .constant
+        
+        annotationNode = SCNNode()
+        annotationNode.geometry = plane
+        
+        super.init(location: location)
+        
+        let billboardConstraint = SCNBillboardConstraint()
+        billboardConstraint.freeAxes = SCNBillboardAxis.Y
+        constraints = [billboardConstraint]
+        
         addChildNode(annotationNode)
     }
 
