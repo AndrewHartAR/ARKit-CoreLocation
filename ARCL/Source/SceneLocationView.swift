@@ -295,7 +295,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
             node.removeFromParentNode()
         }
     }
-	
+
     /// Determine if scene contains a node with the specified tag
     ///
     /// - Parameter tag: tag text
