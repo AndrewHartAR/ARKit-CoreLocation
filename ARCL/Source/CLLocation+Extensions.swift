@@ -78,30 +78,30 @@ public extension CLLocation {
 }
 
 public extension CLLocationCoordinate2D {
-    public func coordinateWithBearing(bearing:Double, distanceMeters:Double) -> CLLocationCoordinate2D {
+    public func coordinateWithBearing(bearing: Double, distanceMeters: Double) -> CLLocationCoordinate2D {
 		// formula by http://www.movable-type.co.uk/scripts/latlong.html
 		let lat1 = self.latitude * Double.pi / 180
 		let lon1 = self.longitude * Double.pi / 180
 
 		let distance = distanceMeters / EARTH_RADIUS
 		let angularBearing = bearing * Double.pi / 180
-		
+
 		var lat2 = lat1 + distance * cos(angularBearing)
 		let dLat = lat2 - lat1
 		let dPhi = log(tan(lat2 / 2 + Double.pi/4) / tan(lat1 / 2 + Double.pi/4))
 		let q = (dPhi != 0) ? dLat/dPhi : cos(lat1)  // E-W line gives dPhi=0
 		let dLon = distance * sin(angularBearing) / q
-		
+
 		// check for some daft bugger going past the pole
-		if (fabs(lat2) > Double.pi/2) {
+		if fabs(lat2) > Double.pi/2 {
 			lat2 = lat2 > 0 ? Double.pi - lat2 : -(Double.pi - lat2)
 		}
 		var lon2 = lon1 + dLon + 3 * Double.pi
-		while (lon2 > 2 * Double.pi) {
+		while lon2 > 2 * Double.pi {
 			lon2 -= 2 * Double.pi
 		}
 		lon2 -= Double.pi
-		
+
         return CLLocationCoordinate2D(latitude: lat2 * 180 / Double.pi, longitude: lon2 * 180 / Double.pi)
     }
 }
