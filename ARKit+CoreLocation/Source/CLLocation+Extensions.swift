@@ -77,11 +77,11 @@ public extension CLLocation {
 
 extension Double {
     func metersToLatitude() -> Double {
-        return self / (6360500.0)
+        return self / (6378137.0)
     }
     
     func metersToLongitude() -> Double {
-        return self / (5602900.0)
+        return self / (6356752.3)
     }
 }
 
