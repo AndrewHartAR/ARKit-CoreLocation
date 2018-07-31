@@ -509,6 +509,14 @@ extension SceneLocationView: LocationManagerDelegate {
     }
 
     func locationManagerDidUpdateHeading(_ locationManager: LocationManager, heading: CLLocationDirection, accuracy: CLLocationAccuracy) {
-
+        // negative value means the heading will equal the `magneticHeading`, and we're interested in the `trueHeading`
+        if accuracy < 0 {
+            return
+        }
+        
+        // heading of 0º means its pointing to the geographic North
+        if heading == 0 {
+            resetSceneHeading()
+        }
     }
 }
