@@ -54,7 +54,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     ///When set to true, displays an axes node at the start of the scene
     public var showAxesNode = false
 
-    private(set) var locationNodes = [LocationNode]()
+    public private(set) var locationNodes = [LocationNode]()
 
     private var sceneLocationEstimates = [SceneLocationEstimate]()
 
@@ -288,6 +288,14 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         sceneNode?.addChildNode(locationNode)
     }
 
+    public func removeAllNodes() {
+        locationNodes.removeAll()
+        guard let childNodes = sceneNode?.childNodes else { return }
+        for node in childNodes {
+            node.removeFromParentNode()
+        }
+    }
+
     /// Determine if scene contains a node with the specified tag
     ///
     /// - Parameter tag: tag text
@@ -509,6 +517,14 @@ extension SceneLocationView: LocationManagerDelegate {
     }
 
     func locationManagerDidUpdateHeading(_ locationManager: LocationManager, heading: CLLocationDirection, accuracy: CLLocationAccuracy) {
-
+        // negative value means the heading will equal the `magneticHeading`, and we're interested in the `trueHeading`
+        if accuracy < 0 {
+            return
+        }
+        
+        // heading of 0º means its pointing to the geographic North
+        if heading == 0 {
+            resetSceneHeading()
+        }
     }
 }

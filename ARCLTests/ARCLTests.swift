@@ -7,6 +7,8 @@
 //
 
 import XCTest
+import CoreLocation
+
 @testable import ARCL
 
 class ARCLTests: XCTestCase {
@@ -21,15 +23,13 @@ class ARCLTests: XCTestCase {
         super.tearDown()
     }
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
+    func testBearing() {
+        let pub = CLLocationCoordinate2D(latitude: 47.6235858, longitude: -122.3128663)
 
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+        let north = pub.coordinateWithBearing(bearing: 0, distanceMeters: 500)
+        XCTAssertEqual(pub.latitude, north.latitude, accuracy: 0.01)
+
+        let east = pub.coordinateWithBearing(bearing: 90, distanceMeters: 500)
+        XCTAssertEqual(pub.longitude, east.longitude, accuracy: 0.01)
     }
 }
