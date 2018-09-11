@@ -194,6 +194,9 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         if let position = currentScenePosition() {
             let sceneLocationEstimate = SceneLocationEstimate(location: location, position: position)
             self.sceneLocationEstimates.append(sceneLocationEstimate)
+            if self.sceneLocationEstimates.count > 30 {
+                self.sceneLocationEstimates.remove(at: 0)
+            }
 
             locationDelegate?.sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: self, position: position, location: location)
         }
