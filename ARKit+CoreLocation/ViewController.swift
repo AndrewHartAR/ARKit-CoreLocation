@@ -144,12 +144,12 @@ class ViewController: UIViewController {
                 self.mapView.addAnnotation(self.userAnnotation!)
             }
 
-            UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.allowUserInteraction, animations: {
+            UIView.animate(withDuration: 0.5, delay: 0, options: UIView.AnimationOptions.allowUserInteraction, animations: {
                 self.userAnnotation?.coordinate = currentLocation.coordinate
             }, completion: nil)
 
             if self.centerMapOnUserLocation {
-                UIView.animate(withDuration: 0.45, delay: 0, options: UIViewAnimationOptions.allowUserInteraction, animations: {
+                UIView.animate(withDuration: 0.45, delay: 0, options: UIView.AnimationOptions.allowUserInteraction, animations: {
                     self.mapView.setCenter(self.userAnnotation!.coordinate, animated: false)
                 }, completion: { _ in
                     self.mapView.region.span = MKCoordinateSpan(latitudeDelta: 0.0005, longitudeDelta: 0.0005)
