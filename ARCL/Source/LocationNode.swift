@@ -89,6 +89,12 @@ open class LocationAnnotationNode: LocationNode {
 
         addChildNode(annotationNode)
     }
+    
+    // Use this constructor to add a UIView as an annotation
+    // UIView is more configurable then a UIImage allowing to add background image and labels
+    public convenience init(location: CLLocation?, markerView: UIView){
+        self.init(location: location, image: markerView.image() ?? UIImage())
+    }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
