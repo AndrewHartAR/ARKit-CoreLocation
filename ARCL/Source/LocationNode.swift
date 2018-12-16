@@ -10,6 +10,23 @@ import Foundation
 import SceneKit
 import CoreLocation
 
+// This node type enables the client to have access to the view or image that was used to initialize
+// the LocationAnnotationNode. 
+open class AnnotationNode: SCNNode{
+    public var view: UIView?
+    public var image: UIImage?
+    
+    public init(view: UIView?, image: UIImage?){
+        super.init()
+        self.view = view
+        self.image = image
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 ///A location node can be added to a scene using a coordinate.
 ///Its scale and position should not be adjusted, as these are used for scene layout purposes
 ///To adjust the scale and position of items within a node, you can add them to a child node and adjust them there
@@ -58,11 +75,10 @@ open class LocationAnnotationNode: LocationNode {
     ///An image to use for the annotation
     ///When viewed from a distance, the annotation will be seen at the size provided
     ///e.g. if the size is 100x100px, the annotation will take up approx 100x100 points on screen.
-    public let image: UIImage
 
     ///Subnodes and adjustments should be applied to this subnode
     ///Required to allow scaling at the same time as having a 2D 'billboard' appearance
-    public let annotationNode: SCNNode
+    public let annotationNode: AnnotationNode
 
     ///Whether the node should be scaled relative to its distance from the camera
     ///Default value (false) scales it to visually appear at the same size no matter the distance
@@ -72,13 +88,12 @@ open class LocationAnnotationNode: LocationNode {
     public var scaleRelativeToDistance = false
 
     public init(location: CLLocation?, image: UIImage) {
-        self.image = image
 
         let plane = SCNPlane(width: image.size.width / 100, height: image.size.height / 100)
         plane.firstMaterial!.diffuse.contents = image
         plane.firstMaterial!.lightingModel = .constant
 
-        annotationNode = SCNNode()
+        annotationNode = AnnotationNode(view: nil, image: image)
         annotationNode.geometry = plane
 
         super.init(location: location)
@@ -87,6 +102,25 @@ open class LocationAnnotationNode: LocationNode {
         billboardConstraint.freeAxes = SCNBillboardAxis.Y
         constraints = [billboardConstraint]
 
+        addChildNode(annotationNode)
+    }
+    
+    // Use this constructor to add a UIView as an annotation
+    // UIView is more configurable then a UIImage allowing to add background image and labels
+    public init(location: CLLocation?, view: UIView){
+        let plane = SCNPlane(width: view.frame.size.width / 100, height: view.frame.size.height / 100)
+        plane.firstMaterial!.diffuse.contents = view
+        plane.firstMaterial!.lightingModel = .constant
+        
+        annotationNode = AnnotationNode(view: view, image: nil)
+        annotationNode.geometry = plane
+        
+        super.init(location: location)
+        
+        let billboardConstraint = SCNBillboardConstraint()
+        billboardConstraint.freeAxes = SCNBillboardAxis.Y
+        constraints = [billboardConstraint]
+        
         addChildNode(annotationNode)
     }
 
