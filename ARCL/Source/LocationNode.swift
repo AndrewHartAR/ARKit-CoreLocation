@@ -94,3 +94,21 @@ open class LocationAnnotationNode: LocationNode {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+extension UIView{
+    
+    // Converts the current state of a UIView instance into UIImage instance
+    // Easier to add UIView with dynamically populated fields like background images and labels for
+    // annotation markers instead of just an image
+    func image() -> UIImage? {
+        var image: UIImage?
+        UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.isOpaque, 0.0)
+        defer{UIGraphicsEndImageContext()}
+        if let context = UIGraphicsGetCurrentContext(){
+            self.layer.render(in: context)
+            let imageFromContext = UIGraphicsGetImageFromCurrentImageContext()
+            image = imageFromContext
+        }
+        return image
+    }
+}
