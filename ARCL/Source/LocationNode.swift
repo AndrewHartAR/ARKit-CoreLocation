@@ -58,7 +58,6 @@ open class LocationAnnotationNode: LocationNode {
     ///An image to use for the annotation
     ///When viewed from a distance, the annotation will be seen at the size provided
     ///e.g. if the size is 100x100px, the annotation will take up approx 100x100 points on screen.
-    public let image: UIImage
 
     ///Subnodes and adjustments should be applied to this subnode
     ///Required to allow scaling at the same time as having a 2D 'billboard' appearance
@@ -72,7 +71,6 @@ open class LocationAnnotationNode: LocationNode {
     public var scaleRelativeToDistance = false
 
     public init(location: CLLocation?, image: UIImage) {
-        self.image = image
 
         let plane = SCNPlane(width: image.size.width / 100, height: image.size.height / 100)
         plane.firstMaterial!.diffuse.contents = image
@@ -92,29 +90,24 @@ open class LocationAnnotationNode: LocationNode {
     
     // Use this constructor to add a UIView as an annotation
     // UIView is more configurable then a UIImage allowing to add background image and labels
-    public convenience init(location: CLLocation?, markerView: UIView){
-        self.init(location: location, image: markerView.image() ?? UIImage())
+    public init(location: CLLocation?, view: UIView){
+        let plane = SCNPlane(width: view.frame.size.width / 100, height: view.frame.size.height / 100)
+        plane.firstMaterial!.diffuse.contents = view
+        plane.firstMaterial!.lightingModel = .constant
+        
+        annotationNode = SCNNode()
+        annotationNode.geometry = plane
+        
+        super.init(location: location)
+        
+        let billboardConstraint = SCNBillboardConstraint()
+        billboardConstraint.freeAxes = SCNBillboardAxis.Y
+        constraints = [billboardConstraint]
+        
+        addChildNode(annotationNode)
     }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension UIView{
-    
-    // Converts the current state of a UIView instance into UIImage instance
-    // Easier to add UIView with dynamically populated fields like background images and labels for
-    // annotation markers instead of just an image
-    func image() -> UIImage? {
-        var image: UIImage?
-        UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.isOpaque, 0.0)
-        defer{UIGraphicsEndImageContext()}
-        if let context = UIGraphicsGetCurrentContext(){
-            self.layer.render(in: context)
-            let imageFromContext = UIGraphicsGetImageFromCurrentImageContext()
-            image = imageFromContext
-        }
-        return image
     }
 }
