@@ -120,16 +120,17 @@ In order for you to get a notification when a node is touched in the `sceneLocat
 ```swift
 class ViewController: UIViewController, LNTouchDelegate {
 
-override func viewDidLoad() {
-    super.viewDidLoad()
-    //...
-    self.sceneLocationView.locationNodeTouchDelegate = self
-    //...
-}
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        //...
+        self.sceneLocationView.locationNodeTouchDelegate = self
+        //...
+    }
 
     func locationNodeTouched(node: SCNNode) {
         // Do stuffs with the node instance
     }
+}
 ```
 ## Additional features
 The library and demo come with a bunch of additional features for configuration. It’s all fully documented to be sure to have a look around.
