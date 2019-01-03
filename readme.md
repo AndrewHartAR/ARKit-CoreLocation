@@ -116,6 +116,22 @@ There are two ways to add a location node to a scene - using `addLocationNodeWit
 
 So that’s it. If you set the frame of your sceneLocationView, you should now see the pin hovering above Canary Wharf.
 
+In order to get a notification when a node is touched in the `sceneLocationView`, you need to conform to `LNTouchDelegate` in the ViewController class. 
+```swift
+class ViewController: UIViewController, LNTouchDelegate {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        //...
+        self.sceneLocationView.locationNodeTouchDelegate = self
+        //...
+    }
+
+    func locationNodeTouched(node: SCNNode) {
+        // Do stuffs with the node instance
+    }
+}
+```
 ## Additional features
 The library and demo come with a bunch of additional features for configuration. It’s all fully documented to be sure to have a look around.
 

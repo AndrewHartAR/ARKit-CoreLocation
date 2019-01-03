@@ -26,6 +26,11 @@ public protocol SceneLocationViewDelegate: class {
     func sceneLocationViewDidUpdateLocationAndScaleOfLocationNode(sceneLocationView: SceneLocationView, locationNode: LocationNode)
 }
 
+// Delegate for touch events on LocationNode
+public protocol LNTouchDelegate {
+    func locationNodeTouched(node: SCNNode)
+}
+
 ///Different methods which can be used when determining locations (such as the user's location).
 public enum LocationEstimateMethod {
     ///Only uses core location data.
@@ -113,6 +118,9 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         if showFeaturePoints {
             debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         }
+        
+        let touchGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(sceneLocationViewTouched(sender:)))
+        self.addGestureRecognizer(touchGestureRecognizer)
     }
 
     override public func layoutSubviews() {
@@ -255,6 +263,10 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
 
     // MARK: - LocationNodes
     ///upon being added, a node's location, locationConfirmed and position may be modified and should not be changed externally.
+    
+    //A delegate for calling the touch event on a LocationAnnotationNode
+    public var locationNodeTouchDelegate: LNTouchDelegate?
+    
     public func addLocationNodeForCurrentPosition(locationNode: LocationNode) {
         guard let currentPosition = currentScenePosition(),
         let currentLocation = currentLocation(),
@@ -456,6 +468,15 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         SCNTransaction.commit()
 
         locationDelegate?.sceneLocationViewDidUpdateLocationAndScaleOfLocationNode(sceneLocationView: self, locationNode: locationNode)
+    }
+    
+    @objc func sceneLocationViewTouched(sender: UITapGestureRecognizer){
+        let touchedView = sender.view as! SCNView
+        let coordinates = sender.location(in: touchedView)
+        let hitTest = touchedView.hitTest(coordinates)
+        if !(hitTest.isEmpty){
+            self.locationNodeTouchDelegate?.locationNodeTouched(node: hitTest[0].node)
+        }
     }
 
     // MARK: - ARSCNViewDelegate
