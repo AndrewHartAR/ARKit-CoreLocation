@@ -143,11 +143,11 @@ class ViewController: UIViewController, LNTouchDelegate {
         
         // node could have either node.view or node.image
         if let nodeView = node.view{
-            // Do stuffs with the view
+            // Do stuffs with the nodeView
             // ...
         }
         if let nodeImage = node.image{
-            // Do stuffs with the image
+            // Do stuffs with the nodeImage
             // ...
         }
     }
