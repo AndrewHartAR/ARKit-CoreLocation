@@ -10,6 +10,21 @@ import Foundation
 import SceneKit
 import CoreLocation
 
+open class AnnotationNode: SCNNode{
+    public var view: UIView?
+    public var image: UIImage?
+    
+    public init(view: UIView?, image: UIImage?){
+        super.init()
+        self.view = view
+        self.image = image
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 ///A location node can be added to a scene using a coordinate.
 ///Its scale and position should not be adjusted, as these are used for scene layout purposes
 ///To adjust the scale and position of items within a node, you can add them to a child node and adjust them there
@@ -61,7 +76,7 @@ open class LocationAnnotationNode: LocationNode {
 
     ///Subnodes and adjustments should be applied to this subnode
     ///Required to allow scaling at the same time as having a 2D 'billboard' appearance
-    public let annotationNode: SCNNode
+    public let annotationNode: AnnotationNode
 
     ///Whether the node should be scaled relative to its distance from the camera
     ///Default value (false) scales it to visually appear at the same size no matter the distance
@@ -76,7 +91,7 @@ open class LocationAnnotationNode: LocationNode {
         plane.firstMaterial!.diffuse.contents = image
         plane.firstMaterial!.lightingModel = .constant
 
-        annotationNode = SCNNode()
+        annotationNode = AnnotationNode(view: nil, image: image)
         annotationNode.geometry = plane
 
         super.init(location: location)
@@ -95,7 +110,7 @@ open class LocationAnnotationNode: LocationNode {
         plane.firstMaterial!.diffuse.contents = view
         plane.firstMaterial!.lightingModel = .constant
         
-        annotationNode = SCNNode()
+        annotationNode = AnnotationNode(view: view, image: nil)
         annotationNode.geometry = plane
         
         super.init(location: location)

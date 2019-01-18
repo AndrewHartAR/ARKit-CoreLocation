@@ -28,7 +28,7 @@ public protocol SceneLocationViewDelegate: class {
 
 // Delegate for touch events on LocationNode
 public protocol LNTouchDelegate {
-    func locationNodeTouched(node: SCNNode)
+    func locationNodeTouched(node: AnnotationNode)
 }
 
 ///Different methods which can be used when determining locations (such as the user's location).
@@ -475,7 +475,8 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         let coordinates = sender.location(in: touchedView)
         let hitTest = touchedView.hitTest(coordinates)
         if !(hitTest.isEmpty){
-            self.locationNodeTouchDelegate?.locationNodeTouched(node: hitTest[0].node)
+            let touchedNode = hitTest[0].node as! AnnotationNode
+            self.locationNodeTouchDelegate?.locationNodeTouched(node: touchedNode)
         }
     }
 
