@@ -106,6 +106,17 @@ let image = UIImage(named: "pin")!
 let annotationNode = LocationAnnotationNode(location: location, image: image)
 ```
 
+`LocationAnnotationNode` can also be initialized using a UIView. This is a preferred method since the attributes of the UIView can be kept dynamic during the lifecycle of the application.
+
+```swift
+let coordinate = CLLocationCoordinate2D(latitude: 51.504571, longitude: -0.019717)
+let location = CLLocation(coordinate: coordinate, altitude: 300)
+let view = UIView() // or a custom UIView subclass
+
+let annotationNode = LocationAnnotationNode(location: location, view: view)
+```
+
+
 By default, the image you set should always appear at the size it was given, for example if you give a 100x100 image, it would appear at 100x100 on the screen. This means distant annotation nodes can always be seen at the same size as nearby ones. If you’d rather they scale relative to their distance, you can set LocationAnnotationNode’s `scaleRelativeToDistance` to `true`.
 
 ```swift
@@ -116,6 +127,32 @@ There are two ways to add a location node to a scene - using `addLocationNodeWit
 
 So that’s it. If you set the frame of your sceneLocationView, you should now see the pin hovering above Canary Wharf.
 
+In order to get a notification when a node is touched in the `sceneLocationView`, you need to conform to `LNTouchDelegate` in the ViewController class. The `locationNodeTouched(node: AnnotationNode)` gives you access to node that was touched on the screen. `AnnotationNode` is a subclass of SCNNode with two extra properties: `image: UIImage?` and `view: UIView?`. Either of these properties will be filled in based on how the `LocationAnnotationNode` was initialized (using the constructor that takes UIImage or UIView).
+```swift
+class ViewController: UIViewController, LNTouchDelegate {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        //...
+        self.sceneLocationView.locationNodeTouchDelegate = self
+        //...
+    }
+
+    func locationNodeTouched(node: AnnotationNode) {
+        // Do stuffs with the node instance
+        
+        // node could have either node.view or node.image
+        if let nodeView = node.view{
+            // Do stuffs with the nodeView
+            // ...
+        }
+        if let nodeImage = node.image{
+            // Do stuffs with the nodeImage
+            // ...
+        }
+    }
+}
+```
 ## Additional features
 The library and demo come with a bunch of additional features for configuration. It’s all fully documented to be sure to have a look around.
 
