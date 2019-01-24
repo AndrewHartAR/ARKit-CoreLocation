@@ -118,7 +118,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
         if showFeaturePoints {
             debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         }
-        
+
         let touchGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(sceneLocationViewTouched(sender:)))
         self.addGestureRecognizer(touchGestureRecognizer)
     }
@@ -263,10 +263,10 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
 
     // MARK: - LocationNodes
     ///upon being added, a node's location, locationConfirmed and position may be modified and should not be changed externally.
-    
+
     //A delegate for calling the touch event on a LocationAnnotationNode
     public weak var locationNodeTouchDelegate: LNTouchDelegate?
-    
+
     public func addLocationNodeForCurrentPosition(locationNode: LocationNode) {
         guard let currentPosition = currentScenePosition(),
         let currentLocation = currentLocation(),
@@ -469,13 +469,18 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
 
         locationDelegate?.sceneLocationViewDidUpdateLocationAndScaleOfLocationNode(sceneLocationView: self, locationNode: locationNode)
     }
-    
-    @objc func sceneLocationViewTouched(sender: UITapGestureRecognizer){
-        let touchedView = sender.view as! SCNView
+
+    @objc func sceneLocationViewTouched(sender: UITapGestureRecognizer) {
+        guard let touchedView = sender.view as? SCNView else {
+            return
+        }
+
         let coordinates = sender.location(in: touchedView)
         let hitTest = touchedView.hitTest(coordinates)
-        if !(hitTest.isEmpty){
-            let touchedNode = hitTest[0].node as! AnnotationNode
+
+        if !hitTest.isEmpty,
+           let firstHitTest = hitTest.first,
+           let touchedNode = firstHitTest.node as? AnnotationNode {
             self.locationNodeTouchDelegate?.locationNodeTouched(node: touchedNode)
         }
     }

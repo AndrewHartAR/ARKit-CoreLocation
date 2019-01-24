@@ -296,6 +296,9 @@ private extension ViewController {
         let canaryWharf = buildNode(latitude: 51.504607, longitude: -0.019592, altitude: 236, imageName: "pin")
         nodes.append(canaryWharf)
 
+        let applePark = buildViewNode(latitude: 37.334807, longitude: -122.009076, altitude: 100, text: "Apple Park")
+        nodes.append(applePark)
+
         return nodes
     }
 
@@ -304,6 +307,15 @@ private extension ViewController {
         let location = CLLocation(coordinate: coordinate, altitude: altitude)
         let image = UIImage(named: imageName)!
         return LocationAnnotationNode(location: location, image: image)
+    }
+
+    func buildViewNode(latitude: CLLocationDegrees, longitude: CLLocationDegrees, altitude: CLLocationDistance, text: String) -> LocationAnnotationNode {
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let location = CLLocation(coordinate: coordinate, altitude: altitude)
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        label.text = text
+        label.backgroundColor = .green
+        return LocationAnnotationNode(location: location, view: label)
     }
 }
 
