@@ -27,7 +27,7 @@ public protocol SceneLocationViewDelegate: class {
 }
 
 // Delegate for touch events on LocationNode
-public protocol LNTouchDelegate {
+public protocol LNTouchDelegate: class {
     func locationNodeTouched(node: AnnotationNode)
 }
 
@@ -265,7 +265,7 @@ public class SceneLocationView: ARSCNView, ARSCNViewDelegate {
     ///upon being added, a node's location, locationConfirmed and position may be modified and should not be changed externally.
     
     //A delegate for calling the touch event on a LocationAnnotationNode
-    public var locationNodeTouchDelegate: LNTouchDelegate?
+    public weak var locationNodeTouchDelegate: LNTouchDelegate?
     
     public func addLocationNodeForCurrentPosition(locationNode: LocationNode) {
         guard let currentPosition = currentScenePosition(),
