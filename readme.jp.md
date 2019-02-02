@@ -96,6 +96,16 @@ let image = UIImage(named: "pin")!
 let annotationNode = LocationAnnotationNode(location: location, image: image)
 ```
 
+UIViewを使用して`LocationAnnotationNode`を初期化することも可能です。 推奨されている方法として、アプリケーションのライフサイクルを動的に保持することもできます。
+
+```swift
+let coordinate = CLLocationCoordinate2D(latitude: 51.504571, longitude: -0.019717)
+let location = CLLocation(coordinate: coordinate, altitude: 300)
+let view = UIView() // or a custom UIView subclass
+
+let annotationNode = LocationAnnotationNode(location: location, view: view)
+```
+
 デフォルトで、設置した画像は常に与えられたサイズで見えるべきです。例えば、100x100の画像を与えたなら、それはスクリーン上でも100x100で表示されるでしょう。
 遠くにあるアノテーションノードは近くになるのと同じサイズで常に見えるということです。
 もし距離に応じて縮小と拡大をさせる方がいいなら、LocationAnnotationNodeの`scaleRelativeToDistance`を`true`にセットすることができます。
@@ -106,6 +116,32 @@ sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: annotationN
 
 シーンに位置ノードを追加する方法は2つあります。それは`addLocationNodeWithConfirmedLocation`と`addLocationNodeForCurrentPosition`を使う方法です。端末と同じ位置に位置ノードを3Dの世界に配置し、座標を与えてくれます。
 sceneLocationViewのframeを設定したら、Canary Wharfの上にピンが浮かんでるのが見えます。
+
+ノードが`sceneLocationView`によってタッチされたときに、通知を受け取るためにはViewControllerクラスの`LNTouchDelegate`に従う必要があります。`locationNodeTouched（node：AnnotationNode）`は画面に触れたノードへのアクセスを提供します。`AnnotationNode`はSCNNodeのサブクラスであり、` image：UIImage？ `と` view：UIView？ `の2つの追加プロパティがあります。これらのプロパティはどちらも `LocationAnnotationNode`がどのように初期化されたかに基づいて定められます（UIImageまたはUIViewどちらかのコンストラクタを使ったかによって定められます）。
+
+```swift
+class ViewController: UIViewController, LNTouchDelegate {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        //...
+        self.sceneLocationView.locationNodeTouchDelegate = self
+        //...
+    }
+    func locationNodeTouched(node: AnnotationNode) {
+        // Do stuffs with the node instance
+
+        // node could have either node.view or node.image
+        if let nodeView = node.view{
+            // Do stuffs with the nodeView
+            // ...
+        }
+        if let nodeImage = node.image{
+            // Do stuffs with the nodeImage
+            // ...
+        }
+    }
+}
+```
 
 ## 追加機能
 ライブラリとデモには、設定のための追加の機能が用意されています。必ず一覧できるように完全に文書化されています。
