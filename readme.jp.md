@@ -59,7 +59,7 @@ iOS 11 は Apple’s Developer websiteからダウンロードできます。
 
 まず、ARCLとCoreLocationをインポートします。それから、SceneLocationViewをプロパティとして宣言します。
 
-```
+```swift
 import ARCL
 import CoreLocation
 
@@ -70,7 +70,7 @@ var sceneLocationView = SceneLocationView()
 
 ピントが合ってるときはいつでも `sceneLocationView.run()` を呼び、別のビューに移動したりアプリを閉じたりするなどで中断する場合は `sceneLocationView.pause()` を呼ぶべきです。
 
-```
+```swift
 override func viewDidLoad() {
 super.viewDidLoad()
 
@@ -88,7 +88,7 @@ sceneLocationView.frame = view.bounds
 `run()`を呼んだら、座標を追加することができます。ARCLは`LocationNode`という、3Dシーンのオブジェクトで、現実世界の位置を持ち、3Dの世界の中に適切に表示できるようにする他のいくつかのプロパティも持っているクラスがあります。
 `LocationNode` は SceneKitの`SCNNode`のサブクラスで、さらにサブクラス化できます。例えば、`LocationAnnotationNode`というサブクラスを使います。これは3Dの世界に2次元の画像を表示するために使用しますが、いつも使うことになります。
 
-```
+```swift
 let coordinate = CLLocationCoordinate2D(latitude: 51.504571, longitude: -0.019717)
 let location = CLLocation(coordinate: coordinate, altitude: 300)
 let image = UIImage(named: "pin")!
@@ -100,7 +100,7 @@ let annotationNode = LocationAnnotationNode(location: location, image: image)
 遠くにあるアノテーションノードは近くになるのと同じサイズで常に見えるということです。
 もし距離に応じて縮小と拡大をさせる方がいいなら、LocationAnnotationNodeの`scaleRelativeToDistance`を`true`にセットすることができます。
 
-```
+```swift
 sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: annotationNode)
 ```
 
