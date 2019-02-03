@@ -59,6 +59,11 @@ open class LocationNode: SCNNode {
     /// This should only be set to false if you plan to manually update position and scale
     /// at regular intervals. You can do this with `SceneLocationView`'s `updatePositionOfLocationNode`.
     public var continuallyUpdatePositionAndScale = true
+    
+    /// Whether the node should appear at the same altitude of the user
+    /// May be useful when you don't know the real altitude of the node
+    /// When set to true, the node will stay at the same altitude of the user
+    public var ignoreAltitude = false
 
     public init(location: CLLocation?) {
         self.location = location
