@@ -113,7 +113,7 @@ open class LocationAnnotationNode: LocationNode {
     ///   - view: The view to display at the specified location.
     public init(location: CLLocation?, view: UIView) {
         let plane = SCNPlane(width: view.frame.size.width / 100, height: view.frame.size.height / 100)
-        plane.firstMaterial!.diffuse.contents = view
+        plane.firstMaterial!.diffuse.contents = view.layer
         plane.firstMaterial!.lightingModel = .constant
 
         annotationNode = AnnotationNode(view: view, image: nil)
