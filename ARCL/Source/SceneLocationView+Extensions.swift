@@ -13,6 +13,8 @@ import MapKit
 
 @available(iOS 11.0, *)
 extension SceneLocationView: ARSCNViewDelegate {
+
+    @objc
     public func renderer(_ renderer: SCNSceneRenderer, didRenderScene scene: SCNScene, atTime time: TimeInterval) {
         if sceneNode == nil {
             sceneNode = SCNNode()
@@ -27,10 +29,9 @@ extension SceneLocationView: ARSCNViewDelegate {
         if !didFetchInitialLocation {
             //Current frame and current location are required for this to be successful
             if session.currentFrame != nil,
-                let currentLocation = self.locationManager.currentLocation {
+                let currentLocation = sceneLocationManager.currentLocation {
                 didFetchInitialLocation = true
-
-                self.addSceneLocationEstimate(location: currentLocation)
+                sceneLocationManager.addSceneLocationEstimate(location: currentLocation)
             }
         }
     }
@@ -65,23 +66,23 @@ extension SceneLocationView: ARSCNViewDelegate {
     }
 }
 
-// MARK: - LocationManager
-
-@available(iOS 11.0, *)
-extension SceneLocationView: LocationManagerDelegate {
-    func locationManagerDidUpdateLocation(_ locationManager: LocationManager, location: CLLocation) {
-        addSceneLocationEstimate(location: location)
-    }
-
-    func locationManagerDidUpdateHeading(_ locationManager: LocationManager, heading: CLLocationDirection, accuracy: CLLocationAccuracy) {
-        // negative value means the heading will equal the `magneticHeading`, and we're interested in the `trueHeading`
-        if accuracy < 0 {
-            return
-        }
-
-        // heading of 0º means its pointing to the geographic North
-        if heading == 0 {
-            resetSceneHeading()
-        }
-    }
-}
+//// MARK: - LocationManager
+//
+//@available(iOS 11.0, *)
+//extension SceneLocationView: LocationManagerDelegate {
+//    func locationManagerDidUpdateLocation(_ locationManager: LocationManager, location: CLLocation) {
+//        addSceneLocationEstimate(location: location)
+//    }
+//
+//    func locationManagerDidUpdateHeading(_ locationManager: LocationManager, heading: CLLocationDirection, accuracy: CLLocationAccuracy) {
+//        // negative value means the heading will equal the `magneticHeading`, and we're interested in the `trueHeading`
+//        if accuracy < 0 {
+//            return
+//        }
+//
+//        // heading of 0º means its pointing to the geographic North
+//        if heading == 0 {
+//            resetSceneHeading()
+//        }
+//    }
+//}

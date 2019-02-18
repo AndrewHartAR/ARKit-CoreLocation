@@ -71,9 +71,8 @@ public class SceneLocationView: ARSCNView {
 
     public private(set) var locationNodes = [LocationNode]()
 
-    // MARK: Private desclarations
-    private var didFetchInitialLocation = false
-    private let sceneLocationManager = SceneLocationManager()
+    var didFetchInitialLocation = false
+    let sceneLocationManager = SceneLocationManager()
 
     // MARK: Setup
     public convenience init() {
@@ -287,29 +286,5 @@ extension SceneLocationView: SceneLocationManagerDelegate {
 
     func didRemoveSceneLocationEstimate(position: SCNVector3, location: CLLocation) {
         locationEstimateDelegate?.didRemoveSceneLocationEstimate(sceneLocationView: self, position: position, location: location)
-    }
-}
-
-@available(iOS 11.0, *)
-extension SceneLocationView: ARSCNViewDelegate {
-    public func renderer(_ renderer: SCNSceneRenderer, didRenderScene scene: SCNScene, atTime time: TimeInterval) {
-        if sceneNode == nil {
-            sceneNode = SCNNode()
-            scene.rootNode.addChildNode(sceneNode!)
-
-            if showAxesNode {
-                let axesNode = SCNNode.axesNode(quiverLength: 0.1, quiverThickness: 0.5)
-                sceneNode?.addChildNode(axesNode)
-            }
-        }
-
-        if !didFetchInitialLocation {
-            //Current frame and current location are required for this to be successful
-            if session.currentFrame != nil,
-                let currentLocation = sceneLocationManager.currentLocation {
-                didFetchInitialLocation = true
-                sceneLocationManager.addSceneLocationEstimate(location: currentLocation)
-            }
-        }
     }
 }
