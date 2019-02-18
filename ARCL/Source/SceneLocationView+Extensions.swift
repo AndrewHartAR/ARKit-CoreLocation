@@ -65,24 +65,3 @@ extension SceneLocationView: ARSCNViewDelegate {
         }
     }
 }
-
-//// MARK: - LocationManager
-//
-//@available(iOS 11.0, *)
-//extension SceneLocationView: LocationManagerDelegate {
-//    func locationManagerDidUpdateLocation(_ locationManager: LocationManager, location: CLLocation) {
-//        addSceneLocationEstimate(location: location)
-//    }
-//
-//    func locationManagerDidUpdateHeading(_ locationManager: LocationManager, heading: CLLocationDirection, accuracy: CLLocationAccuracy) {
-//        // negative value means the heading will equal the `magneticHeading`, and we're interested in the `trueHeading`
-//        if accuracy < 0 {
-//            return
-//        }
-//
-//        // heading of 0º means its pointing to the geographic North
-//        if heading == 0 {
-//            resetSceneHeading()
-//        }
-//    }
-//}

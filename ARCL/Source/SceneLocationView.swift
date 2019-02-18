@@ -43,7 +43,6 @@ public class SceneLocationView: ARSCNView {
 
             locationNodes.forEach { sceneNode?.addChildNode($0) }
 
-
             locationViewDelegate?.didSetupSceneNode(sceneLocationView: self, sceneNode: sceneNode!)
         }
     }
@@ -260,7 +259,7 @@ public extension SceneLocationView {
 
 @available(iOS 11.0, *)
 public extension SceneLocationView {
-    
+
     public func addRoutes(routes: [MKRoute]) {
         guard let altitude = sceneLocationManager.currentLocation?.altitude else { return }
         let polyNodes = routes.map { PolylineNode(polyline: $0.polyline, altitude: altitude - 2.0) }
