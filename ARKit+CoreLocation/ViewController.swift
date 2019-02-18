@@ -193,9 +193,6 @@ class ViewController: UIViewController {
     func buildDemoData() -> [LocationAnnotationNode] {
         var nodes: [LocationAnnotationNode] = []
 
-        // TODO: add a few more demo points of interest.
-        // TODO: use more varied imagery.
-
         let spaceNeedle = buildNode(latitude: 47.6205, longitude: -122.3493, altitude: 225, imageName: "pin")
         nodes.append(spaceNeedle)
 
@@ -226,6 +223,7 @@ class ViewController: UIViewController {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         label.text = text
         label.backgroundColor = .green
+        label.textAlignment = .center
         return LocationAnnotationNode(location: location, view: label)
     }
 }
