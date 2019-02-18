@@ -4,5 +4,5 @@ use_frameworks!
 inhibit_all_warnings!
 
 target 'ARKit+CoreLocation' do
-	pod 'CocoaLumberjack/Swift', :git => 'https://github.com/CocoaLumberjack/CocoaLumberjack', :branch => 'master'
+#	pod 'CocoaLumberjack/Swift', :git => 'https://github.com/CocoaLumberjack/CocoaLumberjack', :branch => 'master'
 end

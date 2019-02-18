@@ -9,7 +9,6 @@
 import UIKit
 import SceneKit
 import MapKit
-import CocoaLumberjack
 import ARCL
 
 @available(iOS 11.0, *)
@@ -77,7 +76,7 @@ class ViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        DDLogDebug("pause")
+        print("pause")
         // Pause the view's session
         sceneLocationView.pause()
     }
@@ -242,13 +241,13 @@ extension ViewController: SceneLocationViewDelegate {
     func sceneLocationViewDidAddSceneLocationEstimate(sceneLocationView: SceneLocationView,
                                                       position: SCNVector3,
                                                       location: CLLocation) {
-        DDLogDebug("add scene location estimate, position: \(position), \(location.debugLog)")
+        print("add scene location estimate, position: \(position), \(location.debugLog)")
     }
 
     func sceneLocationViewDidRemoveSceneLocationEstimate(sceneLocationView: SceneLocationView,
                                                          position: SCNVector3,
                                                          location: CLLocation) {
-        DDLogDebug("remove scene location estimate, position: \(position), \(location.debugLog)")
+        print("remove scene location estimate, position: \(position), \(location.debugLog)")
     }
 }
 
