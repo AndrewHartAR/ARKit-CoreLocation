@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.makeKeyAndVisible()
 
         if #available(iOS 11.0, *) {
-            let vc = ViewController()
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController")
             self.window!.rootViewController = vc
         } else {
             self.window!.rootViewController = NotSupportedViewController()

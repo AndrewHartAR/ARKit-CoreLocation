@@ -13,10 +13,10 @@ import ARCL
 
 @available(iOS 11.0, *)
 class ViewController: UIViewController {
-    @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var infoLabel: UILabel!
+    @IBOutlet var mapView: MKMapView!
+    @IBOutlet var infoLabel: UILabel!
 
-    @IBOutlet weak var contentView: UIView!
+    @IBOutlet var contentView: UIView!
     let sceneLocationView = SceneLocationView()
 
     var userAnnotation: MKPointAnnotation?
