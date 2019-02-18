@@ -7,6 +7,7 @@ Pod::Spec.new do |s|
   s.license      = { :type => 'MIT', :file => 'LICENSE'  }
   s.source       = { :git => "https://ProjectDent@github.com/ProjectDent/ARKit-CoreLocation.git", :tag => s.version.to_s, :submodules => false }
   s.platform     = :ios, '9.0'
+  s.swift_version = "4.2"
   s.requires_arc = true
   s.source_files = 'ARCL/Source/**/*.{swift}'
   s.frameworks   = 'Foundation', 'UIKit', 'ARKit', 'CoreLocation', 'MapKit', 'SceneKit'

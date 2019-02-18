@@ -11,10 +11,10 @@ import SceneKit
 import MapKit
 
 public class PolylineNode {
-    var locationNodes = [LocationNode]()
+    public private(set) var locationNodes = [LocationNode]()
 
-    private let polyline: MKPolyline
-    private let altitude: CLLocationDistance
+    public let polyline: MKPolyline
+    public let altitude: CLLocationDistance
 
     private let lightNode: SCNNode = {
         let node = SCNNode()
@@ -58,8 +58,8 @@ public class PolylineNode {
         let points = polyline.points()
 
         for i in 0 ..< polyline.pointCount - 1 {
-            let currentLocation = CLLocation(coordinate: MKCoordinateForMapPoint(points[i]), altitude: altitude)
-            let nextLocation = CLLocation(coordinate: MKCoordinateForMapPoint(points[i + 1]), altitude: altitude)
+            let currentLocation = CLLocation(coordinate: points[i].coordinate, altitude: altitude)
+            let nextLocation = CLLocation(coordinate: points[i + 1].coordinate, altitude: altitude)
 
             let distance = currentLocation.distance(from: nextLocation)
 
