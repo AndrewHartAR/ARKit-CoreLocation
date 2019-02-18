@@ -6,6 +6,7 @@
 //  Copyright © 2017 Project Dent. All rights reserved.
 //
 
+import CocoaLumberjack
 import UIKit
 
 @UIApplicationMain

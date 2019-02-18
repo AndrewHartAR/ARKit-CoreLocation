@@ -217,6 +217,31 @@ class ViewController: UIViewController, MKMapViewDelegate, SceneLocationViewDele
         }
     }
 
+    func buildDemoData() -> [LocationAnnotationNode] {
+        var nodes: [LocationAnnotationNode] = []
+
+        // TODO: add a few more demo points of interest.
+        // TODO: use more varied imagery.
+
+        let spaceNeedle = buildNode(latitude: 47.6205, longitude: -122.3493, altitude: 225, imageName: "pin")
+        nodes.append(spaceNeedle)
+
+        let empireStateBuilding = buildNode(latitude: 40.7484, longitude: -73.9857, altitude: 14.3, imageName: "pin")
+        nodes.append(empireStateBuilding)
+
+        let canaryWharf = buildNode(latitude: 51.504607, longitude: -0.019592, altitude: 236, imageName: "pin")
+        nodes.append(canaryWharf)
+
+        return nodes
+    }
+
+    func buildNode(latitude: CLLocationDegrees, longitude: CLLocationDegrees, altitude: CLLocationDistance, imageName: String) -> LocationAnnotationNode {
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let location = CLLocation(coordinate: coordinate, altitude: altitude)
+        let image = UIImage(named: imageName)!
+        return LocationAnnotationNode(location: location, image: image)
+    }
+
     // MARK: MKMapViewDelegate
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {

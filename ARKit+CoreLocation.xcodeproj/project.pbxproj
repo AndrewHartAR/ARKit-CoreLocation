@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		128F72A11F39BE2F00AC6E4C /* BaseTypes+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128F72A01F39BE2F00AC6E4C /* BaseTypes+Extensions.swift */; };
-		4901EF051F1B7D560067870D /* SceneLocationEstimate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4901EF041F1B7D560067870D /* SceneLocationEstimate+Extensions.swift */; };
+		3D16C296C513125F6AFC405E /* Pods_ARKit_CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C10523EF85AA6B7CDF962AD /* Pods_ARKit_CoreLocation.framework */; };
 		49099E391F24BAE5007B76FD /* SCNVector3+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49099E381F24BAE5007B76FD /* SCNVector3+Extensions.swift */; };
 		49A3FBDC1F09988100AA59C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A3FBDB1F09988100AA59C8 /* AppDelegate.swift */; };
 		49A3FBE01F09988100AA59C8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A3FBDF1F09988100AA59C8 /* ViewController.swift */; };
@@ -18,7 +18,6 @@
 		932EF23220BE7E6E0052210C /* ARCLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932EF23120BE7E6E0052210C /* ARCLTests.swift */; };
 		932EF23420BE7E6E0052210C /* ARCL.h in Headers */ = {isa = PBXBuildFile; fileRef = 932EF22420BE7E6D0052210C /* ARCL.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		932EF23720BE7E6E0052210C /* ARCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 932EF22220BE7E6D0052210C /* ARCL.framework */; };
-		932EF23820BE7E6E0052210C /* ARCL.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 932EF22220BE7E6D0052210C /* ARCL.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		932EF26120BE83A80052210C /* SceneLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A3FBF61F099C8100AA59C8 /* SceneLocationView.swift */; };
 		932EF26220BE83A80052210C /* LocationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A3FBFE1F09B1D200AA59C8 /* LocationNode.swift */; };
 		932EF26320BE83A80052210C /* SceneLocationEstimate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A3FC001F09B9CF00AA59C8 /* SceneLocationEstimate.swift */; };
@@ -56,23 +55,9 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		932EF23E20BE7E6E0052210C /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				932EF23820BE7E6E0052210C /* ARCL.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
+		0BB91C943796356004210093 /* Pods-ARKit+CoreLocation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARKit+CoreLocation.release.xcconfig"; path = "Pods/Target Support Files/Pods-ARKit+CoreLocation/Pods-ARKit+CoreLocation.release.xcconfig"; sourceTree = "<group>"; };
 		128F72A01F39BE2F00AC6E4C /* BaseTypes+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BaseTypes+Extensions.swift"; sourceTree = "<group>"; };
-		38104A8494954E9B79241EAE /* Pods-ARKit+CoreLocation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARKit+CoreLocation.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ARKit+CoreLocation/Pods-ARKit+CoreLocation.debug.xcconfig"; sourceTree = "<group>"; };
 		4901EF041F1B7D560067870D /* SceneLocationEstimate+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SceneLocationEstimate+Extensions.swift"; sourceTree = "<group>"; };
 		49099E381F24BAE5007B76FD /* SCNVector3+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+Extensions.swift"; sourceTree = "<group>"; };
 		49A3FBD81F09988100AA59C8 /* ARKit+CoreLocation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ARKit+CoreLocation.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,6 +75,7 @@
 		49A3FC041F0A423800AA59C8 /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
 		49D206F21F124BDD00D7D622 /* SCNNode+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNNode+Extensions.swift"; sourceTree = "<group>"; };
 		6C10523EF85AA6B7CDF962AD /* Pods_ARKit_CoreLocation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ARKit_CoreLocation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C31ACA439BC114F28F96BDD /* Pods-ARKit+CoreLocation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARKit+CoreLocation.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ARKit+CoreLocation/Pods-ARKit+CoreLocation.debug.xcconfig"; sourceTree = "<group>"; };
 		932EF22220BE7E6D0052210C /* ARCL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ARCL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		932EF22420BE7E6D0052210C /* ARCL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARCL.h; sourceTree = "<group>"; };
 		932EF22520BE7E6D0052210C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -105,6 +91,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				932EF23720BE7E6E0052210C /* ARCL.framework in Frameworks */,
+				3D16C296C513125F6AFC405E /* Pods_ARKit_CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +113,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		26D180C0CA780108CD695139 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8C31ACA439BC114F28F96BDD /* Pods-ARKit+CoreLocation.debug.xcconfig */,
+				0BB91C943796356004210093 /* Pods-ARKit+CoreLocation.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		49A3FBCF1F09988100AA59C8 = {
 			isa = PBXGroup;
 			children = (
@@ -134,6 +130,7 @@
 				932EF23020BE7E6E0052210C /* ARCLTests */,
 				49A3FBD91F09988100AA59C8 /* Products */,
 				F2E2E005FD78BDD52B0F8A94 /* Frameworks */,
+				26D180C0CA780108CD695139 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -223,12 +220,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 49A3FBEC1F09988100AA59C8 /* Build configuration list for PBXNativeTarget "ARKit+CoreLocation" */;
 			buildPhases = (
+				F3C651027697D46CB173FF94 /* [CP] Check Pods Manifest.lock */,
 				49A3FBD41F09988100AA59C8 /* Sources */,
 				49A3FBD51F09988100AA59C8 /* Frameworks */,
 				49A3FBD61F09988100AA59C8 /* Resources */,
-				B912B23DE2753A7230AC73FF /* [CP] Embed Pods Frameworks */,
+				B912B23DE2753A7230AC73FF /* Swiftlint */,
 				3B65648ABF0CBE46120C6ABF /* [CP] Copy Pods Resources */,
 				128F729F1F39B73C00AC6E4C /* SwiftLint */,
+				9CE3F8FA71585F7964C43538 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -377,25 +376,29 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ARKit+CoreLocation/Pods-ARKit+CoreLocation-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		63B0FABA6912CCD1470FF302 /* [CP] Check Pods Manifest.lock */ = {
+		9CE3F8FA71585F7964C43538 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+			inputFileListPaths = (
 			);
-			name = "[CP] Check Pods Manifest.lock";
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ARKit+CoreLocation/Pods-ARKit+CoreLocation-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ARKit+CoreLocation-checkManifestLockResult.txt",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ARKit+CoreLocation/Pods-ARKit+CoreLocation-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B912B23DE2753A7230AC73FF /* [CP] Embed Pods Frameworks */ = {
+		B912B23DE2753A7230AC73FF /* Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -412,6 +415,28 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
+		F3C651027697D46CB173FF94 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ARKit+CoreLocation-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -422,11 +447,6 @@
 				D8C205D11F5B197200675E6E /* NotSupportedViewController.swift in Sources */,
 				49099E391F24BAE5007B76FD /* SCNVector3+Extensions.swift in Sources */,
 				128F72A11F39BE2F00AC6E4C /* BaseTypes+Extensions.swift in Sources */,
-				49A3FBF71F099C8100AA59C8 /* SceneLocationView.swift in Sources */,
-				49A3FC031F09BADB00AA59C8 /* FloatingPoint+Radians.swift in Sources */,
-				49A3FBFF1F09B1D200AA59C8 /* LocationNode.swift in Sources */,
-				49A3FBFD1F09B00400AA59C8 /* CLLocation+Extensions.swift in Sources */,
-				49A3FC051F0A423800AA59C8 /* CGPoint+Extensions.swift in Sources */,
 				49A3FBE01F09988100AA59C8 /* ViewController.swift in Sources */,
 				49A3FBDC1F09988100AA59C8 /* AppDelegate.swift in Sources */,
 			);
@@ -602,6 +622,7 @@
 		};
 		49A3FBED1F09988100AA59C8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8C31ACA439BC114F28F96BDD /* Pods-ARKit+CoreLocation.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -617,6 +638,7 @@
 		};
 		49A3FBEE1F09988100AA59C8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0BB91C943796356004210093 /* Pods-ARKit+CoreLocation.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
