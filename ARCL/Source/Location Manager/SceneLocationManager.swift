@@ -32,21 +32,21 @@ protocol SceneLocationManagerDelegate: class {
     func didRemoveSceneLocationEstimate(position: SCNVector3, location: CLLocation)
 }
 
-final class SceneLocationManager {
+public final class SceneLocationManager {
     weak var sceneLocationDelegate: SceneLocationManagerDelegate?
 
-    var locationEstimateMethod: LocationEstimateMethod = .mostRelevantEstimate
+    public var locationEstimateMethod: LocationEstimateMethod = .mostRelevantEstimate
+    public let locationManager = LocationManager()
 
-    internal let locationManager = LocationManager()
-    internal var sceneLocationEstimates = [SceneLocationEstimate]()
+    var sceneLocationEstimates = [SceneLocationEstimate]()
 
-    internal var updateEstimatesTimer: Timer?
+    var updateEstimatesTimer: Timer?
 
-    ///The best estimation of location that has been taken
-    ///This takes into account horizontal accuracy, and the time at which the estimation was taken
-    ///favouring the most accurate, and then the most recent result.
-    ///This doesn't indicate where the user currently is.
-    var bestLocationEstimate: SceneLocationEstimate? {
+    /// The best estimation of location that has been taken
+    /// This takes into account horizontal accuracy, and the time at which the estimation was taken
+    /// favouring the most accurate, and then the most recent result.
+    /// This doesn't indicate where the user currently is.
+    public var bestLocationEstimate: SceneLocationEstimate? {
         let sortedLocationEstimates = sceneLocationEstimates.sorted(by: {
             if $0.location.horizontalAccuracy == $1.location.horizontalAccuracy {
                 return $0.location.timestamp > $1.location.timestamp
@@ -58,7 +58,7 @@ final class SceneLocationManager {
         return sortedLocationEstimates.first
     }
 
-    var currentLocation: CLLocation? {
+    public var currentLocation: CLLocation? {
         if locationEstimateMethod == .coreLocationDataOnly { return locationManager.currentLocation }
 
         guard let bestEstimate = bestLocationEstimate,
@@ -75,7 +75,8 @@ final class SceneLocationManager {
         pause()
     }
 
-    @objc internal func updateLocationData() {
+    @objc
+    func updateLocationData() {
         removeOldLocationEstimates()
 
         sceneLocationDelegate?.confirmLocationOfDistantLocationNodes()
@@ -91,12 +92,12 @@ final class SceneLocationManager {
         sceneLocationDelegate?.didAddSceneLocationEstimate(position: position, location: location)
     }
 
-    internal func removeOldLocationEstimates() {
+    func removeOldLocationEstimates() {
         guard let currentScenePosition = sceneLocationDelegate?.scenePosition else { return }
         removeOldLocationEstimates(currentScenePosition: currentScenePosition)
     }
 
-    internal func removeOldLocationEstimates(currentScenePosition: SCNVector3) {
+    func removeOldLocationEstimates(currentScenePosition: SCNVector3) {
         let currentPoint = CGPoint.pointWithVector(vector: currentScenePosition)
 
         sceneLocationEstimates = sceneLocationEstimates.filter {
@@ -121,11 +122,12 @@ final class SceneLocationManager {
 extension SceneLocationManager {
     func run() {
         pause()
-        updateEstimatesTimer = Timer.scheduledTimer(timeInterval: 0.1,
-                                                    target: self,
-                                                    selector: #selector(SceneLocationManager.updateLocationData),
-                                                    userInfo: nil,
-                                                    repeats: true)
+        updateEstimatesTimer = Timer.scheduledTimer(
+                timeInterval: 0.1,
+                target: self,
+                selector: #selector(SceneLocationManager.updateLocationData),
+                userInfo: nil,
+                repeats: true)
     }
 
     func pause() {
@@ -136,7 +138,8 @@ extension SceneLocationManager {
 
 extension SceneLocationManager: LocationManagerDelegate {
 
-    func locationManagerDidUpdateLocation(_ locationManager: LocationManager, location: CLLocation) {
+    func locationManagerDidUpdateLocation(_ locationManager: LocationManager,
+                                          location: CLLocation) {
         addSceneLocationEstimate(location: location)
     }
 }

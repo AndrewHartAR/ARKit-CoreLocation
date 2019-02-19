@@ -21,6 +21,9 @@ public class SceneLocationView: ARSCNView {
     public weak var locationViewDelegate: SceneLocationViewDelegate?
     public weak var locationEstimateDelegate: SceneLocationViewEstimateDelegate?
 
+    public let sceneLocationManager = SceneLocationManager()
+
+
     ///The method to use for determining locations.
     ///Not advisable to change this as the scene is ongoing.
     public var locationEstimateMethod: LocationEstimateMethod {
@@ -73,7 +76,6 @@ public class SceneLocationView: ARSCNView {
 
     // MARK: Internal desclarations
     internal var didFetchInitialLocation = false
-    internal let sceneLocationManager = SceneLocationManager()
 
     // MARK: Setup
     public convenience init() {
