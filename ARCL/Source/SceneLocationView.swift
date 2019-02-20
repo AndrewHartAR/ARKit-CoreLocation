@@ -14,8 +14,8 @@ import MapKit
 //Should conform to delegate here, add in future commit
 @available(iOS 11.0, *)
 public class SceneLocationView: ARSCNView {
-    ///The limit to the scene, in terms of what data is considered reasonably accurate.
-    ///Measured in meters.
+    /// The limit to the scene, in terms of what data is considered reasonably accurate.
+    /// Measured in meters.
     static let sceneLimit = 100.0
 
     public weak var locationViewDelegate: SceneLocationViewDelegate?
@@ -23,9 +23,8 @@ public class SceneLocationView: ARSCNView {
 
     public let sceneLocationManager = SceneLocationManager()
 
-
-    ///The method to use for determining locations.
-    ///Not advisable to change this as the scene is ongoing.
+    /// The method to use for determining locations.
+    /// Not advisable to change this as the scene is ongoing.
     public var locationEstimateMethod: LocationEstimateMethod {
         get {
             return sceneLocationManager.locationEstimateMethod
@@ -37,7 +36,7 @@ public class SceneLocationView: ARSCNView {
         }
     }
 
-    ///When set to true, displays an axes node at the start of the scene
+    /// When set to true, displays an axes node at the start of the scene
     public var showAxesNode = false
 
     public internal(set) var sceneNode: SCNNode? {
@@ -50,17 +49,17 @@ public class SceneLocationView: ARSCNView {
         }
     }
 
-    ///Only to be overrided if you plan on manually setting True North.
-    ///When true, sets up the scene to face what the device considers to be True North.
-    ///This can be inaccurate, hence the option to override it.
-    ///The functions for altering True North can be used irrespective of this value,
-    ///but if the scene is oriented to true north, it will update without warning,
-    ///thus affecting your alterations.
-    ///The initial value of this property is respected.
+    /// Only to be overrided if you plan on manually setting True North.
+    /// When true, sets up the scene to face what the device considers to be True North.
+    /// This can be inaccurate, hence the option to override it.
+    /// The functions for altering True North can be used irrespective of this value,
+    /// but if the scene is oriented to true north, it will update without warning,
+    /// thus affecting your alterations.
+    /// The initial value of this property is respected.
     public var orientToTrueNorth = true
 
-    ///Whether debugging feature points should be displayed.
-    ///Defaults to false
+    /// Whether debugging feature points should be displayed.
+    /// Defaults to false
     public var showFeaturePoints = false
 
     // MARK: Scene location estimates
@@ -107,18 +106,18 @@ public class SceneLocationView: ARSCNView {
         super.layoutSubviews()
     }
 
-    ///Resets the scene heading to 0
-    internal func resetSceneHeading() {
+    /// Resets the scene heading to 0
+    func resetSceneHeading() {
         sceneNode?.eulerAngles.y = 0
     }
 
-    internal func confirmLocationOfLocationNode(_ locationNode: LocationNode) {
+    func confirmLocationOfLocationNode(_ locationNode: LocationNode) {
         locationNode.location = locationOfLocationNode(locationNode)
         locationViewDelegate?.didConfirmLocationOfNode(sceneLocationView: self, node: locationNode)
     }
 
-    ///Gives the best estimate of the location of a node
-    internal func locationOfLocationNode(_ locationNode: LocationNode) -> CLLocation {
+    /// Gives the best estimate of the location of a node
+    func locationOfLocationNode(_ locationNode: LocationNode) -> CLLocation {
         if locationNode.locationConfirmed || locationEstimateMethod == .coreLocationDataOnly {
             return locationNode.location!
         }
@@ -135,7 +134,8 @@ public class SceneLocationView: ARSCNView {
 
 @available(iOS 11.0, *)
 public extension SceneLocationView {
-    public func run() {
+
+    func run() {
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .horizontal
@@ -146,35 +146,36 @@ public extension SceneLocationView {
         sceneLocationManager.run()
     }
 
-    public func pause() {
+    func pause() {
         session.pause()
         sceneLocationManager.pause()
     }
 
     // MARK: True North
-    ///iOS can be inaccurate when setting true north
-    ///The scene is oriented to true north, and will update its heading when it gets a more accurate reading
-    ///You can disable this through setting the
-    ///These functions provide manual overriding of the scene heading,
-    /// if you have a more precise idea of where True North is
-    ///The goal is for the True North orientation problems to be resolved
-    ///At which point these functions would no longer be useful
 
-    ///Moves the scene heading clockwise by 1 degree
-    ///Intended for correctional purposes
-    public func moveSceneHeadingClockwise() {
+    /// iOS can be inaccurate when setting true north
+    /// The scene is oriented to true north, and will update its heading when it gets a more accurate reading
+    /// You can disable this through setting the
+    /// These functions provide manual overriding of the scene heading,
+    /// if you have a more precise idea of where True North is
+    /// The goal is for the True North orientation problems to be resolved
+    /// At which point these functions would no longer be useful
+    /// Moves the scene heading clockwise by 1 degree
+    /// Intended for correctional purposes
+    func moveSceneHeadingClockwise() {
         sceneNode?.eulerAngles.y -= Float(1).degreesToRadians
     }
 
-    ///Moves the scene heading anti-clockwise by 1 degree
-    ///Intended for correctional purposes
-    public func moveSceneHeadingAntiClockwise() {
+    /// Moves the scene heading anti-clockwise by 1 degree
+    /// Intended for correctional purposes
+    func moveSceneHeadingAntiClockwise() {
         sceneNode?.eulerAngles.y += Float(1).degreesToRadians
     }
 
     // MARK: LocationNodes
-    ///upon being added, a node's location, locationConfirmed and position may be modified and should not be changed externally.
-    public func addLocationNodeForCurrentPosition(locationNode: LocationNode) {
+
+    /// upon being added, a node's location, locationConfirmed and position may be modified and should not be changed externally.
+    func addLocationNodeForCurrentPosition(locationNode: LocationNode) {
         guard let currentPosition = currentScenePosition,
             let currentLocation = sceneLocationManager.currentLocation,
             let sceneNode = sceneNode else { return }
@@ -185,14 +186,15 @@ public extension SceneLocationView {
         locationNodes.append(locationNode)
         sceneNode.addChildNode(locationNode)
     }
-    public func addLocationNodesForCurrentPosition(locationNodes: [LocationNode]) {
+
+    func addLocationNodesForCurrentPosition(locationNodes: [LocationNode]) {
         locationNodes.forEach { addLocationNodeForCurrentPosition(locationNode: $0) }
     }
 
-    ///location not being nil, and locationConfirmed being true are required
-    ///Upon being added, a node's position will be modified and should not be changed externally.
-    ///location will not be modified, but taken as accurate.
-    public func addLocationNodeWithConfirmedLocation(locationNode: LocationNode) {
+    /// location not being nil, and locationConfirmed being true are required
+    /// Upon being added, a node's position will be modified and should not be changed externally.
+    /// location will not be modified, but taken as accurate.
+    func addLocationNodeWithConfirmedLocation(locationNode: LocationNode) {
         if locationNode.location == nil || locationNode.locationConfirmed == false { return }
 
         locationNode.updatePositionAndScale(setup: true,
@@ -207,11 +209,11 @@ public extension SceneLocationView {
         sceneNode?.addChildNode(locationNode)
     }
 
-    public func addLocationNodesWithConfirmedLocation(locationNodes: [LocationNode]) {
+    func addLocationNodesWithConfirmedLocation(locationNodes: [LocationNode]) {
         locationNodes.forEach { addLocationNodeWithConfirmedLocation(locationNode: $0) }
     }
 
-    public func removeAllNodes() {
+    func removeAllNodes() {
         locationNodes.removeAll()
         guard let childNodes = sceneNode?.childNodes else { return }
         for node in childNodes {
@@ -223,7 +225,7 @@ public extension SceneLocationView {
     ///
     /// - Parameter tag: tag text
     /// - Returns: true if a LocationNode with the tag exists; false otherwise
-    public func sceneContainsNodeWithTag(_ tag: String) -> Bool {
+    func sceneContainsNodeWithTag(_ tag: String) -> Bool {
         return findNodes(tagged: tag).count > 0
     }
 
@@ -231,7 +233,7 @@ public extension SceneLocationView {
     ///
     /// - Parameter tag: The tag text for which to search nodes.
     /// - Returns: A list of all matching tags
-    public func findNodes(tagged tag: String) -> [LocationNode] {
+    func findNodes(tagged tag: String) -> [LocationNode] {
         guard tag.count > 0 else {
             return []
         }
@@ -239,7 +241,7 @@ public extension SceneLocationView {
         return locationNodes.filter { $0.tag == tag }
     }
 
-    public func removeLocationNode(locationNode: LocationNode) {
+    func removeLocationNode(locationNode: LocationNode) {
         if let index = locationNodes.index(of: locationNode) {
             locationNodes.remove(at: index)
         }
@@ -247,7 +249,7 @@ public extension SceneLocationView {
         locationNode.removeFromParentNode()
     }
 
-    public func removeLocationNodes(locationNodes: [LocationNode]) {
+    func removeLocationNodes(locationNodes: [LocationNode]) {
         locationNodes.forEach { removeLocationNode(locationNode: $0) }
     }
 }
@@ -255,7 +257,7 @@ public extension SceneLocationView {
 @available(iOS 11.0, *)
 public extension SceneLocationView {
 
-    public func addRoutes(routes: [MKRoute]) {
+    func addRoutes(routes: [MKRoute]) {
         guard let altitude = sceneLocationManager.currentLocation?.altitude else { return }
         let polyNodes = routes.map { PolylineNode(polyline: $0.polyline, altitude: altitude - 2.0) }
 
@@ -271,7 +273,7 @@ public extension SceneLocationView {
         }
     }
 
-    public func removeRoutes(routes: [MKRoute]) {
+    func removeRoutes(routes: [MKRoute]) {
         routes.forEach { route in
             if let index = polylineNodes.index(where: { $0.polyline == route.polyline }) {
                 polylineNodes.remove(at: index)

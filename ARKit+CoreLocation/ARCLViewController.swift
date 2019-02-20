@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ARCLViewController.swift
 //  ARKit+CoreLocation
 //
 //  Created by Andrew Hart on 02/07/2017.
@@ -12,7 +12,7 @@ import MapKit
 import ARCL
 
 @available(iOS 11.0, *)
-class ViewController: UIViewController {
+class ARCLViewController: UIViewController {
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var infoLabel: UILabel!
 
@@ -27,6 +27,12 @@ class ViewController: UIViewController {
 
     var centerMapOnUserLocation: Bool = true
 
+    var showMap = false {
+        didSet {
+            mapView.isHidden = !showMap
+        }
+    }
+
     /// Whether to display some debugging data
     /// This currently displays the coordinate of the best location estimate
     /// The initial value is respected
@@ -39,7 +45,7 @@ class ViewController: UIViewController {
 
         updateInfoLabelTimer = Timer.scheduledTimer(timeInterval: 0.1,
                                                     target: self,
-                                                    selector: #selector(ViewController.updateInfoLabel),
+                                                    selector: #selector(ARCLViewController.updateInfoLabel),
                                                     userInfo: nil,
                                                     repeats: true)
 
@@ -62,7 +68,7 @@ class ViewController: UIViewController {
         if !mapView.isHidden {
             updateUserLocationTimer = Timer.scheduledTimer(timeInterval: 0.5,
                                                            target: self,
-                                                           selector: #selector(ViewController.updateUserLocation),
+                                                           selector: #selector(ARCLViewController.updateUserLocation),
                                                            userInfo: nil,
                                                            repeats: true)
         }
@@ -70,6 +76,7 @@ class ViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
         print("run")
         sceneLocationView.run()
     }
@@ -111,12 +118,20 @@ class ViewController: UIViewController {
             }
         }
     }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let settingsVC = segue.destination as? SettingsViewController else {
+            return
+        }
+
+        settingsVC.arclViewController = self
+    }
 }
 
 // MARK: - MKMapViewDelegate
 
 @available(iOS 11.0, *)
-extension ViewController: MKMapViewDelegate {
+extension ARCLViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard !(annotation is MKUserLocation),
            let pointAnnotation = annotation as? MKPointAnnotation else { return nil }
@@ -139,7 +154,7 @@ extension ViewController: MKMapViewDelegate {
 // MARK: - Implementation
 
 @available(iOS 11.0, *)
-extension ViewController {
+extension ARCLViewController {
 
     @objc
     func updateUserLocation() {
