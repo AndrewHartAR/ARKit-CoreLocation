@@ -46,7 +46,9 @@ open class LocationNode: SCNNode {
     /// Otherwise, this is false, and becomes true once the user moves 100m away from the node,
     /// except when the locationEstimateMethod is set to use Core Location data only,
     /// as then it becomes true immediately.
-    public var locationConfirmed = false
+    public var locationConfirmed: Bool {
+        return location != nil
+    }
 
     /// Whether a node's position should be adjusted on an ongoing basis
     /// based on its' given location.
@@ -66,7 +68,6 @@ open class LocationNode: SCNNode {
 
     public init(location: CLLocation?) {
         self.location = location
-        self.locationConfirmed = location != nil
         super.init()
     }
 

@@ -114,9 +114,6 @@ public class SceneLocationView: ARSCNView {
 
     internal func confirmLocationOfLocationNode(_ locationNode: LocationNode) {
         locationNode.location = locationOfLocationNode(locationNode)
-
-        locationNode.locationConfirmed = true
-
         locationViewDelegate?.didConfirmLocationOfNode(sceneLocationView: self, node: locationNode)
     }
 
@@ -183,10 +180,6 @@ public extension SceneLocationView {
             let sceneNode = sceneNode else { return }
 
         locationNode.location = currentLocation
-
-        ///Location is not changed after being added when using core location data only for location estimates
-        locationNode.locationConfirmed = locationEstimateMethod == .coreLocationDataOnly
-
         locationNode.position = currentPosition
 
         locationNodes.append(locationNode)

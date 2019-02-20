@@ -76,8 +76,6 @@ public class PolylineNode {
             boxNode.addChildNode(lightNode3)
 
             let locationNode = LocationNode(location: currentLocation)
-            locationNode.locationConfirmed = true
-//            locationNode.continuallyUpdatePositionAndScale = false
             locationNode.addChildNode(boxNode)
 
             locationNodes.append(locationNode)
