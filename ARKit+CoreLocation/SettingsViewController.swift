@@ -12,8 +12,6 @@ import UIKit
 @available(iOS 11.0, *)
 class SettingsViewController: UIViewController {
 
-    weak var arclViewController: ARCLViewController?
-
     @IBOutlet weak var showMapSwitch: UISwitch!
     @IBOutlet weak var showPointsOfInterest: UISwitch!
     @IBOutlet weak var showRouteDirections: UISwitch!
@@ -22,30 +20,20 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var refreshControl: UIActivityIndicatorView!
 
     var mapSearchResults: [MKMapItem]?
-    var existingRoutes: [MKRoute]?
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        showMapSwitch.isOn = arclViewController?.showMap ?? false
-        searchResultTable.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
     @IBAction
     func toggledSwitch(_ sender: UISwitch) {
-        if sender == showMapSwitch {
-            arclViewController?.showMap = sender.isOn
-        } else if sender == showPointsOfInterest {
+        if sender == showPointsOfInterest {
             showRouteDirections.isOn = !sender.isOn
+            searchResultTable.reloadData()
         } else if sender == showRouteDirections {
             showPointsOfInterest.isOn = !sender.isOn
-            if sender.isOn {
-                addressText.becomeFirstResponder()
-            }
+            searchResultTable.reloadData()
         }
     }
 
@@ -68,6 +56,9 @@ extension SettingsViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if showPointsOfInterest.isOn {
+            return 1
+        }
         guard let mapSearchResults = mapSearchResults else {
             return 0
         }
@@ -76,14 +67,25 @@ extension SettingsViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        if showPointsOfInterest.isOn {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "OpenARCell", for: indexPath)
+            guard let openARCell = cell as? OpenARCell else {
+                return cell
+            }
+            openARCell.parentVC = self
 
-        guard let mapSearchResults = mapSearchResults, indexPath.row < mapSearchResults.count else {
-            return cell
+            return openARCell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: indexPath)
+            guard let mapSearchResults = mapSearchResults,
+                indexPath.row < mapSearchResults.count,
+                let locationCell = cell as? LocationCell else {
+                return cell
+            }
+            locationCell.mapItem = mapSearchResults[indexPath.row]
+
+            return locationCell
         }
-        cell.textLabel?.text = mapSearchResults[indexPath.row].placemark.debugDescription
-
-        return cell
     }
 }
 
@@ -105,7 +107,14 @@ extension SettingsViewController: UITableViewDelegate {
 // MARK: - Implementation
 
 @available(iOS 11.0, *)
-private extension SettingsViewController {
+extension SettingsViewController {
+
+    func createARVC() -> ARCLViewController {
+        let arclVC = ARCLViewController.loadFromStoryboard()
+        arclVC.showMap = showMapSwitch.isOn
+
+        return arclVC
+    }
 
     func getDirections(to mapLocation: MKMapItem) {
         refreshControl.startAnimating()
@@ -131,12 +140,13 @@ private extension SettingsViewController {
             }
 
             DispatchQueue.main.async { [weak self] in
-                if let existingRoutes = self?.existingRoutes {
-                    self?.arclViewController?.sceneLocationView.removeRoutes(routes: existingRoutes)
+                guard let self = self else {
+                    return
                 }
-                self?.arclViewController?.sceneLocationView.addRoutes(routes: response.routes)
-                self?.existingRoutes = response.routes
-                self?.navigationController?.popViewController(animated: true)
+
+                let arclVC = self.createARVC()
+                arclVC.routes = response.routes
+                self.navigationController?.pushViewController(arclVC, animated: true)
             }
         })
     }
@@ -144,7 +154,15 @@ private extension SettingsViewController {
     /// Searches for the location that was entered into the address text
     func searchForLocation() {
         guard let addressText = addressText.text, !addressText.isEmpty else {
-            return assertionFailure("We've goto some issues")
+            return
+        }
+
+        showRouteDirections.isOn = true
+        toggledSwitch(showRouteDirections)
+
+        refreshControl.startAnimating()
+        defer {
+            self.addressText.resignFirstResponder()
         }
 
         let request = MKLocalSearch.Request()
@@ -152,6 +170,11 @@ private extension SettingsViewController {
 
         let search = MKLocalSearch(request: request)
         search.start { response, error in
+            defer {
+                DispatchQueue.main.async { [weak self] in
+                    self?.refreshControl.stopAnimating()
+                }
+            }
             if let error = error {
                 return assertionFailure("Error searching for \(addressText): \(error.localizedDescription)")
             }
@@ -164,12 +187,6 @@ private extension SettingsViewController {
                 }
                 self.mapSearchResults = response.mapItems
                 self.searchResultTable.reloadData()
-            }
-            response.mapItems.forEach { location in
-                guard let name = location.name else {
-                    return
-                }
-                print("\(name): \(location.placemark.coordinate)")
             }
         }
     }

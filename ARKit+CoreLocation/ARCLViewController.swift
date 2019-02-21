@@ -26,9 +26,13 @@ class ARCLViewController: UIViewController {
     var updateInfoLabelTimer: Timer?
 
     var centerMapOnUserLocation: Bool = true
+    var routes: [MKRoute]?
 
     var showMap = false {
         didSet {
+            guard let mapView = mapView else {
+                return
+            }
             mapView.isHidden = !showMap
         }
     }
@@ -39,6 +43,11 @@ class ARCLViewController: UIViewController {
     let displayDebugging = false
 
     let adjustNorthByTappingSidesOfScreen = false
+
+    class func loadFromStoryboard() -> ARCLViewController {
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ARCLViewController") as! ARCLViewController
+        // swiftlint:disable:previous force_cast
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,28 +64,36 @@ class ARCLViewController: UIViewController {
 //        sceneLocationView.locationEstimateMethod = .coreLocationDataOnly
 
         sceneLocationView.showAxesNode = true
-
         sceneLocationView.showFeaturePoints = displayDebugging
 
-        buildDemoData().forEach {
-            sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: $0)
+        if let routes = routes {
+            sceneLocationView.addRoutes(routes: routes)
+        } else {
+            buildDemoData().forEach {
+                sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: $0)
+            }
         }
 
         contentView.addSubview(sceneLocationView)
         sceneLocationView.frame = contentView.bounds
 
-        if !mapView.isHidden {
+        mapView.isHidden = !showMap
+
+        if showMap {
             updateUserLocationTimer = Timer.scheduledTimer(timeInterval: 0.5,
                                                            target: self,
                                                            selector: #selector(ARCLViewController.updateUserLocation),
                                                            userInfo: nil,
                                                            repeats: true)
+            if let routes = routes {
+                
+            }
         }
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
         print("run")
         sceneLocationView.run()
     }
@@ -117,14 +134,6 @@ class ARCLViewController: UIViewController {
                 sceneLocationView.addLocationNodeForCurrentPosition(locationNode: annotationNode)
             }
         }
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let settingsVC = segue.destination as? SettingsViewController else {
-            return
-        }
-
-        settingsVC.arclViewController = self
     }
 }
 
