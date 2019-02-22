@@ -36,6 +36,8 @@ class SettingsViewController: UIViewController {
         locationManager.startUpdatingLocation()
 
         locationManager.requestWhenInUseAuthorization()
+
+        addressText.delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -61,6 +63,24 @@ class SettingsViewController: UIViewController {
         }
         searchForLocation()
     }
+}
+
+// MARK: - UITextFieldDelegate
+
+@available(iOS 11.0, *)
+extension SettingsViewController: UITextFieldDelegate {
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+
+        if string == "\n" {
+            DispatchQueue.main.async { [weak self] in
+                self?.searchForLocation()
+            }
+        }
+
+        return true
+    }
+
 }
 
 // MARK: - DataSource
@@ -215,9 +235,28 @@ extension SettingsViewController {
                 guard let self = self else {
                     return
                 }
-                self.mapSearchResults = response.mapItems
+                self.mapSearchResults = response.sortedMapItems(byDistanceFrom: self.locationManager.location)
                 self.searchResultTable.reloadData()
             }
         }
     }
+}
+
+extension MKLocalSearch.Response {
+
+    func sortedMapItems(byDistanceFrom location: CLLocation?) -> [MKMapItem] {
+        guard let location = location else {
+            return mapItems
+        }
+
+        return mapItems.sorted { (first, second) -> Bool in
+            guard let d1 = first.placemark.location?.distance(from: location),
+                let d2 = second.placemark.location?.distance(from: location) else {
+                    return true
+            }
+
+            return d1 < d2
+        }
+    }
+
 }
