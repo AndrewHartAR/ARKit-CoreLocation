@@ -1,0 +1,8 @@
+language: objective-c
+osx_image: xcode10.1
+
+script:
+    - pod lib lint
+
+notifications:
+  email: false
