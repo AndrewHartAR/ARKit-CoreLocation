@@ -6,6 +6,7 @@
 //  Copyright © 2019 Project Dent. All rights reserved.
 //
 
+import CoreLocation
 import MapKit
 import UIKit
 
@@ -19,7 +20,23 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var searchResultTable: UITableView!
     @IBOutlet weak var refreshControl: UIActivityIndicatorView!
 
+    var locationManager = CLLocationManager()
+
     var mapSearchResults: [MKMapItem]?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+        locationManager.distanceFilter = kCLDistanceFilterNone
+        locationManager.headingFilter = kCLHeadingFilterNone
+        locationManager.pausesLocationUpdatesAutomatically = false
+        locationManager.delegate = self
+        locationManager.startUpdatingHeading()
+        locationManager.startUpdatingLocation()
+
+        locationManager.requestWhenInUseAuthorization()
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -82,6 +99,7 @@ extension SettingsViewController: UITableViewDataSource {
                 let locationCell = cell as? LocationCell else {
                 return cell
             }
+            locationCell.locationManager = locationManager
             locationCell.mapItem = mapSearchResults[indexPath.row]
 
             return locationCell
@@ -103,6 +121,18 @@ extension SettingsViewController: UITableViewDelegate {
     }
 
 }
+
+// MARK: - CLLocationManagerDelegate
+
+@available(iOS 11.0, *)
+extension SettingsViewController: CLLocationManagerDelegate {
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+
+    }
+}
+
+
 
 // MARK: - Implementation
 

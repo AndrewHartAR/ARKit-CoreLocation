@@ -258,7 +258,9 @@ public extension SceneLocationView {
 public extension SceneLocationView {
 
     func addRoutes(routes: [MKRoute]) {
-        guard let altitude = sceneLocationManager.currentLocation?.altitude else { return }
+        guard let altitude = sceneLocationManager.currentLocation?.altitude else {
+            return assertionFailure("we don't have an elevation")
+        }
         let polyNodes = routes.map { PolylineNode(polyline: $0.polyline, altitude: altitude - 2.0) }
 
         polylineNodes.append(contentsOf: polyNodes)

@@ -66,13 +66,8 @@ class ARCLViewController: UIViewController {
         sceneLocationView.showAxesNode = true
         sceneLocationView.showFeaturePoints = displayDebugging
 
-        if let routes = routes {
-            sceneLocationView.addRoutes(routes: routes)
-        } else {
-            buildDemoData().forEach {
-                sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: $0)
-            }
-        }
+        // Now add the route or location annotations as appropriate
+        addSceneModels()
 
         contentView.addSubview(sceneLocationView)
         sceneLocationView.frame = contentView.bounds
@@ -80,14 +75,14 @@ class ARCLViewController: UIViewController {
         mapView.isHidden = !showMap
 
         if showMap {
-            updateUserLocationTimer = Timer.scheduledTimer(timeInterval: 0.5,
-                                                           target: self,
-                                                           selector: #selector(ARCLViewController.updateUserLocation),
-                                                           userInfo: nil,
-                                                           repeats: true)
-            if let routes = routes {
-                
-            }
+            updateUserLocationTimer = Timer.scheduledTimer(
+                timeInterval: 0.5,
+                target: self,
+                selector: #selector(ARCLViewController.updateUserLocation),
+                userInfo: nil,
+                repeats: true)
+
+            routes?.forEach { mapView.addOverlay($0.polyline) }
         }
     }
 
@@ -141,6 +136,15 @@ class ARCLViewController: UIViewController {
 
 @available(iOS 11.0, *)
 extension ARCLViewController: MKMapViewDelegate {
+
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(overlay: overlay)
+        renderer.lineWidth = 3
+        renderer.strokeColor = UIColor.blue.withAlphaComponent(0.5)
+
+        return renderer
+    }
+
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard !(annotation is MKUserLocation),
            let pointAnnotation = annotation as? MKPointAnnotation else { return nil }
@@ -165,6 +169,50 @@ extension ARCLViewController: MKMapViewDelegate {
 @available(iOS 11.0, *)
 extension ARCLViewController {
 
+    /// Adds the appropriate ARKit models to the scene.  Note: that this won't
+    /// do anything until the scene has a `currentLocation`.  It "polls" on that
+    /// and when a location is finally discovered, the models are added.
+    func addSceneModels() {
+        // 1. Don't try to add the models to the scene until we have a current location
+        guard sceneLocationView.sceneLocationManager.currentLocation != nil else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.addSceneModels()
+            }
+            return
+        }
+
+        // 2. If there is a route, show that
+        if let routes = routes {
+            sceneLocationView.addRoutes(routes: routes)
+        } else {
+            // 3. If not, then show the
+            buildDemoData().forEach {
+                sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: $0)
+            }
+        }
+    }
+
+    /// Builds the location annotations for a few random objects, scattered across the country
+    ///
+    /// - Returns: an array of annotation nodes.
+    func buildDemoData() -> [LocationAnnotationNode] {
+        var nodes: [LocationAnnotationNode] = []
+
+        let spaceNeedle = buildNode(latitude: 47.6205, longitude: -122.3493, altitude: 225, imageName: "pin")
+        nodes.append(spaceNeedle)
+
+        let empireStateBuilding = buildNode(latitude: 40.7484, longitude: -73.9857, altitude: 14.3, imageName: "pin")
+        nodes.append(empireStateBuilding)
+
+        let canaryWharf = buildNode(latitude: 51.504607, longitude: -0.019592, altitude: 236, imageName: "pin")
+        nodes.append(canaryWharf)
+
+        let applePark = buildViewNode(latitude: 37.334807, longitude: -122.009076, altitude: 100, text: "Apple Park")
+        nodes.append(applePark)
+
+        return nodes
+    }
+
     @objc
     func updateUserLocation() {
         guard let currentLocation = sceneLocationView.sceneLocationManager.currentLocation else {
@@ -174,20 +222,6 @@ extension ARCLViewController {
         DispatchQueue.main.async { [weak self ] in
             guard let self = self else {
                 return
-            }
-
-            if let bestEstimate = self.sceneLocationView.sceneLocationManager.bestLocationEstimate,
-                let position = self.sceneLocationView.currentScenePosition {
-                print("")
-                print("Fetch current location")
-                print("best location estimate, position: \(bestEstimate.position), \(bestEstimate.location.debugLog)")
-                print("current position: \(position)")
-
-                let translation = bestEstimate.translatedLocation(to: position)
-
-                print("translation: \(translation)")
-                print("translated location: \(currentLocation)")
-                print("")
             }
 
             if self.userAnnotation == nil {
@@ -239,24 +273,6 @@ extension ARCLViewController {
         if let hour = comp.hour, let minute = comp.minute, let second = comp.second, let nanosecond = comp.nanosecond {
             infoLabel.text!.append("\(hour.short):\(minute.short):\(second.short):\(nanosecond.short3)")
         }
-    }
-
-    func buildDemoData() -> [LocationAnnotationNode] {
-        var nodes: [LocationAnnotationNode] = []
-
-        let spaceNeedle = buildNode(latitude: 47.6205, longitude: -122.3493, altitude: 225, imageName: "pin")
-        nodes.append(spaceNeedle)
-
-        let empireStateBuilding = buildNode(latitude: 40.7484, longitude: -73.9857, altitude: 14.3, imageName: "pin")
-        nodes.append(empireStateBuilding)
-
-        let canaryWharf = buildNode(latitude: 51.504607, longitude: -0.019592, altitude: 236, imageName: "pin")
-        nodes.append(canaryWharf)
-
-        let applePark = buildViewNode(latitude: 37.334807, longitude: -122.009076, altitude: 100, text: "Apple Park")
-        nodes.append(applePark)
-
-        return nodes
     }
 
     func buildNode(latitude: CLLocationDegrees, longitude: CLLocationDegrees,

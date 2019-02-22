@@ -6,16 +6,19 @@
 //  Copyright © 2019 Project Dent. All rights reserved.
 //
 
+import CoreLocation
 import MapKit
 import UIKit
 
 class LocationCell: UITableViewCell {
 
+    var locationManager: CLLocationManager?
+    var locationUpdateTimer: Timer?
+
     var currentLocation: CLLocation? {
-        didSet {
-            updateCell()
-        }
+        return locationManager?.location
     }
+
     var mapItem: MKMapItem? {
         didSet {
             updateCell()
@@ -29,6 +32,7 @@ class LocationCell: UITableViewCell {
         super.prepareForReuse()
         distanceLabel.text = nil
         titleLabel.text = nil
+        locationUpdateTimer?.invalidate()
     }
 
 }
@@ -37,8 +41,10 @@ class LocationCell: UITableViewCell {
 
 extension LocationCell {
 
+    @objc
     func updateCell() {
         guard let mapItem = mapItem else {
+            locationUpdateTimer?.invalidate()
             return
         }
         titleLabel.text = mapItem.titleLabelText
@@ -53,6 +59,8 @@ extension LocationCell {
         }
 
         distanceLabel.text = String(format: "%.0f km", mapItemLocation.distance(from: currentLocation)/1000)
+
+        locationUpdateTimer = Timer(timeInterval: 1, target: self, selector: #selector(updateCell), userInfo: nil, repeats: false)
     }
 
 }
