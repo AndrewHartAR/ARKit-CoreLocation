@@ -12,6 +12,7 @@ Describe any breaking changes that this pull request will introduce.
 
 - [ ] Appropriate label has been added to this PR (i.e., Bug, Enhancement, etc.).
 - [ ] Documentation has been added to all `open`, and `public` scoped methods and properties.
+- [ ] Changelog has been updated
 - [ ] Tests have have been added to all new features. (not a requirement, but helpful)
 - [ ] Image/GIFs have been added for all UI related changed.
 
