@@ -1,0 +1,6 @@
+framework module ARCL {
+  umbrella header "ARCL-umbrella.h"
+
+  export *
+  module * { export * }
+}
