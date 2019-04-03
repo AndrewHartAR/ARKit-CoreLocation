@@ -119,7 +119,7 @@ public final class SceneLocationManager {
 
 }
 
-extension SceneLocationManager {
+public extension SceneLocationManager {
     func run() {
         pause()
         updateEstimatesTimer = Timer.scheduledTimer(
