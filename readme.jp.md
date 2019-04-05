@@ -20,7 +20,7 @@
 やるべきことがまだたくさんあり、他の分野でもそうであるため、GithubのIssueで私たちがやるよりも、このプロジェクトはオープンなコミュニティで提供されるのが最善でしょう。
 なので、このライブラリや改善、自分たちの仕事について議論をするために   誰でも参加できるSlackのグループを開こうと思います。
 
-**[Slackのコミュニティに参加してください](https://join.slack.com/t/arcl-dev/shared_invite/MjE4NTQ3NzE3MzgxLTE1MDExNTAzMTUtMTIyMmNlMTkyYg)**
+**[Slackのコミュニティに参加してください](https://join.slack.com/t/arcl-dev/shared_invite/enQtNTk4OTg4MzU0MTEyLTMzYTM0Mjk0YmNkMjgwYzg4OWQ1NDFjNjc3NjM1NzdkNWNkZTc2NjQ1MWFiNmI1MTZiMTA5MmNjZmRiOTk1NjI)**
 
 ## 必要条件
 ARKitはiOS 11が必要で、以下の端末が対応しています。
