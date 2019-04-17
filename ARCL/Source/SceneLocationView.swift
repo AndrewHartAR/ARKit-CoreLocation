@@ -20,6 +20,7 @@ public class SceneLocationView: ARSCNView {
 
     public weak var locationViewDelegate: SceneLocationViewDelegate?
     public weak var locationEstimateDelegate: SceneLocationViewEstimateDelegate?
+    public weak var locationNodeTouchDelegate: LNTouchDelegate?
 
     public let sceneLocationManager = SceneLocationManager()
 
@@ -100,6 +101,9 @@ public class SceneLocationView: ARSCNView {
         showsStatistics = false
 
         debugOptions = showFeaturePoints ? [ARSCNDebugOptions.showFeaturePoints] : debugOptions
+        
+        let touchGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(sceneLocationViewTouched(sender:)))
+        self.addGestureRecognizer(touchGestureRecognizer)
     }
 
     override public func layoutSubviews() {
@@ -207,6 +211,21 @@ public extension SceneLocationView {
 
         locationNodes.append(locationNode)
         sceneNode?.addChildNode(locationNode)
+    }
+    
+    @objc func sceneLocationViewTouched(sender: UITapGestureRecognizer) {
+        guard let touchedView = sender.view as? SCNView else {
+            return
+        }
+        
+        let coordinates = sender.location(in: touchedView)
+        let hitTest = touchedView.hitTest(coordinates)
+        
+        if !hitTest.isEmpty,
+            let firstHitTest = hitTest.first,
+            let touchedNode = firstHitTest.node as? AnnotationNode {
+            self.locationNodeTouchDelegate?.locationNodeTouched(node: touchedNode)
+        }
     }
 
     func addLocationNodesWithConfirmedLocation(locationNodes: [LocationNode]) {
