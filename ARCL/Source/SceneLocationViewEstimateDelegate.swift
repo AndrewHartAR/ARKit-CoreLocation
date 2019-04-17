@@ -11,6 +11,11 @@ import ARKit
 import CoreLocation
 import MapKit
 
+// Delegate for touch events on LocationNode
+public protocol LNTouchDelegate: class {
+    func locationNodeTouched(node: AnnotationNode)
+}
+
 @available(iOS 11.0, *)
 public protocol SceneLocationViewEstimateDelegate: class {
     func didAddSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation)
