@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1000"
+   LastUpgradeVersion = "1010"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "932EF22120BE7E6D0052210C"
+               BlueprintIdentifier = "A4134F75EC58E09F3C60888E4C5EC4A3"
                BuildableName = "ARCL.framework"
                BlueprintName = "ARCL"
-               ReferencedContainer = "container:ARKit+CoreLocation.xcodeproj">
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,10 +45,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "932EF22120BE7E6D0052210C"
+            BlueprintIdentifier = "A4134F75EC58E09F3C60888E4C5EC4A3"
             BuildableName = "ARCL.framework"
             BlueprintName = "ARCL"
-            ReferencedContainer = "container:ARKit+CoreLocation.xcodeproj">
+            ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -63,10 +63,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "932EF22120BE7E6D0052210C"
+            BlueprintIdentifier = "A4134F75EC58E09F3C60888E4C5EC4A3"
             BuildableName = "ARCL.framework"
             BlueprintName = "ARCL"
-            ReferencedContainer = "container:ARKit+CoreLocation.xcodeproj">
+            ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
