@@ -1,5 +1,5 @@
 //
-//  ARCLViewController.swift
+//  POIViewController.swift
 //  ARKit+CoreLocation
 //
 //  Created by Andrew Hart on 02/07/2017.
@@ -12,7 +12,8 @@ import MapKit
 import ARCL
 
 @available(iOS 11.0, *)
-class ARCLViewController: UIViewController {
+/// Displays Points of Interest in ARCL
+class POIViewController: UIViewController {
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var infoLabel: UILabel!
 
@@ -44,8 +45,9 @@ class ARCLViewController: UIViewController {
 
     let adjustNorthByTappingSidesOfScreen = false
 
-    class func loadFromStoryboard() -> ARCLViewController {
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ARCLViewController") as! ARCLViewController
+    class func loadFromStoryboard() -> POIViewController {
+        return UIStoryboard(name: "Main", bundle: nil)
+            .instantiateViewController(withIdentifier: "ARCLViewController") as! POIViewController
         // swiftlint:disable:previous force_cast
     }
 
@@ -54,7 +56,7 @@ class ARCLViewController: UIViewController {
 
         updateInfoLabelTimer = Timer.scheduledTimer(timeInterval: 0.1,
                                                     target: self,
-                                                    selector: #selector(ARCLViewController.updateInfoLabel),
+                                                    selector: #selector(POIViewController.updateInfoLabel),
                                                     userInfo: nil,
                                                     repeats: true)
 
@@ -78,7 +80,7 @@ class ARCLViewController: UIViewController {
             updateUserLocationTimer = Timer.scheduledTimer(
                 timeInterval: 0.5,
                 target: self,
-                selector: #selector(ARCLViewController.updateUserLocation),
+                selector: #selector(POIViewController.updateUserLocation),
                 userInfo: nil,
                 repeats: true)
 
@@ -135,7 +137,7 @@ class ARCLViewController: UIViewController {
 // MARK: - MKMapViewDelegate
 
 @available(iOS 11.0, *)
-extension ARCLViewController: MKMapViewDelegate {
+extension POIViewController: MKMapViewDelegate {
 
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
@@ -167,7 +169,7 @@ extension ARCLViewController: MKMapViewDelegate {
 // MARK: - Implementation
 
 @available(iOS 11.0, *)
-extension ARCLViewController {
+extension POIViewController {
 
     /// Adds the appropriate ARKit models to the scene.  Note: that this won't
     /// do anything until the scene has a `currentLocation`.  It "polls" on that
