@@ -38,27 +38,15 @@ open class LocationAnnotationNode: LocationNode {
         addChildNode(annotationNode)
     }
 
-    /// Use this constructor to add a UIView as an annotation
+    @available(iOS 10.0, *)
+    /// Use this constructor to add a UIView as an annotation.  Keep in mind that it is not live, instead it's a "snapshot" of that UIView.
     /// UIView is more configurable then a UIImage, allowing you to add background image, labels, etc.
     ///
     /// - Parameters:
     ///   - location: The location of the node in the world.
     ///   - view: The view to display at the specified location.
-    public init(location: CLLocation?, view: UIView) {
-        let plane = SCNPlane(width: view.frame.size.width / 100, height: view.frame.size.height / 100)
-        plane.firstMaterial!.diffuse.contents = view
-        plane.firstMaterial!.lightingModel = .constant
-
-        annotationNode = AnnotationNode(view: view, image: nil)
-        annotationNode.geometry = plane
-
-        super.init(location: location)
-
-        let billboardConstraint = SCNBillboardConstraint()
-        billboardConstraint.freeAxes = SCNBillboardAxis.Y
-        constraints = [billboardConstraint]
-
-        addChildNode(annotationNode)
+    public convenience init(location: CLLocation?, view: UIView) {
+        self.init(location: location, image: view.image)
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -100,4 +88,19 @@ open class LocationAnnotationNode: LocationNode {
 
         onCompletion()
     }
+}
+
+// MARK: - Image from View
+
+extension UIView {
+
+    @available(iOS 10.0, *)
+    /// Gets you an image from the view.
+    var image: UIImage {
+        let renderer = UIGraphicsImageRenderer(bounds: bounds)
+        return renderer.image { rendererContext in
+            layer.render(in: rendererContext.cgContext)
+        }
+    }
+
 }
