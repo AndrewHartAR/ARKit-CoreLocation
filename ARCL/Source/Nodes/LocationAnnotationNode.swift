@@ -92,7 +92,7 @@ open class LocationAnnotationNode: LocationNode {
 
 // MARK: - Image from View
 
-extension UIView {
+public extension UIView {
 
     @available(iOS 10.0, *)
     /// Gets you an image from the view.
