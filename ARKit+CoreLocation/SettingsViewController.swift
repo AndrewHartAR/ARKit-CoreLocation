@@ -152,8 +152,6 @@ extension SettingsViewController: CLLocationManagerDelegate {
     }
 }
 
-
-
 // MARK: - Implementation
 
 @available(iOS 11.0, *)
