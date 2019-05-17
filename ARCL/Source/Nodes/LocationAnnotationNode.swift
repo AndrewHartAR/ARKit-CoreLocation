@@ -76,9 +76,8 @@ open class LocationAnnotationNode: LocationNode {
             scale = appliedScale.y
             annotationNode.scale = appliedScale
         } else {
-            //Scale it to be an appropriate size so that it can be seen
-            scale = Float(adjustedDistance) * 0.181
-            if distance > 3_000 { scale *=  0.75 }
+            let scaleFunc = scalingScheme.getScheme()
+            scale = scaleFunc(distance, adjustedDistance)
 
             annotationNode.scale = SCNVector3(x: scale, y: scale, z: scale)
         }

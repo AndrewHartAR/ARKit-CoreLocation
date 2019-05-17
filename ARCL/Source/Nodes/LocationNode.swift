@@ -66,6 +66,9 @@ open class LocationNode: SCNNode {
     /// at regular intervals. You can do this with `SceneLocationView`'s `updatePositionOfLocationNode`.
     public var continuallyUpdatePositionAndScale = true
 
+    /// The scheme to use for scaling
+    public var scalingScheme: ScalingScheme = .normal
+
     public init(location: CLLocation?) {
         self.location = location
         super.init()
