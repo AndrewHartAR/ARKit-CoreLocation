@@ -8,32 +8,32 @@
 
 /* Begin PBXBuildFile section */
 		066EF95DE2B26C5ECF6BA9AD3E0D1407 /* ARKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77CEE13898FE6A6CE00CDB476C5112E1 /* ARKit.framework */; };
+		070050C544CFCBDC71A69E4E3DEF93DF /* LocationAnnotationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EC1A7FFBC06F12DDACC575520AC537 /* LocationAnnotationNode.swift */; };
 		0C91A8DA418831E877CCA779333BCF0D /* Pods-ARKit+CoreLocation-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1569D8AB75F6B4E0C4BB77FF9E53D61B /* Pods-ARKit+CoreLocation-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		14A6A686C90AFFDA970F45704840C229 /* SCNNode+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DA643017FBBAA818CB7F76131A44F8 /* SCNNode+Extensions.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		20DDC7A33CAA0CD87C6DFB2E521029F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75AF827189F1F504D97E674C3E7EB012 /* Foundation.framework */; };
+		211CB3C0CDA683967507089946AE2DD6 /* CLLocation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0422089577C15C1C0FCF1242687867 /* CLLocation+Extensions.swift */; };
+		249DB45EE64807A7DFA9A36F2EA19F01 /* BaseTypes+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6984206E65585B8B022DA93360E14DD /* BaseTypes+Extensions.swift */; };
+		250BBB7BBCAA134D18831F20405942FE /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76B312B647B2F7BD980DC2154894497 /* LocationManager.swift */; };
 		2D0A6CB7D0EE72861995015777137D50 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82DF07DE6F650F2AD66476DCA2C9488 /* UIKit.framework */; };
-		3DE089ADC309F48F08141FCF1490A3FB /* CLLocation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0422089577C15C1C0FCF1242687867 /* CLLocation+Extensions.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		48938EB4F29DBE6E7F35BF3EE0FB5F32 /* ARCL-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A712144F76E5E1B0D30F7BE9BADCD4EB /* ARCL-dummy.m */; };
-		599CE3641B291140A8FB9E5D603F5D00 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76B312B647B2F7BD980DC2154894497 /* LocationManager.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		33B5B29230C94A14B5FFF8EC28A29A81 /* SCNNode+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DA643017FBBAA818CB7F76131A44F8 /* SCNNode+Extensions.swift */; };
+		46C803732A57452C0E7ECEBB38A8CB5D /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F89E65049BF2BF20F88DA1FB7E0BA5F /* CGPoint+Extensions.swift */; };
+		52E10A03E85857773BE67603C60DA0A6 /* SceneLocationEstimate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53CECF9ABC2C4785BD2C7C9DD901D74 /* SceneLocationEstimate+Extensions.swift */; };
 		5B4C10A00978AE1C3399AA575EE1E268 /* Pods-ARKit+CoreLocation-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D33B939D8285598F2C92F217F8E11CC6 /* Pods-ARKit+CoreLocation-dummy.m */; };
 		5DF44D6C8FB62B1F7675ABDD11CF2559 /* ARCL-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 69B96848BF644E78DD7C33D5B10BAE77 /* ARCL-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		63D0A822C50464A12515A4A7C17391B6 /* SceneLocationEstimate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53CECF9ABC2C4785BD2C7C9DD901D74 /* SceneLocationEstimate+Extensions.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		6A07D0DE2872B0D0531C9D920E4BB114 /* SceneLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19C516D9B979CDA8009D52F8EFE4351 /* SceneLocationManager.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		659F1E1A586B6761FD707BDBBE3EBB67 /* SceneLocationEstimate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD17C8FFE8E07C175696087F92B2566 /* SceneLocationEstimate.swift */; };
+		695B4CB4C3FB227946AE97FC3C74932E /* SceneLocationViewEstimateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91149C058CC2C7680A542C1764BE4FB1 /* SceneLocationViewEstimateDelegate.swift */; };
+		6C007EC2D5D6C37291E8957BC1B84B26 /* LocationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A325FB8CDAF8A062982C66A07A975D /* LocationNode.swift */; };
+		86765EF0F1027DBBD409879261A03CC9 /* PolylineNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A955E7B9945823C9112DC45C333B65A /* PolylineNode.swift */; };
 		919C77B076841C48A714B1EE210805B9 /* SceneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99A821ECC143818F83A7F8947BF17EB4 /* SceneKit.framework */; };
-		9BCEAE87FDF2D9FB81641D19695DA15D /* FloatingPoint+Radians.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08BF2189E40B1AEBDE5583CAA2C84B4 /* FloatingPoint+Radians.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		A010B1102EC18F7BE4C6E9A9A1365645 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9F48576E55453A9576E652C65E184D8 /* MapKit.framework */; };
-		B3AFFFFE4556B049893E062C5D766203 /* PolylineNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A955E7B9945823C9112DC45C333B65A /* PolylineNode.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		B47A38E2D38C140007442C9C6AD08A31 /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F89E65049BF2BF20F88DA1FB7E0BA5F /* CGPoint+Extensions.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		B536EBFA2C27782AFB6C859CD6B909CE /* SceneLocationViewEstimateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91149C058CC2C7680A542C1764BE4FB1 /* SceneLocationViewEstimateDelegate.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		B5BACEB22A43E845BBE0E822ADD3E0F1 /* SCNVector3+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3168EB8D57DD20FD65776E6E3E14644D /* SCNVector3+Extensions.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		B154E782BE5EBA3E1CE0D3B9CFBB4294 /* SceneLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19C516D9B979CDA8009D52F8EFE4351 /* SceneLocationManager.swift */; };
+		C5D8BF8F864C20A2FFB1D5A5A5D8F84E /* ARCL-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A712144F76E5E1B0D30F7BE9BADCD4EB /* ARCL-dummy.m */; };
 		C6E25CF2FC856136EC4DB34D71AD361E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75AF827189F1F504D97E674C3E7EB012 /* Foundation.framework */; };
 		C71C3D760B3CB7441374D0865ED98A1D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9DE522081B918A58C6502AA55E4022D /* CoreLocation.framework */; };
-		DA404C101804320A8214E463E334E308 /* SceneLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4562550955B4278CDA3943C6043CE797 /* SceneLocationView.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		E3AFA301454D38DB58F9FA5AA101928D /* SceneLocationView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A02D1AC555B012B8650EDB84F0ACC6E /* SceneLocationView+Extensions.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		E86F59767C2B326586FFEA1C9AD66D61 /* LocationAnnotationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EC1A7FFBC06F12DDACC575520AC537 /* LocationAnnotationNode.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		F0B85ABCD119C994FFEF7DAC02ADD35A /* SceneLocationEstimate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD17C8FFE8E07C175696087F92B2566 /* SceneLocationEstimate.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		F561B76D6E66E38CA6DA638326F7FFE6 /* BaseTypes+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6984206E65585B8B022DA93360E14DD /* BaseTypes+Extensions.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		FA93CA2766EFE77410BE4EF82B791E47 /* LocationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A325FB8CDAF8A062982C66A07A975D /* LocationNode.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		CF6F67565DAB25A0D88106688ECD28D1 /* SceneLocationView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A02D1AC555B012B8650EDB84F0ACC6E /* SceneLocationView+Extensions.swift */; };
+		E77DBF07A56CC19907013229C6E61813 /* SceneLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4562550955B4278CDA3943C6043CE797 /* SceneLocationView.swift */; };
+		EDDAF6EB2FF2D999C90F4A8A517EB907 /* FloatingPoint+Radians.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08BF2189E40B1AEBDE5583CAA2C84B4 /* FloatingPoint+Radians.swift */; };
+		F5750A68D00B98ED3CFFC5063E65D5A6 /* SCNVector3+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3168EB8D57DD20FD65776E6E3E14644D /* SCNVector3+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -297,7 +297,7 @@
 			buildConfigurationList = 29B97F4322165800FB812304083E7286 /* Build configuration list for PBXNativeTarget "ARCL" */;
 			buildPhases = (
 				F73C125FE4ECBBC46E7CD9F0DB0EBC5D /* Headers */,
-				F4F16C64A6F65CF94D43BB1512F92C72 /* Sources */,
+				6BCF6A9B2314AA11CB57FFDCF4EDF399 /* Sources */,
 				164428F8FF40D44675418C0939F965A4 /* Frameworks */,
 				B6CA4E1BFF39F63A3475EF6707CB1B6C /* Resources */,
 			);
@@ -382,27 +382,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F4F16C64A6F65CF94D43BB1512F92C72 /* Sources */ = {
+		6BCF6A9B2314AA11CB57FFDCF4EDF399 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48938EB4F29DBE6E7F35BF3EE0FB5F32 /* ARCL-dummy.m in Sources */,
-				F561B76D6E66E38CA6DA638326F7FFE6 /* BaseTypes+Extensions.swift in Sources */,
-				B47A38E2D38C140007442C9C6AD08A31 /* CGPoint+Extensions.swift in Sources */,
-				3DE089ADC309F48F08141FCF1490A3FB /* CLLocation+Extensions.swift in Sources */,
-				9BCEAE87FDF2D9FB81641D19695DA15D /* FloatingPoint+Radians.swift in Sources */,
-				E86F59767C2B326586FFEA1C9AD66D61 /* LocationAnnotationNode.swift in Sources */,
-				599CE3641B291140A8FB9E5D603F5D00 /* LocationManager.swift in Sources */,
-				FA93CA2766EFE77410BE4EF82B791E47 /* LocationNode.swift in Sources */,
-				B3AFFFFE4556B049893E062C5D766203 /* PolylineNode.swift in Sources */,
-				63D0A822C50464A12515A4A7C17391B6 /* SceneLocationEstimate+Extensions.swift in Sources */,
-				F0B85ABCD119C994FFEF7DAC02ADD35A /* SceneLocationEstimate.swift in Sources */,
-				6A07D0DE2872B0D0531C9D920E4BB114 /* SceneLocationManager.swift in Sources */,
-				E3AFA301454D38DB58F9FA5AA101928D /* SceneLocationView+Extensions.swift in Sources */,
-				DA404C101804320A8214E463E334E308 /* SceneLocationView.swift in Sources */,
-				B536EBFA2C27782AFB6C859CD6B909CE /* SceneLocationViewEstimateDelegate.swift in Sources */,
-				14A6A686C90AFFDA970F45704840C229 /* SCNNode+Extensions.swift in Sources */,
-				B5BACEB22A43E845BBE0E822ADD3E0F1 /* SCNVector3+Extensions.swift in Sources */,
+				C5D8BF8F864C20A2FFB1D5A5A5D8F84E /* ARCL-dummy.m in Sources */,
+				249DB45EE64807A7DFA9A36F2EA19F01 /* BaseTypes+Extensions.swift in Sources */,
+				46C803732A57452C0E7ECEBB38A8CB5D /* CGPoint+Extensions.swift in Sources */,
+				211CB3C0CDA683967507089946AE2DD6 /* CLLocation+Extensions.swift in Sources */,
+				EDDAF6EB2FF2D999C90F4A8A517EB907 /* FloatingPoint+Radians.swift in Sources */,
+				070050C544CFCBDC71A69E4E3DEF93DF /* LocationAnnotationNode.swift in Sources */,
+				250BBB7BBCAA134D18831F20405942FE /* LocationManager.swift in Sources */,
+				6C007EC2D5D6C37291E8957BC1B84B26 /* LocationNode.swift in Sources */,
+				86765EF0F1027DBBD409879261A03CC9 /* PolylineNode.swift in Sources */,
+				52E10A03E85857773BE67603C60DA0A6 /* SceneLocationEstimate+Extensions.swift in Sources */,
+				659F1E1A586B6761FD707BDBBE3EBB67 /* SceneLocationEstimate.swift in Sources */,
+				B154E782BE5EBA3E1CE0D3B9CFBB4294 /* SceneLocationManager.swift in Sources */,
+				CF6F67565DAB25A0D88106688ECD28D1 /* SceneLocationView+Extensions.swift in Sources */,
+				E77DBF07A56CC19907013229C6E61813 /* SceneLocationView.swift in Sources */,
+				695B4CB4C3FB227946AE97FC3C74932E /* SceneLocationViewEstimateDelegate.swift in Sources */,
+				33B5B29230C94A14B5FFF8EC28A29A81 /* SCNNode+Extensions.swift in Sources */,
+				F5750A68D00B98ED3CFFC5063E65D5A6 /* SCNVector3+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

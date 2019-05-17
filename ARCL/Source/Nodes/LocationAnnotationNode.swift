@@ -39,8 +39,9 @@ open class LocationAnnotationNode: LocationNode {
     }
 
     @available(iOS 10.0, *)
-    /// Use this constructor to add a UIView as an annotation.  Keep in mind that it is not live, instead it's a "snapshot" of that UIView.
-    /// UIView is more configurable then a UIImage, allowing you to add background image, labels, etc.
+    /// Use this constructor to add a UIView as an annotation.  Keep in mind that it is not live, instead
+    /// it's a "snapshot" of that UIView.  UIView is more configurable then a UIImage, allowing you to add
+    /// background image, labels, etc.
     ///
     /// - Parameters:
     ///   - location: The location of the node in the world.
