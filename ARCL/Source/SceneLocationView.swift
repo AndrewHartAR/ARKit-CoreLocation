@@ -276,11 +276,19 @@ public extension SceneLocationView {
 @available(iOS 11.0, *)
 public extension SceneLocationView {
 
-    func addRoutes(routes: [MKRoute]) {
+    /// Adds routes to the scene and lets you specify the geometry prototype for the box.
+    /// Note: You can provide your own SCNBox prototype to base the direction nodes from.
+    ///
+    /// - Parameters:
+    ///   - routes: The MKRoute of directions.
+    ///   - boxPrototype: A base SCNBox to "clone" the direction boxes from.
+    func addRoutes(routes: [MKRoute], boxPrototype: SCNBox? = nil) {
         guard let altitude = sceneLocationManager.currentLocation?.altitude else {
             return assertionFailure("we don't have an elevation")
         }
-        let polyNodes = routes.map { PolylineNode(polyline: $0.polyline, altitude: altitude - 2.0) }
+        let polyNodes = routes.map {
+            PolylineNode(polyline: $0.polyline, altitude: altitude - 2.0, boxPrototype: boxPrototype)
+        }
 
         polylineNodes.append(contentsOf: polyNodes)
         polyNodes.forEach {

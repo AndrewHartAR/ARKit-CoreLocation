@@ -183,9 +183,12 @@ extension POIViewController {
             return
         }
 
+        let box = SCNBox(width: 1, height: 0.2, length: 5, chamferRadius: 0.25)
+        box.firstMaterial?.diffuse.contents = UIColor.gray.withAlphaComponent(0.5)
+
         // 2. If there is a route, show that
         if let routes = routes {
-            sceneLocationView.addRoutes(routes: routes)
+            sceneLocationView.addRoutes(routes: routes, boxPrototype: box)
         } else {
             // 3. If not, then show the
             buildDemoData().forEach {
