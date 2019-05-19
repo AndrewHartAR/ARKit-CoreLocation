@@ -68,7 +68,7 @@ open class LocationAnnotationNode: LocationNode {
         if scaleRelativeToDistance {
             scale = appliedScale.y
             annotationNode.scale = appliedScale
-            childNodes.forEach { child in
+            annotationNode.childNodes.forEach { child in
                 child.scale = appliedScale
             }
         } else {
@@ -79,6 +79,9 @@ open class LocationAnnotationNode: LocationNode {
             }
 
             annotationNode.scale = SCNVector3(x: scale, y: scale, z: scale)
+            annotationNode.childNodes.forEach { node in
+                node.scale = SCNVector3(x: scale, y: scale, z: scale)
+            }
         }
 
         self.pivot = SCNMatrix4MakeTranslation(0, -1.1 * scale, 0)
