@@ -47,7 +47,7 @@ open class LocationAnnotationNode: LocationNode {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func updatePositionAndScale(setup: Bool = false, scenePosition: SCNVector3?,
+    override func updatePositionAndScale(setup: Bool = false, scenePosition: SCNVector3?, locationNodeLocation nodeLocation: CLLocation,
                                          locationManager: SceneLocationManager, onCompletion: (() -> Void)) {
         guard let position = scenePosition, let location = locationManager.currentLocation else { return }
 
@@ -56,7 +56,8 @@ open class LocationAnnotationNode: LocationNode {
 
         let distance = self.location(locationManager.bestLocationEstimate).distance(from: location)
 
-        let adjustedDistance = self.adjustedDistance(setup: setup, position: position, locationManager: locationManager)
+        let adjustedDistance = self.adjustedDistance(setup: setup, position: position,
+                                                     locationNodeLocation: nodeLocation, locationManager: locationManager)
 
         // The scale of a node with a billboard constraint applied is ignored
         // The annotation subnode itself, as a subnode, has the scale applied to it

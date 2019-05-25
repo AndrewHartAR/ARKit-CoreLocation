@@ -73,6 +73,11 @@ open class LocationNode: SCNNode {
     /// For landmarks in the distance, the default is correct
     public var scaleRelativeToDistance = false
 
+    /// Whether the node should appear at the same altitude of the user
+    /// May be useful when you don't know the real altitude of the node
+    /// When set to true, the node will stay at the same altitude of the user
+    public var ignoreAltitude = false
+
     public init(location: CLLocation?) {
         self.location = location
         super.init()
@@ -95,17 +100,20 @@ open class LocationNode: SCNNode {
         }
     }
 
-    internal func adjustedDistance(setup: Bool, position: SCNVector3,
+    internal func adjustedDistance(setup: Bool, position: SCNVector3, locationNodeLocation: CLLocation,
                                    locationManager: SceneLocationManager) -> CLLocationDistance {
-        guard let location = locationManager.currentLocation else { return 0.0 }
+        guard let location = locationManager.currentLocation else {
+            return 0.0
+        }
 
-        //Position is set to a position coordinated via the current position
+        // Position is set to a position coordinated via the current position
         let distance = self.location(locationManager.bestLocationEstimate).distance(from: location)
+
+        var locationTranslation = location.translation(toLocation: locationNodeLocation)
+        locationTranslation.altitudeTranslation = ignoreAltitude ? 0 : locationTranslation.altitudeTranslation
 
         let adjustedDistance: CLLocationDistance
         if locationConfirmed && (distance > 100 || continuallyAdjustNodePositionWhenWithinRange || setup) {
-            let locationTranslation = location.translation(toLocation: self.location(locationManager.bestLocationEstimate))
-
             if distance > 100 {
                 //If the item is too far away, bring it closer and scale it down
                 let scale = 100 / Float(distance)
@@ -136,14 +144,17 @@ open class LocationNode: SCNNode {
         return adjustedDistance
     }
 
-    func updatePositionAndScale(setup: Bool = false, scenePosition: SCNVector3?,
+    func updatePositionAndScale(setup: Bool = false, scenePosition: SCNVector3?, locationNodeLocation nodeLocation: CLLocation,
                                 locationManager: SceneLocationManager, onCompletion: (() -> Void)) {
-        guard let position = scenePosition, locationManager.currentLocation != nil else { return }
+        guard let position = scenePosition, locationManager.currentLocation != nil else {
+            return
+        }
 
         SCNTransaction.begin()
         SCNTransaction.animationDuration = setup ? 0.0 : 0.1
 
-        _ = self.adjustedDistance(setup: setup, position: position, locationManager: locationManager)
+        _ = self.adjustedDistance(setup: setup, position: position,
+                                  locationNodeLocation: nodeLocation, locationManager: locationManager)
 
         SCNTransaction.commit()
 
