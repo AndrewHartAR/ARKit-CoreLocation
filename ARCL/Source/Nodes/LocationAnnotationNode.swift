@@ -47,8 +47,10 @@ open class LocationAnnotationNode: LocationNode {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func updatePositionAndScale(setup: Bool = false, scenePosition: SCNVector3?, locationNodeLocation nodeLocation: CLLocation,
-                                         locationManager: SceneLocationManager, onCompletion: (() -> Void)) {
+    override func updatePositionAndScale(setup: Bool = false, scenePosition: SCNVector3?,
+                                         locationNodeLocation nodeLocation: CLLocation,
+                                         locationManager: SceneLocationManager,
+                                         onCompletion: (() -> Void)) {
         guard let position = scenePosition, let location = locationManager.currentLocation else { return }
 
         SCNTransaction.begin()
@@ -73,11 +75,8 @@ open class LocationAnnotationNode: LocationNode {
                 child.scale = appliedScale
             }
         } else {
-            // Scale it to be an appropriate size so that it can be seen
-            scale = Float(adjustedDistance) * 0.181
-            if distance > 3_000 {
-                scale *= 0.75
-            }
+            let scaleFunc = scalingScheme.getScheme()
+            scale = scaleFunc(distance, adjustedDistance)
 
             annotationNode.scale = SCNVector3(x: scale, y: scale, z: scale)
             annotationNode.childNodes.forEach { node in

@@ -11,11 +11,11 @@ import Foundation
 public extension Double {
 
     var metersToLatitude: Double {
-        return self / (6_360_500.0)
+        return self / (6_378_137.0)
     }
 
     var metersToLongitude: Double {
-        return self / (5_602_900.0)
+        return self / (6_356_752.3)
     }
 }
 

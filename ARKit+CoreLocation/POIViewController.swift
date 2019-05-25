@@ -127,7 +127,8 @@ class POIViewController: UIViewController {
             } else {
                 let image = UIImage(named: "pin")!
                 let annotationNode = LocationAnnotationNode(location: nil, image: image)
-                annotationNode.scaleRelativeToDistance = true
+                annotationNode.scaleRelativeToDistance = false
+                annotationNode.scalingScheme = .normal
                 sceneLocationView.addLocationNodeForCurrentPosition(locationNode: annotationNode)
             }
         }

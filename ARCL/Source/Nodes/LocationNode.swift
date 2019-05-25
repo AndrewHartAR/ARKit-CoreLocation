@@ -78,6 +78,9 @@ open class LocationNode: SCNNode {
     /// When set to true, the node will stay at the same altitude of the user
     public var ignoreAltitude = false
 
+    /// The scheme to use for scaling
+    public var scalingScheme: ScalingScheme = .normal
+
     public init(location: CLLocation?) {
         self.location = location
         super.init()
