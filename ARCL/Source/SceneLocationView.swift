@@ -199,10 +199,14 @@ public extension SceneLocationView {
     /// Upon being added, a node's position will be modified and should not be changed externally.
     /// location will not be modified, but taken as accurate.
     func addLocationNodeWithConfirmedLocation(locationNode: LocationNode) {
-        if locationNode.location == nil || locationNode.locationConfirmed == false { return }
+        if locationNode.location == nil || locationNode.locationConfirmed == false {
+            return
+        }
+
+        let locationNodeLocation = locationOfLocationNode(locationNode)
 
         locationNode.updatePositionAndScale(setup: true,
-                                            scenePosition: currentScenePosition,
+                                            scenePosition: currentScenePosition, locationNodeLocation: locationNodeLocation,
                                             locationManager: sceneLocationManager) {
                                                 self.locationViewDelegate?
                                                     .didUpdateLocationAndScaleOfLocationNode(sceneLocationView: self,
@@ -276,17 +280,27 @@ public extension SceneLocationView {
 @available(iOS 11.0, *)
 public extension SceneLocationView {
 
-    func addRoutes(routes: [MKRoute]) {
+    /// Adds routes to the scene and lets you specify the geometry prototype for the box.
+    /// Note: You can provide your own SCNBox prototype to base the direction nodes from.
+    ///
+    /// - Parameters:
+    ///   - routes: The MKRoute of directions.
+    ///   - boxBuilder: A block that will customize how a box is built.
+    func addRoutes(routes: [MKRoute], boxBuilder: BoxBuilder? = nil) {
         guard let altitude = sceneLocationManager.currentLocation?.altitude else {
             return assertionFailure("we don't have an elevation")
         }
-        let polyNodes = routes.map { PolylineNode(polyline: $0.polyline, altitude: altitude - 2.0) }
+        let polyNodes = routes.map {
+            PolylineNode(polyline: $0.polyline, altitude: altitude - 2.0, boxBuilder: boxBuilder)
+        }
 
         polylineNodes.append(contentsOf: polyNodes)
         polyNodes.forEach {
             $0.locationNodes.forEach {
+                let locationNodeLocation = self.locationOfLocationNode($0)
                 $0.updatePositionAndScale(setup: true,
                                           scenePosition: currentScenePosition,
+                                          locationNodeLocation: locationNodeLocation,
                                           locationManager: sceneLocationManager,
                                           onCompletion: {})
                 sceneNode?.addChildNode($0)
@@ -322,7 +336,9 @@ extension SceneLocationView: SceneLocationManagerDelegate {
 
     func updatePositionAndScaleOfLocationNodes() {
         locationNodes.filter { $0.continuallyUpdatePositionAndScale }.forEach { node in
+            let locationNodeLocation = locationOfLocationNode(node)
             node.updatePositionAndScale(scenePosition: currentScenePosition,
+                                        locationNodeLocation: locationNodeLocation,
                                         locationManager: sceneLocationManager) {
                                             self.locationViewDelegate?
                                                 .didUpdateLocationAndScaleOfLocationNode(sceneLocationView: self,

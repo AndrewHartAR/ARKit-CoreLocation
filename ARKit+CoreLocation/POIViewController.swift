@@ -184,9 +184,25 @@ extension POIViewController {
             return
         }
 
+        let box = SCNBox(width: 1, height: 0.2, length: 5, chamferRadius: 0.25)
+        box.firstMaterial?.diffuse.contents = UIColor.gray.withAlphaComponent(0.5)
+
         // 2. If there is a route, show that
         if let routes = routes {
-            sceneLocationView.addRoutes(routes: routes)
+            sceneLocationView.addRoutes(routes: routes) { distance -> SCNBox in
+                let box = SCNBox(width: 1.75, height: 0.5, length: distance, chamferRadius: 0.25)
+
+//                // Option 1: An absolutely terrible box material set (that demonstrates what you can do):
+//                box.materials = ["box0", "box1", "box2", "box3", "box4", "box5"].map {
+//                    let material = SCNMaterial()
+//                    material.diffuse.contents = UIImage(named: $0)
+//                    return material
+//                }
+
+                // Option 2: Something more typical
+                box.firstMaterial?.diffuse.contents = UIColor.blue.withAlphaComponent(0.7)
+                return box
+            }
         } else {
             // 3. If not, then show the
             buildDemoData().forEach {

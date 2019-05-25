@@ -1,7 +1,9 @@
 # Changelog
 
 - next
+    - [PR #184 - adds "ignoreAltitude" to LocationNode](https://github.com/ProjectDent/ARKit-CoreLocation/pull/184)
     - [PR #183 - Scaling schemes](https://github.com/ProjectDent/ARKit-CoreLocation/pull/183)
+    - [PR #182 - child node scaling](https://github.com/ProjectDent/ARKit-CoreLocation/pull/182)
     - [PR #181 - Cleans up warnings](https://github.com/ProjectDent/ARKit-CoreLocation/pull/181)
     - [PR #177 - Fixes the workspace schemes](https://github.com/ProjectDent/ARKit-CoreLocation/pull/177)
     - [PR #176 - Fixes issue #164](https://github.com/ProjectDent/ARKit-CoreLocation/pull/176)
