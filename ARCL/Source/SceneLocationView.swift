@@ -281,13 +281,13 @@ public extension SceneLocationView {
     ///
     /// - Parameters:
     ///   - routes: The MKRoute of directions.
-    ///   - boxPrototype: A base SCNBox to "clone" the direction boxes from.
-    func addRoutes(routes: [MKRoute], boxPrototype: SCNBox? = nil) {
+    ///   - boxBuilder: A block that will customize how a box is built.
+    func addRoutes(routes: [MKRoute], boxBuilder: BoxBuilder? = nil) {
         guard let altitude = sceneLocationManager.currentLocation?.altitude else {
             return assertionFailure("we don't have an elevation")
         }
         let polyNodes = routes.map {
-            PolylineNode(polyline: $0.polyline, altitude: altitude - 2.0, boxPrototype: boxPrototype)
+            PolylineNode(polyline: $0.polyline, altitude: altitude - 2.0, boxBuilder: boxBuilder)
         }
 
         polylineNodes.append(contentsOf: polyNodes)
