@@ -1,6 +1,6 @@
 # Changelog
 
-- next
+- 1.2.0 
     - [PR #185 - Custom boxes for directions](https://github.com/ProjectDent/ARKit-CoreLocation/pull/185/files)
     - [PR #184 - adds "ignoreAltitude" to LocationNode](https://github.com/ProjectDent/ARKit-CoreLocation/pull/184)
     - [PR #183 - Scaling schemes](https://github.com/ProjectDent/ARKit-CoreLocation/pull/183)
