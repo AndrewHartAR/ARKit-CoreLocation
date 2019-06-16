@@ -102,7 +102,7 @@ open class SceneLocationView: ARSCNView {
         showsStatistics = false
 
         debugOptions = showFeaturePoints ? [ARSCNDebugOptions.showFeaturePoints] : debugOptions
-        
+
         let touchGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(sceneLocationViewTouched(sender:)))
         self.addGestureRecognizer(touchGestureRecognizer)
     }
@@ -213,15 +213,15 @@ public extension SceneLocationView {
         locationNodes.append(locationNode)
         sceneNode?.addChildNode(locationNode)
     }
-    
+
     @objc func sceneLocationViewTouched(sender: UITapGestureRecognizer) {
         guard let touchedView = sender.view as? SCNView else {
             return
         }
-        
+
         let coordinates = sender.location(in: touchedView)
         let hitTest = touchedView.hitTest(coordinates)
-        
+
         if !hitTest.isEmpty,
             let firstHitTest = hitTest.first,
             let touchedNode = firstHitTest.node as? AnnotationNode {
@@ -276,7 +276,7 @@ public extension SceneLocationView {
 
 @available(iOS 11.0, *)
 public extension SceneLocationView {
-    
+
     /// Adds routes to the scene and lets you specify the geometry prototype for the box.
     /// Note: You can provide your own SCNBox prototype to base the direction nodes from.
     ///
