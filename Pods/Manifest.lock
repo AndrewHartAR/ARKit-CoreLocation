@@ -1,5 +1,5 @@
 PODS:
-  - ARCL (1.2.0)
+  - ARCL (1.2.1)
 
 DEPENDENCIES:
   - ARCL (from `.`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: .
 
 SPEC CHECKSUMS:
-  ARCL: 29c62033bea1143385e72bfd214f8fc35d9e3f80
+  ARCL: c97df72da45b4d2d97095dc837b5ceb0e497dd3d
 
 PODFILE CHECKSUM: 1576bdfdc3990c7e821f93bcae8cf3b28a3cf18c
 
