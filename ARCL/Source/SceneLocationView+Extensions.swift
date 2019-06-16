@@ -38,14 +38,17 @@ extension SceneLocationView: ARSCNViewDelegate {
 
     public func sessionWasInterrupted(_ session: ARSession) {
         print("session was interrupted")
+        sceneTrackingDelegate?.sessionWasInterrupted(session)
     }
 
     public func sessionInterruptionEnded(_ session: ARSession) {
         print("session interruption ended")
+        sceneTrackingDelegate?.sessionInterruptionEnded(session)
     }
 
     public func session(_ session: ARSession, didFailWithError error: Error) {
         print("session did fail with error: \(error)")
+        sceneTrackingDelegate?.session(session, didFailWithError: error)
     }
 
     public func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
@@ -63,5 +66,6 @@ extension SceneLocationView: ARSCNViewDelegate {
         case .limited(.relocalizing):
             print("camera did change tracking state: limited, relocalizing")
         }
+        sceneTrackingDelegate?.session(session, cameraDidChangeTrackingState: camera)
     }
 }

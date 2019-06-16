@@ -21,6 +21,7 @@ open class SceneLocationView: ARSCNView {
     public weak var locationViewDelegate: SceneLocationViewDelegate?
     public weak var locationEstimateDelegate: SceneLocationViewEstimateDelegate?
     public weak var locationNodeTouchDelegate: LNTouchDelegate?
+    public weak var sceneTrackingDelegate: SceneTrackingDelegate?
 
     public let sceneLocationManager = SceneLocationManager()
 
@@ -101,13 +102,9 @@ open class SceneLocationView: ARSCNView {
         showsStatistics = false
 
         debugOptions = showFeaturePoints ? [ARSCNDebugOptions.showFeaturePoints] : debugOptions
-
+        
         let touchGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(sceneLocationViewTouched(sender:)))
         self.addGestureRecognizer(touchGestureRecognizer)
-    }
-
-    override open func layoutSubviews() {
-        super.layoutSubviews()
     }
 
     /// Resets the scene heading to 0
@@ -216,15 +213,15 @@ public extension SceneLocationView {
         locationNodes.append(locationNode)
         sceneNode?.addChildNode(locationNode)
     }
-
+    
     @objc func sceneLocationViewTouched(sender: UITapGestureRecognizer) {
         guard let touchedView = sender.view as? SCNView else {
             return
         }
-
+        
         let coordinates = sender.location(in: touchedView)
         let hitTest = touchedView.hitTest(coordinates)
-
+        
         if !hitTest.isEmpty,
             let firstHitTest = hitTest.first,
             let touchedNode = firstHitTest.node as? AnnotationNode {
@@ -279,7 +276,7 @@ public extension SceneLocationView {
 
 @available(iOS 11.0, *)
 public extension SceneLocationView {
-
+    
     /// Adds routes to the scene and lets you specify the geometry prototype for the box.
     /// Note: You can provide your own SCNBox prototype to base the direction nodes from.
     ///
@@ -298,14 +295,14 @@ public extension SceneLocationView {
         polyNodes.forEach {
             $0.locationNodes.forEach {
                 let locationNodeLocation = self.locationOfLocationNode($0)
-                $0.updatePositionAndScale(setup: true,
-                                          scenePosition: currentScenePosition,
+            $0.updatePositionAndScale(setup: true,
+                                      scenePosition: currentScenePosition,
                                           locationNodeLocation: locationNodeLocation,
-                                          locationManager: sceneLocationManager,
-                                          onCompletion: {})
-                sceneNode?.addChildNode($0)
-            }
+                                      locationManager: sceneLocationManager,
+                                      onCompletion: {})
+            sceneNode?.addChildNode($0)
         }
+    }
     }
 
     func removeRoutes(routes: [MKRoute]) {
