@@ -21,6 +21,7 @@ open class SceneLocationView: ARSCNView {
     public weak var locationViewDelegate: SceneLocationViewDelegate?
     public weak var locationEstimateDelegate: SceneLocationViewEstimateDelegate?
     public weak var locationNodeTouchDelegate: LNTouchDelegate?
+    public weak var sceneTrackingDelegate: SceneTrackingDelegate?
 
     public let sceneLocationManager = SceneLocationManager()
 
@@ -104,10 +105,6 @@ open class SceneLocationView: ARSCNView {
 
         let touchGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(sceneLocationViewTouched(sender:)))
         self.addGestureRecognizer(touchGestureRecognizer)
-    }
-
-    override open func layoutSubviews() {
-        super.layoutSubviews()
     }
 
     /// Resets the scene heading to 0
@@ -298,14 +295,14 @@ public extension SceneLocationView {
         polyNodes.forEach {
             $0.locationNodes.forEach {
                 let locationNodeLocation = self.locationOfLocationNode($0)
-                $0.updatePositionAndScale(setup: true,
-                                          scenePosition: currentScenePosition,
+            $0.updatePositionAndScale(setup: true,
+                                      scenePosition: currentScenePosition,
                                           locationNodeLocation: locationNodeLocation,
-                                          locationManager: sceneLocationManager,
-                                          onCompletion: {})
-                sceneNode?.addChildNode($0)
-            }
+                                      locationManager: sceneLocationManager,
+                                      onCompletion: {})
+            sceneNode?.addChildNode($0)
         }
+    }
     }
 
     func removeRoutes(routes: [MKRoute]) {

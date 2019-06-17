@@ -44,6 +44,20 @@ public protocol SceneLocationViewDelegate: class {
     func didUpdateLocationAndScaleOfLocationNode(sceneLocationView: SceneLocationView, locationNode: LocationNode)
 }
 
+/// Subset of delegate methods from ARSCNViewDelegate to be notified on tracking status changes
+@available(iOS 11.0, *)
+public protocol SceneTrackingDelegate: class {
+
+    func sessionWasInterrupted(_ session: ARSession)
+
+    func sessionInterruptionEnded(_ session: ARSession)
+
+    func session(_ session: ARSession, didFailWithError error: Error)
+
+    func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera)
+
+}
+
 @available(iOS 11.0, *)
 public extension SceneLocationViewDelegate {
     func didAddSceneLocationEstimate(sceneLocationView: SceneLocationView, position: SCNVector3, location: CLLocation) {
