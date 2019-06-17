@@ -47,6 +47,17 @@ This library contains the ARKit + CoreLocation framework, as well as a demo appl
 
 [Be sure to read the section on True North calibration.](#true-north-calibration)
 
+### Building with Swift:
+
+```bash
+swift build \
+        -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" \
+        -Xswiftc "-target" -Xswiftc "x86_64-apple-ios12.1-simulator"
+```
+
+### Setting up using Swift Package Manager
+
+
 ### Setting up using CocoaPods
 1. Add to your podfile:
 
@@ -91,7 +102,7 @@ override func viewDidLoad() {
 
 override func viewDidLayoutSubviews() {
   super.viewDidLayoutSubviews()
-  
+
   sceneLocationView.frame = view.bounds
 }
 ```
@@ -140,7 +151,7 @@ class ViewController: UIViewController, LNTouchDelegate {
 
     func locationNodeTouched(node: AnnotationNode) {
         // Do stuffs with the node instance
-        
+
         // node could have either node.view or node.image
         if let nodeView = node.view{
             // Do stuffs with the nodeView

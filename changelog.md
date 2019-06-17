@@ -1,5 +1,6 @@
 # Changelog
-
+- 1.2.1
+    - [PR #193 - Adds support for Swift Package Manager](https://github.com/ProjectDent/ARKit-CoreLocation/pull/193)
 - 1.2.0 
     - [PR #185 - Custom boxes for directions](https://github.com/ProjectDent/ARKit-CoreLocation/pull/185/files)
     - [PR #184 - adds "ignoreAltitude" to LocationNode](https://github.com/ProjectDent/ARKit-CoreLocation/pull/184)
