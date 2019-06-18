@@ -1,5 +1,20 @@
 ![ARKit + CoreLocation](https://github.com/ProjectDent/ARKit-CoreLocation/blob/master/arkit.png)
 
+<p align="center">
+    <a href="https://opensource.org/licenses/MIT">
+        <img src="https://img.shields.io/github/license/ProjectDent/ARKit-CoreLocation.svg"
+             alt="MIT License">
+    </a>
+    <a href="https://cocoapods.org/pods/ARCL">
+        <img src="https://img.shields.io/cocoapods/v/ARCL.svg?style=flat"
+             alt="Pods Version">
+    </a>
+    <a href="https://github.com/Carthage/Carthage">
+        <img src="https://img.shields.io/badge/Carthage-compatible-brightgreen.svg?style=flat"
+             alt="Carthage Compatible">
+    </a>
+</p>
+
 **ARKit**: Uses camera and motion data to map out the local world as you move around.
 
 **CoreLocation**: Uses wifi and GPS data to determine your global location, with a low degree of accuracy.
@@ -16,7 +31,7 @@ The improved location accuracy is currently in an “experimental” phase, but 
 
 Because there’s still work to be done there, and in other areas, this project will best be served by an open community, more than what GitHub Issues would allow us. So I’m opening up a Slack group that anyone can join, to discuss the library, improvements to it, and their own work.
 
-**[Join the Slack community](https://join.slack.com/t/arcl-dev/shared_invite/MjE4NTQ3NzE3MzgxLTE1MDExNTAzMTUtMTIyMmNlMTkyYg)**
+**[Join the Slack community](https://join.slack.com/t/arcl-dev/shared_invite/enQtNTk4OTg4MzU0MTEyLTMzYTM0Mjk0YmNkMjgwYzg4OWQ1NDFjNjc3NjM1NzdkNWNkZTc2NjQ1MWFiNmI1MTZiMTA5MmNjZmRiOTk1NjI)**
 
 ## Requirements
 ARKit requires iOS 11, and supports the following devices:
@@ -31,6 +46,17 @@ iOS 11 can be downloaded from Apple’s Developer website.
 This library contains the ARKit + CoreLocation framework, as well as a demo application similar to [Demo 1](https://twitter.com/AndrewProjDent/status/886916872683343872).
 
 [Be sure to read the section on True North calibration.](#true-north-calibration)
+
+### Building with Swift:
+
+```bash
+swift build \
+        -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" \
+        -Xswiftc "-target" -Xswiftc "x86_64-apple-ios12.1-simulator"
+```
+
+### Setting up using Swift Package Manager
+
 
 ### Setting up using CocoaPods
 1. Add to your podfile:
@@ -55,7 +81,7 @@ To place a pin over a building, for example Canary Wharf in London, we’ll use 
 
 First, import ARCL and CoreLocation, then declare SceneLocationView as a property:
 
-```
+```swift
 import ARCL
 import CoreLocation
 
@@ -66,18 +92,24 @@ class ViewController: UIViewController {
 
 You should call `sceneLocationView.run()` whenever it’s in focus, and `sceneLocationView.pause()` if it’s interrupted, such as by moving to a different view or by leaving the app.
 
-```
+```swift
 override func viewDidLoad() {
   super.viewDidLoad()
 
   sceneLocationView.run()
   view.addSubview(sceneLocationView)
 }
+
+override func viewDidLayoutSubviews() {
+  super.viewDidLayoutSubviews()
+
+  sceneLocationView.frame = view.bounds
+}
 ```
 
 After we’ve called `run()`, we can add our coordinate. ARCL comes with a class called `LocationNode` - an object within the 3D scene which has a real-world location along with a few other properties which allow it to be displayed appropriately within the world. `LocationNode` is a subclass of SceneKit’s `SCNNode`, and can also be subclassed further. For this example we’re going to use a subclass called `LocationAnnotationNode`, which we use to display a 2D image within the world, which always faces us:
 
-```
+```swift
 let coordinate = CLLocationCoordinate2D(latitude: 51.504571, longitude: -0.019717)
 let location = CLLocation(coordinate: coordinate, altitude: 300)
 let image = UIImage(named: "pin")!
@@ -85,9 +117,20 @@ let image = UIImage(named: "pin")!
 let annotationNode = LocationAnnotationNode(location: location, image: image)
 ```
 
+`LocationAnnotationNode` can also be initialized using a UIView. This is a preferred method since the attributes of the UIView can be kept dynamic during the lifecycle of the application.
+
+```swift
+let coordinate = CLLocationCoordinate2D(latitude: 51.504571, longitude: -0.019717)
+let location = CLLocation(coordinate: coordinate, altitude: 300)
+let view = UIView() // or a custom UIView subclass
+
+let annotationNode = LocationAnnotationNode(location: location, view: view)
+```
+
+
 By default, the image you set should always appear at the size it was given, for example if you give a 100x100 image, it would appear at 100x100 on the screen. This means distant annotation nodes can always be seen at the same size as nearby ones. If you’d rather they scale relative to their distance, you can set LocationAnnotationNode’s `scaleRelativeToDistance` to `true`.
 
-```
+```swift
 sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: annotationNode)
 ```
 
@@ -95,6 +138,32 @@ There are two ways to add a location node to a scene - using `addLocationNodeWit
 
 So that’s it. If you set the frame of your sceneLocationView, you should now see the pin hovering above Canary Wharf.
 
+In order to get a notification when a node is touched in the `sceneLocationView`, you need to conform to `LNTouchDelegate` in the ViewController class. The `locationNodeTouched(node: AnnotationNode)` gives you access to node that was touched on the screen. `AnnotationNode` is a subclass of SCNNode with two extra properties: `image: UIImage?` and `view: UIView?`. Either of these properties will be filled in based on how the `LocationAnnotationNode` was initialized (using the constructor that takes UIImage or UIView).
+```swift
+class ViewController: UIViewController, LNTouchDelegate {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        //...
+        self.sceneLocationView.locationNodeTouchDelegate = self
+        //...
+    }
+
+    func locationNodeTouched(node: AnnotationNode) {
+        // Do stuffs with the node instance
+
+        // node could have either node.view or node.image
+        if let nodeView = node.view{
+            // Do stuffs with the nodeView
+            // ...
+        }
+        if let nodeImage = node.image{
+            // Do stuffs with the nodeImage
+            // ...
+        }
+    }
+}
+```
 ## Additional features
 The library and demo come with a bunch of additional features for configuration. It’s all fully documented to be sure to have a look around.
 
@@ -121,6 +190,8 @@ CoreLocation can deliver location updates anywhere from every 1-15 seconds, with
 
 A user may receive a location reading accurate to 4m, then they walk 10m north and receive another location reading accurate to 65m. This 65m-accurate reading is the best that CoreLocation can offer, but knowing the user’s position within the AR scene when they got that 4m reading, and the fact that they’ve walked 10m north through the scene since then, we can translate that data to give them a new coordinate with about 4m of accuracy. This is accurate up to about 100m.
 
+[There is more detail on this on the wiki](https://github.com/ProjectDent/ARKit-CoreLocation/wiki/Current-Location-Accuracy).
+
 ### Issues
 I mentioned this was experimental - currently, ARKit occasionally gets confused as the user is walking through a scene, and may change their position inaccurately. This issue also seems to affect the “euler angles”, or directional information about the device, so after a short distance it may think you’re walking in a different direction.
 
@@ -131,6 +202,11 @@ There are further optimisations to determining a user’s location which can be 
 
 For example, one technique could be to look at recent location data, translate each data point using the user’s travel since then, and use the overlap between the data points to more narrowly determine the user’s possible location.
 
+[There is more detail on this on the wiki](https://github.com/ProjectDent/ARKit-CoreLocation/wiki/Current-Location-Accuracy).
+
+## Going Forward
+
+We have some Milestones and Issues related to them - anyone is welcome to discuss and contribute to them. Pull requests are welcomed. You can discuss new features/enhancements/bugs either by adding a new Issue or via [the Slack community](https://join.slack.com/t/arcl-dev/shared_invite/enQtMjgzNTcxMDE1NTA0LTZjNDI0MjA3YmFhYjFiNGY4MWY5ZThhZGYzMzcyNTFjNzQzZGVlNmYwOGQ1Y2I5NmJmYTc2MTNjMTZhZTI5ZjU).
 
 ## Thanks
 Library created by [@AndrewProjDent](https://twitter.com/andrewprojdent), but a community effort from here on.
