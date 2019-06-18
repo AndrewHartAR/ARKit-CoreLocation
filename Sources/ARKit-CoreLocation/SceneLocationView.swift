@@ -222,10 +222,14 @@ public extension SceneLocationView {
         let coordinates = sender.location(in: touchedView)
         let hitTest = touchedView.hitTest(coordinates)
 
-        if !hitTest.isEmpty,
-            let firstHitTest = hitTest.first,
-            let touchedNode = firstHitTest.node as? AnnotationNode {
-            self.locationNodeTouchDelegate?.locationNodeTouched(node: touchedNode)
+        guard let firstHitTest = hitTest.first else {
+            return
+        }
+
+        if let touchedNode = firstHitTest.node as? AnnotationNode {
+            self.locationNodeTouchDelegate?.annotationNodeTouched(node: touchedNode)
+        } else if let locationNode = firstHitTest.node.parent as? LocationNode {
+            self.locationNodeTouchDelegate?.locationNodeTouched(node: locationNode)
         }
     }
 
