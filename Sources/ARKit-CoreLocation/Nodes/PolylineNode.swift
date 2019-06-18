@@ -21,6 +21,7 @@ public class PolylineNode {
     public let polyline: MKPolyline
     public let altitude: CLLocationDistance
     public let boxBuilder: BoxBuilder
+    public let tag: String
 
     /// Creates a `PolylineNode` from the provided polyline, altitude (which is assumed to be uniform
     /// for all of the points) and an optional SCNBox to use as a prototype for the location boxes.
@@ -28,10 +29,15 @@ public class PolylineNode {
     /// - Parameters:
     ///   - polyline: The polyline that we'll be creating location nodes for.
     ///   - altitude: The uniform altitude to use to show the location nodes.
+    ///   - tag: a String attribute to identify the node in the scene (e.g when it's touched)
     ///   - boxBuilder: A block that will customize how a box is built.
-    public init(polyline: MKPolyline, altitude: CLLocationDistance, boxBuilder: BoxBuilder? = nil) {
+    public init(polyline: MKPolyline,
+                altitude: CLLocationDistance,
+                tag: String? = nil,
+                boxBuilder: BoxBuilder? = nil) {
         self.polyline = polyline
         self.altitude = altitude
+        self.tag = tag ?? Constants.defaultTag
         self.boxBuilder = boxBuilder ?? Constants.defaultBuilder
 
         contructNodes()
@@ -49,6 +55,7 @@ private extension PolylineNode {
             box.firstMaterial?.diffuse.contents = UIColor(red: 47.0/255.0, green: 125.0/255.0, blue: 255.0/255.0, alpha: 1.0)
             return box
         }
+        static let defaultTag: String = ""
     }
 
     /// This is what actually builds the SCNNodes and appends them to the
@@ -71,7 +78,7 @@ private extension PolylineNode {
             boxNode.pivot = SCNMatrix4MakeTranslation(0, 0, 0.5 * Float(distance))
             boxNode.eulerAngles.y = Float(bearing).degreesToRadians
 
-            let locationNode = LocationNode(location: currentLocation)
+            let locationNode = LocationNode(location: currentLocation, tag: tag)
             locationNode.addChildNode(boxNode)
 
             locationNodes.append(locationNode)

@@ -81,8 +81,9 @@ open class LocationNode: SCNNode {
     /// The scheme to use for scaling
     public var scalingScheme: ScalingScheme = .normal
 
-    public init(location: CLLocation?) {
+    public init(location: CLLocation?, tag: String? = nil) {
         self.location = location
+        self.tag = tag
         super.init()
     }
 
@@ -103,6 +104,7 @@ open class LocationNode: SCNNode {
         }
     }
 
+    @discardableResult
     internal func adjustedDistance(setup: Bool, position: SCNVector3, locationNodeLocation: CLLocation,
                                    locationManager: SceneLocationManager) -> CLLocationDistance {
         guard let location = locationManager.currentLocation else {
@@ -156,8 +158,9 @@ open class LocationNode: SCNNode {
         SCNTransaction.begin()
         SCNTransaction.animationDuration = setup ? 0.0 : 0.1
 
-        _ = self.adjustedDistance(setup: setup, position: position,
-                                  locationNodeLocation: nodeLocation, locationManager: locationManager)
+        self.adjustedDistance(setup: setup, position: position,
+                              locationNodeLocation: nodeLocation,
+                              locationManager: locationManager)
 
         SCNTransaction.commit()
 
