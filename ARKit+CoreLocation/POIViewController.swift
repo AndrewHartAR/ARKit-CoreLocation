@@ -68,6 +68,8 @@ class POIViewController: UIViewController {
         sceneLocationView.showAxesNode = true
         sceneLocationView.showFeaturePoints = displayDebugging
 
+        sceneLocationView.locationNodeTouchDelegate = self
+
         // Now add the route or location annotations as appropriate
         addSceneModels()
 
@@ -312,6 +314,20 @@ extension POIViewController {
         label.textAlignment = .center
         return LocationAnnotationNode(location: location, view: label)
     }
+}
+
+// MARK: - LNTouchDelegate
+@available(iOS 11.0, *)
+extension POIViewController: LNTouchDelegate {
+
+    func annotationNodeTouched(node: AnnotationNode) {
+        print("AnnotationNode touched \(node)")
+    }
+
+    func locationNodeTouched(node: LocationNode) {
+        print("Location node touched - tag: \(node.tag ?? "")")
+    }
+
 }
 
 // MARK: - Helpers

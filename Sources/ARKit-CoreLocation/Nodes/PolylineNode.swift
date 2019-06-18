@@ -11,7 +11,7 @@ import SceneKit
 import MapKit
 
 /// A block that will build an SCNBox with the provided distance.
-/// Note: the distance should be aassigned to the length
+/// Note: the distance should be assigned to the length
 public typealias BoxBuilder = (_ distance: CGFloat) -> SCNBox
 
 /// A Node that is used to show directions in AR-CL.
