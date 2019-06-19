@@ -1,6 +1,6 @@
 {
   "name": "ARCL",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "summary": "ARKit + CoreLocation combines the high accuracy of AR with the scale of GPS data.",
   "homepage": "https://github.com/ProjectDent/arkit-corelocation",
   "authors": {
@@ -12,13 +12,13 @@
   },
   "source": {
     "git": "https://ProjectDent@github.com/ProjectDent/ARKit-CoreLocation.git",
-    "tag": "1.2.1",
+    "tag": "1.2.2",
     "submodules": false
   },
   "platforms": {
     "ios": "9.0"
   },
-  "swift_version": "4.2",
+  "swift_version": "5.0",
   "requires_arc": true,
   "source_files": "Sources/**/*.{swift}",
   "frameworks": [

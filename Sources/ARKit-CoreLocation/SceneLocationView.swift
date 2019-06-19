@@ -290,7 +290,7 @@ public extension SceneLocationView {
     }
 
     func removeLocationNode(locationNode: LocationNode) {
-        if let index = locationNodes.index(of: locationNode) {
+        if let index = locationNodes.firstIndex(of: locationNode) {
             locationNodes.remove(at: index)
         }
 
@@ -335,7 +335,7 @@ public extension SceneLocationView {
 
     func removeRoutes(routes: [MKRoute]) {
         routes.forEach { route in
-            if let index = polylineNodes.index(where: { $0.polyline == route.polyline }) {
+            if let index = polylineNodes.firstIndex(where: { $0.polyline == route.polyline }) {
                 polylineNodes.remove(at: index)
             }
         }
