@@ -18,6 +18,17 @@ open class SceneLocationView: ARSCNView {
     /// Measured in meters.
     static let sceneLimit = 100.0
 
+    /// The type of tracking to use.
+    ///
+    /// - orientationTracking: Informs the `SceneLocationView` to use Device Orientatoin tracking only.
+    ///  See [Apple's documentation](https://developer.apple.com/documentation/arkit/arorientationtrackingconfiguration)
+    /// - worldTracking: Informs the `SceneLocationView` to use a World Tracking Configuration.
+    ///  See [Apple's documentation](https://developer.apple.com/documentation/arkit/arworldtrackingconfiguration#overview)
+    public enum ARTrackingType {
+        case orientationTracking
+        case worldTracking
+    }
+
     public weak var locationViewDelegate: SceneLocationViewDelegate?
     public weak var locationEstimateDelegate: SceneLocationViewEstimateDelegate?
     public weak var locationNodeTouchDelegate: LNTouchDelegate?
@@ -74,13 +85,19 @@ open class SceneLocationView: ARSCNView {
 
     public internal(set) var locationNodes = [LocationNode]()
     public internal(set) var polylineNodes = [PolylineNode]()
+    public internal(set) var arTrackingType: ARTrackingType = .worldTracking
 
     // MARK: Internal desclarations
     internal var didFetchInitialLocation = false
 
     // MARK: Setup
-    public convenience init() {
+
+    /// Default initialization, allows you specify the type of AR Tracking to use (or default to World Tracking).
+    ///
+    /// - Parameter trackingType: The type of AR Tracking to use.
+    public convenience init(trackingType: ARTrackingType = .worldTracking) {
         self.init(frame: .zero, options: nil)
+        self.arTrackingType = trackingType
     }
 
     public override init(frame: CGRect, options: [String: Any]? = nil) {
@@ -137,12 +154,17 @@ open class SceneLocationView: ARSCNView {
 public extension SceneLocationView {
 
     func run() {
-        // Create a session configuration
-        let configuration = AROrientationTrackingConfiguration()
-        configuration.worldAlignment = orientToTrueNorth ? .gravityAndHeading : .gravity
+        switch arTrackingType {
+        case .worldTracking:
+            let configuration = ARWorldTrackingConfiguration()
+            configuration.planeDetection = .horizontal
+            session.run(configuration)
 
-        // Run the view's session
-        session.run(configuration)
+        case .orientationTracking:
+            let configuration = AROrientationTrackingConfiguration()
+            configuration.worldAlignment = orientToTrueNorth ? .gravityAndHeading : .gravity
+            session.run(configuration)
+        }
         sceneLocationManager.run()
     }
 
