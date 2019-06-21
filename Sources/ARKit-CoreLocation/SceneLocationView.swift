@@ -18,6 +18,17 @@ open class SceneLocationView: ARSCNView {
     /// Measured in meters.
     static let sceneLimit = 100.0
 
+    /// The type of tracking to use.
+    ///
+    /// - orientationTracking: Informs the `SceneLocationView` to use Device Orientatoin tracking only.
+    ///  See [Apple's documentation](https://developer.apple.com/documentation/arkit/arorientationtrackingconfiguration)
+    /// - worldTracking: Informs the `SceneLocationView` to use a World Tracking Configuration.
+    ///  See [Apple's documentation](https://developer.apple.com/documentation/arkit/arworldtrackingconfiguration#overview)
+    public enum ARTrackingType {
+        case orientationTracking
+        case worldTracking
+    }
+
     public weak var locationViewDelegate: SceneLocationViewDelegate?
     public weak var locationEstimateDelegate: SceneLocationViewEstimateDelegate?
     public weak var locationNodeTouchDelegate: LNTouchDelegate?
@@ -74,13 +85,23 @@ open class SceneLocationView: ARSCNView {
 
     public internal(set) var locationNodes = [LocationNode]()
     public internal(set) var polylineNodes = [PolylineNode]()
+    public internal(set) var arTrackingType: ARTrackingType = .worldTracking
 
     // MARK: Internal desclarations
     internal var didFetchInitialLocation = false
 
     // MARK: Setup
-    public convenience init() {
-        self.init(frame: .zero, options: nil)
+
+    /// This initializer allows you to specify the type of tracking configuration (defaults to world tracking) as well as
+    /// some other optional values.
+    ///
+    /// - Parameters:
+    ///   - trackingType: The type of AR Tracking configuration (defaults to world tracking).
+    ///   - frame: The CGRect for the frame (defaults to .zero).
+    ///   - options: The rendering options for the `SCNView`.
+    public convenience init(trackingType: ARTrackingType = .worldTracking, frame: CGRect = .zero, options: [String: Any]? = nil) {
+        self.init(frame: frame, options: options)
+        self.arTrackingType = trackingType
     }
 
     public override init(frame: CGRect, options: [String: Any]? = nil) {
@@ -137,13 +158,18 @@ open class SceneLocationView: ARSCNView {
 public extension SceneLocationView {
 
     func run() {
-        // Create a session configuration
-        let configuration = ARWorldTrackingConfiguration()
-        configuration.planeDetection = .horizontal
-        configuration.worldAlignment = orientToTrueNorth ? .gravityAndHeading : .gravity
+        switch arTrackingType {
+        case .worldTracking:
+            let configuration = ARWorldTrackingConfiguration()
+            configuration.planeDetection = .horizontal
+            configuration.worldAlignment = orientToTrueNorth ? .gravityAndHeading : .gravity
+            session.run(configuration)
 
-        // Run the view's session
-        session.run(configuration)
+        case .orientationTracking:
+            let configuration = AROrientationTrackingConfiguration()
+            configuration.worldAlignment = orientToTrueNorth ? .gravityAndHeading : .gravity
+            session.run(configuration)
+        }
         sceneLocationManager.run()
     }
 
