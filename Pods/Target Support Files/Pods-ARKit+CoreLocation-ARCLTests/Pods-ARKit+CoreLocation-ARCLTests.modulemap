@@ -1,0 +1,6 @@
+framework module Pods_ARKit_CoreLocation_ARCLTests {
+  umbrella header "Pods-ARKit+CoreLocation-ARCLTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
