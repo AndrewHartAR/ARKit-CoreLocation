@@ -92,11 +92,15 @@ open class SceneLocationView: ARSCNView {
 
     // MARK: Setup
 
-    /// Default initialization, allows you specify the type of AR Tracking to use (or default to World Tracking).
+    /// This initializer allows you to specify the type of tracking configuration (defaults to world tracking) as well as
+    /// some other optional values.
     ///
-    /// - Parameter trackingType: The type of AR Tracking to use.
-    public convenience init(trackingType: ARTrackingType = .worldTracking) {
-        self.init(frame: .zero, options: nil)
+    /// - Parameters:
+    ///   - trackingType: The type of AR Tracking configuration (defaults to world tracking).
+    ///   - frame: The CGRect for the frame (defaults to .zero).
+    ///   - options: The rendering options for the `SCNView`.
+    public convenience init(trackingType: ARTrackingType = .worldTracking, frame: CGRect = .zero, options: [String: Any]? = nil) {
+        self.init(frame: frame, options: options)
         self.arTrackingType = trackingType
     }
 
@@ -158,6 +162,7 @@ public extension SceneLocationView {
         case .worldTracking:
             let configuration = ARWorldTrackingConfiguration()
             configuration.planeDetection = .horizontal
+            configuration.worldAlignment = orientToTrueNorth ? .gravityAndHeading : .gravity
             session.run(configuration)
 
         case .orientationTracking:
