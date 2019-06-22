@@ -20,7 +20,7 @@ open class SceneLocationView: ARSCNView {
 
     /// The type of tracking to use.
     ///
-    /// - orientationTracking: Informs the `SceneLocationView` to use Device Orientatoin tracking only.
+    /// - orientationTracking: Informs the `SceneLocationView` to use Device Orientation tracking only.
 	///  Useful when your nodes are all CLLocation based, and are not synced to real world planes
     ///  See [Apple's documentation](https://developer.apple.com/documentation/arkit/arorientationtrackingconfiguration)
     /// - worldTracking: Informs the `SceneLocationView` to use a World Tracking Configuration.
