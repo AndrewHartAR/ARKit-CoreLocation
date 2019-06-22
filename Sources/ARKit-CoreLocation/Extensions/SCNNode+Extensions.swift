@@ -9,9 +9,9 @@
 import SceneKit
 
 extension SCNNode {
-	/// Overlapping nodes require unique renderingOrder values to avoid flicker
-	/// This method will select random values if you don't care which node is in front of the other,
-	/// or you can specify a particular z-order value
+    /// Overlapping nodes require unique renderingOrder values to avoid flicker
+    /// This method will select random values if you don't care which node is in front of the other,
+    /// or you can specify a particular z-order value
     func removeFlicker (withRenderingOrder renderingOrder: Int = Int.random(in: 1..<Int.max)) {
         self.renderingOrder = renderingOrder
         if let geom = geometry {
