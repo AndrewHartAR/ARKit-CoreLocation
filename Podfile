@@ -4,4 +4,8 @@ use_frameworks!
 
 target 'ARKit+CoreLocation' do
     pod 'ARCL', :path => '.'
+
+    target 'ARCLTests' do
+
+    end
 end
