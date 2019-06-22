@@ -65,7 +65,7 @@ private extension PolylineNode {
 
             let box = boxBuilder(CGFloat(distance))
             let boxNode = SCNNode(geometry: box)
-			boxNode.removeFlicker()
+            boxNode.removeFlicker()
 
             let bearing = -currentLocation.bearing(between: nextLocation)
 
