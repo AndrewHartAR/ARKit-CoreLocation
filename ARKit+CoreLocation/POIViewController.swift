@@ -287,11 +287,12 @@ extension POIViewController {
         if let eulerAngles = sceneLocationView.currentEulerAngles {
             infoLabel.text!.append("Euler x: \(eulerAngles.x.short), y: \(eulerAngles.y.short), z: \(eulerAngles.z.short)\n")
         }
-		
+
 		if let eulerAngles = sceneLocationView.currentEulerAngles,
 			let heading = sceneLocationView.sceneLocationManager.locationManager.heading,
 			let headingAccuracy = sceneLocationView.sceneLocationManager.locationManager.headingAccuracy {
-			infoLabel.text!.append("Heading: \((((0 - eulerAngles.y.radiansToDegrees) + 360).truncatingRemainder(dividingBy: 360) ).short)° • \(Float(heading).short)° • \(headingAccuracy)°\n")
+            let yDegrees = (((0 - eulerAngles.y.radiansToDegrees) + 360).truncatingRemainder(dividingBy: 360) ).short
+			infoLabel.text!.append("Heading: \(yDegrees)° • \(Float(heading).short)° • \(headingAccuracy)°\n")
 		}
 
         let comp = Calendar.current.dateComponents([.hour, .minute, .second, .nanosecond], from: Date())
