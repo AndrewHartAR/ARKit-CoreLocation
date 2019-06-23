@@ -177,7 +177,6 @@
 				49A3FBD61F09988100AA59C8 /* Resources */,
 				128F729F1F39B73C00AC6E4C /* SwiftLint */,
 				9CE3F8FA71585F7964C43538 /* [CP] Embed Pods Frameworks */,
-				3FCF210431D0A0CF95E6F78E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -197,7 +196,6 @@
 				932EF22720BE7E6E0052210C /* Frameworks */,
 				932EF22820BE7E6E0052210C /* Resources */,
 				C224D3A38F464259B5D8D1FC /* [CP] Embed Pods Frameworks */,
-				AF09B578A67265D4FAAAF6DB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -285,25 +283,6 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
-		3FCF210431D0A0CF95E6F78E /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ARKit+CoreLocation/Pods-ARKit+CoreLocation-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		502B623DED1EB84FD22D345A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -346,25 +325,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ARKit+CoreLocation/Pods-ARKit+CoreLocation-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AF09B578A67265D4FAAAF6DB /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ARKit+CoreLocation-ARCLTests/Pods-ARKit+CoreLocation-ARCLTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C224D3A38F464259B5D8D1FC /* [CP] Embed Pods Frameworks */ = {

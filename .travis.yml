@@ -3,6 +3,7 @@ osx_image: xcode10.1
 
 script:
     - pod lib lint
+    - bundle exec fastlane test
 
 notifications:
   email: false
