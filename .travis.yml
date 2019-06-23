@@ -1,8 +1,9 @@
 language: objective-c
-osx_image: xcode10.1
+osx_image: xcode10.2
 
 script:
     - pod lib lint
+    - gem install bundler
     - bundle exec fastlane test
 
 notifications:
