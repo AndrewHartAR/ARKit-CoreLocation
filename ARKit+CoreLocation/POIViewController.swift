@@ -6,10 +6,11 @@
 //  Copyright © 2017 Project Dent. All rights reserved.
 //
 
-import UIKit
-import SceneKit
-import MapKit
 import ARCL
+import ARKit
+import MapKit
+import SceneKit
+import UIKit
 
 @available(iOS 11.0, *)
 /// Displays Points of Interest in ARCL
@@ -67,6 +68,9 @@ class POIViewController: UIViewController {
 
         sceneLocationView.showAxesNode = true
         sceneLocationView.showFeaturePoints = displayDebugging
+
+//        sceneLocationView.delegate = self // Causes an assertionFailure - use the `arViewDelegate` instead:
+        sceneLocationView.arViewDelegate = self
 
         // Now add the route or location annotations as appropriate
         addSceneModels()
