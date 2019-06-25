@@ -34,7 +34,7 @@ public class PolylineNode: LocationNode {
         self.altitude = altitude
         self.boxBuilder = boxBuilder ?? Constants.defaultBuilder
 
-		super.init(location: nil)
+        super.init(location: nil)
 
         contructNodes()
     }
