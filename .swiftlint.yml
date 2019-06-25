@@ -1,5 +1,9 @@
 line_length: 130
 
+file_length:
+  warning: 500
+  error: 1200
+
 disabled_rules:
   - variable_name
   - todo

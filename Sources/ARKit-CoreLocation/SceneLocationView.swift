@@ -38,6 +38,28 @@ open class SceneLocationView: ARSCNView {
 
     public let sceneLocationManager = SceneLocationManager()
 
+    /// Addresses [Issue #196](https://github.com/ProjectDent/ARKit-CoreLocation/issues/196) -
+    /// Delegate issue when assigned to self (no location nodes render).   If the user
+    /// tries to set the delegate, perform an assertionFailure and tell them to set the `arViewDelegate` instead.
+    open override var delegate: ARSCNViewDelegate? {
+        set {
+            if let newValue = newValue, !(newValue is SceneLocationView) {
+                assertionFailure("Set the arViewDelegate instead")
+            } else if self.delegate != nil, newValue == nil {
+                assertionFailure("Attempted to nil the existing delegate (it must be self). Set the arViewDelegate instead")
+            }
+            super.delegate = newValue
+        }
+        get {
+            return super.delegate
+        }
+    }
+
+    /// If you wish to receive delegate `ARSCNViewDelegate` events, use this instead of the `delegate` property.
+    /// The `delegate` property is reserved for this class itself and trying to set it will result in an assertionFailure
+    /// and in production, things just won't work as you expect.
+    public weak var arViewDelegate: ARSCNViewDelegate?
+
     /// The method to use for determining locations.
     /// Not advisable to change this as the scene is ongoing.
     public var locationEstimateMethod: LocationEstimateMethod {
