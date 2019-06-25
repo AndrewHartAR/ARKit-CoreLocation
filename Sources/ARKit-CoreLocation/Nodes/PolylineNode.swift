@@ -15,7 +15,7 @@ import MapKit
 public typealias BoxBuilder = (_ distance: CGFloat) -> SCNBox
 
 /// A Node that is used to show directions in AR-CL.
-public class PolylineNode : LocationNode {
+public class PolylineNode: LocationNode {
     public private(set) var locationNodes = [LocationNode]()
 
     public let polyline: MKPolyline
@@ -34,15 +34,15 @@ public class PolylineNode : LocationNode {
         self.altitude = altitude
         self.boxBuilder = boxBuilder ?? Constants.defaultBuilder
 
-		super.init(location:nil)
-		
+		super.init(location: nil)
+
         contructNodes()
     }
 
 	required public init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-	
+
 }
 
 // MARK: - Implementation
