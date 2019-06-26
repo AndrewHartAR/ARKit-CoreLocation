@@ -4,8 +4,7 @@ osx_image: xcode10.2
 script:
     - bundle install
     - pod lib lint
-#    - gem install bundler
-#    - bundle exec fastlane test
+    - bundle exec fastlane test
 
 notifications:
   email: false
