@@ -381,15 +381,30 @@ extension SceneLocationView: SceneLocationManagerDelegate {
         }
     }
 
+    /// Updates the position and scale of the `polylineNodes` and the `locationNodes`.
     func updatePositionAndScaleOfLocationNodes() {
+		polylineNodes.filter { $0.continuallyUpdatePositionAndScale }.forEach { node in
+			node.locationNodes.forEach { node in
+				let locationNodeLocation = self.locationOfLocationNode(node)
+				node.updatePositionAndScale(
+                    setup: false,
+                    scenePosition: currentScenePosition,
+                    locationNodeLocation: locationNodeLocation,
+                    locationManager: sceneLocationManager) {
+                        self.locationViewDelegate?.didUpdateLocationAndScaleOfLocationNode(
+                            sceneLocationView: self, locationNode: node)
+				} // updatePositionAndScale
+			} // foreach Location node
+		} // foreach Polyline node
+
         locationNodes.filter { $0.continuallyUpdatePositionAndScale }.forEach { node in
             let locationNodeLocation = locationOfLocationNode(node)
-            node.updatePositionAndScale(scenePosition: currentScenePosition,
-                                        locationNodeLocation: locationNodeLocation,
-                                        locationManager: sceneLocationManager) {
-                                            self.locationViewDelegate?
-                                                .didUpdateLocationAndScaleOfLocationNode(sceneLocationView: self,
-                                                                                         locationNode: node)
+            node.updatePositionAndScale(
+                scenePosition: currentScenePosition,
+                locationNodeLocation: locationNodeLocation,
+                locationManager: sceneLocationManager) {
+                    self.locationViewDelegate?.didUpdateLocationAndScaleOfLocationNode(
+                        sceneLocationView: self, locationNode: node)
             }
         }
     }
