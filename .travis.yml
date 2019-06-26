@@ -1,10 +1,11 @@
 language: objective-c
-osx_image: xcode10.2
+osx_image: xcode10.2 
 
 script:
+    - bundle install
     - pod lib lint
-    - gem install bundler
-    - bundle exec fastlane test
+#    - gem install bundler
+#    - bundle exec fastlane test
 
 notifications:
   email: false
