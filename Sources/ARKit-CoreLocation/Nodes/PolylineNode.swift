@@ -21,7 +21,6 @@ public class PolylineNode: LocationNode {
     public let polyline: MKPolyline
     public let altitude: CLLocationDistance
     public let boxBuilder: BoxBuilder
-    public let tag: String
 
     /// Creates a `PolylineNode` from the provided polyline, altitude (which is assumed to be uniform
     /// for all of the points) and an optional SCNBox to use as a prototype for the location boxes.
@@ -37,10 +36,11 @@ public class PolylineNode: LocationNode {
                 boxBuilder: BoxBuilder? = nil) {
         self.polyline = polyline
         self.altitude = altitude
-        self.tag = tag ?? Constants.defaultTag
         self.boxBuilder = boxBuilder ?? Constants.defaultBuilder
 
         super.init(location: nil)
+
+        self.tag = tag ?? Constants.defaultTag
 
         contructNodes()
     }
