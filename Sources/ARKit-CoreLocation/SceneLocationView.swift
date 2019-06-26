@@ -18,12 +18,47 @@ open class SceneLocationView: ARSCNView {
     /// Measured in meters.
     static let sceneLimit = 100.0
 
+    /// The type of tracking to use.
+    ///
+    /// - orientationTracking: Informs the `SceneLocationView` to use Device Orientation tracking only.
+	///  Useful when your nodes are all CLLocation based, and are not synced to real world planes
+    ///  See [Apple's documentation](https://developer.apple.com/documentation/arkit/arorientationtrackingconfiguration)
+    /// - worldTracking: Informs the `SceneLocationView` to use a World Tracking Configuration.
+	///  Useful when you have nodes that attach themselves to real world planes
+    ///  See [Apple's documentation](https://developer.apple.com/documentation/arkit/arworldtrackingconfiguration#overview)
+    public enum ARTrackingType {
+        case orientationTracking
+        case worldTracking
+    }
+
     public weak var locationViewDelegate: SceneLocationViewDelegate?
     public weak var locationEstimateDelegate: SceneLocationViewEstimateDelegate?
     public weak var locationNodeTouchDelegate: LNTouchDelegate?
     public weak var sceneTrackingDelegate: SceneTrackingDelegate?
 
     public let sceneLocationManager = SceneLocationManager()
+
+    /// Addresses [Issue #196](https://github.com/ProjectDent/ARKit-CoreLocation/issues/196) -
+    /// Delegate issue when assigned to self (no location nodes render).   If the user
+    /// tries to set the delegate, perform an assertionFailure and tell them to set the `arViewDelegate` instead.
+    open override var delegate: ARSCNViewDelegate? {
+        set {
+            if let newValue = newValue, !(newValue is SceneLocationView) {
+                assertionFailure("Set the arViewDelegate instead")
+            } else if self.delegate != nil, newValue == nil {
+                assertionFailure("Attempted to nil the existing delegate (it must be self). Set the arViewDelegate instead")
+            }
+            super.delegate = newValue
+        }
+        get {
+            return super.delegate
+        }
+    }
+
+    /// If you wish to receive delegate `ARSCNViewDelegate` events, use this instead of the `delegate` property.
+    /// The `delegate` property is reserved for this class itself and trying to set it will result in an assertionFailure
+    /// and in production, things just won't work as you expect.
+    public weak var arViewDelegate: ARSCNViewDelegate?
 
     /// The method to use for determining locations.
     /// Not advisable to change this as the scene is ongoing.
@@ -74,13 +109,23 @@ open class SceneLocationView: ARSCNView {
 
     public internal(set) var locationNodes = [LocationNode]()
     public internal(set) var polylineNodes = [PolylineNode]()
+    public internal(set) var arTrackingType: ARTrackingType = .worldTracking
 
     // MARK: Internal desclarations
     internal var didFetchInitialLocation = false
 
     // MARK: Setup
-    public convenience init() {
-        self.init(frame: .zero, options: nil)
+
+    /// This initializer allows you to specify the type of tracking configuration (defaults to world tracking) as well as
+    /// some other optional values.
+    ///
+    /// - Parameters:
+    ///   - trackingType: The type of AR Tracking configuration (defaults to world tracking).
+    ///   - frame: The CGRect for the frame (defaults to .zero).
+    ///   - options: The rendering options for the `SCNView`.
+    public convenience init(trackingType: ARTrackingType = .worldTracking, frame: CGRect = .zero, options: [String: Any]? = nil) {
+        self.init(frame: frame, options: options)
+        self.arTrackingType = trackingType
     }
 
     public override init(frame: CGRect, options: [String: Any]? = nil) {
@@ -137,13 +182,18 @@ open class SceneLocationView: ARSCNView {
 public extension SceneLocationView {
 
     func run() {
-        // Create a session configuration
-        let configuration = ARWorldTrackingConfiguration()
-        configuration.planeDetection = .horizontal
-        configuration.worldAlignment = orientToTrueNorth ? .gravityAndHeading : .gravity
+        switch arTrackingType {
+        case .worldTracking:
+            let configuration = ARWorldTrackingConfiguration()
+            configuration.planeDetection = .horizontal
+            configuration.worldAlignment = orientToTrueNorth ? .gravityAndHeading : .gravity
+            session.run(configuration)
 
-        // Run the view's session
-        session.run(configuration)
+        case .orientationTracking:
+            let configuration = AROrientationTrackingConfiguration()
+            configuration.worldAlignment = orientToTrueNorth ? .gravityAndHeading : .gravity
+            session.run(configuration)
+        }
         sceneLocationManager.run()
     }
 
@@ -266,7 +316,7 @@ public extension SceneLocationView {
     }
 
     func removeLocationNode(locationNode: LocationNode) {
-        if let index = locationNodes.index(of: locationNode) {
+        if let index = locationNodes.firstIndex(of: locationNode) {
             locationNodes.remove(at: index)
         }
 
@@ -329,7 +379,7 @@ public extension SceneLocationView {
 
     func removeRoutes(routes: [MKRoute]) {
         routes.forEach { route in
-            if let index = polylineNodes.index(where: { $0.polyline == route.polyline }) {
+            if let index = polylineNodes.firstIndex(where: { $0.polyline == route.polyline }) {
                 polylineNodes.remove(at: index)
             }
         }
@@ -353,15 +403,30 @@ extension SceneLocationView: SceneLocationManagerDelegate {
         }
     }
 
+    /// Updates the position and scale of the `polylineNodes` and the `locationNodes`.
     func updatePositionAndScaleOfLocationNodes() {
+		polylineNodes.filter { $0.continuallyUpdatePositionAndScale }.forEach { node in
+			node.locationNodes.forEach { node in
+				let locationNodeLocation = self.locationOfLocationNode(node)
+				node.updatePositionAndScale(
+                    setup: false,
+                    scenePosition: currentScenePosition,
+                    locationNodeLocation: locationNodeLocation,
+                    locationManager: sceneLocationManager) {
+                        self.locationViewDelegate?.didUpdateLocationAndScaleOfLocationNode(
+                            sceneLocationView: self, locationNode: node)
+				} // updatePositionAndScale
+			} // foreach Location node
+		} // foreach Polyline node
+
         locationNodes.filter { $0.continuallyUpdatePositionAndScale }.forEach { node in
             let locationNodeLocation = locationOfLocationNode(node)
-            node.updatePositionAndScale(scenePosition: currentScenePosition,
-                                        locationNodeLocation: locationNodeLocation,
-                                        locationManager: sceneLocationManager) {
-                                            self.locationViewDelegate?
-                                                .didUpdateLocationAndScaleOfLocationNode(sceneLocationView: self,
-                                                                                         locationNode: node)
+            node.updatePositionAndScale(
+                scenePosition: currentScenePosition,
+                locationNodeLocation: locationNodeLocation,
+                locationManager: sceneLocationManager) {
+                    self.locationViewDelegate?.didUpdateLocationAndScaleOfLocationNode(
+                        sceneLocationView: self, locationNode: node)
             }
         }
     }

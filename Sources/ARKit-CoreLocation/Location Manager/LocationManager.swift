@@ -36,7 +36,7 @@ public class LocationManager: NSObject {
     var currentLocation: CLLocation?
 
     private(set) public var heading: CLLocationDirection?
-    private(set) public var headingAccuracy: CLLocationDegrees?
+    private(set) public var headingAccuracy: CLLocationDirection?
 
     override init() {
         super.init()
