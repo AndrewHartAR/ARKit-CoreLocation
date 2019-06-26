@@ -6,10 +6,11 @@
 //  Copyright © 2017 Project Dent. All rights reserved.
 //
 
-import UIKit
-import SceneKit
-import MapKit
 import ARCL
+import ARKit
+import MapKit
+import SceneKit
+import UIKit
 
 @available(iOS 11.0, *)
 /// Displays Points of Interest in ARCL
@@ -67,6 +68,9 @@ class POIViewController: UIViewController {
 
         sceneLocationView.showAxesNode = true
         sceneLocationView.showFeaturePoints = displayDebugging
+
+//        sceneLocationView.delegate = self // Causes an assertionFailure - use the `arViewDelegate` instead:
+        sceneLocationView.arViewDelegate = self
 
         // Now add the route or location annotations as appropriate
         addSceneModels()
@@ -281,23 +285,23 @@ extension POIViewController {
     @objc
     func updateInfoLabel() {
         if let position = sceneLocationView.currentScenePosition {
-            infoLabel.text = "x: \(position.x.short), y: \(position.y.short), z: \(position.z.short)\n"
+            infoLabel.text = " x: \(position.x.short), y: \(position.y.short), z: \(position.z.short)\n"
         }
 
         if let eulerAngles = sceneLocationView.currentEulerAngles {
-            infoLabel.text!.append("Euler x: \(eulerAngles.x.short), y: \(eulerAngles.y.short), z: \(eulerAngles.z.short)\n")
+            infoLabel.text!.append(" Euler x: \(eulerAngles.x.short), y: \(eulerAngles.y.short), z: \(eulerAngles.z.short)\n")
         }
 
 		if let eulerAngles = sceneLocationView.currentEulerAngles,
 			let heading = sceneLocationView.sceneLocationManager.locationManager.heading,
 			let headingAccuracy = sceneLocationView.sceneLocationManager.locationManager.headingAccuracy {
             let yDegrees = (((0 - eulerAngles.y.radiansToDegrees) + 360).truncatingRemainder(dividingBy: 360) ).short
-			infoLabel.text!.append("Heading: \(yDegrees)° • \(Float(heading).short)° • \(headingAccuracy)°\n")
+			infoLabel.text!.append(" Heading: \(yDegrees)° • \(Float(heading).short)° • \(headingAccuracy)°\n")
 		}
 
         let comp = Calendar.current.dateComponents([.hour, .minute, .second, .nanosecond], from: Date())
         if let hour = comp.hour, let minute = comp.minute, let second = comp.second, let nanosecond = comp.nanosecond {
-            infoLabel.text!.append("\(hour.short):\(minute.short):\(second.short):\(nanosecond.short3)")
+            infoLabel.text!.append(" \(hour.short):\(minute.short):\(second.short):\(nanosecond.short3)")
         }
     }
 
