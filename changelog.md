@@ -6,6 +6,7 @@
     - [PR #203 - InfoLabel includes additional heading data](https://github.com/ProjectDent/ARKit-CoreLocation/pull/203)
     - [PR #198 - Adds support for AR Orientation Tracking](https://github.com/ProjectDent/ARKit-CoreLocation/pull/198)
     - [PR #193 - Adds support for Swift Package Manager](https://github.com/ProjectDent/ARKit-CoreLocation/pull/193)
+    - [PR #197 - Interact with location nodes](https://github.com/ProjectDent/ARKit-CoreLocation/pull/197)
 - 1.2.0 
     - [PR #185 - Custom boxes for directions](https://github.com/ProjectDent/ARKit-CoreLocation/pull/185/files)
     - [PR #184 - adds "ignoreAltitude" to LocationNode](https://github.com/ProjectDent/ARKit-CoreLocation/pull/184)
