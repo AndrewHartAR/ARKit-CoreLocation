@@ -8,8 +8,8 @@ Describe any breaking changes that this pull request will introduce.
 ### Meta
 - Tied to Version Release(s):
 
-### Checklist
-
+### PR Checklist
+- [ ] CI runs clean?
 - [ ] Appropriate label has been added to this PR (i.e., Bug, Enhancement, etc.).
 - [ ] Documentation has been added to all `open`, and `public` scoped methods and properties.
 - [ ] Changelog has been updated

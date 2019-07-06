@@ -1,6 +1,9 @@
 ![ARKit + CoreLocation](https://github.com/ProjectDent/ARKit-CoreLocation/blob/master/arkit.png)
 
 <p align="center">
+    <a href="https://travis-ci.org/ProjectDent/ARKit-CoreLocation">
+        <img src="https://travis-ci.org/ProjectDent/ARKit-CoreLocation.svg?branch=develop" alt="CI Status">
+    </a>
     <a href="https://opensource.org/licenses/MIT">
         <img src="https://img.shields.io/github/license/ProjectDent/ARKit-CoreLocation.svg"
              alt="MIT License">
