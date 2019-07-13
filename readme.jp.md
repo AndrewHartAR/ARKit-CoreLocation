@@ -108,7 +108,7 @@ let annotationNode = LocationAnnotationNode(location: location, view: view)
 ```
 
 また、CALayer を使用して`LocationAnnotationNode`を初期化することも可能です。 
-`cornerRadius` を指定したいような場合、またコンテンツを動的に更新したいような場合に利用するといいでしょう。
+コンテンツを動的に更新したいような場合に利用するといいでしょう。
 
 ```swift
 let coordinate = CLLocationCoordinate2D(latitude: 51.504571, longitude: -0.019717)

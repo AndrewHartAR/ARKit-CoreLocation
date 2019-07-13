@@ -128,7 +128,7 @@ let view = UIView() // or a custom UIView subclass
 let annotationNode = LocationAnnotationNode(location: location, view: view)
 ```
 
-It can also be initialized with CALayer. You can use this when you want to specify `cornerRadius`, or you want to update the contents live.
+It can also be initialized with CALayer. You can use this when you want to update the contents live.
 
 ```swift
 let coordinate = CLLocationCoordinate2D(latitude: 51.504571, longitude: -0.019717)
