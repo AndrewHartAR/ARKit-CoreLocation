@@ -156,6 +156,11 @@ open class LocationNode: SCNNode {
         SCNTransaction.begin()
         SCNTransaction.animationDuration = setup ? 0.0 : 0.1
 
+        let distance = self.location(locationManager.bestLocationEstimate).distance(from:
+            locationManager.currentLocation ?? nodeLocation)
+
+        childNodes.first?.renderingOrder = Int.max - 1000 - (Int(distance * 1000))
+
         _ = self.adjustedDistance(setup: setup, position: position,
                                   locationNodeLocation: nodeLocation, locationManager: locationManager)
 
