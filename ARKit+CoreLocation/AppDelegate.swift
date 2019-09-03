@@ -33,4 +33,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         return true
     }
+
+    // must call begin/endAppearanceTransition to make sure POIViewController's viewWillAppear/viewWilDisappear methods are called
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        for window in application.windows {
+            window.rootViewController?.beginAppearanceTransition(false, animated: false)
+            window.rootViewController?.endAppearanceTransition()
+        }
+    }
+
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        for window in application.windows {
+            window.rootViewController?.beginAppearanceTransition(true, animated: false)
+            window.rootViewController?.endAppearanceTransition()
+        }
+    }
+
 }
