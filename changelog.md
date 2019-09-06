@@ -1,5 +1,6 @@
 # Changelog
 - 1.2.2
+    - [PR #222 - Trigger viewWillDisappear/viewWillAppear calls when app backgrounded/foregrounded](https://github.com/ProjectDent/ARKit-CoreLocation/pull/222)
 - 1.2.1
     - [PR #207 - Addresses Issue #136 - ARCL lacks CI ](https://github.com/ProjectDent/ARKit-CoreLocation/pull/207)
     - [PR #209 - Updates polyline position/scale when GPS location is updated](https://github.com/ProjectDent/ARKit-CoreLocation/pull/209)
