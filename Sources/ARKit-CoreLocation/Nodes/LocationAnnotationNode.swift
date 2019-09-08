@@ -59,7 +59,7 @@ open class LocationAnnotationNode: LocationNode {
 
         let distance = self.location(locationManager.bestLocationEstimate).distance(from: location)
 
-		childNodes.first?.renderingOrder = Int.max - 1000 - (Int(distance * 1000))
+        childNodes.first?.renderingOrder = renderingOrder(fromDistance: distance)
 
         let adjustedDistance = self.adjustedDistance(setup: setup, position: position,
                                                      locationNodeLocation: nodeLocation, locationManager: locationManager)

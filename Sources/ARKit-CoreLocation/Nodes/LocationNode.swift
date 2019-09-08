@@ -159,7 +159,7 @@ open class LocationNode: SCNNode {
         let distance = self.location(locationManager.bestLocationEstimate).distance(from:
             locationManager.currentLocation ?? nodeLocation)
 
-        childNodes.first?.renderingOrder = Int.max - 1000 - (Int(distance * 1000))
+        childNodes.first?.renderingOrder = renderingOrder(fromDistance: distance)
 
         _ = self.adjustedDistance(setup: setup, position: position,
                                   locationNodeLocation: nodeLocation, locationManager: locationManager)
@@ -167,5 +167,12 @@ open class LocationNode: SCNNode {
         SCNTransaction.commit()
 
         onCompletion()
+    }
+	
+    // Converts distance from meters to SCNKit rendering order
+    // Constant multiplier eliminates flicker caused by slight distance variations
+    // Nodes with greater rendering orders are rendered last
+    func renderingOrder(fromDistance distance: CLLocationDistance) -> Int {
+        return Int.max - 1000 - (Int(distance * 1000))
     }
 }
