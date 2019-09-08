@@ -214,7 +214,7 @@ extension POIViewController {
             }
         }
 
-        // There are many differnet ways to add lighting to a scene, but even this mechanism (the absolute simplest)
+        // There are many different ways to add lighting to a scene, but even this mechanism (the absolute simplest)
         // keeps 3D objects fron looking flat
         sceneLocationView.autoenablesDefaultLighting = true
 
