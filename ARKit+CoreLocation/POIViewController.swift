@@ -213,6 +213,11 @@ extension POIViewController {
                 sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: $0)
             }
         }
+
+        // There are many differnet ways to add lighting to a scene, but even this mechanism (the absolute simplest)
+        // keeps 3D objects fron looking flat
+        sceneLocationView.autoenablesDefaultLighting = true
+
     }
 
     /// Builds the location annotations for a few random objects, scattered across the country
