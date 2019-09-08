@@ -169,9 +169,9 @@ open class LocationNode: SCNNode {
         onCompletion()
     }
 	
-    // Converts distance from meters to SCNKit rendering order
-    // Constant multiplier eliminates flicker caused by slight distance variations
-    // Nodes with greater rendering orders are rendered last
+    /// Converts distance from meters to SCNKit rendering order
+    /// Constant multiplier eliminates flicker caused by slight distance variations
+    /// Nodes with greater rendering orders are rendered last
     func renderingOrder(fromDistance distance: CLLocationDistance) -> Int {
         return Int.max - 1000 - (Int(distance * 1000))
     }
