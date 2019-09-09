@@ -16,8 +16,8 @@ open class LocationAnnotationNode: LocationNode {
 
     public init(location: CLLocation?, image: UIImage) {
         let plane = SCNPlane(width: image.size.width / 100, height: image.size.height / 100)
-        plane.firstMaterial!.diffuse.contents = image
-        plane.firstMaterial!.lightingModel = .constant
+        plane.firstMaterial?.diffuse.contents = image
+        plane.firstMaterial?.lightingModel = .constant
 
         annotationNode = AnnotationNode(view: nil, image: image)
         annotationNode.geometry = plane
@@ -46,8 +46,8 @@ open class LocationAnnotationNode: LocationNode {
 
     public init(location: CLLocation?, layer: CALayer) {
         let plane = SCNPlane(width: layer.bounds.size.width / 100, height: layer.bounds.size.height / 100)
-        plane.firstMaterial!.diffuse.contents = layer
-        plane.firstMaterial!.lightingModel = .constant
+        plane.firstMaterial?.diffuse.contents = layer
+        plane.firstMaterial?.lightingModel = .constant
 
         annotationNode = AnnotationNode(view: nil, image: nil, layer: layer)
         annotationNode.geometry = plane
