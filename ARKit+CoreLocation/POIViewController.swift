@@ -55,6 +55,13 @@ class POIViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        NotificationCenter.default.addObserver(forName: UIApplication.willResignActiveNotification, object: nil, queue: nil) { _ in
+            self.pauseAnimation()
+        }
+        NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil) { _ in
+            self.restartAnimation()
+        }
+
         updateInfoLabelTimer = Timer.scheduledTimer(timeInterval: 0.1,
                                                     target: self,
                                                     selector: #selector(POIViewController.updateInfoLabel),
@@ -95,16 +102,23 @@ class POIViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
-        print("run")
-        sceneLocationView.run()
+        restartAnimation()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
+        print(#function)
+        pauseAnimation()
         super.viewWillDisappear(animated)
+    }
 
+    func pauseAnimation() {
         print("pause")
-        // Pause the view's session
         sceneLocationView.pause()
+    }
+
+    func restartAnimation() {
+        print("run")
+        sceneLocationView.run()
     }
 
     override func viewDidLayoutSubviews() {
