@@ -1,6 +1,6 @@
 # Changelog
 - 1.2.2
-    - [PR #222 - Trigger viewWillDisappear/viewWillAppear calls when app backgrounded/foregrounded](https://github.com/ProjectDent/ARKit-CoreLocation/pull/222)
+   - [PR #222 - Trigger viewWillDisappear/viewWillAppear calls when app backgrounded/foregrounded](https://github.com/ProjectDent/ARKit-CoreLocation/pull/222)
    - [PR #220 - Render distant nodes behind closer nodes ](https://github.com/ProjectDent/ARKit-CoreLocation/pull/220)
 >>>>>>> develop
     - [PR #207 - Addresses Issue #136 - ARCL lacks CI ](https://github.com/ProjectDent/ARKit-CoreLocation/pull/207)
