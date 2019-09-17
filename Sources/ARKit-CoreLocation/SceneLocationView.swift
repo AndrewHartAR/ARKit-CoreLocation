@@ -163,7 +163,7 @@ open class SceneLocationView: ARSCNView {
     }
 
     /// Gives the best estimate of the location of a node
-    func locationOfLocationNode(_ locationNode: LocationNode) -> CLLocation {
+    public func locationOfLocationNode(_ locationNode: LocationNode) -> CLLocation {
         if locationNode.locationConfirmed || locationEstimateMethod == .coreLocationDataOnly {
             return locationNode.location!
         }

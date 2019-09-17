@@ -25,7 +25,6 @@ class POIViewController: UIViewController {
     var locationEstimateAnnotation: MKPointAnnotation?
 
     var updateUserLocationTimer: Timer?
-    var updateInfoLabelTimer: Timer?
 
     var centerMapOnUserLocation: Bool = true
     var routes: [MKRoute]?
@@ -42,7 +41,7 @@ class POIViewController: UIViewController {
     /// Whether to display some debugging data
     /// This currently displays the coordinate of the best location estimate
     /// The initial value is respected
-    let displayDebugging = false
+    let displayDebugging = true
 
     let adjustNorthByTappingSidesOfScreen = false
 
@@ -55,19 +54,6 @@ class POIViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        NotificationCenter.default.addObserver(forName: UIApplication.willResignActiveNotification, object: nil, queue: nil) { _ in
-            self.pauseAnimation()
-        }
-        NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil) { _ in
-            self.restartAnimation()
-        }
-
-        updateInfoLabelTimer = Timer.scheduledTimer(timeInterval: 0.1,
-                                                    target: self,
-                                                    selector: #selector(POIViewController.updateInfoLabel),
-                                                    userInfo: nil,
-                                                    repeats: true)
-
         // Set to true to display an arrow which points north.
         // Checkout the comments in the property description and on the readme on this.
 //        sceneLocationView.orientToTrueNorth = false
@@ -75,9 +61,12 @@ class POIViewController: UIViewController {
 
         sceneLocationView.showAxesNode = true
         sceneLocationView.showFeaturePoints = displayDebugging
-
+        sceneLocationView.showsStatistics = true
+        sceneLocationView.debugOptions = [.showWireframe, .showWorldOrigin]
 //        sceneLocationView.delegate = self // Causes an assertionFailure - use the `arViewDelegate` instead:
         sceneLocationView.arViewDelegate = self
+        
+        sceneLocationView.locationNodeTouchDelegate = self
 
         // Now add the route or location annotations as appropriate
         addSceneModels()
@@ -102,23 +91,16 @@ class POIViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
-        restartAnimation()
+        print("run")
+        sceneLocationView.run()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        print(#function)
-        pauseAnimation()
         super.viewWillDisappear(animated)
-    }
 
-    func pauseAnimation() {
         print("pause")
+        // Pause the view's session
         sceneLocationView.pause()
-    }
-
-    func restartAnimation() {
-        print("run")
-        sceneLocationView.run()
     }
 
     override func viewDidLayoutSubviews() {
@@ -147,8 +129,27 @@ class POIViewController: UIViewController {
                 let annotationNode = LocationAnnotationNode(location: nil, image: image)
                 annotationNode.scaleRelativeToDistance = false
                 annotationNode.scalingScheme = .normal
-                sceneLocationView.addLocationNodeForCurrentPosition(locationNode: annotationNode)
+                DispatchQueue.main.async {
+                    self.sceneLocationView.addLocationNodeForCurrentPosition(locationNode: annotationNode)
+                }
             }
+        }
+    }
+}
+
+// MARK: - LNTouchDelegate
+
+@available(iOS 11.0, *)
+extension POIViewController: LNTouchDelegate {
+
+    func locationNodeTouched(node: AnnotationNode) {
+        print(node)
+        print(node.parent)
+        print(node.parent?.simdPosition)
+        print(node.parent?.childNodes)
+        print(node.childNodes)
+        if let parent = node.parent as? LocationNode {
+            print(sceneLocationView.locationOfLocationNode(parent))
         }
     }
 }
@@ -183,6 +184,21 @@ extension POIViewController: MKMapViewDelegate {
 
         return marker
     }
+}
+
+// MARK: - SCNSceneRendererDelegate
+
+@available(iOS 11.0, *)
+extension POIViewController: SCNSceneRendererDelegate {
+    func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+    }
+
+    func renderer(_ renderer: SCNSceneRenderer, didRenderScene scene: SCNScene, atTime time: TimeInterval) {
+        DispatchQueue.main.async {
+            self.updateInfoLabel()
+        }
+    }
+
 }
 
 // MARK: - Implementation
