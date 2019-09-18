@@ -1,5 +1,6 @@
 # Changelog
 - 1.2.2
+   - [PR #225 - Expose SceneLocationView.locationOfLocationNode ](https://github.com/ProjectDent/ARKit-CoreLocation/pull/225)
    - [PR #220 - Render distant nodes behind closer nodes ](https://github.com/ProjectDent/ARKit-CoreLocation/pull/220)
 - 1.2.1
     - [PR #207 - Addresses Issue #136 - ARCL lacks CI ](https://github.com/ProjectDent/ARKit-CoreLocation/pull/207)
