@@ -78,6 +78,7 @@ open class LocationAnnotationNode: LocationNode {
     override func updatePositionAndScale(setup: Bool = false, scenePosition: SCNVector3?,
                                          locationNodeLocation nodeLocation: CLLocation,
                                          locationManager: SceneLocationManager,
+                                         stackAnnotation: Bool,
                                          onCompletion: (() -> Void)) {
         guard let position = scenePosition, let location = locationManager.currentLocation else { return }
 
@@ -89,7 +90,8 @@ open class LocationAnnotationNode: LocationNode {
         childNodes.first?.renderingOrder = renderingOrder(fromDistance: distance)
 
         let adjustedDistance = self.adjustedDistance(setup: setup, position: position,
-                                                     locationNodeLocation: nodeLocation, locationManager: locationManager)
+                                                     locationNodeLocation: nodeLocation,
+                                                     locationManager: locationManager, stackAnnotation: stackAnnotation)
 
         // The scale of a node with a billboard constraint applied is ignored
         // The annotation subnode itself, as a subnode, has the scale applied to it

@@ -79,6 +79,10 @@ open class SceneLocationView: ARSCNView {
             locationNodes.forEach { $0.locationEstimateMethod = newValue }
         }
     }
+    
+    /// When set to true, locationNodes are all displaced 100 m far from the user and annotations are y-stacked
+    public var shouldStackAnnotations = false
+    public var stackingOffset: Float = 0.0
 
     /// When set to true, displays an axes node at the start of the scene
     public var showAxesNode = false
@@ -266,7 +270,7 @@ public extension SceneLocationView {
 
         locationNode.updatePositionAndScale(setup: true,
                                             scenePosition: currentScenePosition, locationNodeLocation: locationNodeLocation,
-                                            locationManager: sceneLocationManager) {
+                                            locationManager: sceneLocationManager, stackAnnotation: shouldStackAnnotations) {
                                                 self.locationViewDelegate?
                                                     .didUpdateLocationAndScaleOfLocationNode(sceneLocationView: self,
                                                                                              locationNode: locationNode)
@@ -298,6 +302,9 @@ public extension SceneLocationView {
     /// Each node's addition to the scene can silently fail; See `addLocationNodeWithConfirmedLocation(locationNode:)`.
     func addLocationNodesWithConfirmedLocation(locationNodes: [LocationNode]) {
         locationNodes.forEach { addLocationNodeWithConfirmedLocation(locationNode: $0) }
+        if shouldStackAnnotations {
+            self.stackAnnotations()
+        }
     }
 
     func removeAllNodes() {
@@ -383,7 +390,7 @@ public extension SceneLocationView {
             $0.updatePositionAndScale(setup: true,
                                       scenePosition: currentScenePosition,
                                           locationNodeLocation: locationNodeLocation,
-                                      locationManager: sceneLocationManager,
+                                      locationManager: sceneLocationManager, stackAnnotation: false,
                                       onCompletion: {})
             sceneNode?.addChildNode($0)
         }
@@ -466,7 +473,8 @@ extension SceneLocationView: SceneLocationManagerDelegate {
                     setup: false,
                     scenePosition: currentScenePosition,
                     locationNodeLocation: locationNodeLocation,
-                    locationManager: sceneLocationManager) {
+                    locationManager: sceneLocationManager,
+                    stackAnnotation: false) {
                         self.locationViewDelegate?.didUpdateLocationAndScaleOfLocationNode(
                             sceneLocationView: self, locationNode: node)
 				} // updatePositionAndScale
@@ -478,7 +486,8 @@ extension SceneLocationView: SceneLocationManagerDelegate {
             node.updatePositionAndScale(
                 scenePosition: currentScenePosition,
                 locationNodeLocation: locationNodeLocation,
-                locationManager: sceneLocationManager) {
+                locationManager: sceneLocationManager,
+                stackAnnotation: shouldStackAnnotations) {
                     self.locationViewDelegate?.didUpdateLocationAndScaleOfLocationNode(
                         sceneLocationView: self, locationNode: node)
             }
