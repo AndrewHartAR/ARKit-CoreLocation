@@ -36,6 +36,16 @@ iOS 11 は Apple’s Developer websiteからダウンロードできます。
 
 [True North calibration のセクションを必ず読んでください。](#true-north-calibration)
 
+### Build設定:
+
+ ```bash
+swift build \
+        -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" \
+        -Xswiftc "-target" -Xswiftc "x86_64-apple-ios12.1-simulator"
+```
+
+### Swift Package Managerでの設定
+
 ### CocoaPodsでの設定
 1. Podfileに以下を追加:
 
