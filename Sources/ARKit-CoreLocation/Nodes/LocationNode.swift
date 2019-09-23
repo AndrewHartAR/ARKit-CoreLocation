@@ -84,6 +84,11 @@ open class LocationNode: SCNNode {
 
     /// The scheme to use for scaling
     public var scalingScheme: ScalingScheme = .normal
+    
+    /// Whether the nod should be stacked along the y-axis accordingly with the distance
+    /// When set to true, scaleRealtiveToDistance should be false
+    public var shouldStackAnnotation = false
+    
 
     public init(location: CLLocation?, tag: String? = nil) {
         self.location = location
@@ -109,7 +114,7 @@ open class LocationNode: SCNNode {
     }
 
     internal func adjustedDistance(setup: Bool, position: SCNVector3, locationNodeLocation: CLLocation,
-                                   locationManager: SceneLocationManager, stackAnnotation: Bool) -> CLLocationDistance {
+                                   locationManager: SceneLocationManager) -> CLLocationDistance {
         guard let location = locationManager.currentLocation else {
             return 0.0
         }
@@ -121,8 +126,8 @@ open class LocationNode: SCNNode {
         locationTranslation.altitudeTranslation = ignoreAltitude ? 0 : locationTranslation.altitudeTranslation
 
         let adjustedDistance: CLLocationDistance
-        if locationConfirmed && (distance > 100 || continuallyAdjustNodePositionWhenWithinRange || setup || stackAnnotation) {
-            if distance > 100 || stackAnnotation {
+        if locationConfirmed && (distance > 100 || continuallyAdjustNodePositionWhenWithinRange || setup || shouldStackAnnotation) {
+            if distance > 100 || shouldStackAnnotation {
                 //If the item is too far away, bring it closer and scale it down
                 let scale = 100 / Float(distance)
 
@@ -155,7 +160,7 @@ open class LocationNode: SCNNode {
     /// See `LocationAnnotationNode`'s override of this function. Because it doesn't invoke `super`'s version, any changes
     /// made in this file must be repeated in `LocationAnnotationNode`.
     func updatePositionAndScale(setup: Bool = false, scenePosition: SCNVector3?, locationNodeLocation nodeLocation: CLLocation,
-                                locationManager: SceneLocationManager, stackAnnotation: Bool, onCompletion: (() -> Void)) {
+                                locationManager: SceneLocationManager, onCompletion: (() -> Void)) {
         guard let position = scenePosition, locationManager.currentLocation != nil else {
             return
         }
@@ -170,7 +175,7 @@ open class LocationNode: SCNNode {
 
         _ = self.adjustedDistance(setup: setup, position: position,
                                   locationNodeLocation: nodeLocation,
-                                  locationManager: locationManager, stackAnnotation: stackAnnotation)
+                                  locationManager: locationManager)
 
         SCNTransaction.commit()
 

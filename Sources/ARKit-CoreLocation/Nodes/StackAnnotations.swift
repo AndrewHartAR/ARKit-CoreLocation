@@ -18,7 +18,8 @@ extension SceneLocationView {
         SCNTransaction.begin()
         SCNTransaction.animationDuration = 0.3
         
-        var sortedLocationNodes = self.locationNodes as! [LocationAnnotationNode]
+        // Filter only locationNodes that should be stacked
+        var sortedLocationNodes = self.locationNodes.filter{$0.shouldStackAnnotation} as! [LocationAnnotationNode]
         
         // Sort nodes by distance with the user
         if let userLocation = self.sceneLocationManager.currentLocation {
