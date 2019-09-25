@@ -14,7 +14,7 @@ import CoreLocation
 /// Test `coordinateWithBearing(bearing:distanceMeters)` for 4 different latitudes (85, 47.6, 5, -47.6),
 /// 8 different bearings (every 45 degrees starting at 0),
 /// and 3 different ranges (500, 10000, and 50000 meters). Compare against values computed with PostGIS.
-class ARCLTests: XCTestCase {
+class CLLocationExtensionsTests: XCTestCase {
 
     let longitudeAccuracy = 0.001 // 120 yards
     let latitudeAccuracy = 0.001  // 120 yards at equator, 85 yards at 45 degrees longitude
