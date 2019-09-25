@@ -23,6 +23,7 @@ public extension CLLocation {
 
     /// Translates distance in meters between two locations.
     /// Returns the result as the distance in latitude and distance in longitude.
+    /// This function uses questionable geodesy and needs unit test support.
     func translation(toLocation location: CLLocation) -> LocationTranslation {
         let inbetweenLocation = CLLocation(latitude: self.coordinate.latitude, longitude: location.coordinate.longitude)
 
@@ -61,6 +62,11 @@ public extension CLLocation {
                           timestamp: self.timestamp)
     }
 
+    /// Returns bearing in degrees from north between `self` and another point.
+    /// This function uses neither a geodesic nor a rhumb line formula. Instead, it uses a rectangular approximation of a sphere.
+    /// For node pairs that are fairly close together, this method is probably accurate enough, but for long distances,
+    /// a geodesic (great circle) formula is required instead.
+    /// - Parameter point: second point to compute bearing to.
     func bearing(between point: CLLocation) -> Double {
         let lat1 = self.coordinate.latitude.degreesToRadians
         let lon1 = self.coordinate.longitude.degreesToRadians
@@ -84,6 +90,12 @@ public extension CLLocation {
 
 public extension CLLocationCoordinate2D {
 
+    /// Returns a new `CLLocationCoordinate2D` at the given bearing and distance from the original point.
+    /// This function uses neither a geodesic nor a rhumb line formula. Instead, it uses a rectangular approximation of a sphere.
+    /// For very short distances, this method is probably accurate enough, but for long distances, a geodesic (great circle)
+    /// formula is required instead. Unit testing shows inaccuracy even as close as 500 meters.
+    /// - Parameter bearing: bearing in degrees clockwise from north.
+    /// - Parameter distanceMeters: distance in meters.
     func coordinateWithBearing(bearing: Double, distanceMeters: Double) -> CLLocationCoordinate2D {
         //The numbers for earth radius may be _off_ here
         //but this gives a reasonably accurate result..
