@@ -1,5 +1,5 @@
 //
-//  ARCLTests.swift
+//  CLLocationExtensionsTests.swift
 //  ARCLTests
 //
 //  Created by Aaron Brethorst on 5/29/18.
