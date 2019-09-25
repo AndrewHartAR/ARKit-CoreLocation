@@ -26,6 +26,39 @@ class CLLocationExtensionsTests: XCTestCase {
         super.tearDown()
     }
 
+    func assertCorrectBearingProjection(start: CLLocation, distanceMeters: Double, bearing: Double, lon: Double, lat: Double, file: StaticString = #file,
+    line: UInt = #line) {
+        // Thanks to https://medium.com/bleeding-edge/writing-better-unit-tests-in-swift-part-two-d19b69f3d794 for the #file/#line trick!
+        // 1 nautical mile ~= 2000 yards. 1 degree of latitude = 60 nautical miles.
+        let longitudeAccuracy = 0.001 // 120 yards at equator, 85 yards at +/-45 degrees latitude
+        let latitudeAccuracy = 0.001  // 120 yards
+
+        let startPoint = start.coordinate
+        let resultPoint = startPoint.coordinateWithBearing(bearing: bearing, distanceMeters: distanceMeters)
+
+        XCTAssertEqual(resultPoint.latitude, lat, accuracy: latitudeAccuracy, file: file, line: line)
+        XCTAssertEqual(resultPoint.longitude, lon, accuracy: longitudeAccuracy, file: file, line: line)
+        
+        let resultLocation = CLLocation.init(coordinate: resultPoint, altitude: 0)
+        let distanceError = resultLocation.distance(from: CLLocation.init(latitude: lat, longitude: lon))
+        XCTAssertLessThan(distanceError, 100.0, file: file, line: line)
+
+        // An angular error of 5 degrees is about twice the width of your thumb at arm's length.
+        let maxAngularError = 5.0 * .pi / 180
+        // distanceError/distanceMeters is the sin of the max angular error.
+        XCTAssertLessThan(distanceError / distanceMeters, sin(maxAngularError), file: file, line: line)
+    }
+    
+    func assertCorrectBearingComputation(start: CLLocation, lon: Double, lat: Double, correctBearing: Double, file: StaticString = #file,
+    line: UInt = #line) {
+        let destination = CLLocation.init(latitude: lat, longitude: lon)
+        let computedBearing = start.bearing(between: destination)
+        print(start, destination,computedBearing,correctBearing)
+        XCTAssertEqual(computedBearing, correctBearing, accuracy: 0.1, file: file, line: line)
+}
+
+    // MARK: - tests
+
     // TODO: this test doesn't appear to test anything. Looks like the expected value axes are reversed, and
     // a .01 accuracy translates to 1200 yards north/south, about 850 yards east/west
     // at this latitude.
@@ -39,27 +72,7 @@ class CLLocationExtensionsTests: XCTestCase {
         XCTAssertEqual(pub.longitude, east.longitude, accuracy: 0.01)
     }
 
-    func assertCorrectBearingProjection(start: CLLocation, distanceMeters: Double, bearing: Double, lon: Double, lat: Double) {
-        // 1 nautical mile ~= 2000 yards. 1 degree of latitude = 60 nautical miles.
-        let longitudeAccuracy = 0.001 // 120 yards at equator, 85 yards at +/-45 degrees latitude
-        let latitudeAccuracy = 0.001  // 120 yards
 
-        let startPoint = start.coordinate
-        let resultPoint = startPoint.coordinateWithBearing(bearing: bearing, distanceMeters: distanceMeters)
-
-        XCTAssertEqual(resultPoint.latitude, lat, accuracy: latitudeAccuracy)
-        XCTAssertEqual(resultPoint.longitude, lon, accuracy: longitudeAccuracy)
-        
-        let resultLocation = CLLocation.init(coordinate: resultPoint, altitude: 0)
-        let distanceError = resultLocation.distance(from: CLLocation.init(latitude: lat, longitude: lon))
-        XCTAssertLessThan(distanceError, 100.0)
-
-        // An angular error of 5 degrees is about twice the width of your thumb at arm's length.
-        let maxAngularError = 5.0 * .pi / 180
-        // distanceError/distanceMeters is the sin of the max angular error.
-        XCTAssertLessThan(distanceError / distanceMeters, sin(maxAngularError))
-    }
-    
     func testCoordinateWithBearingMidLatitude500() {
         /*
          select bearing,ST_AsText(ST_Project('POINT(-122.3128663 47.6235858)'::geography, 500, radians(bearing)))
@@ -411,13 +424,99 @@ class CLLocationExtensionsTests: XCTestCase {
         assertCorrectBearingProjection(start: start, distanceMeters: 50000, bearing:315, lon:-122.724980108402, lat: -39.6808395104955)
     }
 
+    func testAzimuthMidLatitude500() {
+/*      bearing |                 st_astext
+     ---------+-------------------------------------------
+            0 | POINT(-122.3128663 47.6280828887704)
+           45 | POINT(-122.308162416608 47.6267656259013)
+           90 | POINT(-122.306214407755 47.6235856071536)
+          135 | POINT(-122.308162987107 47.620405779481)
+          180 | POINT(-122.3128663 47.6190887076871)
+          225 | POINT(-122.317569612893 47.620405779481)
+          270 | POINT(-122.319518192245 47.6235856071536)
+          315 | POINT(-122.317570183392 47.6267656259013)
+     (8 rows)
+*/
+        let start = CLLocation.init(latitude: 47.6235858, longitude: -122.3128663)
+        assertCorrectBearingComputation(start: start, lon: -122.3128663, lat:  47.6280828887704, correctBearing: 0.0)
+        assertCorrectBearingComputation(start: start, lon: -122.308162416608, lat: 47.6267656259013, correctBearing: 45.0)
+        assertCorrectBearingComputation(start: start, lon: -122.306214407755, lat: 47.6235856071536, correctBearing: 90.0)
+        assertCorrectBearingComputation(start: start, lon: -122.308162987107, lat: 47.620405779481, correctBearing: 135.0)
+        assertCorrectBearingComputation(start: start, lon: -122.3128663, lat: 47.6190887076871, correctBearing: 180.0)
+        assertCorrectBearingComputation(start: start, lon: -122.317569612893, lat: 47.620405779481, correctBearing: 225.0)
+        assertCorrectBearingComputation(start: start, lon: -122.319518192245, lat: 47.6235856071536, correctBearing: 270.0)
+        assertCorrectBearingComputation(start: start, lon: -122.317570183392, lat: 47.6267656259013, correctBearing: 315.0)
+    }
+    
+    func testAzimuthMidLatitude10000() {
+
+     
+/*      select bearing,ST_AsText(ST_Project('POINT(-122.3128663 47.6235858)'::geography, 10000, radians(bearing)))
+              from (
+                  values (0),(45),(90),(135),(180),(225),(270),(315)
+              ) s(bearing);
+      bearing |                 st_astext
+     ---------+-------------------------------------------
+            0 | POINT(-122.3128663 47.7135269024092)
+           45 | POINT(-122.218680106776 47.6871452814007)
+           90 | POINT(-122.179828585245 47.6235086614964)
+          135 | POINT(-122.218908306631 47.5599484713877)
+          180 | POINT(-122.3128663 47.5336432805981)
+          225 | POINT(-122.406824293369 47.5599484713877)
+          270 | POINT(-122.445904014755 47.6235086614964)
+          315 | POINT(-122.407052493224 47.6871452814007)
+     (8 rows)
+*/
+        let start = CLLocation.init(latitude: 47.6235858, longitude: -122.3128663)
+        assertCorrectBearingComputation(start: start, lon: -122.3128663, lat: 47.7135269024092, correctBearing: 0.0)
+        assertCorrectBearingComputation(start: start, lon: -122.218680106776, lat: 47.6871452814007, correctBearing: 45.0)
+        assertCorrectBearingComputation(start: start, lon: -122.179828585245, lat: 47.6235086614964, correctBearing: 90.0)
+        assertCorrectBearingComputation(start: start, lon: -122.218908306631, lat: 47.5599484713877, correctBearing: 135.0)
+        assertCorrectBearingComputation(start: start, lon: -122.3128663, lat: 47.5336432805981, correctBearing: 180.0)
+        assertCorrectBearingComputation(start: start, lon: -122.406824293369, lat: 47.5599484713877, correctBearing: 225.0)
+        assertCorrectBearingComputation(start: start, lon: -122.445904014755, lat: 47.6235086614964, correctBearing: 270.0)
+        assertCorrectBearingComputation(start: start, lon: -122.407052493224, lat: 47.6871452814007, correctBearing: 315.0)
+    }
+    
+    func testAzimuthMidLatitude50000() {
+
+/*
+select bearing,ST_AsText(ST_Project('POINT(-122.3128663 47.6235858)'::geography, 50000, radians(bearing)))
+              from (
+                  values (0),(45),(90),(135),(180),(225),(270),(315)
+              ) s(bearing);
+      bearing |                 st_astext
+     ---------+-------------------------------------------
+            0 | POINT(-122.3128663 48.0732771512326)
+           45 | POINT(-121.839637614568 47.9405975715807)
+           90 | POINT(-121.647693382546 47.6216573806133)
+          135 | POINT(-121.845342666805 47.3046277647178)
+          180 | POINT(-122.3128663 47.1738590246445)
+          225 | POINT(-122.780389933195 47.3046277647178)
+          270 | POINT(-122.978039217454 47.6216573806133)
+          315 | POINT(-122.786094985432 47.9405975715807)
+     (8 rows)
+*/
+        let start = CLLocation.init(latitude: 47.6235858, longitude: -122.3128663)
+        assertCorrectBearingComputation(start: start, lon: -122.3128663, lat: 48.0732771512326, correctBearing: 0.0)
+        assertCorrectBearingComputation(start: start, lon: -121.839637614568, lat: 47.9405975715807, correctBearing: 45.0)
+        assertCorrectBearingComputation(start: start, lon: -121.647693382546, lat: 47.6216573806133, correctBearing: 90.0)
+        assertCorrectBearingComputation(start: start, lon: -121.845342666805, lat: 47.3046277647178, correctBearing: 135.0)
+        assertCorrectBearingComputation(start: start, lon: -122.3128663, lat: 47.1738590246445, correctBearing: 180.0)
+        assertCorrectBearingComputation(start: start, lon: -122.780389933195, lat: 47.3046277647178, correctBearing: 225.0)
+        assertCorrectBearingComputation(start: start, lon: -122.978039217454, lat: 47.6216573806133, correctBearing: 270.0)
+        assertCorrectBearingComputation(start: start, lon: -122.786094985432, lat: 47.9405975715807, correctBearing: 315.0)
+    }
+
+    // MARK: - PostGIS
+    // MARK: coordinateWithBearing
     /*
      Here is the original transcript of the PostGIS session for coordinateWithBearing/assertCorrectBearingProjection.
      
-     nrhp=>          select bearing,ST_AsText(ST_Project('POINT(-122.3128663 47.6235858)'::geography, 500, radians(bearing)))
-     nrhp->          from (
-     nrhp(>              values (0),(45),(90),(135),(180),(225),(270),(315)
-     nrhp(>          ) s(bearing);
+               select bearing,ST_AsText(ST_Project('POINT(-122.3128663 47.6235858)'::geography, 500, radians(bearing)))
+               from (
+                   values (0),(45),(90),(135),(180),(225),(270),(315)
+               ) s(bearing);
       bearing |                 st_astext
      ---------+-------------------------------------------
             0 | POINT(-122.3128663 47.6280828887704)
@@ -430,8 +529,8 @@ class CLLocationExtensionsTests: XCTestCase {
           315 | POINT(-122.317570183392 47.6267656259013)
      (8 rows)
 
-     nrhp=>
-     nrhp=> select bearing,ST_AsText(ST_Project('POINT(-122.3128663 47.6235858)'::geography, 10000, radians(bearing)))
+     
+      select bearing,ST_AsText(ST_Project('POINT(-122.3128663 47.6235858)'::geography, 10000, radians(bearing)))
               from (
                   values (0),(45),(90),(135),(180),(225),(270),(315)
               ) s(bearing);
@@ -447,7 +546,7 @@ class CLLocationExtensionsTests: XCTestCase {
           315 | POINT(-122.407052493224 47.6871452814007)
      (8 rows)
 
-     nrhp=> select bearing,ST_AsText(ST_Project('POINT(-122.3128663 47.6235858)'::geography, 50000, radians(bearing)))
+      select bearing,ST_AsText(ST_Project('POINT(-122.3128663 47.6235858)'::geography, 50000, radians(bearing)))
               from (
                   values (0),(45),(90),(135),(180),(225),(270),(315)
               ) s(bearing);
@@ -463,7 +562,7 @@ class CLLocationExtensionsTests: XCTestCase {
           315 | POINT(-122.786094985432 47.9405975715807)
      (8 rows)
 
-     nrhp=> select bearing,ST_AsText(ST_Project('POINT(-122.3128663 85)'::geography, 50000, radians(bearing)))
+      select bearing,ST_AsText(ST_Project('POINT(-122.3128663 85)'::geography, 50000, radians(bearing)))
               from (
                   values (0),(45),(90),(135),(180),(225),(270),(315)
               ) s(bearing);
@@ -479,7 +578,7 @@ class CLLocationExtensionsTests: XCTestCase {
           315 | POINT(-126.183815522551 85.3059018482087)
      (8 rows)
 
-     nrhp=> select bearing,ST_AsText(ST_Project('POINT(-122.3128663 85)'::geography, 10000, radians(bearing)))
+      select bearing,ST_AsText(ST_Project('POINT(-122.3128663 85)'::geography, 10000, radians(bearing)))
               from (
                   values (0),(45),(90),(135),(180),(225),(270),(315)
               ) s(bearing);
@@ -495,7 +594,7 @@ class CLLocationExtensionsTests: XCTestCase {
           315 | POINT(-123.04850872027 85.0629073941419)
      (8 rows)
 
-     nrhp=> select bearing,ST_AsText(ST_Project('POINT(-122.3128663 85)'::geography, 500, radians(bearing)))
+      select bearing,ST_AsText(ST_Project('POINT(-122.3128663 85)'::geography, 500, radians(bearing)))
               from (
                   values (0),(45),(90),(135),(180),(225),(270),(315)
               ) s(bearing);
@@ -511,10 +610,10 @@ class CLLocationExtensionsTests: XCTestCase {
           315 | POINT(-122.34920878575 85.003164618309)
      (8 rows)
 
-     nrhp=>          select bearing,ST_AsText(ST_Project('POINT(-122.3128663 5)'::geography, 500, radians(bearing)))
-     nrhp->                   from (
-     nrhp(>                       values (0),(45),(90),(135),(180),(225),(270),(315)
-     nrhp(>                   ) s(bearing);
+               select bearing,ST_AsText(ST_Project('POINT(-122.3128663 5)'::geography, 500, radians(bearing)))
+                        from (
+                            values (0),(45),(90),(135),(180),(225),(270),(315)
+                        ) s(bearing);
       bearing |                 st_astext
      ---------+-------------------------------------------
             0 | POINT(-122.3128663 5.00452150216546)
@@ -527,11 +626,11 @@ class CLLocationExtensionsTests: XCTestCase {
           315 | POINT(-122.316054390444 5.00319717715266)
      (8 rows)
 
-     nrhp=>
-     nrhp=>          select bearing,ST_AsText(ST_Project('POINT(-122.3128663 5)'::geography, 500, radians(bearing)))
-     nrhp->                   from (
-     nrhp(>                       values (0),(45),(90),(135),(180),(225),(270),(315)
-     nrhp(>                   ) s(bearing);
+     
+               select bearing,ST_AsText(ST_Project('POINT(-122.3128663 5)'::geography, 500, radians(bearing)))
+                        from (
+                            values (0),(45),(90),(135),(180),(225),(270),(315)
+                        ) s(bearing);
       bearing |                 st_astext
      ---------+-------------------------------------------
             0 | POINT(-122.3128663 5.00452150216546)
@@ -544,11 +643,11 @@ class CLLocationExtensionsTests: XCTestCase {
           315 | POINT(-122.316054390444 5.00319717715266)
      (8 rows)
 
-     nrhp=>
-     nrhp=>          select bearing,ST_AsText(ST_Project('POINT(-122.3128663 5)'::geography, 500, radians(bearing)))
-     nrhp->                   from (
-     nrhp(>                       values (0),(45),(90),(135),(180),(225),(270),(315)
-     nrhp(>                   ) s(bearing);
+     
+               select bearing,ST_AsText(ST_Project('POINT(-122.3128663 5)'::geography, 500, radians(bearing)))
+                        from (
+                            values (0),(45),(90),(135),(180),(225),(270),(315)
+                        ) s(bearing);
       bearing |                 st_astext
      ---------+-------------------------------------------
             0 | POINT(-122.3128663 5.00452150216546)
@@ -561,11 +660,11 @@ class CLLocationExtensionsTests: XCTestCase {
           315 | POINT(-122.316054390444 5.00319717715266)
      (8 rows)
 
-     nrhp=>
-     nrhp=>          select bearing,ST_AsText(ST_Project('POINT(-122.3128663 5)'::geography, 10000, radians(bearing)))
-     nrhp->                   from (
-     nrhp(>                       values (0),(45),(90),(135),(180),(225),(270),(315)
-     nrhp(>                   ) s(bearing);
+     
+               select bearing,ST_AsText(ST_Project('POINT(-122.3128663 5)'::geography, 10000, radians(bearing)))
+                        from (
+                            values (0),(45),(90),(135),(180),(225),(270),(315)
+                        ) s(bearing);
       bearing |                 st_astext
      ---------+-------------------------------------------
             0 | POINT(-122.3128663 5.09042992434887)
@@ -578,11 +677,11 @@ class CLLocationExtensionsTests: XCTestCase {
           315 | POINT(-122.376634010586 5.06394052429685)
      (8 rows)
 
-     nrhp=>
-     nrhp=>          select bearing,ST_AsText(ST_Project('POINT(-122.3128663 5)'::geography, 50000, radians(bearing)))
-     nrhp->                   from (
-     nrhp(>                       values (0),(45),(90),(135),(180),(225),(270),(315)
-     nrhp(>                   ) s(bearing);
+     
+               select bearing,ST_AsText(ST_Project('POINT(-122.3128663 5)'::geography, 50000, radians(bearing)))
+                        from (
+                            values (0),(45),(90),(135),(180),(225),(270),(315)
+                        ) s(bearing);
       bearing |                 st_astext
      ---------+-------------------------------------------
             0 | POINT(-122.3128663 5.4521470438799)
@@ -595,10 +694,10 @@ class CLLocationExtensionsTests: XCTestCase {
           315 | POINT(-122.63183174401 5.31963770686063)
      (8 rows)
 
-     nrhp=>          select bearing,ST_AsText(ST_Project('POINT(-122.3128663 -40)'::geography, 500, radians(bearing)))
-     nrhp->                   from (
-     nrhp(>                       values (0),(45),(90),(135),(180),(225),(270),(315)
-     nrhp(>                   ) s(bearing);
+               select bearing,ST_AsText(ST_Project('POINT(-122.3128663 -40)'::geography, 500, radians(bearing)))
+                        from (
+                            values (0),(45),(90),(135),(180),(225),(270),(315)
+                        ) s(bearing);
       bearing |                 st_astext
      ---------+--------------------------------------------
             0 | POINT(-122.3128663 -39.9954968987312)
@@ -611,11 +710,11 @@ class CLLocationExtensionsTests: XCTestCase {
           315 | POINT(-122.317006374965 -39.9968157529746)
      (8 rows)
 
-     nrhp=>
-     nrhp=>          select bearing,ST_AsText(ST_Project('POINT(-122.3128663 -40)'::geography, 10000, radians(bearing)))
-     nrhp->                   from (
-     nrhp(>                       values (0),(45),(90),(135),(180),(225),(270),(315)
-     nrhp(>                   ) s(bearing);
+     
+               select bearing,ST_AsText(ST_Project('POINT(-122.3128663 -40)'::geography, 10000, radians(bearing)))
+                        from (
+                            values (0),(45),(90),(135),(180),(225),(270),(315)
+                        ) s(bearing);
       bearing |                 st_astext
      ---------+--------------------------------------------
             0 | POINT(-122.3128663 -39.9099373079262)
@@ -628,11 +727,11 @@ class CLLocationExtensionsTests: XCTestCase {
           315 | POINT(-122.395594802917 -39.9362866650943)
      (8 rows)
 
-     nrhp=>
-     nrhp=>          select bearing,ST_AsText(ST_Project('POINT(-122.3128663 -40)'::geography, 50000, radians(bearing)))
-     nrhp->                   from (
-     nrhp(>                       values (0),(45),(90),(135),(180),(225),(270),(315)
-     nrhp(>                   ) s(bearing);
+     
+               select bearing,ST_AsText(ST_Project('POINT(-122.3128663 -40)'::geography, 50000, radians(bearing)))
+                        from (
+                            values (0),(45),(90),(135),(180),(225),(270),(315)
+                        ) s(bearing);
       bearing |                 st_astext
      ---------+--------------------------------------------
             0 | POINT(-122.3128663 -39.5496725166091)
@@ -647,4 +746,21 @@ class CLLocationExtensionsTests: XCTestCase {
 
 
      */
+    
+    // MARK: bearing to point
+
+    /*
+    select ST_AsText(destination),degrees(ST_Azimuth('POINT(-122.3128663 47.6235858)'::geography, destination))
+             from (
+    values ('POINT(-122.3128663 47.6280828887704)'::geography),
+    ('POINT(-122.308162416608 47.6267656259013)'::geography),
+    ('POINT(-122.306214407755 47.6235856071536)'::geography),
+    ('POINT(-122.308162987107 47.620405779481)'::geography),
+    ('POINT(-122.3128663 47.6190887076871)'::geography),
+    ('POINT(-122.317569612893 47.620405779481)'::geography),
+    ('POINT(-122.319518192245 47.6235856071536)'::geography),
+    ('POINT(-122.317570183392 47.6267656259013)'::geography)
+              ) s(destination);
+     */
+
 }
