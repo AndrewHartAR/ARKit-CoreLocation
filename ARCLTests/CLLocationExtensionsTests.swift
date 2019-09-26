@@ -36,13 +36,16 @@ class CLLocationExtensionsTests: XCTestCase {
         let startPoint = start.coordinate
         let resultPoint = startPoint.coordinateWithBearing(bearing: bearing, distanceMeters: distanceMeters)
 
+        // Calculated lat/lon must be within limits.
         XCTAssertEqual(resultPoint.latitude, lat, accuracy: latitudeAccuracy, file: file, line: line)
         XCTAssertEqual(resultPoint.longitude, lon, accuracy: longitudeAccuracy, file: file, line: line)
         
+        // Calculated location must be no farther than 100 meters from correct location.
         let resultLocation = CLLocation.init(coordinate: resultPoint, altitude: 0)
         let distanceError = resultLocation.distance(from: CLLocation.init(latitude: lat, longitude: lon))
         XCTAssertLessThan(distanceError, 100.0, file: file, line: line)
 
+        // Angular error less than 5 degrees, if the error distance is perpendicular to the line of sight.
         // An angular error of 5 degrees is about twice the width of your thumb at arm's length.
         let maxAngularError = 5.0 * .pi / 180
         // distanceError/distanceMeters is the sin of the max angular error.
@@ -53,8 +56,10 @@ class CLLocationExtensionsTests: XCTestCase {
     line: UInt = #line) {
         let destination = CLLocation.init(latitude: lat, longitude: lon)
         let computedBearing = start.bearing(between: destination)
-        print(start, destination,computedBearing,correctBearing)
-        XCTAssertEqual(computedBearing, correctBearing, accuracy: 0.1, file: file, line: line)
+        // get result in range 0-360.
+        let adjustedComputedBearing = (computedBearing + 360.0).truncatingRemainder(dividingBy: 360.0)
+        print(start, destination, adjustedComputedBearing, correctBearing)
+        XCTAssertEqual(adjustedComputedBearing, correctBearing, accuracy: 0.1, file: file, line: line)
 }
 
     // MARK: - tests
@@ -62,17 +67,22 @@ class CLLocationExtensionsTests: XCTestCase {
     // TODO: this test doesn't appear to test anything. Looks like the expected value axes are reversed, and
     // a .01 accuracy translates to 1200 yards north/south, about 850 yards east/west
     // at this latitude.
+    // Leaving it in for now because it's the only green test :-(
     func testBearing() {
         let pub = CLLocationCoordinate2D(latitude: 47.6235858, longitude: -122.3128663)
 
         let north = pub.coordinateWithBearing(bearing: 0, distanceMeters: 500)
+        // Assert: if I move north 500 meters, my northing has changed by less than 1200 yards.
         XCTAssertEqual(pub.latitude, north.latitude, accuracy: 0.01)
 
         let east = pub.coordinateWithBearing(bearing: 90, distanceMeters: 500)
+        // Assert: if I move east 500 meters, my easting has changed by less than 800 yards.
         XCTAssertEqual(pub.longitude, east.longitude, accuracy: 0.01)
     }
 
 
+    // MARK: - CLLocation.coordinateWithBearing(bearing:distanceMeters:)
+    
     func testCoordinateWithBearingMidLatitude500() {
         /*
          select bearing,ST_AsText(ST_Project('POINT(-122.3128663 47.6235858)'::geography, 500, radians(bearing)))
@@ -424,7 +434,10 @@ class CLLocationExtensionsTests: XCTestCase {
         assertCorrectBearingProjection(start: start, distanceMeters: 50000, bearing:315, lon:-122.724980108402, lat: -39.6808395104955)
     }
 
+    // MARK: - CLLocation.bearing(between)
+    
     func testAzimuthMidLatitude500() {
+        // Points are 500 meters apart. Same data as in testCoordinateWithBearingMidLatitude500() above.
 /*      bearing |                 st_astext
      ---------+-------------------------------------------
             0 | POINT(-122.3128663 47.6280828887704)
@@ -449,9 +462,8 @@ class CLLocationExtensionsTests: XCTestCase {
     }
     
     func testAzimuthMidLatitude10000() {
-
-     
-/*      select bearing,ST_AsText(ST_Project('POINT(-122.3128663 47.6235858)'::geography, 10000, radians(bearing)))
+        // Points are 10000 meters apart. Same data as in testCoordinateWithBearingMidLatitude10000() above.
+        /*      select bearing,ST_AsText(ST_Project('POINT(-122.3128663 47.6235858)'::geography, 10000, radians(bearing)))
               from (
                   values (0),(45),(90),(135),(180),(225),(270),(315)
               ) s(bearing);
@@ -479,9 +491,9 @@ class CLLocationExtensionsTests: XCTestCase {
     }
     
     func testAzimuthMidLatitude50000() {
-
-/*
-select bearing,ST_AsText(ST_Project('POINT(-122.3128663 47.6235858)'::geography, 50000, radians(bearing)))
+        // Points are 500000 meters apart. Same data as in testCoordinateWithBearingMidLatitude50000() above.
+        /*
+         select bearing,ST_AsText(ST_Project('POINT(-122.3128663 47.6235858)'::geography, 50000, radians(bearing)))
               from (
                   values (0),(45),(90),(135),(180),(225),(270),(315)
               ) s(bearing);

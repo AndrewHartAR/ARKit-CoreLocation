@@ -62,7 +62,7 @@ public extension CLLocation {
                           timestamp: self.timestamp)
     }
 
-    /// Returns bearing in degrees from north between `self` and another point.
+    /// Bearing from `self` to another point. Returns bearing in +/- degrees from north 
     /// This function uses neither a geodesic nor a rhumb line formula. Instead, it uses a rectangular approximation of a sphere.
     /// For node pairs that are fairly close together, this method is probably accurate enough, but for long distances,
     /// a geodesic (great circle) formula is required instead.
