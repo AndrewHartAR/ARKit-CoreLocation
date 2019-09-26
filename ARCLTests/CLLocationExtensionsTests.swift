@@ -37,19 +37,19 @@ class CLLocationExtensionsTests: XCTestCase {
         let resultPoint = startPoint.coordinateWithBearing(bearing: bearing, distanceMeters: distanceMeters)
 
         // Calculated lat/lon must be within limits.
-        XCTAssertEqual(resultPoint.latitude, lat, accuracy: latitudeAccuracy, file: file, line: line)
-        XCTAssertEqual(resultPoint.longitude, lon, accuracy: longitudeAccuracy, file: file, line: line)
+        XCTAssertEqual(resultPoint.latitude, lat, accuracy: latitudeAccuracy, "latitude difference exceeds limit", file: file, line: line)
+        XCTAssertEqual(resultPoint.longitude, lon, accuracy: longitudeAccuracy, "longitude difference exceeds limit", file: file, line: line)
         
         // Calculated location must be no farther than 100 meters from correct location.
         let resultLocation = CLLocation.init(coordinate: resultPoint, altitude: 0)
         let distanceError = resultLocation.distance(from: CLLocation.init(latitude: lat, longitude: lon))
-        XCTAssertLessThan(distanceError, 100.0, file: file, line: line)
+        XCTAssertLessThan(distanceError, 100.0, "distance between correct and computed locations exceeds limit", file: file, line: line)
 
         // Angular error less than 5 degrees, if the error distance is perpendicular to the line of sight.
         // An angular error of 5 degrees is about twice the width of your thumb at arm's length.
         let maxAngularError = 5.0 * .pi / 180
         // distanceError/distanceMeters is the sin of the max angular error.
-        XCTAssertLessThan(distanceError / distanceMeters, sin(maxAngularError), file: file, line: line)
+        XCTAssertLessThan(distanceError / distanceMeters, sin(maxAngularError), "max angular error exceeds limit", file: file, line: line)
     }
     
     func assertCorrectBearingComputation(start: CLLocation, lon: Double, lat: Double, correctBearing: Double, file: StaticString = #file,
@@ -59,7 +59,7 @@ class CLLocationExtensionsTests: XCTestCase {
         // get result in range 0-360.
         let adjustedComputedBearing = (computedBearing + 360.0).truncatingRemainder(dividingBy: 360.0)
         print(start, destination, adjustedComputedBearing, correctBearing)
-        XCTAssertEqual(adjustedComputedBearing, correctBearing, accuracy: 0.1, file: file, line: line)
+        XCTAssertEqual(adjustedComputedBearing, correctBearing, accuracy: 0.1, "difference in bearing to second point exceeds limit", file: file, line: line)
 }
 
     // MARK: - tests
