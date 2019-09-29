@@ -63,9 +63,9 @@ public extension CLLocation {
     }
 
     /// Bearing from `self` to another point. Returns bearing in +/- degrees from north 
-    /// This function uses neither a geodesic nor a rhumb line formula. Instead, it uses a rectangular approximation of a sphere.
-    /// For node pairs that are fairly close together, this method is probably accurate enough, but for long distances,
-    /// a geodesic (great circle) formula is required instead.
+    /// This function uses the haversine formula to compute a geodesic (great circle). Note that, especially
+    /// at high latitudes and with relatively distant points, `a.bearing(between: b)` is not 180 degrees
+    /// opposite of `b.bearing(between: a)`.
     /// - Parameter point: second point to compute bearing to.
     func bearing(between point: CLLocation) -> Double {
         let lat1 = self.coordinate.latitude.degreesToRadians

@@ -54,12 +54,12 @@ class CLLocationExtensionsTests: XCTestCase {
     
     func assertCorrectBearingComputation(start: CLLocation, lon: Double, lat: Double, correctBearing: Double, file: StaticString = #file,
     line: UInt = #line) {
+        let maxBearingErrorDegrees = 0.1
         let destination = CLLocation.init(latitude: lat, longitude: lon)
         let computedBearing = start.bearing(between: destination)
-        // get result in range 0-360.
+        // Now force result into range 0-360:
         let adjustedComputedBearing = (computedBearing + 360.0).truncatingRemainder(dividingBy: 360.0)
-        print(start, destination, adjustedComputedBearing, correctBearing)
-        XCTAssertEqual(adjustedComputedBearing, correctBearing, accuracy: 0.1, "difference in bearing to second point exceeds limit", file: file, line: line)
+        XCTAssertEqual(adjustedComputedBearing, correctBearing, accuracy: maxBearingErrorDegrees, "difference in bearing to second point exceeds limit", file: file, line: line)
 }
 
     // MARK: - tests
