@@ -63,9 +63,9 @@ public extension CLLocation {
     }
 
     /// Bearing from `self` to another point. Returns bearing in +/- degrees from north 
-    /// This function uses the haversine formula to compute a geodesic (great circle). Note that, especially
-    /// at high latitudes and with relatively distant points, `a.bearing(between: b)` is not 180 degrees
-    /// opposite of `b.bearing(between: a)`.
+    /// This function uses the haversine formula to compute a geodesic (great circle), assuming a spherical earth.
+    /// Note that, especially at high latitudes and with relatively distant points, `a.bearing(between: b)`
+    /// is not necessarily 180 degrees opposite to `b.bearing(between: a)`.
     /// - Parameter point: second point to compute bearing to.
     func bearing(between point: CLLocation) -> Double {
         let lat1 = self.coordinate.latitude.degreesToRadians

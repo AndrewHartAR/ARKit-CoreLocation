@@ -10,10 +10,12 @@ import Foundation
 
 public extension Double {
 
+    /// Returns radians. Distance divided by the WGS-84 earth radius at the equator. Dubious geodesy.
     var metersToLatitude: Double {
         return self / (6_378_137.0)
     }
 
+    /// Returns radians. Distance divided by the WGS-84 earth radius at the poles. Dubious geodesy.
     var metersToLongitude: Double {
         return self / (6_356_752.3)
     }

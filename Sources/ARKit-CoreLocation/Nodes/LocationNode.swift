@@ -51,7 +51,7 @@ open class LocationNode: SCNNode {
     }
 
     /// Whether a node's position should be adjusted on an ongoing basis
-    /// based on its' given location.
+    /// based on its given location.
     /// This only occurs when a node's location is within 100m of the user.
     /// Adjustment doesn't apply to nodes without a confirmed location.
     /// When this is set to false, the result is a smoother appearance.
@@ -147,6 +147,8 @@ open class LocationNode: SCNNode {
         return adjustedDistance
     }
 
+    /// See `LocationAnnotationNode`'s override of this function. Because it doesn't invoke `super`'s version, any changes
+    /// made in this file must be repeated in `LocationAnnotationNode`.
     func updatePositionAndScale(setup: Bool = false, scenePosition: SCNVector3?, locationNodeLocation nodeLocation: CLLocation,
                                 locationManager: SceneLocationManager, onCompletion: (() -> Void)) {
         guard let position = scenePosition, locationManager.currentLocation != nil else {

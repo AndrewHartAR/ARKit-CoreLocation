@@ -9,6 +9,7 @@ import Foundation
 import SceneKit
 import CoreLocation
 
+/// A `LocationNode` which has an attached `AnnotationNode`.
 open class LocationAnnotationNode: LocationNode {
     /// Subnodes and adjustments should be applied to this subnode
     /// Required to allow scaling at the same time as having a 2D 'billboard' appearance
@@ -38,8 +39,8 @@ open class LocationAnnotationNode: LocationNode {
     /// background image, labels, etc.
     ///
     /// - Parameters:
-    ///   - location: The location of the node in the world.
-    ///   - view: The view to display at the specified location.
+    ///   - location:The location of the node in the world.
+    ///   - view:The view to display at the specified location.
     public convenience init(location: CLLocation?, view: UIView) {
         self.init(location: location, image: view.image)
     }
@@ -48,6 +49,9 @@ open class LocationAnnotationNode: LocationNode {
         fatalError("init(coder:) has not been implemented")
     }
 
+    /// Note: we repeat code from `LocationNode`'s implementation of this function. Is this because of the use of `SCNTransaction`
+    /// to wrap the changes? It's legal to nest the calls, should consider this if any more changes to
+    /// `LocationNode`'s implementation are needed.
     override func updatePositionAndScale(setup: Bool = false, scenePosition: SCNVector3?,
                                          locationNodeLocation nodeLocation: CLLocation,
                                          locationManager: SceneLocationManager,
@@ -87,6 +91,7 @@ open class LocationAnnotationNode: LocationNode {
             }
         }
 
+        // Where does -1.1 come from?
         self.pivot = SCNMatrix4MakeTranslation(0, -1.1 * scale, 0)
 
         SCNTransaction.commit()
