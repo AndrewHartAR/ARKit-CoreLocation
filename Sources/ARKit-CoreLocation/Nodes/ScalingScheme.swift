@@ -52,7 +52,7 @@ public enum ScalingScheme {
                 let absThreshold = abs(threshold)
                 let absAdjDist = abs(adjustedDistance)
 
-                let scaleToReturn =  Float( max (maxSize - (absAdjDist / absThreshold), 0.0))
+                let scaleToReturn =  Float( max(maxSize - (absAdjDist / absThreshold), 0.0))
 //                print("threshold: \(absThreshold) adjDist: \(absAdjDist) scaleToReturn: \(scaleToReturn)")
                 return scaleToReturn
             }

@@ -170,7 +170,7 @@ open class LocationNode: SCNNode {
 
         onCompletion()
     }
-	
+
     /// Converts distance from meters to SCNKit rendering order
     /// Constant multiplier eliminates flicker caused by slight distance variations
     /// Nodes with greater rendering orders are rendered last
