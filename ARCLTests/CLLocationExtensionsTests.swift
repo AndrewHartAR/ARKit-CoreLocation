@@ -26,6 +26,23 @@ class CLLocationExtensionsTests: XCTestCase {
         super.tearDown()
     }
 
+    /// Verify that the CLLocation extension function `coordinateWithBearing(bearing:distanceMeters:)` works correctly.
+    ///
+    /// Tested:
+    /// - longitude accuracy and latitude accuracy within absolute limits of 0.001 degrees.
+    /// - distance from computed point to correct point less than 100 meters.
+    /// - max angular error (assuming error distance is perpendicular to bearing) less than 5 degrees.
+    ///
+    /// Parameter order is `lon`, `lat` because the GIS software I'm using to produce the comparison values assumes `(x, y)` (as does most
+    /// GIS software). This makes it easier to generate calls with an editing macro, and to compare the call to the comparison values.
+    /// - Parameters:
+    ///     - start: passed as the `start:` parameter to the function.
+    ///     - distanceMeters: passed as the `distanceMeters` parameter to the function.
+    ///     - bearing: passed as the `bearing` parameter to the function.
+    ///     - lon: longitude of the correct result.
+    ///     - lat: latitude of the correct result.
+    ///     - file: reference to #file to make the failure message appear at the point of call.
+    ///     - line: reference to #line to make the failure message appear at the point of call.
     func assertCorrectBearingProjection(start: CLLocation, distanceMeters: Double, bearing: Double, lon: Double, lat: Double, file: StaticString = #file,
     line: UInt = #line) {
         // Thanks to https://medium.com/bleeding-edge/writing-better-unit-tests-in-swift-part-two-d19b69f3d794 for the #file/#line trick!
@@ -52,6 +69,20 @@ class CLLocationExtensionsTests: XCTestCase {
         XCTAssertLessThan(distanceError / distanceMeters, sin(maxAngularError), "max angular error exceeds limit", file: file, line: line)
     }
     
+    /// Verify that the CLLocation extension function `bearing(between:)` works correctly.
+    ///
+    /// Tested:
+    /// - error between computed and correct bearing less than 0.1 degrees.
+    ///
+    /// Parameter order is `lon`, `lat` because the GIS software I'm using to produce the comparison values assumes `(x, y)` (as does most
+    /// GIS software). This makes it easier to generate calls with an editing macro, and to compare the call to the comparison values.
+    /// - Parameters:
+    ///     - start: passed as the `start:` parameter to the function.
+    ///     - lon: longitude of the test destination result.
+    ///     - lat: latitude of the test destination result.
+    ///     - correctBearing: the correct result.
+    ///     - file: reference to #file to make the failure message appear at the point of call.
+    ///     - line: reference to #line to make the failure message appear at the point of call.
     func assertCorrectBearingComputation(start: CLLocation, lon: Double, lat: Double, correctBearing: Double, file: StaticString = #file,
     line: UInt = #line) {
         let maxBearingErrorDegrees = 0.1
