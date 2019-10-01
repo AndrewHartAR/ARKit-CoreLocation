@@ -571,9 +571,12 @@ class CLLocationExtensionsTests: XCTestCase {
     }
 
     // MARK: - CLLocation.translation
+
+    /// Uses the same geographic points as the previous mid-latitude 500 meter tests. Any expansion of this particular test would
+    /// warrant a bit of Python code to generate the PostGIS calls and emit the `assertCorrectTranslationComputations`
+    /// invocations.
     func testTranslationMidLatitude500() {
         
-
         assertCorrectTranslationComputations(bearing: 45, radius: 500, lon0: 122.3128663, lat0: 47.6235858, east0: -13615805.9939818, north0:  6044459.82841367 ,lon1:  -122.308162416608, lat1: 47.6267656259013, east1: -13615282.3600778, north1: 6044985.0335112)
          assertCorrectTranslationComputations(bearing: 90, radius: 500, lon0: 122.3128663, lat0: 47.6235858, east0: -13615805.9939818, north0:  6044459.82841367 ,lon1:  -122.306214407755, lat1: 47.6235856071536, east1: -13615065.5087242, north1: 6044459.7965626)
          assertCorrectTranslationComputations(bearing: 135, radius: 500, lon0: 122.3128663, lat0: 47.6235858, east0: -13615805.9939818, north0:  6044459.82841367 ,lon1:  -122.308162987107, lat1: 47.620405779481, east1: -13615282.4235855, north1: 6043934.6231210)
@@ -842,7 +845,7 @@ class CLLocationExtensionsTests: XCTestCase {
 
     // MARK: test data for testing translations
     /*
-     Reproject to Web Mercator (EPSG 3857, informally 909913.
+     Reproject to Web Mercator (EPSG 3857, informally 900913.
      
      These points came from the circular sweep, 45 degree increments, at 500 meter radius used in
      select ST_AsText(ST_Transform(ST_SetSRID(ST_MakePoint(-122.3128663, 47.6235858), 4326), 3857)) as start,
