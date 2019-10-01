@@ -26,6 +26,8 @@ class CLLocationExtensionsTests: XCTestCase {
         super.tearDown()
     }
 
+// MARK: test runners
+
     /// Verify that the CLLocation extension function `coordinateWithBearing(bearing:distanceMeters:)` works correctly.
     ///
     /// Tested:
@@ -91,7 +93,24 @@ class CLLocationExtensionsTests: XCTestCase {
         // Now force result into range 0-360:
         let adjustedComputedBearing = (computedBearing + 360.0).truncatingRemainder(dividingBy: 360.0)
         XCTAssertEqual(adjustedComputedBearing, correctBearing, accuracy: maxBearingErrorDegrees, "difference in bearing to second point exceeds limit", file: file, line: line)
-}
+    }
+
+    func assertCorrectTranslationComputations(bearing: Double, radius: Double,
+                                              lon0: Double, lat0: Double, east0: Double, north0:  Double,
+                                              lon1: Double, lat1: Double, east1: Double, north1: Double,
+                                              file: StaticString = #file, line: UInt = #line) {
+        let metersAccuracy = 10.0
+        
+        let startPoint = CLLocation(latitude: lat0, longitude: lon0)
+        let endPoint = CLLocation(latitude: lat1, longitude: lon1)
+        let eastingDelta = east1 - east0
+        let northingDelta = north1 - north0
+        let computedTranslation = startPoint.translation(toLocation: endPoint)
+        print(computedTranslation)
+        XCTAssertEqual(eastingDelta, computedTranslation.longitudeTranslation, accuracy: metersAccuracy, "longitude translation error exceeds limit", file: file, line: line)
+        XCTAssertEqual(northingDelta, computedTranslation.latitudeTranslation, accuracy: metersAccuracy, "longitude translation error exceeds limit", file: file, line: line)
+        XCTAssertEqual(sqrt(eastingDelta*eastingDelta + northingDelta*northingDelta), radius, accuracy: metersAccuracy, "radius wrong", file: file, line: line)
+    }
 
     // MARK: - tests
 
@@ -551,6 +570,21 @@ class CLLocationExtensionsTests: XCTestCase {
         assertCorrectBearingComputation(start: start, lon: -122.786094985432, lat: 47.9405975715807, correctBearing: 315.0)
     }
 
+    // MARK: - CLLocation.translation
+    func testTranslationMidLatitude500() {
+        
+
+        assertCorrectTranslationComputations(bearing: 45, radius: 500, lon0: 122.3128663, lat0: 47.6235858, east0: -13615805.9939818, north0:  6044459.82841367 ,lon1:  -122.308162416608, lat1: 47.6267656259013, east1: -13615282.3600778, north1: 6044985.0335112)
+         assertCorrectTranslationComputations(bearing: 90, radius: 500, lon0: 122.3128663, lat0: 47.6235858, east0: -13615805.9939818, north0:  6044459.82841367 ,lon1:  -122.306214407755, lat1: 47.6235856071536, east1: -13615065.5087242, north1: 6044459.7965626)
+         assertCorrectTranslationComputations(bearing: 135, radius: 500, lon0: 122.3128663, lat0: 47.6235858, east0: -13615805.9939818, north0:  6044459.82841367 ,lon1:  -122.308162987107, lat1: 47.620405779481, east1: -13615282.4235855, north1: 6043934.6231210)
+         assertCorrectTranslationComputations(bearing: 180, radius: 500, lon0: 122.3128663, lat0: 47.6235858, east0: -13615805.9939818, north0:  6044459.82841367 ,lon1:  -122.3128663, lat1: 47.6190887076871, east1: -13615805.9939818, north1: 6043717.1077554)
+         assertCorrectTranslationComputations(bearing: 225, radius: 500, lon0: 122.3128663, lat0: 47.6235858, east0: -13615805.9939818, north0:  6044459.82841367 ,lon1:  -122.317569612893, lat1: 47.620405779481, east1: -13616329.564378, north1: 6043934.6231210)
+         assertCorrectTranslationComputations(bearing: 270, radius: 500, lon0: 122.3128663, lat0: 47.6235858, east0: -13615805.9939818, north0:  6044459.82841367 ,lon1:  -122.319518192245, lat1: 47.6235856071536, east1: -13616546.4792393, north1: 6044459.7965626)
+         assertCorrectTranslationComputations(bearing: 315, radius: 500, lon0: 122.3128663, lat0: 47.6235858, east0: -13615805.9939818, north0:  6044459.82841367 ,lon1:  -122.317570183392, lat1: 47.626765625901, east1: -13616329.6278857, north1: 6044985.0335112)
+	 
+
+    }
+    
     // MARK: - PostGIS
     // MARK: coordinateWithBearing
     /*
@@ -806,4 +840,34 @@ class CLLocationExtensionsTests: XCTestCase {
               ) s(destination);
      */
 
+    // MARK: test data for testing translations
+    /*
+     Reproject to Web Mercator (EPSG 3857, informally 909913.
+     
+     These points came from the circular sweep, 45 degree increments, at 500 meter radius used in
+     select ST_AsText(ST_Transform(ST_SetSRID(ST_MakePoint(-122.3128663, 47.6235858), 4326), 3857)) as start,
+         ST_AsText(ST_Transform(ST_SetSRID(destination, 4326), 3857)) as finish
+              from (
+     values (ST_MakePoint(-122.3128663, 47.6280828887704)),
+     (ST_MakePoint(-122.308162416608, 47.6267656259013)),
+     (ST_MakePoint(-122.306214407755, 47.6235856071536)),
+     (ST_MakePoint(-122.308162987107, 47.620405779481)),
+     (ST_MakePoint(-122.3128663, 47.6190887076871)),
+     (ST_MakePoint(-122.317569612893, 47.620405779481)),
+     (ST_MakePoint(-122.319518192245, 47.6235856071536)),
+     (ST_MakePoint(-122.317570183392, 47.6267656259013))
+               ) s(destination)
+
+                        start                   |                  finish
+     -------------------------------------------+-------------------------------------------
+      POINT(-13615805.9939818 6044459.82841367) | POINT(-13615805.9939818 6045202.61238399)
+      POINT(-13615805.9939818 6044459.82841367) | POINT(-13615282.3600778 6044985.03351121)
+      POINT(-13615805.9939818 6044459.82841367) | POINT(-13615065.5087242 6044459.79656261)
+      POINT(-13615805.9939818 6044459.82841367) | POINT(-13615282.4235855 6043934.62312109)
+      POINT(-13615805.9939818 6044459.82841367) | POINT(-13615805.9939818 6043717.10775543)
+      POINT(-13615805.9939818 6044459.82841367) | POINT(-13616329.564378 6043934.62312109)
+      POINT(-13615805.9939818 6044459.82841367) | POINT(-13616546.4792393 6044459.79656261)
+      POINT(-13615805.9939818 6044459.82841367) | POINT(-13616329.6278857 6044985.03351121)
+     (8 rows)
+     */
 }
