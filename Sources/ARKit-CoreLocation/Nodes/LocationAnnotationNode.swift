@@ -91,7 +91,10 @@ open class LocationAnnotationNode: LocationNode {
             }
         }
 
-        // Where does -1.1 come from?
+        // Adjust the pivot in the Y axis so the label will show above the actual node location.
+        // The actual adjustment should probably be a parameter or property of some sort instead
+        // of a magic "-1.1". Some applications want the label drawn exactly in place, and some
+        // might even want to use a positive pivot, to draw below its true location.
         self.pivot = SCNMatrix4MakeTranslation(0, -1.1 * scale, 0)
 
         SCNTransaction.commit()

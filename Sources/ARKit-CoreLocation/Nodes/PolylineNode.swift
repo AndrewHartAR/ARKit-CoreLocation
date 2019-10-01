@@ -75,6 +75,9 @@ private extension PolylineNode {
 
             let bearing = -currentLocation.bearing(between: nextLocation)
 
+            // This pivot adjust will cause the box to be rendered a bit away from
+            // its true location. The actual factor should probably be a parameter
+            // or property of some sort.
             boxNode.pivot = SCNMatrix4MakeTranslation(0, 0, 0.5 * Float(distance))
             boxNode.eulerAngles.y = Float(bearing).degreesToRadians
 
