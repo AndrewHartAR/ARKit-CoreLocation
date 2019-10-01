@@ -95,6 +95,20 @@ class CLLocationExtensionsTests: XCTestCase {
         XCTAssertEqual(adjustedComputedBearing, correctBearing, accuracy: maxBearingErrorDegrees, "difference in bearing to second point exceeds limit", file: file, line: line)
     }
 
+    /// Test the `CLLocation` extention function `translation(toLocation:)`. Translation from point defined by `lat0, lon0` (Point 0)
+    ///  to  `lat1, lon1` (Point 1) must be correct to within 10 meters. Right triangle hypotenuse of the translations must equal the original translation radius.
+    ///
+    /// - Parameters:
+    ///     - bearing: original bearing used in ground-truth computation of Point 1.
+    ///     - radius: distance in meters from Point 1 to Point 2.
+    ///     - lon0: degrees.
+    ///     - lat0: degrees.
+    ///     - east0: easting, in meters, of rectangular projection of Point 0.
+    ///     - north0: northing, in meters, of rectangular projection of Point 0.
+    ///     - lon1: degrees.
+    ///     - lat1: degrees.
+    ///     - east1: easting, in meters, of rectangular projection of Point 1.
+    ///     - north1: northing, in meters, of rectangular projection of Point 1.
     func assertCorrectTranslationComputations(bearing: Double, radius: Double,
                                               lon0: Double, lat0: Double, east0: Double, north0:  Double,
                                               lon1: Double, lat1: Double, east1: Double, north1: Double,
