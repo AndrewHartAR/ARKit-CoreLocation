@@ -62,7 +62,7 @@ class ARCLViewController: UIViewController {
             return
         }
         print(sceneLocationView.sceneLocationManager.currentLocation)
-        for altitude in [0.0, 20, 40, 60, 80, 100] {
+        for altitude in [-100.0, -80, -60, -40, -20, 0.0, 20, 40, 60, 80, 100] {
             let node = buildViewNode(altitude: altitude, referenceLocation: sceneLocationView.sceneLocationManager.currentLocation!)
             sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: node)
         }
