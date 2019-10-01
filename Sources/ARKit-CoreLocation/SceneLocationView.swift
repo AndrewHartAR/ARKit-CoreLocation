@@ -232,7 +232,9 @@ public extension SceneLocationView {
 
     // MARK: LocationNodes
 
-    /// upon being added, a node's location, locationConfirmed and position may be modified and should not be changed externally.
+    /// Upon being added, a node's location, locationConfirmed and position may be modified and should not be changed externally.
+    /// Silently fails and returns without adding the node to the scene if any of `currentScenePosition`,
+    /// `sceneLocationManager.currentLocation`, or `sceneNode` is `nil`.
     func addLocationNodeForCurrentPosition(locationNode: LocationNode) {
         guard let currentPosition = currentScenePosition,
             let currentLocation = sceneLocationManager.currentLocation,
@@ -245,13 +247,16 @@ public extension SceneLocationView {
         sceneNode.addChildNode(locationNode)
     }
 
+    /// Each node's addition to the scene can silently fail; See `addLocationNodeForCurrentPosition(locationNode:)`.
+    ///
+    /// Why would we want to add multiple nodes at the current position?
     func addLocationNodesForCurrentPosition(locationNodes: [LocationNode]) {
         locationNodes.forEach { addLocationNodeForCurrentPosition(locationNode: $0) }
     }
 
-    /// location not being nil, and locationConfirmed being true are required
-    /// Upon being added, a node's position will be modified and should not be changed externally.
-    /// location will not be modified, but taken as accurate.
+    /// Silently fails and returns without adding the node unless`location` is not `nil` and `locationConfirmed` is `true`.
+    /// Upon being added, a node's position will be modified internally and should not be changed externally.
+    /// `location` will not be modified, but taken as accurate.
     func addLocationNodeWithConfirmedLocation(locationNode: LocationNode) {
         if locationNode.location == nil || locationNode.locationConfirmed == false {
             return
@@ -286,6 +291,7 @@ public extension SceneLocationView {
         }
     }
 
+    /// Each node's addition to the scene can silently fail; See `addLocationNodeWithConfirmedLocation(locationNode:)`.
     func addLocationNodesWithConfirmedLocation(locationNodes: [LocationNode]) {
         locationNodes.forEach { addLocationNodeWithConfirmedLocation(locationNode: $0) }
     }
