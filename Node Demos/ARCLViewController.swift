@@ -25,7 +25,7 @@ class ARCLViewController: UIViewController {
         sceneLocationView.frame = contentView.frame
         sceneLocationView.arViewDelegate = self
 
-        sceneLocationView.debugOptions = .showWorldOrigin
+        sceneLocationView.debugOptions = [.showWireframe, .showWorldOrigin, .showBoundingBoxes]
         sceneLocationView.showsStatistics = true
         sceneLocationView.showAxesNode = false // don't need ARCL's axesNode because we're showing SceneKit's
         sceneLocationView.autoenablesDefaultLighting = true
@@ -71,19 +71,21 @@ class ARCLViewController: UIViewController {
         }
         print(sceneLocationView.sceneLocationManager.currentLocation)
         let referenceLocation = sceneLocationView.sceneLocationManager.currentLocation!
-        let cubeSide = CGFloat(5)
         for altitude in [0.0, 20, 60, 100] {
+            // Create one annotation node 100 meters north, at specified altitude.
             let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 100.0, longitudeTranslation: 0.0, altitudeTranslation: altitude))
             let node = buildDisplacedAnnotationViewNode(altitude: altitude, location: location)
             sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: node)
 
+            // Now create a plain old geometry node at the same location.
             let cubeNode = LocationNode(location: location)
+            let cubeSide = CGFloat(5)
             let cube = SCNBox(width: cubeSide, height: cubeSide, length: cubeSide, chamferRadius: 0)
             cube.firstMaterial?.diffuse.contents = UIColor.systemOrange
             cubeNode.addChildNode(SCNNode(geometry: cube))
             sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: cubeNode)
         }
-        // origin node
+        // Put a label at the origin.
         let text = "Starting point"
         let font = UIFont.preferredFont(forTextStyle: .title2)
         let fontAttributes = [NSAttributedString.Key.font: font]
@@ -99,7 +101,7 @@ class ARCLViewController: UIViewController {
         sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: originLabelNode)
 
     }
-
+    /// Create a `LocationAnnotationNode` at `altitude` meters above the given location, labeled with the altitude.
     func buildDisplacedAnnotationViewNode(altitude: Double, location: CLLocation) -> LocationAnnotationNode {
         let text = "\(altitude)"
         let font = UIFont.preferredFont(forTextStyle: .title2)
