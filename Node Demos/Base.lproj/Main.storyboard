@@ -50,12 +50,23 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2pz-fq-SnP">
+                                <rect key="frame" x="353" y="52" width="37" height="30"/>
+                                <state key="normal" title="Done">
+                                    <color key="titleColor" systemColor="systemGreenColor" red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="doneTapped:" destination="N1T-Ak-Td3" eventType="touchUpInside" id="Bjq-7U-xwF"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="2qf-cv-vkj" firstAttribute="top" secondItem="8pW-34-0ii" secondAttribute="topMargin" constant="-44" id="5ad-Gf-0Kd"/>
+                            <constraint firstItem="2pz-fq-SnP" firstAttribute="top" secondItem="JpF-Re-Tkh" secondAttribute="top" constant="8" id="GYY-og-Q50"/>
                             <constraint firstItem="2qf-cv-vkj" firstAttribute="centerX" secondItem="8pW-34-0ii" secondAttribute="centerX" id="Gaf-pm-Sfc"/>
                             <constraint firstItem="2qf-cv-vkj" firstAttribute="centerY" secondItem="8pW-34-0ii" secondAttribute="centerY" id="ITW-7b-lDq"/>
+                            <constraint firstItem="JpF-Re-Tkh" firstAttribute="trailing" secondItem="2pz-fq-SnP" secondAttribute="trailing" constant="24" id="QWK-9j-Y9H"/>
                             <constraint firstItem="2qf-cv-vkj" firstAttribute="leading" secondItem="8pW-34-0ii" secondAttribute="leading" id="fHL-tD-8Lu"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="JpF-Re-Tkh"/>
