@@ -16,32 +16,39 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Ivi-Oz-Rbl">
-                                <rect key="frame" x="83" y="143" width="103" height="144"/>
+                                <rect key="frame" x="83" y="143" width="127" height="182"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h6P-sB-ZFM">
-                                        <rect key="frame" x="0.0" y="0.0" width="103" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="127" height="30"/>
                                         <state key="normal" title="Stack of nodes"/>
                                         <connections>
                                             <action selector="showStackedNodes:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WbP-us-Zzy"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0pU-7D-pcm">
-                                        <rect key="frame" x="0.0" y="38" width="103" height="30"/>
+                                        <rect key="frame" x="0.0" y="38" width="127" height="30"/>
                                         <state key="normal" title="Field of nodes"/>
                                         <connections>
                                             <action selector="showFieldOfNodes:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OES-gB-XEy"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EK5-Vp-bnN">
-                                        <rect key="frame" x="0.0" y="76" width="103" height="30"/>
+                                        <rect key="frame" x="0.0" y="76" width="127" height="30"/>
                                         <state key="normal" title="Field of labels"/>
                                         <connections>
                                             <action selector="showFieldOflabels:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uad-j4-q1I"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IfI-0k-DXg">
+                                        <rect key="frame" x="0.0" y="114" width="127" height="30"/>
+                                        <state key="normal" title="SpriteKit nodes"/>
+                                        <connections>
+                                            <action selector="showSpriteKitNodes:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qKM-rJ-359"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZU6-uQ-mXb">
-                                        <rect key="frame" x="0.0" y="114" width="103" height="30"/>
-                                        <state key="normal" title="Field of radii"/>
+                                        <rect key="frame" x="0.0" y="152" width="127" height="30"/>
+                                        <state key="normal" title="Field of radii (WIP)"/>
                                         <connections>
                                             <action selector="showFieldOfRadii:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zxh-0v-Q4i"/>
                                         </connections>
@@ -61,6 +68,7 @@
                         <segue destination="N1T-Ak-Td3" kind="presentation" identifier="fieldOfNodes" id="YzY-TE-QQU"/>
                         <segue destination="N1T-Ak-Td3" kind="presentation" identifier="fieldOfLabels" id="Hm0-Ri-pOZ"/>
                         <segue destination="N1T-Ak-Td3" kind="presentation" identifier="fieldOfRadii" id="fUz-Mi-yGk"/>
+                        <segue destination="N1T-Ak-Td3" kind="presentation" identifier="spriteKitNodes" id="uwt-Pg-Vw2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -91,9 +99,10 @@
                         <constraints>
                             <constraint firstItem="2qf-cv-vkj" firstAttribute="top" secondItem="JpF-Re-Tkh" secondAttribute="top" constant="-44" id="5ad-Gf-0Kd"/>
                             <constraint firstItem="2qf-cv-vkj" firstAttribute="trailing" secondItem="JpF-Re-Tkh" secondAttribute="trailing" id="EpG-io-2qZ"/>
-                            <constraint firstItem="2pz-fq-SnP" firstAttribute="top" secondItem="JpF-Re-Tkh" secondAttribute="top" constant="8" id="GYY-og-Q50"/>
-                            <constraint firstItem="JpF-Re-Tkh" firstAttribute="trailing" secondItem="2pz-fq-SnP" secondAttribute="trailing" constant="24" id="QWK-9j-Y9H"/>
+                            <constraint firstItem="2pz-fq-SnP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="JpF-Re-Tkh" secondAttribute="leading" id="fMe-h9-SxK"/>
+                            <constraint firstItem="JpF-Re-Tkh" firstAttribute="trailing" secondItem="2pz-fq-SnP" secondAttribute="trailing" constant="24" id="fbp-jt-lTE"/>
                             <constraint firstItem="JpF-Re-Tkh" firstAttribute="bottom" secondItem="2qf-cv-vkj" secondAttribute="bottom" id="o0Y-Rf-zx2"/>
+                            <constraint firstItem="2pz-fq-SnP" firstAttribute="top" secondItem="JpF-Re-Tkh" secondAttribute="top" constant="8" id="sds-ds-n0z"/>
                             <constraint firstItem="2qf-cv-vkj" firstAttribute="leading" secondItem="JpF-Re-Tkh" secondAttribute="leading" id="wJu-dS-41L"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="JpF-Re-Tkh"/>
@@ -109,6 +118,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="fUz-Mi-yGk"/>
+        <segue reference="uwt-Pg-Vw2"/>
     </inferredMetricsTieBreakers>
 </document>

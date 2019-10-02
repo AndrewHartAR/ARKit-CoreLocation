@@ -31,6 +31,10 @@ class PickerViewController: UIViewController {
         performSegue(withIdentifier: "fieldOfRadii", sender: sender)
     }
 
+    @IBAction func showSpriteKitNodes(_ sender: Any) {
+        performSegue(withIdentifier: "spriteKitNodes", sender: sender)
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? ARCLViewController {
             if segue.identifier == "stackOfNodes" {
@@ -44,6 +48,9 @@ class PickerViewController: UIViewController {
             }
             else if segue.identifier == "fieldOfRadii" {
                 destination.demonstration = .fieldOfRadii
+            }
+            else if segue.identifier == "spriteKitNodes" {
+                destination.demonstration = .spriteKitNodes
             }
         }
     }

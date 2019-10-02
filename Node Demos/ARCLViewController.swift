@@ -17,6 +17,7 @@ enum Demonstration {
     case fieldOfNodes
     case fieldOfLabels
     case fieldOfRadii
+    case spriteKitNodes
 }
 
 class ARCLViewController: UIViewController {
@@ -39,11 +40,11 @@ class ARCLViewController: UIViewController {
         sceneLocationView.autoenablesDefaultLighting = true
 
         contentView.addSubview(sceneLocationView)
-        print("scene", sceneLocationView.scene)
-        print("delegate", sceneLocationView.delegate)
-        print("arViewDelegate", sceneLocationView.arViewDelegate)
-        print("sceneTrackingDelegate", sceneLocationView.sceneTrackingDelegate)
-        print("locationNodeTouchDelegate", sceneLocationView.locationNodeTouchDelegate)
+        print("scene", sceneLocationView.scene.debugDescription)
+        print("delegate", sceneLocationView.delegate.debugDescription)
+        print("arViewDelegate", sceneLocationView.arViewDelegate.debugDescription)
+        print("sceneTrackingDelegate", sceneLocationView.sceneTrackingDelegate.debugDescription)
+        print("locationNodeTouchDelegate", sceneLocationView.locationNodeTouchDelegate.debugDescription)
 
     }
     
@@ -58,6 +59,8 @@ class ARCLViewController: UIViewController {
             addFieldOfLabels()
         case .fieldOfRadii:
             addFieldOfRadii()
+        case .spriteKitNodes:
+            addSpriteKitNodes()
         }
         sceneLocationView.run()
     }
@@ -137,7 +140,7 @@ class ARCLViewController: UIViewController {
             let color = colors[colorIndex % colors.count]
             colorIndex += 1
             for eastStep in -5...5 {
-                let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: Double(northStep) * 200.0, longitudeTranslation: Double(eastStep) * 200.0, altitudeTranslation: referenceLocation.altitude))
+                let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: Double(northStep) * 200.0, longitudeTranslation: Double(eastStep) * 200.0, altitudeTranslation: 0.0))
                 let sphereNode = LocationNode(location: location)
                 let sphere = SCNSphere(radius: 10.0)
                 sphere.firstMaterial?.diffuse.contents = color
@@ -167,7 +170,7 @@ class ARCLViewController: UIViewController {
             for eastStep in -5...5 {
                 let northOffset = Double(northStep) * 200.0
                 let eastOffset = Double(eastStep) * 200.0
-                let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: northOffset, longitudeTranslation: eastOffset, altitudeTranslation: referenceLocation.altitude))
+                let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: northOffset, longitudeTranslation: eastOffset, altitudeTranslation: 0.0))
                 let radius = Int(sqrt (northOffset * northOffset + eastOffset * eastOffset))
                 let label = UILabel.largeLabel(text: "\(northStep), \(eastStep) (\(radius))")
                 label.backgroundColor = color
@@ -175,6 +178,29 @@ class ARCLViewController: UIViewController {
                 sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: annoNode)
             }
         }
+    }
+
+
+    func addSpriteKitNodes() {
+        // Don't try to add the nodes to the scene until we have a current location
+        guard sceneLocationView.sceneLocationManager.currentLocation != nil else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.addSpriteKitNodes()
+            }
+            return
+        }
+
+        let referenceLocation = CLLocation(coordinate:sceneLocationView.sceneLocationManager.currentLocation!.coordinate,
+                                           altitude: sceneLocationView.sceneLocationManager.currentLocation!.altitude)
+
+        // Put a label at the origin.
+        let label = UILabel.largeLabel(text: "North 10 meters")
+        label.backgroundColor = .systemTeal
+        let north10MetersLocation = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 10.0, longitudeTranslation: 0.0, altitudeTranslation: 0.0))
+        let north10MetersLabelNode = LocationAnnotationNode(location: north10MetersLocation, view: label)
+        sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: north10MetersLabelNode)
+
+        
     }
 
     /// Add an array of annotation nodes centered on your current location. Radius values are updated live.
@@ -193,7 +219,7 @@ class ARCLViewController: UIViewController {
             for eastStep in -5...5 {
                 let northOffset = Double(northStep) * 2.0
                 let eastOffset = Double(eastStep) * 2.0
-                let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: northOffset, longitudeTranslation: eastOffset, altitudeTranslation: referenceLocation.altitude))
+                let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: northOffset, longitudeTranslation: eastOffset, altitudeTranslation: 0))
                 let radius = Int(sqrt (northOffset * northOffset + eastOffset * eastOffset))
                 let label = UILabel.largeLabel(text: "(\(radius))")
                 label.backgroundColor = .systemTeal
