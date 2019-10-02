@@ -27,6 +27,10 @@ class PickerViewController: UIViewController {
         performSegue(withIdentifier: "fieldOfLabels", sender: sender)
     }
 
+    @IBAction func showFieldOfRadii(_ sender: Any) {
+        performSegue(withIdentifier: "fieldOfRadii", sender: sender)
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? ARCLViewController {
             if segue.identifier == "stackOfNodes" {
@@ -37,6 +41,9 @@ class PickerViewController: UIViewController {
             }
             else if segue.identifier == "fieldOfLabels" {
                 destination.demonstration = .fieldOfLabels
+            }
+            else if segue.identifier == "fieldOfRadii" {
+                destination.demonstration = .fieldOfRadii
             }
         }
     }

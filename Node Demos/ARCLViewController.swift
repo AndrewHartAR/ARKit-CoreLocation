@@ -16,6 +16,7 @@ enum Demonstration {
     case stackOfNodes
     case fieldOfNodes
     case fieldOfLabels
+    case fieldOfRadii
 }
 
 class ARCLViewController: UIViewController {
@@ -54,7 +55,9 @@ class ARCLViewController: UIViewController {
         case .fieldOfNodes:
             addFieldOfNodes()
         case .fieldOfLabels:
-                addFieldOfLabels()
+            addFieldOfLabels()
+        case .fieldOfRadii:
+            addFieldOfRadii()
         }
         sceneLocationView.run()
     }
@@ -144,7 +147,7 @@ class ARCLViewController: UIViewController {
         }
     }
 
-    /// Add an array of annotation nodes centered on your current location.
+    /// Add an array of annotation nodes centered on your current location. Labels are static.
     func addFieldOfLabels() {
         // Don't try to add the nodes to the scene until we have a current location
         guard sceneLocationView.sceneLocationManager.currentLocation != nil else {
@@ -168,6 +171,32 @@ class ARCLViewController: UIViewController {
                 let radius = Int(sqrt (northOffset * northOffset + eastOffset * eastOffset))
                 let label = UILabel.largeLabel(text: "\(northStep), \(eastStep) (\(radius))")
                 label.backgroundColor = color
+                let annoNode = LocationAnnotationNode(location: location, view: label)
+                sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: annoNode)
+            }
+        }
+    }
+
+    /// Add an array of annotation nodes centered on your current location. Radius values are updated live.
+    func addFieldOfRadii() {
+        // Don't try to add the nodes to the scene until we have a current location
+        guard sceneLocationView.sceneLocationManager.currentLocation != nil else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.addFieldOfRadii()
+            }
+            return
+        }
+
+        let referenceLocation = CLLocation(coordinate:sceneLocationView.sceneLocationManager.currentLocation!.coordinate,
+                                           altitude: sceneLocationView.sceneLocationManager.currentLocation!.altitude)
+        for northStep in -5...5 {
+            for eastStep in -5...5 {
+                let northOffset = Double(northStep) * 2.0
+                let eastOffset = Double(eastStep) * 2.0
+                let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: northOffset, longitudeTranslation: eastOffset, altitudeTranslation: referenceLocation.altitude))
+                let radius = Int(sqrt (northOffset * northOffset + eastOffset * eastOffset))
+                let label = UILabel.largeLabel(text: "(\(radius))")
+                label.backgroundColor = .systemTeal
                 let annoNode = LocationAnnotationNode(location: location, view: label)
                 sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: annoNode)
             }
@@ -198,7 +227,21 @@ extension ARCLViewController: ARSCNViewDelegate {
     }
 
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        // print(#file, #function)
+        if self.demonstration == .fieldOfRadii {
+            if let renderer = renderer as? SceneLocationView {
+                let location = sceneLocationView.sceneLocationManager.currentLocation
+                if let locationNodes = renderer.locationNodes as? [LocationAnnotationNode] {
+                    for node in locationNodes {
+                        DispatchQueue.main.async {
+                            // FIXME: This approach won't work because the underlying SCNPlane has its material set only once, at init time. Leaving it for future inspiration.
+                            let radius = Int(location?.distance(from: node.location) ?? 0)
+                            let label = UILabel.largeLabel(text: "(\(radius))")
+                            label.backgroundColor = UIColor.systemTeal
+                            node.annotationNode.image = label.image
+                        }                    }
+                }
+            }
+        }
     }
 
     public func renderer(_ renderer: SCNSceneRenderer, didApplyAnimationsAtTime time: TimeInterval) {

@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Ivi-Oz-Rbl">
-                                <rect key="frame" x="83" y="143" width="103" height="106"/>
+                                <rect key="frame" x="83" y="143" width="103" height="144"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h6P-sB-ZFM">
                                         <rect key="frame" x="0.0" y="0.0" width="103" height="30"/>
@@ -39,6 +39,13 @@
                                             <action selector="showFieldOflabels:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uad-j4-q1I"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZU6-uQ-mXb">
+                                        <rect key="frame" x="0.0" y="114" width="103" height="30"/>
+                                        <state key="normal" title="Field of radii"/>
+                                        <connections>
+                                            <action selector="showFieldOfRadii:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zxh-0v-Q4i"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -53,6 +60,7 @@
                         <segue destination="N1T-Ak-Td3" kind="presentation" identifier="stackOfNodes" id="kko-O2-BIo"/>
                         <segue destination="N1T-Ak-Td3" kind="presentation" identifier="fieldOfNodes" id="YzY-TE-QQU"/>
                         <segue destination="N1T-Ak-Td3" kind="presentation" identifier="fieldOfLabels" id="Hm0-Ri-pOZ"/>
+                        <segue destination="N1T-Ak-Td3" kind="presentation" identifier="fieldOfRadii" id="fUz-Mi-yGk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -101,6 +109,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Hm0-Ri-pOZ"/>
+        <segue reference="fUz-Mi-yGk"/>
     </inferredMetricsTieBreakers>
 </document>
