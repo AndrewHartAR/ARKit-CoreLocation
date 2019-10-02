@@ -15,43 +15,63 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h6P-sB-ZFM">
-                                <rect key="frame" x="83" y="143" width="103" height="30"/>
-                                <state key="normal" title="Stack of nodes"/>
-                                <connections>
-                                    <action selector="showStackedNodes:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WbP-us-Zzy"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Ivi-Oz-Rbl">
+                                <rect key="frame" x="83" y="143" width="103" height="106"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h6P-sB-ZFM">
+                                        <rect key="frame" x="0.0" y="0.0" width="103" height="30"/>
+                                        <state key="normal" title="Stack of nodes"/>
+                                        <connections>
+                                            <action selector="showStackedNodes:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WbP-us-Zzy"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0pU-7D-pcm">
+                                        <rect key="frame" x="0.0" y="38" width="103" height="30"/>
+                                        <state key="normal" title="Field of nodes"/>
+                                        <connections>
+                                            <action selector="showFieldOfNodes:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OES-gB-XEy"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EK5-Vp-bnN">
+                                        <rect key="frame" x="0.0" y="76" width="103" height="30"/>
+                                        <state key="normal" title="Field of labels"/>
+                                        <connections>
+                                            <action selector="showFieldOflabels:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uad-j4-q1I"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="h6P-sB-ZFM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="83" id="LTj-WG-hB6"/>
-                            <constraint firstItem="h6P-sB-ZFM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="99" id="rKo-b6-VyK"/>
+                            <constraint firstItem="Ivi-Oz-Rbl" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="99" id="M45-xC-P0C"/>
+                            <constraint firstItem="Ivi-Oz-Rbl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="83" id="t0P-gu-ZUA"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <segue destination="N1T-Ak-Td3" kind="presentation" identifier="showARCL" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="kko-O2-BIo"/>
+                        <segue destination="N1T-Ak-Td3" kind="presentation" identifier="stackOfNodes" id="kko-O2-BIo"/>
+                        <segue destination="N1T-Ak-Td3" kind="presentation" identifier="fieldOfNodes" id="YzY-TE-QQU"/>
+                        <segue destination="N1T-Ak-Td3" kind="presentation" identifier="fieldOfLabels" id="Hm0-Ri-pOZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="132" y="129"/>
+            <point key="canvasLocation" x="14" y="129"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="ElJ-K2-QDm">
             <objects>
                 <viewController id="N1T-Ak-Td3" customClass="ARCLViewController" customModule="Node_Demos" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8pW-34-0ii">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2qf-cv-vkj">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="0.0" y="-44" width="414" height="852"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2pz-fq-SnP">
-                                <rect key="frame" x="353" y="52" width="37" height="30"/>
+                                <rect key="frame" x="353" y="8" width="37" height="30"/>
                                 <state key="normal" title="Done">
                                     <color key="titleColor" systemColor="systemGreenColor" red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -60,14 +80,13 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="2qf-cv-vkj" firstAttribute="top" secondItem="8pW-34-0ii" secondAttribute="topMargin" constant="-44" id="5ad-Gf-0Kd"/>
+                            <constraint firstItem="2qf-cv-vkj" firstAttribute="top" secondItem="JpF-Re-Tkh" secondAttribute="top" constant="-44" id="5ad-Gf-0Kd"/>
+                            <constraint firstItem="2qf-cv-vkj" firstAttribute="trailing" secondItem="JpF-Re-Tkh" secondAttribute="trailing" id="EpG-io-2qZ"/>
                             <constraint firstItem="2pz-fq-SnP" firstAttribute="top" secondItem="JpF-Re-Tkh" secondAttribute="top" constant="8" id="GYY-og-Q50"/>
-                            <constraint firstItem="2qf-cv-vkj" firstAttribute="centerX" secondItem="8pW-34-0ii" secondAttribute="centerX" id="Gaf-pm-Sfc"/>
-                            <constraint firstItem="2qf-cv-vkj" firstAttribute="centerY" secondItem="8pW-34-0ii" secondAttribute="centerY" id="ITW-7b-lDq"/>
                             <constraint firstItem="JpF-Re-Tkh" firstAttribute="trailing" secondItem="2pz-fq-SnP" secondAttribute="trailing" constant="24" id="QWK-9j-Y9H"/>
-                            <constraint firstItem="2qf-cv-vkj" firstAttribute="leading" secondItem="8pW-34-0ii" secondAttribute="leading" id="fHL-tD-8Lu"/>
+                            <constraint firstItem="JpF-Re-Tkh" firstAttribute="bottom" secondItem="2qf-cv-vkj" secondAttribute="bottom" id="o0Y-Rf-zx2"/>
+                            <constraint firstItem="2qf-cv-vkj" firstAttribute="leading" secondItem="JpF-Re-Tkh" secondAttribute="leading" id="wJu-dS-41L"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="JpF-Re-Tkh"/>
                     </view>
@@ -81,4 +100,7 @@
             <point key="canvasLocation" x="805.79710144927537" y="128.57142857142856"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Hm0-Ri-pOZ"/>
+    </inferredMetricsTieBreakers>
 </document>

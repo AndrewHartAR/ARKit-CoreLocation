@@ -16,9 +16,29 @@ class PickerViewController: UIViewController {
     }
 
     @IBAction func showStackedNodes(_ sender: Any) {
-    performSegue(withIdentifier: "showARCL", sender: sender)
-        
+        performSegue(withIdentifier: "stackOfNodes", sender: sender)
     }
 
+    @IBAction func showFieldOfNodes(_ sender: Any) {
+        performSegue(withIdentifier: "fieldOfNodes", sender: sender)
+    }
+
+    @IBAction func showFieldOflabels(_ sender: Any) {
+        performSegue(withIdentifier: "fieldOfLabels", sender: sender)
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? ARCLViewController {
+            if segue.identifier == "stackOfNodes" {
+                destination.demonstration = .stackOfNodes
+            }
+            else if segue.identifier == "fieldOfNodes" {
+                destination.demonstration = .fieldOfNodes
+            }
+            else if segue.identifier == "fieldOfLabels" {
+                destination.demonstration = .fieldOfLabels
+            }
+        }
+    }
 }
 
