@@ -23,7 +23,7 @@ public extension CLLocation {
 
     /// Translates distance in meters between two locations.
     /// Returns the result as the distance in latitude and distance in longitude.
-    /// This function uses questionable geodesy and needs unit test support.
+    /// The approximation used here gives reasonable accuracy out to a radius of 50 km except at high latitudes.
     func translation(toLocation location: CLLocation) -> LocationTranslation {
         let inbetweenLocation = CLLocation(latitude: self.coordinate.latitude, longitude: location.coordinate.longitude)
 

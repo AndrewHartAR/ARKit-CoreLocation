@@ -15,7 +15,7 @@ public extension Double {
         return self / (6_378_137.0)
     }
 
-    /// Returns radians. Distance divided by the WGS-84 earth radius at the poles. Dubious geodesy.
+    /// Returns radians. Distance divided by the WGS-84 earth radius at the poles. Dubious geodesy; invalid except at equator.
     var metersToLongitude: Double {
         return self / (6_356_752.3)
     }
