@@ -97,6 +97,7 @@ class ARCLViewController: UIViewController {
             // Create one annotation node 100 meters north, at specified altitude.
             let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 100.0, longitudeTranslation: 0.0, altitudeTranslation: altitude))
             let node = buildDisplacedAnnotationViewNode(altitude: altitude, location: location)
+            node.annotationHeightAdjustmentFactor = 0.0
             sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: node)
 
             // Now create a plain old geometry node at the same location.
