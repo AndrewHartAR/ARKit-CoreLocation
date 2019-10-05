@@ -13,7 +13,12 @@ open class LocationAnnotationNode: LocationNode {
     /// Subnodes and adjustments should be applied to this subnode
     /// Required to allow scaling at the same time as having a 2D 'billboard' appearance
     public let annotationNode: AnnotationNode
-
+    /// Parameter to raise or lower the label's rendering position relative to the node's actual project location.
+    /// The default value of 1.1 places the label at a pleasing height above the node.
+    /// To draw the label exactly on the true location, use a value of 0. To draw it below the true location,
+    /// use a negative value.
+    public var annotationHeightAdjustmentFactor = 1.1
+    
     public init(location: CLLocation?, image: UIImage) {
         let plane = SCNPlane(width: image.size.width / 100, height: image.size.height / 100)
         plane.firstMaterial!.diffuse.contents = image
@@ -87,7 +92,8 @@ open class LocationAnnotationNode: LocationNode {
             }
         }
 
-        self.pivot = SCNMatrix4MakeTranslation(0, -1.1 * scale, 0)
+        // Translate the pivot's Y coordinate so the label will show above or below the actual node location.
+        self.pivot = SCNMatrix4MakeTranslation(0, Float(-1 * annotationHeightAdjustmentFactor) * scale, 0)
 
         SCNTransaction.commit()
 
