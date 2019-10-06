@@ -136,17 +136,20 @@ class ARCLViewController: UIViewController {
         let referenceLocation = CLLocation(coordinate:sceneLocationView.sceneLocationManager.currentLocation!.coordinate,
                                            altitude: sceneLocationView.sceneLocationManager.currentLocation!.altitude)
         let colors = [UIColor.systemGreen, UIColor.systemBlue, UIColor.systemOrange, UIColor.systemRed, UIColor.systemYellow, UIColor.systemPurple]
+        let rotateForeverAction = SCNAction.repeatForever(SCNAction.rotate(by: .pi, around: SCNVector3(1, 0, 0), duration: 3))
         var colorIndex = 0
         for northStep in -5...5 {
             let color = colors[colorIndex % colors.count]
             colorIndex += 1
             for eastStep in -5...5 {
                 let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: Double(northStep) * 200.0, longitudeTranslation: Double(eastStep) * 200.0, altitudeTranslation: 0.0))
-                let sphereNode = LocationNode(location: location)
-                let sphere = SCNSphere(radius: 10.0)
-                sphere.firstMaterial?.diffuse.contents = color
-                sphereNode.addChildNode(SCNNode(geometry: sphere))
-                sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: sphereNode)
+                let locationeNode = LocationNode(location: location)
+                let torus = SCNTorus(ringRadius: 10, pipeRadius: 2)
+                torus.firstMaterial?.diffuse.contents = color
+                let torusNode = SCNNode(geometry: torus)
+                torusNode.runAction(rotateForeverAction)
+                locationeNode.addChildNode(torusNode)
+                sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: locationeNode)
             }
         }
     }
