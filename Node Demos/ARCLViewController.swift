@@ -31,8 +31,9 @@ class ARCLViewController: UIViewController {
 
     public var demonstration = Demonstration.fieldOfNodes
     public var annotationHeightAdjustmentFactor = 1.1
-
-    let colors = [UIColor.systemGreen, UIColor.systemBlue, UIColor.systemOrange, UIColor.systemRed, UIColor.systemYellow, UIColor.systemPurple]
+    public var scalingScheme = ScalingScheme.normal
+    
+    let colors = [UIColor.systemGreen, UIColor.systemBlue, UIColor.systemOrange, UIColor.systemPurple, UIColor.systemYellow, UIColor.systemRed]
     let northingIncrementMeters = 75.0
     let eastingIncrementMeters = 75.0
 
@@ -108,6 +109,7 @@ class ARCLViewController: UIViewController {
             let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 100.0, longitudeTranslation: 0.0, altitudeTranslation: altitude))
             let node = buildDisplacedAnnotationViewNode(altitude: altitude, color: color, location: location)
             node.annotationHeightAdjustmentFactor = annotationHeightAdjustmentFactor
+            node.scalingScheme = scalingScheme
             sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: node)
 
             // Now create a plain old geometry node at the same location.
@@ -116,6 +118,7 @@ class ARCLViewController: UIViewController {
             let cube = SCNBox(width: cubeSide, height: cubeSide, length: cubeSide, chamferRadius: 0)
             cube.firstMaterial?.diffuse.contents = color
             cubeNode.addChildNode(SCNNode(geometry: cube))
+            cubeNode.scalingScheme = scalingScheme
             sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: cubeNode)
         }
         // Put a label at the origin.
@@ -152,13 +155,14 @@ class ARCLViewController: UIViewController {
             colorIndex += 1
             for eastStep in -5...5 {
                 let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: Double(northStep) * northingIncrementMeters, longitudeTranslation: Double(eastStep) * eastingIncrementMeters, altitudeTranslation: 0.0))
-                let locationeNode = LocationNode(location: location)
+                let locationNode = LocationNode(location: location)
                 let torus = SCNTorus(ringRadius: 10, pipeRadius: 2)
                 torus.firstMaterial?.diffuse.contents = color
                 let torusNode = SCNNode(geometry: torus)
                 torusNode.runAction(rotateForeverAction)
-                locationeNode.addChildNode(torusNode)
-                sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: locationeNode)
+                locationNode.addChildNode(torusNode)
+                locationNode.scalingScheme = scalingScheme
+                sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: locationNode)
             }
         }
     }
@@ -187,8 +191,9 @@ class ARCLViewController: UIViewController {
                 let label = UILabel.largeLabel(text: "\(northStep), \(eastStep) (\(radius))")
                 label.backgroundColor = color
                 let annoNode = LocationAnnotationNode(location: location, view: label)
-                sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: annoNode)
                 annoNode.annotationHeightAdjustmentFactor = annotationHeightAdjustmentFactor
+                annoNode.scalingScheme = scalingScheme
+                sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: annoNode)
             }
         }
     }
@@ -313,6 +318,8 @@ class ARCLViewController: UIViewController {
                 let label = UILabel.largeLabel(text: "(\(radius))")
                 label.backgroundColor = .systemTeal
                 let annoNode = LocationAnnotationNode(location: location, view: label)
+                annoNode.annotationHeightAdjustmentFactor = annotationHeightAdjustmentFactor
+                annoNode.scalingScheme = scalingScheme
                 sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: annoNode)
             }
         }
