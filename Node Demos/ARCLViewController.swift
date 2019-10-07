@@ -26,10 +26,12 @@ class ARCLViewController: UIViewController {
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var sceneXYZLabel: UILabel!
     @IBOutlet weak var estLatLonLabel: UILabel!
-    
     @IBOutlet weak var estXYZLabel: UILabel!
     @IBOutlet weak var estHeadingLabel: UILabel!
-    var demonstration = Demonstration.fieldOfNodes
+
+    public var demonstration = Demonstration.fieldOfNodes
+    public var annotationHeightAdjustmentFactor = 1.1
+
     let colors = [UIColor.systemGreen, UIColor.systemBlue, UIColor.systemOrange, UIColor.systemRed, UIColor.systemYellow, UIColor.systemPurple]
     let northingIncrementMeters = 75.0
     let eastingIncrementMeters = 75.0
@@ -46,12 +48,10 @@ class ARCLViewController: UIViewController {
         sceneLocationView.showAxesNode = false // don't need ARCL's axesNode because we're showing SceneKit's
         sceneLocationView.autoenablesDefaultLighting = true
 
-        contentView.addSubview(sceneLocationView)
-        print("scene", sceneLocationView.scene.debugDescription)
-        print("delegate", sceneLocationView.delegate.debugDescription)
-        print("arViewDelegate", sceneLocationView.arViewDelegate.debugDescription)
-        print("sceneTrackingDelegate", sceneLocationView.sceneTrackingDelegate.debugDescription)
-        print("locationNodeTouchDelegate", sceneLocationView.locationNodeTouchDelegate.debugDescription)
+        sceneXYZLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: UIFont.Weight.medium)
+        estLatLonLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: UIFont.Weight.medium)
+        estXYZLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: UIFont.Weight.medium)
+        estHeadingLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: UIFont.Weight.medium)
 
     }
     
@@ -104,7 +104,7 @@ class ARCLViewController: UIViewController {
             // Create one annotation node 100 meters north, at specified altitude.
             let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 100.0, longitudeTranslation: 0.0, altitudeTranslation: altitude))
             let node = buildDisplacedAnnotationViewNode(altitude: altitude, location: location)
-            node.annotationHeightAdjustmentFactor = 0.0
+            node.annotationHeightAdjustmentFactor = annotationHeightAdjustmentFactor
             sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: node)
 
             // Now create a plain old geometry node at the same location.
@@ -185,6 +185,7 @@ class ARCLViewController: UIViewController {
                 label.backgroundColor = color
                 let annoNode = LocationAnnotationNode(location: location, view: label)
                 sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: annoNode)
+                annoNode.annotationHeightAdjustmentFactor = annotationHeightAdjustmentFactor
             }
         }
     }
@@ -338,37 +339,39 @@ extension ARCLViewController: ARSCNViewDelegate {
     public func renderer(_ renderer: SCNSceneRenderer, didRenderScene scene: SCNScene, atTime time: TimeInterval) {
         DispatchQueue.main.async {
             if let position = self.sceneLocationView.currentScenePosition {
-            self.sceneXYZLabel.text = "SLV x: \(position.x.short), y: \(position.y.short), z: \(position.z.short)"
-        }
-        else {
-            self.sceneXYZLabel.text = ""
-        }
-            if let locationEstimate = self.sceneLocationView.sceneLocationManager.bestLocationEstimate {
-                self.estXYZLabel.text = "LM x: \(locationEstimate.position.x.short) y: \(locationEstimate.position.y.short) z: \(locationEstimate.position.z.short)"
-                let coordinate = locationEstimate.location.coordinate
-                let latString = String(format: "%+7.5f", coordinate.latitude)
-                let lonString = String(format: "%+7.5f", coordinate.longitude)
-                self.estLatLonLabel.text = "LM \(latString) \(lonString)"
-                if let heading = self.sceneLocationView.sceneLocationManager.locationManager.heading,
-                    let headingAccuracy = self.sceneLocationView.sceneLocationManager.locationManager.headingAccuracy {
-                    let headingString = String(format: "%4.1f", heading)
-                    let headingAccuracyString = String(format: "%3.1f", headingAccuracy)
-                    self.estHeadingLabel.text = "LM heading \(headingString)° +/- \(headingAccuracyString)°"
-                }
+                let xString = String(format: "%+03.2f", position.x)
+                let yString = String(format: "%+03.2f", position.y)
+                let zString = String(format: "%+03.2f", position.z)
+                self.sceneXYZLabel.text = "SLV x: \(xString), y: \(yString), z: \(zString)"
             }
-//            if let eulerAngles = sceneLocationView.currentEulerAngles,
-//                let heading = sceneLocationView.sceneLocationManager.locationManager.heading,
-//                let headingAccuracy = sceneLocationView.sceneLocationManager.locationManager.headingAccuracy {
-//                let yDegrees = (((0 - eulerAngles.y.radiansToDegrees) + 360).truncatingRemainder(dividingBy: 360) ).short
-//                infoLabel.text!.append(" Heading: \(yDegrees)° • \(Float(heading).short)° • \(headingAccuracy)°\n")
-//            }
-//
-//            let comp = Calendar.current.dateComponents([.hour, .minute, .second, .nanosecond], from: Date())
-//            if let hour = comp.hour, let minute = comp.minute, let second = comp.second, let nanosecond = comp.nanosecond {
-//                let nodeCount = "\(sceneLocationView.sceneNode?.childNodes.count.description ?? "n/a") ARKit Nodes"
-//                infoLabel.text!.append(" \(hour.short):\(minute.short):\(second.short):\(nanosecond.short3) • \(nodeCount)")
-//            }
-//        }
+            else {
+                self.sceneXYZLabel.text = ""
+            }
+            if let locationEstimate = self.sceneLocationView.sceneLocationManager.bestLocationEstimate {
+                let position = locationEstimate.position
+                let xString = String(format: "%+03.2f", position.x)
+                let yString = String(format: "%+03.2f", position.y)
+                let zString = String(format: "%+03.2f", position.z)
+                self.estXYZLabel.text = "LM x: \(xString), y: \(yString), z: \(zString)"
+
+                let coordinate = locationEstimate.location.coordinate
+                let latString = String(format: "%+6.5f", coordinate.latitude)
+                let lonString = String(format: "%+6.5f", coordinate.longitude)
+                self.estLatLonLabel.text = "LM \(latString) \(lonString)"
+            }
+            else {
+                self.estXYZLabel.text = ""
+                self.estHeadingLabel.text = ""
+            }
+            if let heading = self.sceneLocationView.sceneLocationManager.locationManager.heading,
+                let headingAccuracy = self.sceneLocationView.sceneLocationManager.locationManager.headingAccuracy {
+                let headingString = String(format: "%4.1f", heading)
+                let headingAccuracyString = String(format: "%3.1f", headingAccuracy)
+                self.estHeadingLabel.text = "LM heading \(headingString)° +/- \(headingAccuracyString)°"
+            }
+            else {
+                self.estHeadingLabel.text = ""
+            }
         }
     }
 
@@ -384,7 +387,8 @@ extension ARCLViewController: ARSCNViewDelegate {
                             let label = UILabel.largeLabel(text: "(\(radius))")
                             label.backgroundColor = UIColor.systemTeal
                             node.annotationNode.image = label.image
-                        }                    }
+                        }
+                    }
                 }
             }
         }
