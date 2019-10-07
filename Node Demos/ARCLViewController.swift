@@ -100,10 +100,13 @@ class ARCLViewController: UIViewController {
 
         let referenceLocation = CLLocation(coordinate:sceneLocationView.sceneLocationManager.currentLocation!.coordinate,
                                            altitude: sceneLocationView.sceneLocationManager.currentLocation!.altitude)
+        var colorIndex = 0
         for altitude in [0.0, 20, 60, 100] {
+            let color = colors[colorIndex % colors.count]
+            colorIndex += 1
             // Create one annotation node 100 meters north, at specified altitude.
             let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 100.0, longitudeTranslation: 0.0, altitudeTranslation: altitude))
-            let node = buildDisplacedAnnotationViewNode(altitude: altitude, location: location)
+            let node = buildDisplacedAnnotationViewNode(altitude: altitude, color: color, location: location)
             node.annotationHeightAdjustmentFactor = annotationHeightAdjustmentFactor
             sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: node)
 
@@ -111,7 +114,7 @@ class ARCLViewController: UIViewController {
             let cubeNode = LocationNode(location: location)
             let cubeSide = CGFloat(5)
             let cube = SCNBox(width: cubeSide, height: cubeSide, length: cubeSide, chamferRadius: 0)
-            cube.firstMaterial?.diffuse.contents = UIColor.systemOrange
+            cube.firstMaterial?.diffuse.contents = color
             cubeNode.addChildNode(SCNNode(geometry: cube))
             sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: cubeNode)
         }
@@ -124,8 +127,8 @@ class ARCLViewController: UIViewController {
     }
 
     /// Create a `LocationAnnotationNode` at `altitude` meters above the given location, labeled with the altitude.
-    func buildDisplacedAnnotationViewNode(altitude: Double, location: CLLocation) -> LocationAnnotationNode {
-        let label = UILabel.largeLabel(text: "\(altitude)")
+    func buildDisplacedAnnotationViewNode(altitude: Double, color: UIColor, location: CLLocation) -> LocationAnnotationNode {
+        let label = UILabel.largeLabel(text: "\(altitude)", backgroundColor: color)
         let result = LocationAnnotationNode(location: location, view: label)
         return result
     }
@@ -413,7 +416,7 @@ extension ARCLViewController: ARSCNViewDelegate {
 }
 
 extension UILabel {
-    class func largeLabel(text: String) -> UILabel {
+    class func largeLabel(text: String, backgroundColor: UIColor = .systemGray) -> UILabel {
         let font = UIFont.preferredFont(forTextStyle: .title2)
         let fontAttributes = [NSAttributedString.Key.font: font]
         let size = (text as NSString).size(withAttributes: fontAttributes)
@@ -422,7 +425,7 @@ extension UILabel {
         let attributedQuote = NSAttributedString(string: text, attributes:  [NSAttributedString.Key.font: font])
         label.attributedText = attributedQuote
         label.textAlignment = .center
-        label.backgroundColor = UIColor.systemGray
+        label.backgroundColor = backgroundColor
         label.adjustsFontForContentSizeCategory = true
         return label
     }

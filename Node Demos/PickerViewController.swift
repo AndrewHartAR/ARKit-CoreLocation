@@ -8,19 +8,18 @@
 
 import UIKit
 
-class PickerViewController: UIViewController, UITextFieldDelegate {
+class PickerViewController: UITableViewController, UITextFieldDelegate {
 
-    @IBOutlet weak var annotationHeightAdjustmentFactorField: UITextField!
-    @IBOutlet weak var scalingTypeSegControl: UISegmentedControl!
     var annotationHeightAdjustmentFactor = 1.1
-
+    @IBOutlet weak var annoHeightAdjustFactorField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        annotationHeightAdjustmentFactorField.text = "\(annotationHeightAdjustmentFactor)"
+        annoHeightAdjustFactorField.text = "\(annotationHeightAdjustmentFactor)"
     }
 
     @IBAction func showStackedNodes(_ sender: Any) {
@@ -45,6 +44,7 @@ class PickerViewController: UIViewController, UITextFieldDelegate {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? ARCLViewController {
+            destination.annotationHeightAdjustmentFactor = annotationHeightAdjustmentFactor
             if segue.identifier == "stackOfNodes" {
                 destination.demonstration = .stackOfNodes
             }
@@ -68,10 +68,6 @@ class PickerViewController: UIViewController, UITextFieldDelegate {
             let newValue = Double(text) {
             annotationHeightAdjustmentFactor = newValue
         }
-    }
-
-    @IBAction func backgroundTapped(_ sender: Any) {
-        view.endEditing(true)
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
