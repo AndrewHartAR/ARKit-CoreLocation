@@ -31,9 +31,10 @@ class ARCLViewController: UIViewController {
 
     public var demonstration = Demonstration.fieldOfNodes
     public var annotationHeightAdjustmentFactor = 1.1
-    public var scalingScheme = ScalingScheme.normal
     public var locationEstimateMethod = LocationEstimateMethod.mostRelevantEstimate
-    
+    public var arTrackingType = SceneLocationView.ARTrackingType.orientationTracking
+    public var scalingScheme = ScalingScheme.normal
+
     let colors = [UIColor.systemGreen, UIColor.systemBlue, UIColor.systemOrange, UIColor.systemPurple, UIColor.systemYellow, UIColor.systemRed]
     let northingIncrementMeters = 75.0
     let eastingIncrementMeters = 75.0
@@ -49,6 +50,7 @@ class ARCLViewController: UIViewController {
         sceneLocationView.arViewDelegate = self
 
         sceneLocationView.locationEstimateMethod = locationEstimateMethod
+//        sceneLocationView.arTrackingType = arTrackingType
 
         sceneLocationView.debugOptions = [.showWorldOrigin]
         sceneLocationView.showsStatistics = true

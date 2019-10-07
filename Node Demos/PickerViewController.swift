@@ -16,6 +16,8 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
 
     var locationEstimateMethod = LocationEstimateMethod.mostRelevantEstimate
 
+    var arTrackingType = SceneLocationView.ARTrackingType.worldTracking
+
     var scalingScheme = ScalingScheme.normal
     // I have absolutely no idea what reasonable values for these scaling parameters would be.
     var threshold1: Double = 100.0
@@ -28,6 +30,7 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
 
     @IBOutlet weak var annoHeightAdjustFactorField: UITextField!
     @IBOutlet weak var locationEstimateMethodSegController: UISegmentedControl!
+    @IBOutlet weak var trackingTypeSegController: UISegmentedControl!
     @IBOutlet weak var scalingSchemeSegController: UISegmentedControl!
     @IBOutlet weak var threshold1Field: UITextField!
     @IBOutlet weak var scale1Field: UITextField!
@@ -53,6 +56,8 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
         annoHeightAdjustFactorField.text = "\(annotationHeightAdjustmentFactor)"
 
         updateLocationEstimateMethodSegController()
+
+        updateTrackingTypeController()
 
         threshold1Field.text = "\(threshold1)"
         threshold2Field.text = "\(threshold2)"
@@ -95,6 +100,7 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
             destination.annotationHeightAdjustmentFactor = annotationHeightAdjustmentFactor
             destination.scalingScheme = scalingScheme
             destination.locationEstimateMethod = locationEstimateMethod
+            destination.arTrackingType = arTrackingType
             
             if segue.identifier == "stackOfNodes" {
                 destination.demonstration = .stackOfNodes
@@ -114,7 +120,7 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
         }
     }
 
-    // MARK: - Y annotation factor and location estimate method
+    // MARK: - Y annotation factor and some toggles
 
     @IBAction func yAnnoFactorChanged(_ sender: UITextField) {
         if let text = sender.text,
@@ -142,6 +148,27 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
             locationEstimateMethodSegController.selectedSegmentIndex = 1
         }
     }
+
+    @IBAction func trackingTypeChanged(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            arTrackingType = SceneLocationView.ARTrackingType.worldTracking
+        case 1:
+            arTrackingType = SceneLocationView.ARTrackingType.orientationTracking
+        default:
+            arTrackingType = SceneLocationView.ARTrackingType.worldTracking
+        }
+    }
+
+    fileprivate func updateTrackingTypeController() {
+        switch arTrackingType {
+        case .worldTracking:
+            trackingTypeSegController.selectedSegmentIndex = 0
+        case .orientationTracking:
+            trackingTypeSegController.selectedSegmentIndex = 1
+        }
+    }
+
     // MARK: - Scaling scheme
 
     @IBAction func threshold1Changed(_ sender: UITextField) {
