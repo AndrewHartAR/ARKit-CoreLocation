@@ -8,11 +8,19 @@
 
 import UIKit
 
-class PickerViewController: UIViewController {
+class PickerViewController: UIViewController, UITextFieldDelegate {
+
+    @IBOutlet weak var annotationHeightAdjustmentFactorField: UITextField!
+    @IBOutlet weak var scalingTypeSegControl: UISegmentedControl!
+    var annotationHeightAdjustmentFactor = 1.1
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        annotationHeightAdjustmentFactorField.text = "\(annotationHeightAdjustmentFactor)"
     }
 
     @IBAction func showStackedNodes(_ sender: Any) {
@@ -53,6 +61,22 @@ class PickerViewController: UIViewController {
                 destination.demonstration = .spriteKitNodes
             }
         }
+    }
+
+    @IBAction func yAnnoFactorChanged(_ sender: UITextField) {
+        if let text = sender.text,
+            let newValue = Double(text) {
+            annotationHeightAdjustmentFactor = newValue
+        }
+    }
+
+    @IBAction func backgroundTapped(_ sender: Any) {
+        view.endEditing(true)
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
 
