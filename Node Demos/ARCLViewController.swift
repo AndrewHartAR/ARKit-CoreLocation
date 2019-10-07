@@ -22,11 +22,18 @@ enum Demonstration {
 
 class ARCLViewController: UIViewController {
 
-    let sceneLocationView = SceneLocationView()
-    var demonstration = Demonstration.fieldOfNodes
-
+    @IBOutlet weak var sceneLocationView: SceneLocationView!
     @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var sceneXYZLabel: UILabel!
+    @IBOutlet weak var estLatLonLabel: UILabel!
     
+    @IBOutlet weak var estXYZLabel: UILabel!
+    @IBOutlet weak var estHeadingLabel: UILabel!
+    var demonstration = Demonstration.fieldOfNodes
+    let colors = [UIColor.systemGreen, UIColor.systemBlue, UIColor.systemOrange, UIColor.systemRed, UIColor.systemYellow, UIColor.systemPurple]
+    let northingIncrementMeters = 75.0
+    let eastingIncrementMeters = 75.0
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -135,14 +142,13 @@ class ARCLViewController: UIViewController {
 
         let referenceLocation = CLLocation(coordinate:sceneLocationView.sceneLocationManager.currentLocation!.coordinate,
                                            altitude: sceneLocationView.sceneLocationManager.currentLocation!.altitude)
-        let colors = [UIColor.systemGreen, UIColor.systemBlue, UIColor.systemOrange, UIColor.systemRed, UIColor.systemYellow, UIColor.systemPurple]
         let rotateForeverAction = SCNAction.repeatForever(SCNAction.rotate(by: .pi, around: SCNVector3(1, 0, 0), duration: 3))
         var colorIndex = 0
         for northStep in -5...5 {
             let color = colors[colorIndex % colors.count]
             colorIndex += 1
             for eastStep in -5...5 {
-                let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: Double(northStep) * 200.0, longitudeTranslation: Double(eastStep) * 200.0, altitudeTranslation: 0.0))
+                let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: Double(northStep) * northingIncrementMeters, longitudeTranslation: Double(eastStep) * eastingIncrementMeters, altitudeTranslation: 0.0))
                 let locationeNode = LocationNode(location: location)
                 let torus = SCNTorus(ringRadius: 10, pipeRadius: 2)
                 torus.firstMaterial?.diffuse.contents = color
@@ -166,14 +172,13 @@ class ARCLViewController: UIViewController {
 
         let referenceLocation = CLLocation(coordinate:sceneLocationView.sceneLocationManager.currentLocation!.coordinate,
                                            altitude: sceneLocationView.sceneLocationManager.currentLocation!.altitude)
-        let colors = [UIColor.systemGreen, UIColor.systemBlue, UIColor.systemOrange, UIColor.systemRed, UIColor.systemYellow, UIColor.systemPurple]
         var colorIndex = 0
         for northStep in -5...5 {
             let color = colors[colorIndex % colors.count]
             colorIndex += 1
             for eastStep in -5...5 {
-                let northOffset = Double(northStep) * 200.0
-                let eastOffset = Double(eastStep) * 200.0
+                let northOffset = Double(northStep) * northingIncrementMeters
+                let eastOffset = Double(eastStep) * eastingIncrementMeters
                 let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: northOffset, longitudeTranslation: eastOffset, altitudeTranslation: 0.0))
                 let radius = Int(sqrt (northOffset * northOffset + eastOffset * eastOffset))
                 let label = UILabel.largeLabel(text: "\(northStep), \(eastStep) (\(radius))")
@@ -326,10 +331,45 @@ extension ARCLViewController: ARSCNViewDelegate {
     }
 
     // MARK: - SCNSceneRendererDelegate
-    // These functions defined in SCNSceneRendererDelegate are invoked on the arViewDelegate within ARCL's internal SCNSceneRendererDelegate (akak ARSCNViewDelegate).
+    // These functions defined in SCNSceneRendererDelegate are invoked on the arViewDelegate within ARCL's
+    // internal SCNSceneRendererDelegate (akak ARSCNViewDelegate). They're forwarded versions of the
+    // SCNSceneRendererDelegate calls.
     
     public func renderer(_ renderer: SCNSceneRenderer, didRenderScene scene: SCNScene, atTime time: TimeInterval) {
-        // print(#file, #function)
+        DispatchQueue.main.async {
+            if let position = self.sceneLocationView.currentScenePosition {
+            self.sceneXYZLabel.text = "SLV x: \(position.x.short), y: \(position.y.short), z: \(position.z.short)"
+        }
+        else {
+            self.sceneXYZLabel.text = ""
+        }
+            if let locationEstimate = self.sceneLocationView.sceneLocationManager.bestLocationEstimate {
+                self.estXYZLabel.text = "LM x: \(locationEstimate.position.x.short) y: \(locationEstimate.position.y.short) z: \(locationEstimate.position.z.short)"
+                let coordinate = locationEstimate.location.coordinate
+                let latString = String(format: "%+7.5f", coordinate.latitude)
+                let lonString = String(format: "%+7.5f", coordinate.longitude)
+                self.estLatLonLabel.text = "LM \(latString) \(lonString)"
+                if let heading = self.sceneLocationView.sceneLocationManager.locationManager.heading,
+                    let headingAccuracy = self.sceneLocationView.sceneLocationManager.locationManager.headingAccuracy {
+                    let headingString = String(format: "%4.1f", heading)
+                    let headingAccuracyString = String(format: "%3.1f", headingAccuracy)
+                    self.estHeadingLabel.text = "LM heading \(headingString)° +/- \(headingAccuracyString)°"
+                }
+            }
+//            if let eulerAngles = sceneLocationView.currentEulerAngles,
+//                let heading = sceneLocationView.sceneLocationManager.locationManager.heading,
+//                let headingAccuracy = sceneLocationView.sceneLocationManager.locationManager.headingAccuracy {
+//                let yDegrees = (((0 - eulerAngles.y.radiansToDegrees) + 360).truncatingRemainder(dividingBy: 360) ).short
+//                infoLabel.text!.append(" Heading: \(yDegrees)° • \(Float(heading).short)° • \(headingAccuracy)°\n")
+//            }
+//
+//            let comp = Calendar.current.dateComponents([.hour, .minute, .second, .nanosecond], from: Date())
+//            if let hour = comp.hour, let minute = comp.minute, let second = comp.second, let nanosecond = comp.nanosecond {
+//                let nodeCount = "\(sceneLocationView.sceneNode?.childNodes.count.description ?? "n/a") ARKit Nodes"
+//                infoLabel.text!.append(" \(hour.short):\(minute.short):\(second.short):\(nanosecond.short3) • \(nodeCount)")
+//            }
+//        }
+        }
     }
 
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
