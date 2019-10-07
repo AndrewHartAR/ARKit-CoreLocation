@@ -37,6 +37,8 @@ class ARCLViewController: UIViewController {
     let northingIncrementMeters = 75.0
     let eastingIncrementMeters = 75.0
 
+    // MARK: - Lifecycle and actions
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -87,7 +89,9 @@ class ARCLViewController: UIViewController {
     @IBAction func doneTapped(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
-    
+
+    // MARK: - Some canned demos
+
     /// Add a stack of annotation nodes, 100 meters north of location, at altitudes between 0 and 100 meters.
     /// Also add a location node at the same place as each annotation node.
     func addStackOfNodes() {
@@ -198,106 +202,7 @@ class ARCLViewController: UIViewController {
         }
     }
 
-
-    func addSpriteKitNodes() {
-        // Don't try to add the nodes to the scene until we have a current location
-        guard sceneLocationView.sceneLocationManager.currentLocation != nil else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-                self?.addSpriteKitNodes()
-            }
-            return
-        }
-
-        let referenceLocation = CLLocation(coordinate:sceneLocationView.sceneLocationManager.currentLocation!.coordinate,
-                                           altitude: sceneLocationView.sceneLocationManager.currentLocation!.altitude)
-
-        // Put a label at the origin.
-        let north10Meterslabel = UILabel.largeLabel(text: "North 10 meters")
-        north10Meterslabel.backgroundColor = .systemTeal
-        let north10MetersLocation = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 10.0, longitudeTranslation: 0.0, altitudeTranslation: 0.0))
-        let north10MetersLabelNode = LocationAnnotationNode(location: north10MetersLocation, view: north10Meterslabel)
-        sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: north10MetersLabelNode)
-
-        let south10Meterslabel = UILabel.largeLabel(text: "South 10 meters")
-        south10Meterslabel.backgroundColor = .systemPurple
-        let south10MetersLocation = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: -10.0, longitudeTranslation: 0.0, altitudeTranslation: 0.0))
-        let south10MetersLabelNode = LocationAnnotationNode(location: south10MetersLocation, view: south10Meterslabel)
-        sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: south10MetersLabelNode)
-
-        let east10MetersLocation = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 0.0, longitudeTranslation: 10.0, altitudeTranslation: 0.0))
-        let east10MetersLabelNode = LocationNode(location: east10MetersLocation)
-        sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: south10MetersLabelNode)
-
-        //SKScene to hold 2D elements that get put onto a plane, then added to the SCNScene
-        let skScene = SKScene(size:CGSize(width: 500, height: 52  ))
-        skScene.backgroundColor = SKColor(white:0,alpha:0)
-
-        //create red box around the SKScene
-        let shape = SKShapeNode(rect: CGRect(x: 0, y: 0, width: skScene.frame.size.width, height: skScene.frame.size.height))
-        shape.strokeColor = SKColor.red
-        shape.lineWidth = 1
-        skScene.addChild(shape)
-
-        //the label we can update anytime we want
-        let label = SKLabelNode(fontNamed:"Menlo-Bold")
-        label.fontSize = 48
-        label.horizontalAlignmentMode = .left
-        label.verticalAlignmentMode = .center
-        label.position = CGPoint(x:0,y:skScene.frame.size.height/2)
-        label.text = "HELLO WORLD!"
-        skScene.addChild(label)
-
-        //create a plane to put the skScene on
-        let plane = SCNPlane(width:5,height:0.5)
-        let material = SCNMaterial()
-        material.lightingModel = SCNMaterial.LightingModel.constant
-        material.isDoubleSided = true
-        material.diffuse.contents = skScene
-        plane.materials = [material]
-
-        //Add plane to a node, and node to the SCNScene
-        let hudNode = SCNNode(geometry: plane)
-        hudNode.name = "HUD"
-        hudNode.rotation = SCNVector4(x: 1, y: 0, z: 0, w: 3.14159265)
-        hudNode.position = SCNVector3(x:0, y: 1.5, z: 1)
-        let billboardConstraint = SCNBillboardConstraint()
-        billboardConstraint.freeAxes = SCNBillboardAxis.Y
-        hudNode.constraints = [billboardConstraint]
-        east10MetersLabelNode.addChildNode(hudNode)
-
-  /*      SKSpriteNode *someSKSpriteNode;
-
-        // initialize your SKSpriteNode and set it up..
-
-        SKScene *tvSKScene = [SKScene sceneWithSize:CGSizeMake(100, 100)];
-        tvSKScene.anchorPoint = CGPointMake(0.5, 0.5);
-        [tvSKScene addChild:someSKSpriteNode];
-
-        // use spritekit scene as plane's material
-
-        SCNMaterial *materialProperty = [SCNMaterial material];
-        materialProperty.diffuse.contents = tvSKScene;
-
-        // this will likely change to whereever you want to show this scene.
-        SCNVector3 tvLocationCoordinates = SCNVector3Make(0, 0, 0);
-
-        SCNPlane *scnPlane = [SCNPlane planeWithWidth:100.0 height:100.0];
-        SCNNode *scnNode = [SCNNode nodeWithGeometry:scnPlane];
-        scnNode.geometry.firstMaterial = materialProperty;
-        scnNode.position = tvLocationCoordinates;
-
-        // Assume we have a SCNCamera and SCNNode set up already.
-
-        SCNLookAtConstraint *constraint = [SCNLookAtConstraint lookAtConstraintWithTarget:cameraNode];
-        constraint.gimbalLockEnabled = NO;
-        scnNode.constraints = @[constraint];
-
-        // Assume we have a SCNView *sceneView set up already.
-        [sceneView.scene.rootNode addChildNode:scnNode];
-*/
-    }
-
-    /// Add an array of annotation nodes centered on your current location. Radius values are updated live.
+    /// Add an array of annotation nodes showing radius, centered on your current location. Radius values are static.
     func addFieldOfRadii() {
         // Don't try to add the nodes to the scene until we have a current location
         guard sceneLocationView.sceneLocationManager.currentLocation != nil else {
@@ -309,14 +214,16 @@ class ARCLViewController: UIViewController {
 
         let referenceLocation = CLLocation(coordinate:sceneLocationView.sceneLocationManager.currentLocation!.coordinate,
                                            altitude: sceneLocationView.sceneLocationManager.currentLocation!.altitude)
+        var colorIndex = 0
         for northStep in -5...5 {
             for eastStep in -5...5 {
+                let color = colors[colorIndex % colors.count]
+                colorIndex += 1
                 let northOffset = Double(northStep) * 2.0
                 let eastOffset = Double(eastStep) * 2.0
                 let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: northOffset, longitudeTranslation: eastOffset, altitudeTranslation: 0))
                 let radius = Int(sqrt (northOffset * northOffset + eastOffset * eastOffset))
-                let label = UILabel.largeLabel(text: "(\(radius))")
-                label.backgroundColor = .systemTeal
+                let label = UILabel.largeLabel(text: "(\(radius))", backgroundColor: color)
                 let annoNode = LocationAnnotationNode(location: location, view: label)
                 annoNode.annotationHeightAdjustmentFactor = annotationHeightAdjustmentFactor
                 annoNode.scalingScheme = scalingScheme
@@ -386,22 +293,7 @@ extension ARCLViewController: ARSCNViewDelegate {
     }
 
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        if self.demonstration == .fieldOfRadii {
-            if let renderer = renderer as? SceneLocationView {
-                let location = sceneLocationView.sceneLocationManager.currentLocation
-                if let locationNodes = renderer.locationNodes as? [LocationAnnotationNode] {
-                    for node in locationNodes {
-                        DispatchQueue.main.async {
-                            // FIXME: This approach won't work because the underlying SCNPlane has its material set only once, at init time. Leaving it for future inspiration.
-                            let radius = Int(location?.distance(from: node.location) ?? 0)
-                            let label = UILabel.largeLabel(text: "(\(radius))")
-                            label.backgroundColor = UIColor.systemTeal
-                            node.annotationNode.image = label.image
-                        }
-                    }
-                }
-            }
-        }
+        // print(#file, #function)
     }
 
     public func renderer(_ renderer: SCNSceneRenderer, didApplyAnimationsAtTime time: TimeInterval) {

@@ -108,6 +108,7 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
             let newValue = Double(text) {
             threshold1 = newValue
         }
+        recomputeScalingScheme()
     }
 
     @IBAction func threshold2Changed(_ sender: UITextField) {
@@ -115,6 +116,7 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
             let newValue = Double(text) {
             threshold2 = newValue
         }
+        recomputeScalingScheme()
     }
 
     @IBAction func scale1Changed(_ sender: UITextField) {
@@ -122,6 +124,7 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
             let newValue = Float(text) {
             scale1 = newValue
         }
+        recomputeScalingScheme()
     }
 
     @IBAction func scale2Changed(_ sender: UITextField) {
@@ -129,6 +132,7 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
             let newValue = Float(text) {
             scale2 = newValue
         }
+        recomputeScalingScheme()
     }
 
     @IBAction func bufferChanged(_ sender: UITextField) {
@@ -136,6 +140,7 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
             let newValue = Double(text) {
             buffer = newValue
         }
+        recomputeScalingScheme()
     }
 
     @IBAction func scalingSchemeChanged(_ sender: UISegmentedControl) {
@@ -154,6 +159,24 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
             scalingScheme = .normal
         }
         updateScalingParameterCells()
+    }
+
+    /// Yes, this code is very repetitive of `scalingSchemeChanged`. I could make it more DRY by adding
+    /// a computed property to `ScalingScheme`, but I don't want to mess with library code just for this demo.
+    /// https://medium.com/@PhiJay/why-swift-enums-with-associated-values-cannot-have-a-raw-value-21e41d5ec11 has a good discussion.
+    fileprivate func recomputeScalingScheme() {
+        switch scalingScheme {
+        case .normal:
+            scalingScheme = .normal
+        case .tiered:
+            scalingScheme = .tiered(threshold: threshold1, scale: scale1)
+        case .doubleTiered:
+            scalingScheme = .doubleTiered(firstThreshold: threshold1, firstScale: scale1, secondThreshold: threshold2, secondScale: scale2)
+        case .linear:
+            scalingScheme = .linear(threshold: threshold1)
+        case .linearBuffer:
+            scalingScheme = .linearBuffer(threshold: threshold1, buffer: buffer)
+        }
     }
 
     fileprivate func updateScalingParameterCells() {

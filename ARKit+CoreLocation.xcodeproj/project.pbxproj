@@ -19,6 +19,7 @@
 		2B0DA8502341D3C700A1AB33 /* Node_DemosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0DA84F2341D3C700A1AB33 /* Node_DemosTests.swift */; };
 		2B0DA85B2341D3C700A1AB33 /* Node_DemosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0DA85A2341D3C700A1AB33 /* Node_DemosUITests.swift */; };
 		2B0DA8672341D4B800A1AB33 /* ARCLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0DA8662341D4B800A1AB33 /* ARCLViewController.swift */; };
+		2B75FC44234BF75600B04461 /* ARCLViewController+SpriteKitNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B75FC43234BF75600B04461 /* ARCLViewController+SpriteKitNodes.swift */; };
 		34D7563D99636C75B885A566 /* Pods_ARKit_CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C10523EF85AA6B7CDF962AD /* Pods_ARKit_CoreLocation.framework */; };
 		3643DAEB221E30C6002BEAFC /* UIButton+Designable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3643DAEA221E30C6002BEAFC /* UIButton+Designable.swift */; };
 		3643DAED221E3390002BEAFC /* OpenARCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3643DAEC221E3390002BEAFC /* OpenARCell.swift */; };
@@ -79,6 +80,7 @@
 		2B0DA85A2341D3C700A1AB33 /* Node_DemosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node_DemosUITests.swift; sourceTree = "<group>"; };
 		2B0DA85C2341D3C700A1AB33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2B0DA8662341D4B800A1AB33 /* ARCLViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARCLViewController.swift; sourceTree = "<group>"; };
+		2B75FC43234BF75600B04461 /* ARCLViewController+SpriteKitNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ARCLViewController+SpriteKitNodes.swift"; sourceTree = "<group>"; };
 		34FBC59DD392E3B233E769F3 /* Pods-Node Demos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Node Demos.release.xcconfig"; path = "Pods/Target Support Files/Pods-Node Demos/Pods-Node Demos.release.xcconfig"; sourceTree = "<group>"; };
 		3643DAEA221E30C6002BEAFC /* UIButton+Designable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Designable.swift"; sourceTree = "<group>"; };
 		3643DAEC221E3390002BEAFC /* OpenARCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenARCell.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				2B0DA83A2341D3C600A1AB33 /* SceneDelegate.swift */,
 				2B0DA83C2341D3C600A1AB33 /* PickerViewController.swift */,
 				2B0DA8662341D4B800A1AB33 /* ARCLViewController.swift */,
+				2B75FC43234BF75600B04461 /* ARCLViewController+SpriteKitNodes.swift */,
 				2B0DA83E2341D3C600A1AB33 /* Main.storyboard */,
 				2B0DA8412341D3C700A1AB33 /* Assets.xcassets */,
 				2B0DA8432341D3C700A1AB33 /* LaunchScreen.storyboard */,
@@ -667,6 +670,7 @@
 			files = (
 				2B0DA8672341D4B800A1AB33 /* ARCLViewController.swift in Sources */,
 				2B0DA83D2341D3C600A1AB33 /* PickerViewController.swift in Sources */,
+				2B75FC44234BF75600B04461 /* ARCLViewController+SpriteKitNodes.swift in Sources */,
 				2B0DA8392341D3C600A1AB33 /* AppDelegate.swift in Sources */,
 				2B0DA83B2341D3C600A1AB33 /* SceneDelegate.swift in Sources */,
 			);
