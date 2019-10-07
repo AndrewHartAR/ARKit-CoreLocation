@@ -32,6 +32,7 @@ class ARCLViewController: UIViewController {
     public var demonstration = Demonstration.fieldOfNodes
     public var annotationHeightAdjustmentFactor = 1.1
     public var scalingScheme = ScalingScheme.normal
+    public var locationEstimateMethod = LocationEstimateMethod.mostRelevantEstimate
     
     let colors = [UIColor.systemGreen, UIColor.systemBlue, UIColor.systemOrange, UIColor.systemPurple, UIColor.systemYellow, UIColor.systemRed]
     let northingIncrementMeters = 75.0
@@ -44,7 +45,10 @@ class ARCLViewController: UIViewController {
 
         sceneLocationView.translatesAutoresizingMaskIntoConstraints = false
         sceneLocationView.frame = contentView.frame
+
         sceneLocationView.arViewDelegate = self
+
+        sceneLocationView.locationEstimateMethod = locationEstimateMethod
 
         sceneLocationView.debugOptions = [.showWorldOrigin]
         sceneLocationView.showsStatistics = true
@@ -114,6 +118,8 @@ class ARCLViewController: UIViewController {
             let node = buildDisplacedAnnotationViewNode(altitude: altitude, color: color, location: location)
             node.annotationHeightAdjustmentFactor = annotationHeightAdjustmentFactor
             node.scalingScheme = scalingScheme
+            // FIXME: We should be able to do this, or do it internally in addLocationNode...() calls, to match SceneLocationView's setting.
+            // node.locationEstimateMethod = locationEstimateMethod
             sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: node)
 
             // Now create a plain old geometry node at the same location.
@@ -123,6 +129,8 @@ class ARCLViewController: UIViewController {
             cube.firstMaterial?.diffuse.contents = color
             cubeNode.addChildNode(SCNNode(geometry: cube))
             cubeNode.scalingScheme = scalingScheme
+            // FIXME: We should be able to do this, or do it internally in addLocationNode...() calls, to match SceneLocationView's setting.
+            // node.locationEstimateMethod = locationEstimateMethod
             sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: cubeNode)
         }
         // Put a label at the origin.

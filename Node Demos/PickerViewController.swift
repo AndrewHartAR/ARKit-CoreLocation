@@ -14,6 +14,8 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
     // Originally, the hard-coded factor to raise an annotation's label within the viewport was 1.1.
     var annotationHeightAdjustmentFactor = 1.1
 
+    var locationEstimateMethod = LocationEstimateMethod.mostRelevantEstimate
+
     var scalingScheme = ScalingScheme.normal
     // I have absolutely no idea what reasonable values for these scaling parameters would be.
     var threshold1: Double = 100.0
@@ -22,7 +24,10 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
     var scale2: Float = 0.5
     var buffer: Double = 100.0
 
+    // MARK: - Outlets
+
     @IBOutlet weak var annoHeightAdjustFactorField: UITextField!
+    @IBOutlet weak var locationEstimateMethodSegController: UISegmentedControl!
     @IBOutlet weak var scalingSchemeSegController: UISegmentedControl!
     @IBOutlet weak var threshold1Field: UITextField!
     @IBOutlet weak var scale1Field: UITextField!
@@ -37,6 +42,8 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var scale2Cell: UITableViewCell!
     @IBOutlet weak var bufferCell: UITableViewCell!
 
+    // MARK: - Lifecycle and text field delegate
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -44,6 +51,9 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
 
     override func viewDidAppear(_ animated: Bool) {
         annoHeightAdjustFactorField.text = "\(annotationHeightAdjustmentFactor)"
+
+        updateLocationEstimateMethodSegController()
+
         threshold1Field.text = "\(threshold1)"
         threshold2Field.text = "\(threshold2)"
         scale1Field.text = "\(scale1)"
@@ -52,6 +62,13 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
         updateScalingSchemeSegController()
         updateScalingParameterCells()
     }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+
+    // MARK: - demo launch actions
 
     @IBAction func showStackedNodes(_ sender: Any) {
         performSegue(withIdentifier: "stackOfNodes", sender: sender)
@@ -77,6 +94,7 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
         if let destination = segue.destination as? ARCLViewController {
             destination.annotationHeightAdjustmentFactor = annotationHeightAdjustmentFactor
             destination.scalingScheme = scalingScheme
+            destination.locationEstimateMethod = locationEstimateMethod
             
             if segue.identifier == "stackOfNodes" {
                 destination.demonstration = .stackOfNodes
@@ -96,12 +114,35 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
         }
     }
 
+    // MARK: - Y annotation factor and location estimate method
+
     @IBAction func yAnnoFactorChanged(_ sender: UITextField) {
         if let text = sender.text,
             let newValue = Double(text) {
             annotationHeightAdjustmentFactor = newValue
         }
     }
+
+    @IBAction func locationEstimateMethodChanged(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            locationEstimateMethod = .coreLocationDataOnly
+        case 1:
+            locationEstimateMethod = .mostRelevantEstimate
+        default:
+            locationEstimateMethod = .mostRelevantEstimate
+        }
+    }
+
+    fileprivate func updateLocationEstimateMethodSegController() {
+        switch locationEstimateMethod {
+        case .coreLocationDataOnly:
+            locationEstimateMethodSegController.selectedSegmentIndex = 0
+        case .mostRelevantEstimate:
+            locationEstimateMethodSegController.selectedSegmentIndex = 1
+        }
+    }
+    // MARK: - Scaling scheme
 
     @IBAction func threshold1Changed(_ sender: UITextField) {
         if let text = sender.text,
@@ -215,11 +256,6 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
         case .linearBuffer:
             scalingSchemeSegController.selectedSegmentIndex = 4
         }
-    }
-
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
     }
 }
 
