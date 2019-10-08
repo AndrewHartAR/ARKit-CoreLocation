@@ -32,17 +32,20 @@ extension ARCLViewController {
         north10Meterslabel.backgroundColor = .systemTeal
         let north10MetersLocation = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 10.0, longitudeTranslation: 0.0, altitudeTranslation: 0.0))
         let north10MetersLabelNode = LocationAnnotationNode(location: north10MetersLocation, view: north10Meterslabel)
+        addScenewideNodeSettings(north10MetersLabelNode)
         sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: north10MetersLabelNode)
 
         let south10Meterslabel = UILabel.largeLabel(text: "South 10 meters")
         south10Meterslabel.backgroundColor = .systemPurple
         let south10MetersLocation = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: -10.0, longitudeTranslation: 0.0, altitudeTranslation: 0.0))
         let south10MetersLabelNode = LocationAnnotationNode(location: south10MetersLocation, view: south10Meterslabel)
+        addScenewideNodeSettings(south10MetersLabelNode)
         sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: south10MetersLabelNode)
 
         let east10MetersLocation = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 0.0, longitudeTranslation: 10.0, altitudeTranslation: 0.0))
         let east10MetersLabelNode = LocationNode(location: east10MetersLocation)
-        sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: south10MetersLabelNode)
+        addScenewideNodeSettings(east10MetersLabelNode)
+        sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: east10MetersLabelNode)
 
         //SKScene to hold 2D elements that get put onto a plane, then added to the SCNScene
         let skScene = SKScene(size:CGSize(width: 500, height: 52  ))

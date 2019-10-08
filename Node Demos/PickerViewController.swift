@@ -26,11 +26,16 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
     var scale2: Float = 0.5
     var buffer: Double = 100.0
 
+    var continuallyAdjustNodePositionWhenWithinRange = true
+    var continuallyUpdatePositionAndScale = true
+
     // MARK: - Outlets
 
     @IBOutlet weak var annoHeightAdjustFactorField: UITextField!
     @IBOutlet weak var locationEstimateMethodSegController: UISegmentedControl!
     @IBOutlet weak var trackingTypeSegController: UISegmentedControl!
+    @IBOutlet weak var adjustNodePositionWithinRangeSwitch: UISwitch!
+    @IBOutlet weak var updateNodePositionAndScaleSwitch: UISwitch!
     @IBOutlet weak var scalingSchemeSegController: UISegmentedControl!
     @IBOutlet weak var threshold1Field: UITextField!
     @IBOutlet weak var scale1Field: UITextField!
@@ -58,6 +63,9 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
         updateLocationEstimateMethodSegController()
 
         updateTrackingTypeController()
+
+        adjustNodePositionWithinRangeSwitch.isOn = continuallyAdjustNodePositionWhenWithinRange
+        updateNodePositionAndScaleSwitch.isOn = continuallyUpdatePositionAndScale
 
         threshold1Field.text = "\(threshold1)"
         threshold2Field.text = "\(threshold2)"
@@ -101,6 +109,8 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
             destination.scalingScheme = scalingScheme
             destination.locationEstimateMethod = locationEstimateMethod
             destination.arTrackingType = arTrackingType
+            destination.continuallyUpdatePositionAndScale = continuallyUpdatePositionAndScale
+            destination.continuallyAdjustNodePositionWhenWithinRange = continuallyAdjustNodePositionWhenWithinRange
             
             if segue.identifier == "stackOfNodes" {
                 destination.demonstration = .stackOfNodes
@@ -138,6 +148,14 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
         default:
             locationEstimateMethod = .mostRelevantEstimate
         }
+    }
+
+    @IBAction func continuallyAdjustNodePositionWhenWithinRangeChanged(_ sender: UISwitch) {
+        continuallyAdjustNodePositionWhenWithinRange = sender.isOn
+    }
+
+    @IBAction func continuallyUpdatePositionAndScaleChanged(_ sender: UISwitch) {
+        continuallyUpdatePositionAndScale = sender.isOn
     }
 
     fileprivate func updateLocationEstimateMethodSegController() {

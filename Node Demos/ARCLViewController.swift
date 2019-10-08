@@ -30,10 +30,17 @@ class ARCLViewController: UIViewController {
 
     var sceneLocationView: SceneLocationView?
     public var demonstration = Demonstration.fieldOfNodes
-    public var annotationHeightAdjustmentFactor = 1.1
+
+    /// This is for the `SceneLocationView`. There's no way to set a node's `locationEstimateMethod`, which is hardcoded to `mostRelevantEstimate`.
     public var locationEstimateMethod = LocationEstimateMethod.mostRelevantEstimate
+
     public var arTrackingType = SceneLocationView.ARTrackingType.orientationTracking
     public var scalingScheme = ScalingScheme.normal
+
+    // These three properties are properties of individual nodes. We'll set them the same way for each node added.
+    public var continuallyAdjustNodePositionWhenWithinRange = true
+    public var continuallyUpdatePositionAndScale = true
+    public var annotationHeightAdjustmentFactor = 1.1
 
     let colors = [UIColor.systemGreen, UIColor.systemBlue, UIColor.systemOrange, UIColor.systemPurple, UIColor.systemYellow, UIColor.systemRed]
     let northingIncrementMeters = 100.0
@@ -48,7 +55,6 @@ class ARCLViewController: UIViewController {
         estLatLonLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: UIFont.Weight.medium)
         estXYZLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: UIFont.Weight.medium)
         estHeadingLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: UIFont.Weight.medium)
-
     }
 
     func rebuildSceneLocationView() {
@@ -101,6 +107,18 @@ class ARCLViewController: UIViewController {
 
     // MARK: - Some canned demos
 
+    /// Perform these actions on every node after it's added.
+    func addScenewideNodeSettings(_ node: LocationNode) {
+        if let annoNode = node as? LocationAnnotationNode {
+            annoNode.annotationHeightAdjustmentFactor = annotationHeightAdjustmentFactor
+        }
+        node.scalingScheme = scalingScheme
+        // FIXME: We should be able to do this, or do it internally in addLocationNode...() calls, to match SceneLocationView's setting.
+        // node.locationEstimateMethod = locationEstimateMethod
+        node.continuallyAdjustNodePositionWhenWithinRange = continuallyAdjustNodePositionWhenWithinRange
+        node.continuallyUpdatePositionAndScale = continuallyUpdatePositionAndScale
+    }
+
     /// Add a stack of annotation nodes, 100 meters north of location, at altitudes between 0 and 100 meters.
     /// Also add a location node at the same place as each annotation node.
     func addStackOfNodes() {
@@ -121,10 +139,7 @@ class ARCLViewController: UIViewController {
             // Create one annotation node 100 meters north, at specified altitude.
             let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 100.0, longitudeTranslation: 0.0, altitudeTranslation: altitude))
             let node = buildDisplacedAnnotationViewNode(altitude: altitude, color: color, location: location)
-            node.annotationHeightAdjustmentFactor = annotationHeightAdjustmentFactor
-            node.scalingScheme = scalingScheme
-            // FIXME: We should be able to do this, or do it internally in addLocationNode...() calls, to match SceneLocationView's setting.
-            // node.locationEstimateMethod = locationEstimateMethod
+            addScenewideNodeSettings(node)
             sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: node)
 
             // Now create a plain old geometry node at the same location.
@@ -133,9 +148,7 @@ class ARCLViewController: UIViewController {
             let cube = SCNBox(width: cubeSide, height: cubeSide, length: cubeSide, chamferRadius: 0)
             cube.firstMaterial?.diffuse.contents = color
             cubeNode.addChildNode(SCNNode(geometry: cube))
-            cubeNode.scalingScheme = scalingScheme
-            // FIXME: We should be able to do this, or do it internally in addLocationNode...() calls, to match SceneLocationView's setting.
-            // node.locationEstimateMethod = locationEstimateMethod
+            addScenewideNodeSettings(cubeNode)
             sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: cubeNode)
         }
         // Put a label at the origin.
@@ -178,7 +191,7 @@ class ARCLViewController: UIViewController {
                 let torusNode = SCNNode(geometry: torus)
                 torusNode.runAction(rotateForeverAction)
                 locationNode.addChildNode(torusNode)
-                locationNode.scalingScheme = scalingScheme
+                addScenewideNodeSettings(locationNode)
                 sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: locationNode)
             }
         }
@@ -208,8 +221,7 @@ class ARCLViewController: UIViewController {
                 let label = UILabel.largeLabel(text: "\(northStep), \(eastStep) (\(radius))")
                 label.backgroundColor = color
                 let annoNode = LocationAnnotationNode(location: location, view: label)
-                annoNode.annotationHeightAdjustmentFactor = annotationHeightAdjustmentFactor
-                annoNode.scalingScheme = scalingScheme
+                addScenewideNodeSettings(annoNode)
                 sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: annoNode)
             }
         }
@@ -238,8 +250,7 @@ class ARCLViewController: UIViewController {
                 let radius = Int(sqrt (northOffset * northOffset + eastOffset * eastOffset))
                 let label = UILabel.largeLabel(text: "(\(radius))", backgroundColor: color)
                 let annoNode = LocationAnnotationNode(location: location, view: label)
-                annoNode.annotationHeightAdjustmentFactor = annotationHeightAdjustmentFactor
-                annoNode.scalingScheme = scalingScheme
+                addScenewideNodeSettings(annoNode)
                 sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: annoNode)
             }
         }
