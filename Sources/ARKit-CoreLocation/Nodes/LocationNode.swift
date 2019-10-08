@@ -33,6 +33,8 @@ open class AnnotationNode: SCNNode {
 /// layout purposes.  To adjust the scale and position of items within a node,
 /// you can add them to a child node and adjust them there
 open class LocationNode: SCNNode {
+    // FIXME: figure out why this is hardcoded and why it would ever be different from the scene's sitting?
+    /// This seems like it should be a bug? Why is it hardcoded? Why would it ever be different from the scene's setting?
     var locationEstimateMethod: LocationEstimateMethod = .mostRelevantEstimate
 
     /// Location can be changed and confirmed later by SceneLocationView.
