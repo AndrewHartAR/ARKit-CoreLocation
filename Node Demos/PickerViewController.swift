@@ -249,7 +249,6 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
 
     fileprivate func updateScalingParameterCells() {
         for cell in scalingParameterCells {
-            print(cell)
             cell.accessoryType = .none
         }
         switch scalingScheme {
