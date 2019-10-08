@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="RhX-l7-xua">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="RhX-l7-xua">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -525,41 +525,41 @@
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="44" id="x3o-2e-nyJ"/>
                                 </constraints>
                                 <state key="normal" title="Done">
-                                    <color key="titleColor" systemColor="systemGreenColor" red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="doneTapped:" destination="N1T-Ak-Td3" eventType="touchUpInside" id="Bjq-7U-xwF"/>
                                 </connections>
                             </button>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gEB-ed-PNB">
-                                <rect key="frame" x="16" y="507" width="323" height="128"/>
+                                <rect key="frame" x="16" y="507" width="343" height="128"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="1hH-KW-dwf">
-                                    <rect key="frame" x="0.0" y="0.0" width="323" height="128"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="128"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VcC-h5-2PK">
-                                            <rect key="frame" x="8" y="8" width="307" height="24"/>
+                                            <rect key="frame" x="8" y="8" width="327" height="24"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mwz-80-AjX">
-                                            <rect key="frame" x="8" y="40" width="307" height="24"/>
+                                            <rect key="frame" x="8" y="40" width="327" height="24"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oWY-bY-02v">
-                                            <rect key="frame" x="8" y="72" width="307" height="24"/>
+                                            <rect key="frame" x="8" y="72" width="327" height="24"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ob-8O-r1I">
-                                            <rect key="frame" x="8" y="104" width="307" height="24"/>
+                                            <rect key="frame" x="8" y="104" width="327" height="24"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                             <nil key="textColor"/>
@@ -585,7 +585,6 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="Esh-xB-fNM"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="128" id="QTr-db-Nf8"/>
-                                    <constraint firstAttribute="width" constant="323" id="jQl-RZ-kVd"/>
                                 </constraints>
                                 <blurEffect style="regular"/>
                             </visualEffectView>
@@ -594,6 +593,7 @@
                             <constraint firstItem="2qf-cv-vkj" firstAttribute="top" secondItem="JpF-Re-Tkh" secondAttribute="top" id="5ad-Gf-0Kd"/>
                             <constraint firstItem="2qf-cv-vkj" firstAttribute="trailing" secondItem="JpF-Re-Tkh" secondAttribute="trailing" id="EpG-io-2qZ"/>
                             <constraint firstItem="gEB-ed-PNB" firstAttribute="leading" secondItem="JpF-Re-Tkh" secondAttribute="leading" constant="16" id="Y8Q-04-obP"/>
+                            <constraint firstItem="JpF-Re-Tkh" firstAttribute="trailing" secondItem="gEB-ed-PNB" secondAttribute="trailing" constant="16" id="dHb-zY-4aY"/>
                             <constraint firstItem="JpF-Re-Tkh" firstAttribute="trailing" secondItem="2pz-fq-SnP" secondAttribute="trailing" constant="24" id="fbp-jt-lTE"/>
                             <constraint firstItem="JpF-Re-Tkh" firstAttribute="bottom" secondItem="2qf-cv-vkj" secondAttribute="bottom" id="o0Y-Rf-zx2"/>
                             <constraint firstItem="JpF-Re-Tkh" firstAttribute="bottom" secondItem="gEB-ed-PNB" secondAttribute="bottom" constant="32" id="oKV-PO-8Lk"/>
@@ -613,7 +613,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wnG-ze-sS1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="466" y="230"/>
+            <point key="canvasLocation" x="464.80000000000001" y="229.83508245877064"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
