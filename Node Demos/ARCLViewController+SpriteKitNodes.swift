@@ -16,33 +16,33 @@ extension ARCLViewController {
 
     /// Some experiments with getting SpriteKit scenes visible in ARCL.
     func addSpriteKitNodes() {
-        // Don't try to add the nodes to the scene until we have a current location
-        guard sceneLocationView.sceneLocationManager.currentLocation != nil else {
+        guard let currentLocation = sceneLocationView?.sceneLocationManager.currentLocation else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
                 self?.addSpriteKitNodes()
             }
             return
         }
 
-        let referenceLocation = CLLocation(coordinate:sceneLocationView.sceneLocationManager.currentLocation!.coordinate,
-                                           altitude: sceneLocationView.sceneLocationManager.currentLocation!.altitude)
+        // Copy the current location because it's a reference type. Necessary?
+        let referenceLocation = CLLocation(coordinate:currentLocation.coordinate,
+                                           altitude: currentLocation.altitude)
 
         // Put a label at the origin.
         let north10Meterslabel = UILabel.largeLabel(text: "North 10 meters")
         north10Meterslabel.backgroundColor = .systemTeal
         let north10MetersLocation = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 10.0, longitudeTranslation: 0.0, altitudeTranslation: 0.0))
         let north10MetersLabelNode = LocationAnnotationNode(location: north10MetersLocation, view: north10Meterslabel)
-        sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: north10MetersLabelNode)
+        sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: north10MetersLabelNode)
 
         let south10Meterslabel = UILabel.largeLabel(text: "South 10 meters")
         south10Meterslabel.backgroundColor = .systemPurple
         let south10MetersLocation = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: -10.0, longitudeTranslation: 0.0, altitudeTranslation: 0.0))
         let south10MetersLabelNode = LocationAnnotationNode(location: south10MetersLocation, view: south10Meterslabel)
-        sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: south10MetersLabelNode)
+        sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: south10MetersLabelNode)
 
         let east10MetersLocation = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 0.0, longitudeTranslation: 10.0, altitudeTranslation: 0.0))
         let east10MetersLabelNode = LocationNode(location: east10MetersLocation)
-        sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: south10MetersLabelNode)
+        sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: south10MetersLabelNode)
 
         //SKScene to hold 2D elements that get put onto a plane, then added to the SCNScene
         let skScene = SKScene(size:CGSize(width: 500, height: 52  ))

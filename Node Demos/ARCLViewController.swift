@@ -22,13 +22,13 @@ enum Demonstration {
 
 class ARCLViewController: UIViewController {
 
-    @IBOutlet weak var sceneLocationView: SceneLocationView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var sceneXYZLabel: UILabel!
     @IBOutlet weak var estLatLonLabel: UILabel!
     @IBOutlet weak var estXYZLabel: UILabel!
     @IBOutlet weak var estHeadingLabel: UILabel!
 
+    var sceneLocationView: SceneLocationView?
     public var demonstration = Demonstration.fieldOfNodes
     public var annotationHeightAdjustmentFactor = 1.1
     public var locationEstimateMethod = LocationEstimateMethod.mostRelevantEstimate
@@ -36,7 +36,7 @@ class ARCLViewController: UIViewController {
     public var scalingScheme = ScalingScheme.normal
 
     let colors = [UIColor.systemGreen, UIColor.systemBlue, UIColor.systemOrange, UIColor.systemPurple, UIColor.systemYellow, UIColor.systemRed]
-    let northingIncrementMeters = 75.0
+    let northingIncrementMeters = 100.0
     let eastingIncrementMeters = 75.0
 
     // MARK: - Lifecycle and actions
@@ -44,28 +44,31 @@ class ARCLViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        sceneLocationView.translatesAutoresizingMaskIntoConstraints = false
-        sceneLocationView.frame = contentView.frame
-
-        sceneLocationView.arViewDelegate = self
-
-        sceneLocationView.locationEstimateMethod = locationEstimateMethod
-//        sceneLocationView.arTrackingType = arTrackingType
-
-        sceneLocationView.debugOptions = [.showWorldOrigin]
-        sceneLocationView.showsStatistics = true
-        sceneLocationView.showAxesNode = false // don't need ARCL's axesNode because we're showing SceneKit's
-        sceneLocationView.autoenablesDefaultLighting = true
-
         sceneXYZLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: UIFont.Weight.medium)
         estLatLonLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: UIFont.Weight.medium)
         estXYZLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: UIFont.Weight.medium)
         estHeadingLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 20, weight: UIFont.Weight.medium)
 
     }
+
+    func rebuildSceneLocationView() {
+        sceneLocationView?.removeFromSuperview()
+        let newSceneLocationView = SceneLocationView.init(trackingType: arTrackingType, frame: contentView.frame, options: nil)
+        newSceneLocationView.translatesAutoresizingMaskIntoConstraints = false
+        newSceneLocationView.arViewDelegate = self
+        newSceneLocationView.locationEstimateMethod = locationEstimateMethod
+
+        newSceneLocationView.debugOptions = [.showWorldOrigin]
+        newSceneLocationView.showsStatistics = true
+        newSceneLocationView.showAxesNode = false // don't need ARCL's axesNode because we're showing SceneKit's
+        newSceneLocationView.autoenablesDefaultLighting = true
+        contentView.addSubview(newSceneLocationView)
+        sceneLocationView = newSceneLocationView
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        rebuildSceneLocationView()
         switch demonstration {
         case .stackOfNodes:
             addStackOfNodes()
@@ -78,18 +81,18 @@ class ARCLViewController: UIViewController {
         case .spriteKitNodes:
             addSpriteKitNodes()
         }
-        sceneLocationView.run()
+        sceneLocationView?.run()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        sceneLocationView.removeAllNodes()
-        sceneLocationView.pause()
+        sceneLocationView?.removeAllNodes()
+        sceneLocationView?.pause()
         super.viewWillDisappear(animated)
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        sceneLocationView.frame = contentView.bounds
+        sceneLocationView?.frame = contentView.bounds
     }
 
     @IBAction func doneTapped(_ sender: UIButton) {
@@ -101,16 +104,16 @@ class ARCLViewController: UIViewController {
     /// Add a stack of annotation nodes, 100 meters north of location, at altitudes between 0 and 100 meters.
     /// Also add a location node at the same place as each annotation node.
     func addStackOfNodes() {
-        // 1. Don't try to add the models to the scene until we have a current location
-        guard sceneLocationView.sceneLocationManager.currentLocation != nil else {
+        guard let currentLocation = sceneLocationView?.sceneLocationManager.currentLocation else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
                 self?.addStackOfNodes()
             }
             return
         }
 
-        let referenceLocation = CLLocation(coordinate:sceneLocationView.sceneLocationManager.currentLocation!.coordinate,
-                                           altitude: sceneLocationView.sceneLocationManager.currentLocation!.altitude)
+        // Copy the current location because it's a reference type. Necessary?
+        let referenceLocation = CLLocation(coordinate:currentLocation.coordinate,
+                                           altitude: currentLocation.altitude)
         var colorIndex = 0
         for altitude in [0.0, 20, 60, 100] {
             let color = colors[colorIndex % colors.count]
@@ -122,7 +125,7 @@ class ARCLViewController: UIViewController {
             node.scalingScheme = scalingScheme
             // FIXME: We should be able to do this, or do it internally in addLocationNode...() calls, to match SceneLocationView's setting.
             // node.locationEstimateMethod = locationEstimateMethod
-            sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: node)
+            sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: node)
 
             // Now create a plain old geometry node at the same location.
             let cubeNode = LocationNode(location: location)
@@ -133,14 +136,14 @@ class ARCLViewController: UIViewController {
             cubeNode.scalingScheme = scalingScheme
             // FIXME: We should be able to do this, or do it internally in addLocationNode...() calls, to match SceneLocationView's setting.
             // node.locationEstimateMethod = locationEstimateMethod
-            sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: cubeNode)
+            sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: cubeNode)
         }
         // Put a label at the origin.
         let label = UILabel.largeLabel(text: "Starting point")
         label.backgroundColor = .systemTeal
         let startingPoint = CLLocation(coordinate: referenceLocation.coordinate, altitude: referenceLocation.altitude)
         let originLabelNode = LocationAnnotationNode(location: startingPoint, view: label)
-        sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: originLabelNode)
+        sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: originLabelNode)
     }
 
     /// Create a `LocationAnnotationNode` at `altitude` meters above the given location, labeled with the altitude.
@@ -152,16 +155,16 @@ class ARCLViewController: UIViewController {
 
     /// Add an array of SNCSphere nodes centered on your current location.
     func addFieldOfNodes() {
-        // Don't try to add the nodes to the scene until we have a current location
-        guard sceneLocationView.sceneLocationManager.currentLocation != nil else {
+        guard let currentLocation = sceneLocationView?.sceneLocationManager.currentLocation else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
                 self?.addFieldOfNodes()
             }
             return
         }
 
-        let referenceLocation = CLLocation(coordinate:sceneLocationView.sceneLocationManager.currentLocation!.coordinate,
-                                           altitude: sceneLocationView.sceneLocationManager.currentLocation!.altitude)
+        // Copy the current location because it's a reference type. Necessary?
+        let referenceLocation = CLLocation(coordinate:currentLocation.coordinate,
+                                           altitude: currentLocation.altitude)
         let rotateForeverAction = SCNAction.repeatForever(SCNAction.rotate(by: .pi, around: SCNVector3(1, 0, 0), duration: 3))
         var colorIndex = 0
         for northStep in -5...5 {
@@ -176,23 +179,23 @@ class ARCLViewController: UIViewController {
                 torusNode.runAction(rotateForeverAction)
                 locationNode.addChildNode(torusNode)
                 locationNode.scalingScheme = scalingScheme
-                sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: locationNode)
+                sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: locationNode)
             }
         }
     }
 
     /// Add an array of annotation nodes centered on your current location. Labels are static.
     func addFieldOfLabels() {
-        // Don't try to add the nodes to the scene until we have a current location
-        guard sceneLocationView.sceneLocationManager.currentLocation != nil else {
+        guard let currentLocation = sceneLocationView?.sceneLocationManager.currentLocation else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
                 self?.addFieldOfLabels()
             }
             return
         }
 
-        let referenceLocation = CLLocation(coordinate:sceneLocationView.sceneLocationManager.currentLocation!.coordinate,
-                                           altitude: sceneLocationView.sceneLocationManager.currentLocation!.altitude)
+        // Copy the current location because it's a reference type. Necessary?
+        let referenceLocation = CLLocation(coordinate:currentLocation.coordinate,
+                                           altitude: currentLocation.altitude)
         var colorIndex = 0
         for northStep in -5...5 {
             let color = colors[colorIndex % colors.count]
@@ -207,23 +210,23 @@ class ARCLViewController: UIViewController {
                 let annoNode = LocationAnnotationNode(location: location, view: label)
                 annoNode.annotationHeightAdjustmentFactor = annotationHeightAdjustmentFactor
                 annoNode.scalingScheme = scalingScheme
-                sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: annoNode)
+                sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: annoNode)
             }
         }
     }
 
     /// Add an array of annotation nodes showing radius, centered on your current location. Radius values are static.
     func addFieldOfRadii() {
-        // Don't try to add the nodes to the scene until we have a current location
-        guard sceneLocationView.sceneLocationManager.currentLocation != nil else {
+        guard let currentLocation = sceneLocationView?.sceneLocationManager.currentLocation else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
                 self?.addFieldOfRadii()
             }
             return
         }
 
-        let referenceLocation = CLLocation(coordinate:sceneLocationView.sceneLocationManager.currentLocation!.coordinate,
-                                           altitude: sceneLocationView.sceneLocationManager.currentLocation!.altitude)
+        // Copy the current location because it's a reference type. Necessary?
+        let referenceLocation = CLLocation(coordinate:currentLocation.coordinate,
+                                           altitude: currentLocation.altitude)
         var colorIndex = 0
         for northStep in -5...5 {
             for eastStep in -5...5 {
@@ -237,7 +240,7 @@ class ARCLViewController: UIViewController {
                 let annoNode = LocationAnnotationNode(location: location, view: label)
                 annoNode.annotationHeightAdjustmentFactor = annotationHeightAdjustmentFactor
                 annoNode.scalingScheme = scalingScheme
-                sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: annoNode)
+                sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: annoNode)
             }
         }
     }
@@ -265,7 +268,7 @@ extension ARCLViewController: ARSCNViewDelegate {
     
     public func renderer(_ renderer: SCNSceneRenderer, didRenderScene scene: SCNScene, atTime time: TimeInterval) {
         DispatchQueue.main.async {
-            if let position = self.sceneLocationView.currentScenePosition {
+            if let position = self.sceneLocationView?.currentScenePosition {
                 let xString = String(format: "%+03.2f", position.x)
                 let yString = String(format: "%+03.2f", position.y)
                 let zString = String(format: "%+03.2f", position.z)
@@ -274,7 +277,7 @@ extension ARCLViewController: ARSCNViewDelegate {
             else {
                 self.sceneXYZLabel.text = ""
             }
-            if let locationEstimate = self.sceneLocationView.sceneLocationManager.bestLocationEstimate {
+            if let locationEstimate = self.sceneLocationView?.sceneLocationManager.bestLocationEstimate {
                 let position = locationEstimate.position
                 let xString = String(format: "%+03.2f", position.x)
                 let yString = String(format: "%+03.2f", position.y)
@@ -290,8 +293,8 @@ extension ARCLViewController: ARSCNViewDelegate {
                 self.estXYZLabel.text = ""
                 self.estHeadingLabel.text = ""
             }
-            if let heading = self.sceneLocationView.sceneLocationManager.locationManager.heading,
-                let headingAccuracy = self.sceneLocationView.sceneLocationManager.locationManager.headingAccuracy {
+            if let heading = self.sceneLocationView?.sceneLocationManager.locationManager.heading,
+                let headingAccuracy = self.sceneLocationView?.sceneLocationManager.locationManager.headingAccuracy {
                 let headingString = String(format: "%4.1f", heading)
                 let headingAccuracyString = String(format: "%3.1f", headingAccuracy)
                 self.estHeadingLabel.text = "LM heading \(headingString)° +/- \(headingAccuracyString)°"
