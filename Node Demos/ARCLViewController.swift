@@ -13,6 +13,7 @@ import SceneKit
 import UIKit
 
 enum Demonstration {
+    case justOneNode
     case stackOfNodes
     case fieldOfNodes
     case fieldOfLabels
@@ -76,6 +77,8 @@ class ARCLViewController: UIViewController {
         super.viewDidAppear(animated)
         rebuildSceneLocationView()
         switch demonstration {
+        case .justOneNode:
+            addJustOneNode()
         case .stackOfNodes:
             addStackOfNodes()
         case .fieldOfNodes:
@@ -117,6 +120,28 @@ class ARCLViewController: UIViewController {
         // node.locationEstimateMethod = locationEstimateMethod
         node.continuallyAdjustNodePositionWhenWithinRange = continuallyAdjustNodePositionWhenWithinRange
         node.continuallyUpdatePositionAndScale = continuallyUpdatePositionAndScale
+    }
+
+    /// Add one node, at our current location.
+    func addJustOneNode() {
+        guard let currentLocation = sceneLocationView?.sceneLocationManager.currentLocation else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.addJustOneNode()
+            }
+            return
+        }
+
+        // Copy the current location because it's a reference type. Necessary?
+        let referenceLocation = CLLocation(coordinate:currentLocation.coordinate,
+                                           altitude: currentLocation.altitude)
+        let startingPoint = CLLocation(coordinate: referenceLocation.coordinate, altitude: referenceLocation.altitude)
+        let originNode = LocationNode(location: startingPoint)
+        let pyramid: SCNPyramid = SCNPyramid(width: 2.0, height: 2.0, length: 2.0)
+        pyramid.firstMaterial?.diffuse.contents = UIColor.systemPink
+        let pyramidNode = SCNNode(geometry: pyramid)
+        originNode.addChildNode(pyramidNode)
+        addScenewideNodeSettings(originNode)
+        sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: originNode)
     }
 
     /// Add a stack of annotation nodes, 100 meters north of location, at altitudes between 0 and 100 meters.

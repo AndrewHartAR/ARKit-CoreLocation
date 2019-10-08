@@ -83,6 +83,10 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
 
     // MARK: - demo launch actions
 
+    @IBAction func showJustOneNode(_ sender: Any) {
+        performSegue(withIdentifier: "justOneNode", sender: sender)
+    }
+
     @IBAction func showStackedNodes(_ sender: Any) {
         performSegue(withIdentifier: "stackOfNodes", sender: sender)
     }
@@ -112,7 +116,10 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
             destination.continuallyUpdatePositionAndScale = continuallyUpdatePositionAndScale
             destination.continuallyAdjustNodePositionWhenWithinRange = continuallyAdjustNodePositionWhenWithinRange
             
-            if segue.identifier == "stackOfNodes" {
+            if segue.identifier == "justOneNode" {
+                destination.demonstration = .justOneNode
+            }
+            else if segue.identifier == "stackOfNodes" {
                 destination.demonstration = .stackOfNodes
             }
             else if segue.identifier == "fieldOfNodes" {

@@ -14,7 +14,7 @@ import UIKit
 
 extension ARCLViewController {
 
-    /// Some experiments with getting SpriteKit scenes visible in ARCL.
+    /// Some experiments with getting SpriteKit scenes visible in ARCL. Work in progress.
     func addSpriteKitNodes() {
         guard let currentLocation = sceneLocationView?.sceneLocationManager.currentLocation else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in

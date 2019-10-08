@@ -1,5 +1,6 @@
 # Changelog
 - 1.2.2
+   - [PR #2nn -Add a demo/test program to exercise several of the scene and node options](https://github.com/ProjectDent/ARKit-CoreLocation/pull/2nn)
    - [PR #229 - Expose an adjustment factor for label annotation height](https://github.com/ProjectDent/ARKit-CoreLocation/pull/229)
    - [PR #220 - Render distant nodes behind closer nodes ](https://github.com/ProjectDent/ARKit-CoreLocation/pull/220)
 - 1.2.1
