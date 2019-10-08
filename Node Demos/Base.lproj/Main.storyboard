@@ -421,11 +421,11 @@
                         <outletCollection property="scalingParameterCells" destination="nYI-lv-gXX" collectionClass="NSMutableArray" id="uqM-1m-nrg"/>
                         <outletCollection property="scalingParameterCells" destination="aRc-f2-14f" collectionClass="NSMutableArray" id="kcD-VP-ebu"/>
                         <outletCollection property="scalingParameterCells" destination="tZ1-Gs-tyh" collectionClass="NSMutableArray" id="TEu-58-FUP"/>
-                        <segue destination="N1T-Ak-Td3" kind="showDetail" identifier="stackOfNodes" id="qL5-Tm-kSJ"/>
-                        <segue destination="N1T-Ak-Td3" kind="showDetail" identifier="fieldOfNodes" id="POT-Rd-Qhp"/>
-                        <segue destination="N1T-Ak-Td3" kind="showDetail" identifier="fieldOfLabels" id="zIc-k3-iVc"/>
-                        <segue destination="N1T-Ak-Td3" kind="showDetail" identifier="fieldOfRadii" id="tPT-5M-czJ"/>
-                        <segue destination="N1T-Ak-Td3" kind="showDetail" identifier="spriteKitNodes" id="NYQ-RW-ucJ"/>
+                        <segue destination="N1T-Ak-Td3" kind="presentation" identifier="stackOfNodes" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="qL5-Tm-kSJ"/>
+                        <segue destination="N1T-Ak-Td3" kind="presentation" identifier="fieldOfNodes" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="POT-Rd-Qhp"/>
+                        <segue destination="N1T-Ak-Td3" kind="presentation" identifier="fieldOfLabels" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="zIc-k3-iVc"/>
+                        <segue destination="N1T-Ak-Td3" kind="presentation" identifier="fieldOfRadii" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="tPT-5M-czJ"/>
+                        <segue destination="N1T-Ak-Td3" kind="presentation" identifier="spriteKitNodes" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="NYQ-RW-ucJ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hxu-a0-Hrj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -437,12 +437,11 @@
             <objects>
                 <viewController id="N1T-Ak-Td3" customClass="ARCLViewController" customModule="Node_Demos" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8pW-34-0ii">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2qf-cv-vkj">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
-                                <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2pz-fq-SnP">
                                 <rect key="frame" x="307" y="8" width="44" height="30"/>
@@ -456,8 +455,8 @@
                                     <action selector="doneTapped:" destination="N1T-Ak-Td3" eventType="touchUpInside" id="Bjq-7U-xwF"/>
                                 </connections>
                             </button>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gEB-ed-PNB">
-                                <rect key="frame" x="26" y="269" width="323" height="128"/>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gEB-ed-PNB">
+                                <rect key="frame" x="16" y="507" width="323" height="128"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="1hH-KW-dwf">
                                     <rect key="frame" x="0.0" y="0.0" width="323" height="128"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -518,8 +517,10 @@
                         <constraints>
                             <constraint firstItem="2qf-cv-vkj" firstAttribute="top" secondItem="JpF-Re-Tkh" secondAttribute="top" id="5ad-Gf-0Kd"/>
                             <constraint firstItem="2qf-cv-vkj" firstAttribute="trailing" secondItem="JpF-Re-Tkh" secondAttribute="trailing" id="EpG-io-2qZ"/>
+                            <constraint firstItem="gEB-ed-PNB" firstAttribute="leading" secondItem="JpF-Re-Tkh" secondAttribute="leading" constant="16" id="Y8Q-04-obP"/>
                             <constraint firstItem="JpF-Re-Tkh" firstAttribute="trailing" secondItem="2pz-fq-SnP" secondAttribute="trailing" constant="24" id="fbp-jt-lTE"/>
                             <constraint firstItem="JpF-Re-Tkh" firstAttribute="bottom" secondItem="2qf-cv-vkj" secondAttribute="bottom" id="o0Y-Rf-zx2"/>
+                            <constraint firstItem="JpF-Re-Tkh" firstAttribute="bottom" secondItem="gEB-ed-PNB" secondAttribute="bottom" constant="32" id="oKV-PO-8Lk"/>
                             <constraint firstItem="2pz-fq-SnP" firstAttribute="top" secondItem="JpF-Re-Tkh" secondAttribute="top" constant="8" id="sds-ds-n0z"/>
                             <constraint firstItem="2qf-cv-vkj" firstAttribute="leading" secondItem="JpF-Re-Tkh" secondAttribute="leading" id="wJu-dS-41L"/>
                         </constraints>
@@ -536,10 +537,10 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wnG-ze-sS1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="805.79710144927537" y="128.57142857142856"/>
+            <point key="canvasLocation" x="466" y="230"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="zIc-k3-iVc"/>
+        <segue reference="NYQ-RW-ucJ"/>
     </inferredMetricsTieBreakers>
 </document>
