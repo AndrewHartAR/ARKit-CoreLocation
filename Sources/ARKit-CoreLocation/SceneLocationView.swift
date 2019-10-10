@@ -13,6 +13,13 @@ import MapKit
 
 //Should conform to delegate here, add in future commit
 @available(iOS 11.0, *)
+
+/// `SceneLocationView` is the `ARSCNView` subclass used to render an ARCL scene.
+///
+/// Note that all of the standard SceneKit/ARKit delegates and delegate methods are used
+/// internally by ARCL. The delegate functions declared in `ARSCNViewDelegate`, `ARSessionObserver`, and  `ARSCNView` are
+/// shadowed by `ARSCNViewDelegate` and invoked on the `SceneLocationView`'s `arDelegate`. If you need to receive
+/// any of these callbacks, implement them on your `arDelegate`.
 open class SceneLocationView: ARSCNView {
     /// The limit to the scene, in terms of what data is considered reasonably accurate.
     /// Measured in meters.
@@ -225,7 +232,9 @@ public extension SceneLocationView {
 
     // MARK: LocationNodes
 
-    /// upon being added, a node's location, locationConfirmed and position may be modified and should not be changed externally.
+    /// Upon being added, a node's location, locationConfirmed and position may be modified and should not be changed externally.
+    /// Silently fails and returns without adding the node to the scene if any of `currentScenePosition`,
+    /// `sceneLocationManager.currentLocation`, or `sceneNode` is `nil`.
     func addLocationNodeForCurrentPosition(locationNode: LocationNode) {
         guard let currentPosition = currentScenePosition,
             let currentLocation = sceneLocationManager.currentLocation,
@@ -238,13 +247,16 @@ public extension SceneLocationView {
         sceneNode.addChildNode(locationNode)
     }
 
+    /// Each node's addition to the scene can silently fail; See `addLocationNodeForCurrentPosition(locationNode:)`.
+    ///
+    /// Why would we want to add multiple nodes at the current position?
     func addLocationNodesForCurrentPosition(locationNodes: [LocationNode]) {
         locationNodes.forEach { addLocationNodeForCurrentPosition(locationNode: $0) }
     }
 
-    /// location not being nil, and locationConfirmed being true are required
-    /// Upon being added, a node's position will be modified and should not be changed externally.
-    /// location will not be modified, but taken as accurate.
+    /// Silently fails and returns without adding the node unless`location` is not `nil` and `locationConfirmed` is `true`.
+    /// Upon being added, a node's position will be modified internally and should not be changed externally.
+    /// `location` will not be modified, but taken as accurate.
     func addLocationNodeWithConfirmedLocation(locationNode: LocationNode) {
         if locationNode.location == nil || locationNode.locationConfirmed == false {
             return
@@ -283,6 +295,7 @@ public extension SceneLocationView {
         }
     }
 
+    /// Each node's addition to the scene can silently fail; See `addLocationNodeWithConfirmedLocation(locationNode:)`.
     func addLocationNodesWithConfirmedLocation(locationNodes: [LocationNode]) {
         locationNodes.forEach { addLocationNodeWithConfirmedLocation(locationNode: $0) }
     }

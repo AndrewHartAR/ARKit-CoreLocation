@@ -21,7 +21,7 @@
 		49A3FBE51F09988100AA59C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49A3FBE41F09988100AA59C8 /* Assets.xcassets */; };
 		49A3FBE81F09988100AA59C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 49A3FBE61F09988100AA59C8 /* LaunchScreen.storyboard */; };
 		580A603392EEF4589D68F428 /* Pods_ARKit_CoreLocation_ARCLTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE4378FAA43D764F4F6D0513 /* Pods_ARKit_CoreLocation_ARCLTests.framework */; };
-		932EF23220BE7E6E0052210C /* ARCLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932EF23120BE7E6E0052210C /* ARCLTests.swift */; };
+		932EF23220BE7E6E0052210C /* CLLocationExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932EF23120BE7E6E0052210C /* CLLocationExtensionsTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,7 +55,7 @@
 		6C10523EF85AA6B7CDF962AD /* Pods_ARKit_CoreLocation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ARKit_CoreLocation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C31ACA439BC114F28F96BDD /* Pods-ARKit+CoreLocation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARKit+CoreLocation.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ARKit+CoreLocation/Pods-ARKit+CoreLocation.debug.xcconfig"; sourceTree = "<group>"; };
 		932EF22A20BE7E6E0052210C /* ARCLTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ARCLTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		932EF23120BE7E6E0052210C /* ARCLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARCLTests.swift; sourceTree = "<group>"; };
+		932EF23120BE7E6E0052210C /* CLLocationExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocationExtensionsTests.swift; sourceTree = "<group>"; };
 		932EF23320BE7E6E0052210C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		987CF5558E9B786105AD6834 /* Pods-ARKit+CoreLocation-ARCLTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARKit+CoreLocation-ARCLTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ARKit+CoreLocation-ARCLTests/Pods-ARKit+CoreLocation-ARCLTests.release.xcconfig"; sourceTree = "<group>"; };
 		994C280456570735FF51D68E /* Pods-ARKit+CoreLocation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARKit+CoreLocation.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ARKit+CoreLocation/Pods-ARKit+CoreLocation.debug.xcconfig"; sourceTree = "<group>"; };
@@ -152,7 +152,7 @@
 		932EF23020BE7E6E0052210C /* ARCLTests */ = {
 			isa = PBXGroup;
 			children = (
-				932EF23120BE7E6E0052210C /* ARCLTests.swift */,
+				932EF23120BE7E6E0052210C /* CLLocationExtensionsTests.swift */,
 				932EF23320BE7E6E0052210C /* Info.plist */,
 			);
 			path = ARCLTests;
@@ -389,7 +389,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				932EF23220BE7E6E0052210C /* ARCLTests.swift in Sources */,
+				932EF23220BE7E6E0052210C /* CLLocationExtensionsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
