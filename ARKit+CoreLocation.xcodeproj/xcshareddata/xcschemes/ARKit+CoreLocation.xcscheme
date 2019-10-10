@@ -47,6 +47,53 @@
                BlueprintName = "ARCLTests"
                ReferencedContainer = "container:ARKit+CoreLocation.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testCoordinateWithBearingFarNorth10000()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testCoordinateWithBearingFarNorth500()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testCoordinateWithBearingFarNorth50000()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testCoordinateWithBearingLowLatitude10000()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testCoordinateWithBearingLowLatitude500()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testCoordinateWithBearingLowLatitude50000()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testCoordinateWithBearingMidLatitude10000()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testCoordinateWithBearingMidLatitude500()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testCoordinateWithBearingMidLatitude50000()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testCoordinateWithBearingSouthernHemisphere10000()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testCoordinateWithBearingSouthernHemisphere500()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testCoordinateWithBearingSouthernHemisphere50000()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testTranslationFarNorth10000()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testTranslationFarNorth50000()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testTranslationMidLatitude500Old()">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>
