@@ -151,7 +151,11 @@ There are two ways to add a location node to a scene - using `addLocationNodeWit
 
 So that’s it. If you set the frame of your sceneLocationView, you should now see the pin hovering above Canary Wharf.
 
-In order to get a notification when a node is touched in the `sceneLocationView`, you need to conform to `LNTouchDelegate` in the ViewController class. The `locationNodeTouched(node: AnnotationNode)` gives you access to node that was touched on the screen. `AnnotationNode` is a subclass of SCNNode with two extra properties: `image: UIImage?` and `view: UIView?`. Either of these properties will be filled in based on how the `LocationAnnotationNode` was initialized (using the constructor that takes UIImage or UIView).
+In order to get a notification when a node is touched in the `sceneLocationView`, you need to conform to `LNTouchDelegate` in the ViewController class. 
+
+The `annotationNodeTouched(node: AnnotationNode)` gives you access to node that was touched on the screen. `AnnotationNode` is a subclass of SCNNode with two extra properties: `image: UIImage?` and `view: UIView?`. Either of these properties will be filled in based on how the `LocationAnnotationNode` was initialized (using the constructor that takes UIImage or UIView).
+
+The `locationNodeTouched(node: LocationNode)` gives you instead access to the nodes created from a `PolyNode` (e.g. the rendered directions of a `MKRoute`).
 ```swift
 class ViewController: UIViewController, LNTouchDelegate {
 
@@ -162,7 +166,7 @@ class ViewController: UIViewController, LNTouchDelegate {
         //...
     }
 
-    func locationNodeTouched(node: AnnotationNode) {
+    func annotationNodeTouched(node: AnnotationNode) {
         // Do stuffs with the node instance
 
         // node could have either node.view or node.image
@@ -175,6 +179,14 @@ class ViewController: UIViewController, LNTouchDelegate {
             // ...
         }
     }
+
+    func locationNodeTouched(node: LocationNode) {
+        guard let name = node.tag else { return }
+        guard let selectedNode = node.childNodes.first(where: { $0.geometry is SCNBox }) else { return }
+
+        // Interact with the selected node
+    }
+
 }
 ```
 ## Additional features
