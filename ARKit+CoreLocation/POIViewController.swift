@@ -17,6 +17,7 @@ import UIKit
 class POIViewController: UIViewController {
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var infoLabel: UILabel!
+    @IBOutlet weak var nodePositionLabel: UILabel!
 
     @IBOutlet var contentView: UIView!
     let sceneLocationView = SceneLocationView()
@@ -78,6 +79,7 @@ class POIViewController: UIViewController {
         sceneLocationView.locationNodeTouchDelegate = self
 //        sceneLocationView.delegate = self // Causes an assertionFailure - use the `arViewDelegate` instead:
         sceneLocationView.arViewDelegate = self
+        sceneLocationView.locationNodeTouchDelegate = self
 
         // Now add the route or location annotations as appropriate
         addSceneModels()
@@ -147,8 +149,26 @@ class POIViewController: UIViewController {
                 let annotationNode = LocationAnnotationNode(location: nil, image: image)
                 annotationNode.scaleRelativeToDistance = false
                 annotationNode.scalingScheme = .normal
-                sceneLocationView.addLocationNodeForCurrentPosition(locationNode: annotationNode)
+                DispatchQueue.main.async {
+                    // If we're using the touch delegate, adding a new node in the touch handler sometimes causes a freeze.
+                    // So defer to next pass.
+                    self.sceneLocationView.addLocationNodeForCurrentPosition(locationNode: annotationNode)
+                }
             }
+        }
+    }
+}
+
+// MARK: - LNTouchDelegate
+
+@available(iOS 11.0, *)
+extension POIViewController: LNTouchDelegate {
+
+    func locationNodeTouched(node: AnnotationNode) {
+        if let parent = node.parent as? LocationNode {
+            let location = sceneLocationView.locationOfLocationNode(parent)
+            let locText = "Latitude: \(location.coordinate.latitude)° Longitude: \(location.coordinate.longitude)° \nAltitude: \(location.altitude) m"
+            nodePositionLabel.text = locText
         }
     }
 }

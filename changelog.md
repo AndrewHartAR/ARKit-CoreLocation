@@ -1,5 +1,6 @@
 # Changelog
 - 1.2.2
+   - [PR #225 - Expose SceneLocationView.locationOfLocationNode ](https://github.com/ProjectDent/ARKit-CoreLocation/pull/225)
    - [PR #222 - Trigger viewWillDisappear/viewWillAppear calls when app backgrounded/foregrounded](https://github.com/ProjectDent/ARKit-CoreLocation/pull/222)
    - [PR #220 - Render distant nodes behind closer nodes ](https://github.com/ProjectDent/ARKit-CoreLocation/pull/220)
     - [PR #213 - Allows specifying CALayer as POI view](https://github.com/ProjectDent/ARKit-CoreLocation/pull/213)
