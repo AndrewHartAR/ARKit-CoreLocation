@@ -15,7 +15,8 @@ public struct LocationTranslation {
     public var longitudeTranslation: Double
     public var altitudeTranslation: Double
 
-    // needed because the "free" init function is marked fileprivate by default, so LocationTranslation isn't available to client apps.
+    // needed because the "free" init function is marked fileprivate by default, so LocationTranslation isn't
+    // available to client apps.
     public init(latitudeTranslation: Double, longitudeTranslation: Double, altitudeTranslation: Double) {
         self.latitudeTranslation = latitudeTranslation
         self.longitudeTranslation = longitudeTranslation
@@ -51,7 +52,7 @@ public extension CLLocation {
                                     altitudeTranslation: altitudeTranslation)
     }
 
-    public func translatedLocation(with translation: LocationTranslation) -> CLLocation {
+    func translatedLocation(with translation: LocationTranslation) -> CLLocation {
         let latitudeCoordinate = self.coordinate.coordinateWithBearing(bearing: 0,
                                                                        distanceMeters: translation.latitudeTranslation)
 
