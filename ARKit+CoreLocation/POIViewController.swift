@@ -159,20 +159,6 @@ class POIViewController: UIViewController {
     }
 }
 
-// MARK: - LNTouchDelegate
-
-@available(iOS 11.0, *)
-extension POIViewController: LNTouchDelegate {
-
-    func locationNodeTouched(node: AnnotationNode) {
-        if let parent = node.parent as? LocationNode {
-            let location = sceneLocationView.locationOfLocationNode(parent)
-            let locText = "Latitude: \(location.coordinate.latitude)° Longitude: \(location.coordinate.longitude)° \nAltitude: \(location.altitude) m"
-            nodePositionLabel.text = locText
-        }
-    }
-}
-
 // MARK: - MKMapViewDelegate
 
 @available(iOS 11.0, *)
