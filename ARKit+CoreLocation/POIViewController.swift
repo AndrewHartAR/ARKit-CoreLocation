@@ -56,6 +56,13 @@ class POIViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        NotificationCenter.default.addObserver(forName: UIApplication.willResignActiveNotification, object: nil, queue: nil) { _ in
+            self.pauseAnimation()
+        }
+        NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil) { _ in
+            self.restartAnimation()
+        }
+
         updateInfoLabelTimer = Timer.scheduledTimer(timeInterval: 0.1,
                                                     target: self,
                                                     selector: #selector(POIViewController.updateInfoLabel),
@@ -69,7 +76,7 @@ class POIViewController: UIViewController {
 
         sceneLocationView.showAxesNode = true
         sceneLocationView.showFeaturePoints = displayDebugging
-
+        sceneLocationView.locationNodeTouchDelegate = self
 //        sceneLocationView.delegate = self // Causes an assertionFailure - use the `arViewDelegate` instead:
         sceneLocationView.arViewDelegate = self
         sceneLocationView.locationNodeTouchDelegate = self
@@ -97,16 +104,23 @@ class POIViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
-        print("run")
-        sceneLocationView.run()
+        restartAnimation()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
+        print(#function)
+        pauseAnimation()
         super.viewWillDisappear(animated)
+    }
 
+    func pauseAnimation() {
         print("pause")
-        // Pause the view's session
         sceneLocationView.pause()
+    }
+
+    func restartAnimation() {
+        print("run")
+        sceneLocationView.run()
     }
 
     override func viewDidLayoutSubviews() {
@@ -233,6 +247,11 @@ extension POIViewController {
                 sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: $0)
             }
         }
+
+        // There are many different ways to add lighting to a scene, but even this mechanism (the absolute simplest)
+        // keeps 3D objects fron looking flat
+        sceneLocationView.autoenablesDefaultLighting = true
+
     }
 
     /// Builds the location annotations for a few random objects, scattered across the country
@@ -344,6 +363,20 @@ extension POIViewController {
         label.textAlignment = .center
         return LocationAnnotationNode(location: location, view: label)
     }
+}
+
+// MARK: - LNTouchDelegate
+@available(iOS 11.0, *)
+extension POIViewController: LNTouchDelegate {
+
+    func annotationNodeTouched(node: AnnotationNode) {
+        print("AnnotationNode touched \(node)")
+    }
+
+    func locationNodeTouched(node: LocationNode) {
+        print("Location node touched - tag: \(node.tag ?? "")")
+    }
+
 }
 
 // MARK: - Helpers

@@ -272,10 +272,14 @@ public extension SceneLocationView {
         let coordinates = sender.location(in: touchedView)
         let hitTest = touchedView.hitTest(coordinates)
 
-        if !hitTest.isEmpty,
-            let firstHitTest = hitTest.first,
-            let touchedNode = firstHitTest.node as? AnnotationNode {
-            self.locationNodeTouchDelegate?.locationNodeTouched(node: touchedNode)
+        guard let firstHitTest = hitTest.first else {
+            return
+        }
+
+        if let touchedNode = firstHitTest.node as? AnnotationNode {
+            self.locationNodeTouchDelegate?.annotationNodeTouched(node: touchedNode)
+        } else if let locationNode = firstHitTest.node.parent as? LocationNode {
+            self.locationNodeTouchDelegate?.locationNodeTouched(node: locationNode)
         }
     }
 
@@ -331,14 +335,32 @@ public extension SceneLocationView {
     /// Note: You can provide your own SCNBox prototype to base the direction nodes from.
     ///
     /// - Parameters:
-    ///   - routes: The MKRoute of directions.
+    ///   - routes: The MKRoute of directions
     ///   - boxBuilder: A block that will customize how a box is built.
     func addRoutes(routes: [MKRoute], boxBuilder: BoxBuilder? = nil) {
+        addRoutes(polylines: routes.map { AttributedType(type: $0.polyline,
+                                                         attribute: $0.name) },
+                  boxBuilder: boxBuilder)
+    }
+
+    /// Adds polylines to the scene and lets you specify the geometry prototype for the box.
+    /// Note: You can provide your own SCNBox prototype to base the direction nodes from.
+    ///
+    /// - Parameters:
+    ///   - polylines: The list of attributed MKPolyline to rendered
+    ///   - Δaltitude: difference between box and current user altitude
+    ///   - boxBuilder: A block that will customize how a box is built.
+    func addRoutes(polylines: [AttributedType<MKPolyline>],
+                   Δaltitude: CLLocationDistance = -2.0,
+                   boxBuilder: BoxBuilder? = nil) {
         guard let altitude = sceneLocationManager.currentLocation?.altitude else {
             return assertionFailure("we don't have an elevation")
         }
-        let polyNodes = routes.map {
-            PolylineNode(polyline: $0.polyline, altitude: altitude - 2.0, boxBuilder: boxBuilder)
+        let polyNodes = polylines.map {
+            PolylineNode(polyline: $0.type,
+                         altitude: altitude + Δaltitude,
+                         tag: $0.attribute,
+                         boxBuilder: boxBuilder)
         }
 
         polylineNodes.append(contentsOf: polyNodes)
