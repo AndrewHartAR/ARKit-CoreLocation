@@ -15,11 +15,13 @@ import CoreLocation
 open class AnnotationNode: SCNNode {
     public var view: UIView?
     public var image: UIImage?
+    public var layer: CALayer?
 
-    public init(view: UIView?, image: UIImage?) {
+    public init(view: UIView?, image: UIImage?, layer: CALayer? = nil) {
         super.init()
         self.view = view
         self.image = image
+        self.layer = layer
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -81,8 +83,9 @@ open class LocationNode: SCNNode {
     /// The scheme to use for scaling
     public var scalingScheme: ScalingScheme = .normal
 
-    public init(location: CLLocation?) {
+    public init(location: CLLocation?, tag: String? = nil) {
         self.location = location
+        self.tag = tag
         super.init()
     }
 
@@ -168,7 +171,7 @@ open class LocationNode: SCNNode {
 
         onCompletion()
     }
-	
+
     /// Converts distance from meters to SCNKit rendering order
     /// Constant multiplier eliminates flicker caused by slight distance variations
     /// Nodes with greater rendering orders are rendered last
