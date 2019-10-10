@@ -120,7 +120,8 @@ let image = UIImage(named: "pin")!
 let annotationNode = LocationAnnotationNode(location: location, image: image)
 ```
 
-`LocationAnnotationNode` can also be initialized using a UIView. This is a preferred method since the attributes of the UIView can be kept dynamic during the lifecycle of the application.
+`LocationAnnotationNode` can also be initialized using a UIView. Internally, the UIView is converted into UIImage, so you cannot update the content dynamically.
+However, this methods allows you to easily show complex layout as POI.
 
 ```swift
 let coordinate = CLLocationCoordinate2D(latitude: 51.504571, longitude: -0.019717)
@@ -130,6 +131,15 @@ let view = UIView() // or a custom UIView subclass
 let annotationNode = LocationAnnotationNode(location: location, view: view)
 ```
 
+It can also be initialized with CALayer. You can use this when you want to update the contents live.
+
+```swift
+let coordinate = CLLocationCoordinate2D(latitude: 51.504571, longitude: -0.019717)
+let location = CLLocation(coordinate: coordinate, altitude: 300)
+let layer = CALayer() // or a custom CALayer subclass
+
+let annotationNode = LocationAnnotationNode(location: location, layer: layer)
+```
 
 By default, the image you set should always appear at the size it was given, for example if you give a 100x100 image, it would appear at 100x100 on the screen. This means distant annotation nodes can always be seen at the same size as nearby ones. If you’d rather they scale relative to their distance, you can set LocationAnnotationNode’s `scaleRelativeToDistance` to `true`.
 
