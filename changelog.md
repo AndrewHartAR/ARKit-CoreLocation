@@ -2,6 +2,7 @@
 - 1.2.2
    - [PR #224 - Enable default lighting ](https://github.com/ProjectDent/ARKit-CoreLocation/pull/224)
    - [PR #220 - Render distant nodes behind closer nodes ](https://github.com/ProjectDent/ARKit-CoreLocation/pull/220)
+   - [PR #197 - Interact with location nodes](https://github.com/ProjectDent/ARKit-CoreLocation/pull/197)
 - 1.2.1
     - [PR #207 - Addresses Issue #136 - ARCL lacks CI ](https://github.com/ProjectDent/ARKit-CoreLocation/pull/207)
     - [PR #209 - Updates polyline position/scale when GPS location is updated](https://github.com/ProjectDent/ARKit-CoreLocation/pull/209)

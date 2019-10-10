@@ -81,8 +81,9 @@ open class LocationNode: SCNNode {
     /// The scheme to use for scaling
     public var scalingScheme: ScalingScheme = .normal
 
-    public init(location: CLLocation?) {
+    public init(location: CLLocation?, tag: String? = nil) {
         self.location = location
+        self.tag = tag
         super.init()
     }
 

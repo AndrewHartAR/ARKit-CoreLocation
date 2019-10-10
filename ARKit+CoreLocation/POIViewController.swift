@@ -68,7 +68,7 @@ class POIViewController: UIViewController {
 
         sceneLocationView.showAxesNode = true
         sceneLocationView.showFeaturePoints = displayDebugging
-
+        sceneLocationView.locationNodeTouchDelegate = self
 //        sceneLocationView.delegate = self // Causes an assertionFailure - use the `arViewDelegate` instead:
         sceneLocationView.arViewDelegate = self
 
@@ -329,6 +329,20 @@ extension POIViewController {
         label.textAlignment = .center
         return LocationAnnotationNode(location: location, view: label)
     }
+}
+
+// MARK: - LNTouchDelegate
+@available(iOS 11.0, *)
+extension POIViewController: LNTouchDelegate {
+
+    func annotationNodeTouched(node: AnnotationNode) {
+        print("AnnotationNode touched \(node)")
+    }
+
+    func locationNodeTouched(node: LocationNode) {
+        print("Location node touched - tag: \(node.tag ?? "")")
+    }
+
 }
 
 // MARK: - Helpers
