@@ -36,6 +36,16 @@ iOS 11 は Apple’s Developer websiteからダウンロードできます。
 
 [True North calibration のセクションを必ず読んでください。](#true-north-calibration)
 
+### Build設定:
+
+ ```bash
+swift build \
+        -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" \
+        -Xswiftc "-target" -Xswiftc "x86_64-apple-ios12.1-simulator"
+```
+
+### Swift Package Managerでの設定
+
 ### CocoaPodsでの設定
 1. Podfileに以下を追加:
 
@@ -96,7 +106,8 @@ let image = UIImage(named: "pin")!
 let annotationNode = LocationAnnotationNode(location: location, image: image)
 ```
 
-UIViewを使用して`LocationAnnotationNode`を初期化することも可能です。 推奨されている方法として、アプリケーションのライフサイクルを動的に保持することもできます。
+UIViewを使用して`LocationAnnotationNode`を初期化することも可能です。 
+内部では UIImage に変換されるため、内容を動的に更新することができませんが、UIImage を利用するよりも簡単に複雑なレイアウトを指定できます。
 
 ```swift
 let coordinate = CLLocationCoordinate2D(latitude: 51.504571, longitude: -0.019717)
@@ -104,6 +115,17 @@ let location = CLLocation(coordinate: coordinate, altitude: 300)
 let view = UIView() // or a custom UIView subclass
 
 let annotationNode = LocationAnnotationNode(location: location, view: view)
+```
+
+また、CALayer を使用して`LocationAnnotationNode`を初期化することも可能です。 
+コンテンツを動的に更新したいような場合に利用するといいでしょう。
+
+```swift
+let coordinate = CLLocationCoordinate2D(latitude: 51.504571, longitude: -0.019717)
+let location = CLLocation(coordinate: coordinate, altitude: 300)
+let layer = CALayer() // or a custom CALayer subclass
+
+let annotationNode = LocationAnnotationNode(location: location, layer: layer)
 ```
 
 デフォルトで、設置した画像は常に与えられたサイズで見えるべきです。例えば、100x100の画像を与えたなら、それはスクリーン上でも100x100で表示されるでしょう。

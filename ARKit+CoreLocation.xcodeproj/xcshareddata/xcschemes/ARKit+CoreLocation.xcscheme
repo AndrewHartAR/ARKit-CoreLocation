@@ -26,7 +26,17 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "49A3FBD71F09988100AA59C8"
+            BuildableName = "ARKit+CoreLocation.app"
+            BlueprintName = "ARKit+CoreLocation"
+            ReferencedContainer = "container:ARKit+CoreLocation.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -37,19 +47,55 @@
                BlueprintName = "ARCLTests"
                ReferencedContainer = "container:ARKit+CoreLocation.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testCoordinateWithBearingFarNorth10000()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testCoordinateWithBearingFarNorth500()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testCoordinateWithBearingFarNorth50000()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testCoordinateWithBearingLowLatitude10000()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testCoordinateWithBearingLowLatitude500()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testCoordinateWithBearingLowLatitude50000()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testCoordinateWithBearingMidLatitude10000()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testCoordinateWithBearingMidLatitude500()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testCoordinateWithBearingMidLatitude50000()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testCoordinateWithBearingSouthernHemisphere10000()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testCoordinateWithBearingSouthernHemisphere500()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testCoordinateWithBearingSouthernHemisphere50000()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testTranslationFarNorth10000()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testTranslationFarNorth50000()">
+               </Test>
+               <Test
+                  Identifier = "CLLocationExtensionsTests/testTranslationMidLatitude500Old()">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "49A3FBD71F09988100AA59C8"
-            BuildableName = "ARKit+CoreLocation.app"
-            BlueprintName = "ARKit+CoreLocation"
-            ReferencedContainer = "container:ARKit+CoreLocation.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -71,8 +117,6 @@
             ReferencedContainer = "container:ARKit+CoreLocation.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

@@ -15,11 +15,13 @@ import CoreLocation
 open class AnnotationNode: SCNNode {
     public var view: UIView?
     public var image: UIImage?
+    public var layer: CALayer?
 
-    public init(view: UIView?, image: UIImage?) {
+    public init(view: UIView?, image: UIImage?, layer: CALayer? = nil) {
         super.init()
         self.view = view
         self.image = image
+        self.layer = layer
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -33,6 +35,8 @@ open class AnnotationNode: SCNNode {
 /// layout purposes.  To adjust the scale and position of items within a node,
 /// you can add them to a child node and adjust them there
 open class LocationNode: SCNNode {
+    // FIXME: figure out why this is hardcoded and why it would ever be different from the scene's sitting?
+    /// This seems like it should be a bug? Why is it hardcoded? Why would it ever be different from the scene's setting?
     var locationEstimateMethod: LocationEstimateMethod = .mostRelevantEstimate
 
     /// Location can be changed and confirmed later by SceneLocationView.
@@ -51,7 +55,7 @@ open class LocationNode: SCNNode {
     }
 
     /// Whether a node's position should be adjusted on an ongoing basis
-    /// based on its' given location.
+    /// based on its given location.
     /// This only occurs when a node's location is within 100m of the user.
     /// Adjustment doesn't apply to nodes without a confirmed location.
     /// When this is set to false, the result is a smoother appearance.
@@ -81,8 +85,9 @@ open class LocationNode: SCNNode {
     /// The scheme to use for scaling
     public var scalingScheme: ScalingScheme = .normal
 
-    public init(location: CLLocation?) {
+    public init(location: CLLocation?, tag: String? = nil) {
         self.location = location
+        self.tag = tag
         super.init()
     }
 
@@ -147,6 +152,8 @@ open class LocationNode: SCNNode {
         return adjustedDistance
     }
 
+    /// See `LocationAnnotationNode`'s override of this function. Because it doesn't invoke `super`'s version, any changes
+    /// made in this file must be repeated in `LocationAnnotationNode`.
     func updatePositionAndScale(setup: Bool = false, scenePosition: SCNVector3?, locationNodeLocation nodeLocation: CLLocation,
                                 locationManager: SceneLocationManager, onCompletion: (() -> Void)) {
         guard let position = scenePosition, locationManager.currentLocation != nil else {
@@ -156,11 +163,23 @@ open class LocationNode: SCNNode {
         SCNTransaction.begin()
         SCNTransaction.animationDuration = setup ? 0.0 : 0.1
 
+        let distance = self.location(locationManager.bestLocationEstimate).distance(from:
+            locationManager.currentLocation ?? nodeLocation)
+
+        childNodes.first?.renderingOrder = renderingOrder(fromDistance: distance)
+
         _ = self.adjustedDistance(setup: setup, position: position,
                                   locationNodeLocation: nodeLocation, locationManager: locationManager)
 
         SCNTransaction.commit()
 
         onCompletion()
+    }
+
+    /// Converts distance from meters to SCNKit rendering order
+    /// Constant multiplier eliminates flicker caused by slight distance variations
+    /// Nodes with greater rendering orders are rendered last
+    func renderingOrder(fromDistance distance: CLLocationDistance) -> Int {
+        return Int.max - 1000 - (Int(distance * 1000))
     }
 }
