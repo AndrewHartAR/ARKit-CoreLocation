@@ -9,13 +9,13 @@ import Foundation
 
 /// A set of schemes that can be used to scale a LocationNode.
 ///
-/// - normal: The default way of scaling
-/// - tiered: A way of scaling everything beyond a specific distance (threshold) at
-/// a specific scale.
-/// - doubleTiered: A way of scaling everything beyond 2 specific distances at two
+/// Values:
+/// - normal: The default way of scaling, Hardcoded value out to 3000 meters, and then 0.75 that factor beyond 3000 m.
+/// - tiered (threshold, scale): Return 1.0 at distance up to `threshold` meters, or `scale` beyond.
+/// - doubleTiered (firstThreshold, firstCale, secondThreshold, secondScale): A way of scaling everything beyond 2 specific distances at two
 /// specific scales.
-/// - linear: linearly scales an object based on its distance.
-/// - linearBuffer: linearly scales an object based on its distance as long as it is
+/// - linear (threshold): linearly scales an object based on its distance.
+/// - linearBuffer (threshold, buffer): linearly scales an object based on its distance as long as it is
 /// further than the buffer distance, otherwise it just returns 100% scale.
 public enum ScalingScheme {
 
@@ -25,6 +25,8 @@ public enum ScalingScheme {
     case linear(threshold: Double)
     case linearBuffer(threshold: Double, buffer: Double)
 
+    /// Returns a closure to compute appropriate scale factor based on the current value of `self` (a `ScalingSchee`).
+    /// The closure accepts two parameters and returns the scale factor to apply to an `AnnotationNode`.
     public func getScheme() -> ( (_ distance: Double, _ adjustedDistance: Double) -> Float) {
         switch self {
         case .tiered(let threshold, let scale):
@@ -52,7 +54,7 @@ public enum ScalingScheme {
                 let absThreshold = abs(threshold)
                 let absAdjDist = abs(adjustedDistance)
 
-                let scaleToReturn =  Float( max (maxSize - (absAdjDist / absThreshold), 0.0))
+                let scaleToReturn =  Float( max(maxSize - (absAdjDist / absThreshold), 0.0))
 //                print("threshold: \(absThreshold) adjDist: \(absAdjDist) scaleToReturn: \(scaleToReturn)")
                 return scaleToReturn
             }

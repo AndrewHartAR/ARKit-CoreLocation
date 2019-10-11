@@ -12,12 +12,15 @@ extension SCNNode {
     /// Overlapping nodes require unique renderingOrder values to avoid flicker
     /// This method will select random values if you don't care which node is in front of the other,
     /// or you can specify a particular z-order value
+    /// Note: rendering order will be changed later based on distance from camera
     func removeFlicker (withRenderingOrder renderingOrder: Int = Int.random(in: 1..<Int.max)) {
         self.renderingOrder = renderingOrder
         if let geom = geometry {
             geom.materials.forEach { $0.readsFromDepthBuffer = false }
         }
     }
+    
+    /// Returns a node similar to the one displayed when an `ARSCNView`'s `.debugOptions` includes `.showWorldOrigin`
     class func axesNode(quiverLength: CGFloat, quiverThickness: CGFloat) -> SCNNode {
         let quiverThickness = (quiverLength / 50.0) * quiverThickness
         let chamferRadius = quiverThickness / 2.0
