@@ -115,7 +115,7 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
             destination.arTrackingType = arTrackingType
             destination.continuallyUpdatePositionAndScale = continuallyUpdatePositionAndScale
             destination.continuallyAdjustNodePositionWhenWithinRange = continuallyAdjustNodePositionWhenWithinRange
-            
+
             if segue.identifier == "justOneNode" {
                 destination.demonstration = .justOneNode
             }
@@ -243,7 +243,8 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
         case 1:
             scalingScheme = .tiered(threshold: threshold1, scale: scale1)
         case 2:
-            scalingScheme = .doubleTiered(firstThreshold: threshold1, firstScale: scale1, secondThreshold: threshold2, secondScale: scale2)
+            scalingScheme = .doubleTiered(firstThreshold: threshold1, firstScale: scale1,
+                                          secondThreshold: threshold2, secondScale: scale2)
         case 3:
             scalingScheme = .linear(threshold: threshold1)
         case 4:
@@ -255,7 +256,7 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
     }
 
     /// Yes, this code is very repetitive of `scalingSchemeChanged`. I could make it more DRY by adding
-    /// a computed property to `ScalingScheme`, but I don't want to mess with library code just for this demo.
+    /// a computed property to `ScalingScheme`, but I don't want to mess with library code any more than necessary just for this demo.
     /// https://medium.com/@PhiJay/why-swift-enums-with-associated-values-cannot-have-a-raw-value-21e41d5ec11 has a good discussion.
     fileprivate func recomputeScalingScheme() {
         switch scalingScheme {
@@ -309,4 +310,3 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
         }
     }
 }
-

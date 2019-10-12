@@ -132,7 +132,7 @@ class ARCLViewController: UIViewController {
         }
 
         // Copy the current location because it's a reference type. Necessary?
-        let referenceLocation = CLLocation(coordinate:currentLocation.coordinate,
+        let referenceLocation = CLLocation(coordinate: currentLocation.coordinate,
                                            altitude: currentLocation.altitude)
         let startingPoint = CLLocation(coordinate: referenceLocation.coordinate, altitude: referenceLocation.altitude)
         let originNode = LocationNode(location: startingPoint)
