@@ -107,6 +107,10 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
         performSegue(withIdentifier: "spriteKitNodes", sender: sender)
     }
 
+    @IBAction func showLiveNodes(_ sender: Any) {
+        performSegue(withIdentifier: "liveNodes", sender: sender)
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? ARCLViewController {
             destination.annotationHeightAdjustmentFactor = annotationHeightAdjustmentFactor
@@ -133,6 +137,9 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
             }
             else if segue.identifier == "spriteKitNodes" {
                 destination.demonstration = .spriteKitNodes
+            }
+            else if segue.identifier == "liveNodes" {
+                destination.demonstration = .dynamicNodes
             }
         }
     }

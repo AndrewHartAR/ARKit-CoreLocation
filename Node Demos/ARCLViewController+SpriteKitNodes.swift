@@ -28,17 +28,15 @@ extension ARCLViewController {
                                            altitude: currentLocation.altitude)
 
         // Put a label at the origin.
-        let north10Meterslabel = UILabel.largeLabel(text: "North 10 meters")
-        north10Meterslabel.backgroundColor = .systemTeal
+        let north10MetersLabel = UIView.prettyLabeledView(text: "North 10 meters")
         let north10MetersLocation = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 10.0, longitudeTranslation: 0.0, altitudeTranslation: 0.0))
-        let north10MetersLabelNode = LocationAnnotationNode(location: north10MetersLocation, view: north10Meterslabel)
+        let north10MetersLabelNode = LocationAnnotationNode(location: north10MetersLocation, view: north10MetersLabel)
         addScenewideNodeSettings(north10MetersLabelNode)
         sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: north10MetersLabelNode)
 
-        let south10Meterslabel = UILabel.largeLabel(text: "South 10 meters")
-        south10Meterslabel.backgroundColor = .systemPurple
+        let south10MetersLabel = UIView.prettyLabeledView(text: "South 10 meters")
         let south10MetersLocation = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: -10.0, longitudeTranslation: 0.0, altitudeTranslation: 0.0))
-        let south10MetersLabelNode = LocationAnnotationNode(location: south10MetersLocation, view: south10Meterslabel)
+        let south10MetersLabelNode = LocationAnnotationNode(location: south10MetersLocation, view: south10MetersLabel)
         addScenewideNodeSettings(south10MetersLabelNode)
         sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: south10MetersLabelNode)
 

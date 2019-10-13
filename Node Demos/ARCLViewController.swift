@@ -19,6 +19,7 @@ enum Demonstration {
     case fieldOfLabels
     case fieldOfRadii
     case spriteKitNodes
+    case dynamicNodes
 }
 
 class ARCLViewController: UIViewController {
@@ -89,6 +90,8 @@ class ARCLViewController: UIViewController {
             addFieldOfRadii()
         case .spriteKitNodes:
             addSpriteKitNodes()
+        case .dynamicNodes:
+            addDynamicNodes()
         }
         sceneLocationView?.run()
     }
@@ -177,17 +180,16 @@ class ARCLViewController: UIViewController {
             sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: cubeNode)
         }
         // Put a label at the origin.
-        let label = UILabel.largeLabel(text: "Starting point")
-        label.backgroundColor = .systemTeal
+        let labeledView = UIView.prettyLabeledView(text: "Starting point", backgroundColor: .systemTeal)
         let startingPoint = CLLocation(coordinate: referenceLocation.coordinate, altitude: referenceLocation.altitude)
-        let originLabelNode = LocationAnnotationNode(location: startingPoint, view: label)
+        let originLabelNode = LocationAnnotationNode(location: startingPoint, view: labeledView)
         sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: originLabelNode)
     }
 
     /// Create a `LocationAnnotationNode` at `altitude` meters above the given location, labeled with the altitude.
     func buildDisplacedAnnotationViewNode(altitude: Double, color: UIColor, location: CLLocation) -> LocationAnnotationNode {
-        let label = UILabel.largeLabel(text: "\(altitude)", backgroundColor: color)
-        let result = LocationAnnotationNode(location: location, view: label)
+        let labeledView = UIView.prettyLabeledView(text: "\(altitude)", backgroundColor: color)
+        let result = LocationAnnotationNode(location: location, view: labeledView)
         return result
     }
 
@@ -243,9 +245,8 @@ class ARCLViewController: UIViewController {
                 let eastOffset = Double(eastStep) * eastingIncrementMeters
                 let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: northOffset, longitudeTranslation: eastOffset, altitudeTranslation: 0.0))
                 let radius = Int(sqrt (northOffset * northOffset + eastOffset * eastOffset))
-                let label = UILabel.largeLabel(text: "\(northStep), \(eastStep) (\(radius))")
-                label.backgroundColor = color
-                let annoNode = LocationAnnotationNode(location: location, view: label)
+                let labeledView = UIView.prettyLabeledView(text: "\(northStep), \(eastStep) (\(radius))", backgroundColor: color)
+                let annoNode = LocationAnnotationNode(location: location, view: labeledView)
                 addScenewideNodeSettings(annoNode)
                 sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: annoNode)
             }
@@ -273,12 +274,56 @@ class ARCLViewController: UIViewController {
                 let eastOffset = Double(eastStep) * 2.0
                 let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: northOffset, longitudeTranslation: eastOffset, altitudeTranslation: 0))
                 let radius = Int(sqrt (northOffset * northOffset + eastOffset * eastOffset))
-                let label = UILabel.largeLabel(text: "(\(radius))", backgroundColor: color)
-                let annoNode = LocationAnnotationNode(location: location, view: label)
+                let labeledView = UIView.prettyLabeledView(text: "(\(radius))", backgroundColor: color)
+                let annoNode = LocationAnnotationNode(location: location, view: labeledView)
                 addScenewideNodeSettings(annoNode)
                 sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: annoNode)
             }
         }
+    }
+
+    func addDynamicNodes() {
+        guard let currentLocation = sceneLocationView?.sceneLocationManager.currentLocation else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.addDynamicNodes()
+            }
+            return
+        }
+
+        // Copy the current location because it's a reference type. Necessary?
+        let referenceLocation = CLLocation(coordinate:currentLocation.coordinate, altitude: currentLocation.altitude)
+
+        let northLayer = CATextLayer()
+        northLayer.frame = CGRect(x: 0, y: 0, width: 400, height: 40)
+        let north10MetersLocation = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 10.0, longitudeTranslation: 0.0, altitudeTranslation: 0.0))
+        let north10MetersLabelNode = LocationAnnotationNode(location: north10MetersLocation, layer: northLayer)
+        north10MetersLabelNode.tag = "N"
+        addScenewideNodeSettings(north10MetersLabelNode)
+        sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: north10MetersLabelNode)
+
+        let southLayer = CATextLayer()
+        southLayer.frame = CGRect(x: 0, y: 0, width: 400, height: 40)
+        let south10MetersLocation = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: -10.0, longitudeTranslation: 0.0, altitudeTranslation: 0.0))
+        let south10MetersLabelNode = LocationAnnotationNode(location: south10MetersLocation, layer: southLayer)
+        south10MetersLabelNode.tag = "S"
+        addScenewideNodeSettings(south10MetersLabelNode)
+        sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: south10MetersLabelNode)
+
+        let westLayer = CATextLayer()
+        westLayer.frame = CGRect(x: 0, y: 0, width: 400, height: 40)
+        let west10MetersLocation = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 0.0, longitudeTranslation: -10.0, altitudeTranslation: 0.0))
+        let west10MetersLabelNode = LocationAnnotationNode(location: west10MetersLocation, layer: westLayer)
+        west10MetersLabelNode.tag = "W"
+        addScenewideNodeSettings(west10MetersLabelNode)
+        sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: west10MetersLabelNode)
+
+        let eastLayer = CATextLayer()
+        eastLayer.frame = CGRect(x: 0, y: 0, width: 400, height: 40)
+        let east10MetersLocation = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 0.0, longitudeTranslation: 10.0, altitudeTranslation: 0.0))
+        let east10MetersLabelNode = LocationAnnotationNode(location: east10MetersLocation, layer: eastLayer)
+        east10MetersLabelNode.tag = "E"
+        addScenewideNodeSettings(east10MetersLabelNode)
+        sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: east10MetersLabelNode)
     }
 }
 
@@ -342,7 +387,17 @@ extension ARCLViewController: ARSCNViewDelegate {
     }
 
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        // print(#file, #function)
+        if demonstration == .dynamicNodes,
+            let nodes = sceneLocationView?.locationNodes {
+            for node in nodes {
+                if let annoNode = node as? LocationAnnotationNode,
+                    let textLayer = annoNode.annotationNode.layer as? CATextLayer,
+                    let distance = sceneLocationView?.sceneLocationManager.currentLocation?.distance(from: node.location) {
+                    let distanceString = String(format: "%@ %3.0f", node.tag ?? "", distance)
+                    textLayer.string = distanceString
+                }
+            }
+        }
     }
 
     public func renderer(_ renderer: SCNSceneRenderer, didApplyAnimationsAtTime time: TimeInterval) {
@@ -363,21 +418,31 @@ extension ARCLViewController: ARSCNViewDelegate {
 
 }
 
-extension UILabel {
-    class func largeLabel(text: String, backgroundColor: UIColor = .systemGray) -> UILabel {
+extension UIView {
+    /// Create a colored view with label, border, and rounded corners.
+    class func prettyLabeledView(text: String, backgroundColor: UIColor = .systemBackground, borderColor: UIColor = .black) -> UIView {
         let font = UIFont.preferredFont(forTextStyle: .title2)
         let fontAttributes = [NSAttributedString.Key.font: font]
         let size = (text as NSString).size(withAttributes: fontAttributes)
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
 
-        let attributedQuote = NSAttributedString(string: text, attributes:  [NSAttributedString.Key.font: font])
-        label.attributedText = attributedQuote
+        let attributedString = NSAttributedString(string: text, attributes:  [NSAttributedString.Key.font: font])
+        label.attributedText = attributedString
         label.textAlignment = .center
-        label.backgroundColor = backgroundColor
         label.adjustsFontForContentSizeCategory = true
-        return label
+
+        let cframe = CGRect(x: 0, y: 0, width: label.frame.width + 20, height: label.frame.height + 10)
+        let cview = UIView(frame: cframe)
+        cview.translatesAutoresizingMaskIntoConstraints = false
+        cview.layer.cornerRadius = 10
+        cview.layer.backgroundColor = backgroundColor.cgColor
+        cview.layer.borderColor = borderColor.cgColor
+        cview.layer.borderWidth = 1
+        cview.addSubview(label)
+        label.center = cview.center
+
+        return cview
     }
 
 
 }
-
