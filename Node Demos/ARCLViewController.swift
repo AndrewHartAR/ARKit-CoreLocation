@@ -387,11 +387,14 @@ extension ARCLViewController: ARSCNViewDelegate {
 
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         if demonstration == .dynamicNodes,
+            // There's way too much coupling of view and data model here, but this keeps the demo short.
             let nodes = sceneLocationView?.locationNodes {
             for node in nodes {
                 if let annoNode = node as? LocationAnnotationNode,
                     let textLayer = annoNode.annotationNode.layer as? CATextLayer,
                     let distance = sceneLocationView?.sceneLocationManager.currentLocation?.distance(from: node.location) {
+                    // You could use the node's `tag` for more extensive feature lookup, or you could
+                    // keep a pointer to the node from your "source of truth". We'll just draw the tag here, though.
                     let distanceString = String(format: "%@ %3.0f", node.tag ?? "", distance)
                     textLayer.string = distanceString
                 }
