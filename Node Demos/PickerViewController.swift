@@ -135,9 +135,9 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
             else if segue.identifier == "fieldOfRadii" {
                 destination.demonstration = .fieldOfRadii
             }
-            else if segue.identifier == "spriteKitNodes" {
-                destination.demonstration = .spriteKitNodes
-            }
+//            else if segue.identifier == "spriteKitNodes" {
+//                destination.demonstration = .spriteKitNodes
+//            }
             else if segue.identifier == "liveNodes" {
                 destination.demonstration = .dynamicNodes
             }

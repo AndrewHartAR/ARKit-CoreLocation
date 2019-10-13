@@ -18,7 +18,6 @@ enum Demonstration {
     case fieldOfNodes
     case fieldOfLabels
     case fieldOfRadii
-    case spriteKitNodes
     case dynamicNodes
 }
 
@@ -88,8 +87,8 @@ class ARCLViewController: UIViewController {
             addFieldOfLabels()
         case .fieldOfRadii:
             addFieldOfRadii()
-        case .spriteKitNodes:
-            addSpriteKitNodes()
+//        case .spriteKitNodes:
+//            addSpriteKitNodes()
         case .dynamicNodes:
             addDynamicNodes()
         }

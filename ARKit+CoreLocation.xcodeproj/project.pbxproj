@@ -15,7 +15,6 @@
 		2B0FADD023513B35005C1A52 /* Node_DemosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0FADCF23513B35005C1A52 /* Node_DemosTests.swift */; };
 		2B0FADDB23513B35005C1A52 /* Node_DemosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0FADDA23513B35005C1A52 /* Node_DemosUITests.swift */; };
 		2B0FADE723513BCB005C1A52 /* PickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0FADE623513BCA005C1A52 /* PickerViewController.swift */; };
-		2B0FADEA23513BDF005C1A52 /* ARCLViewController+SpriteKitNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0FADE823513BDF005C1A52 /* ARCLViewController+SpriteKitNodes.swift */; };
 		2B0FADEB23513BDF005C1A52 /* ARCLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0FADE923513BDF005C1A52 /* ARCLViewController.swift */; };
 		2B0FADED23513C10005C1A52 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B0FADEC23513C10005C1A52 /* Main.storyboard */; };
 		2B0FADEF23513C1B005C1A52 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B0FADEE23513C1B005C1A52 /* LaunchScreen.storyboard */; };
@@ -78,7 +77,6 @@
 		2B0FADDA23513B35005C1A52 /* Node_DemosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node_DemosUITests.swift; sourceTree = "<group>"; };
 		2B0FADDC23513B35005C1A52 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2B0FADE623513BCA005C1A52 /* PickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerViewController.swift; sourceTree = "<group>"; };
-		2B0FADE823513BDF005C1A52 /* ARCLViewController+SpriteKitNodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ARCLViewController+SpriteKitNodes.swift"; sourceTree = "<group>"; };
 		2B0FADE923513BDF005C1A52 /* ARCLViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARCLViewController.swift; sourceTree = "<group>"; };
 		2B0FADEC23513C10005C1A52 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		2B0FADEE23513C1B005C1A52 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -163,7 +161,6 @@
 				2B0FADBA23513B33005C1A52 /* SceneDelegate.swift */,
 				2B0FADE623513BCA005C1A52 /* PickerViewController.swift */,
 				2B0FADE923513BDF005C1A52 /* ARCLViewController.swift */,
-				2B0FADE823513BDF005C1A52 /* ARCLViewController+SpriteKitNodes.swift */,
 				2B0FADEC23513C10005C1A52 /* Main.storyboard */,
 				2B0FADC123513B35005C1A52 /* Assets.xcassets */,
 				2B0FADEE23513C1B005C1A52 /* LaunchScreen.storyboard */,
@@ -670,7 +667,6 @@
 			files = (
 				2B0FADEB23513BDF005C1A52 /* ARCLViewController.swift in Sources */,
 				2B0FADB923513B33005C1A52 /* AppDelegate.swift in Sources */,
-				2B0FADEA23513BDF005C1A52 /* ARCLViewController+SpriteKitNodes.swift in Sources */,
 				2B0FADE723513BCB005C1A52 /* PickerViewController.swift in Sources */,
 				2B0FADBB23513B33005C1A52 /* SceneDelegate.swift in Sources */,
 			);
