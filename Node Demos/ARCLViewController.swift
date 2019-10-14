@@ -147,7 +147,7 @@ class ARCLViewController: UIViewController {
     }
 
     /// Add a stack of annotation nodes, 100 meters north of location, at altitudes between 0 and 100 meters.
-    /// Also add a location node at the same place as each annotation node.
+    /// Also add a location node at the same place as each annotation node. Nodes with the same color are at the same location.
     func addStackOfNodes() {
         guard let currentLocation = sceneLocationView?.sceneLocationManager.currentLocation else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
@@ -192,7 +192,7 @@ class ARCLViewController: UIViewController {
         return result
     }
 
-    /// Add an array of SNCSphere nodes centered on your current location.
+    /// Add an array of SCNGeometry nodes centered on your current location.
     func addFieldOfNodes() {
         guard let currentLocation = sceneLocationView?.sceneLocationManager.currentLocation else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
@@ -252,7 +252,8 @@ class ARCLViewController: UIViewController {
         }
     }
 
-    /// Add an array of annotation nodes showing radius, centered on your current location. Radius values are static.
+    /// Add an array of annotation nodes showing radius, centered on your current location. Radius values are static. Farther away labels have higher altitudes.
+    /// Use this demo to experiment with `ScalingScheme`.
     func addFieldOfRadii() {
         guard let currentLocation = sceneLocationView?.sceneLocationManager.currentLocation else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
@@ -269,9 +270,10 @@ class ARCLViewController: UIViewController {
             for eastStep in -5...5 {
                 let color = colors[colorIndex % colors.count]
                 colorIndex += 1
-                let northOffset = Double(northStep) * 2.0
-                let eastOffset = Double(eastStep) * 2.0
-                let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: northOffset, longitudeTranslation: eastOffset, altitudeTranslation: 0))
+                let northOffset = Double(northStep) * northingIncrementMeters
+                let eastOffset = Double(eastStep) * eastingIncrementMeters
+                let altitudeTranslation = abs(northStep) + abs(eastStep) * 100
+                let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: northOffset, longitudeTranslation: eastOffset, altitudeTranslation: Double(altitudeTranslation)))
                 let radius = Int(sqrt (northOffset * northOffset + eastOffset * eastOffset))
                 let labeledView = UIView.prettyLabeledView(text: "(\(radius))", backgroundColor: color)
                 let annoNode = LocationAnnotationNode(location: location, view: labeledView)
@@ -281,6 +283,8 @@ class ARCLViewController: UIViewController {
         }
     }
 
+    /// Show 4 nodes positioned 10 meters north, south, east, and west of starting point. Use dynamically updating CATextLayer as the annotation,
+    /// displaying current distance in meters to each node.
     func addDynamicNodes() {
         guard let currentLocation = sceneLocationView?.sceneLocationManager.currentLocation else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
