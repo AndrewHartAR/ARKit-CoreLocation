@@ -188,4 +188,58 @@ open class LocationNode: SCNNode {
     func renderingOrder(fromDistance distance: CLLocationDistance) -> Int {
         return Int.max - 1000 - (Int(distance * 1000))
     }
+    
+    func stackNode(scenePosition: SCNVector3?, locationNodes: [LocationNode], stackingOffset: Float) {
+        
+        // Detecting collision
+        let node1 = self.childNodes.first!
+        var hasCollision = false
+        var i = 0
+        while i < locationNodes.count {
+            let locationNode2 = locationNodes[i]
+            
+            if (locationNode2 == self) {
+                // If collision, start over because movement could cause additional collisions
+                if hasCollision {
+                    hasCollision = false
+                    i = 0
+                    continue
+                }
+                break
+            }
+            
+            let node2 = locationNode2.childNodes.first!
+            
+            // If the angle between two nodes and the user is less than a threshold and the vertical distance
+            // between the node centers is less than deltaY trheshold a collision occured and move the node up
+            let angle = angleBetweenTwoPointsAndUser(scenePosition: scenePosition, pointA: node1.worldPosition, pointB: node2.worldPosition)
+            let angleMin = CGFloat(2.5 * atan(node1.scale.x / 100)) // You can change 2.5 to your requirements
+            
+            let deltaY = abs(node1.worldPosition.y - node2.worldPosition.y)
+            let deltaYMin = 2 * node1.boundingBox.max.y * node1.scale.y
+            
+            // We have a collision, move the node 1 up
+            if deltaY < deltaYMin && angle < angleMin {
+                node1.position.y += deltaYMin + stackingOffset
+                hasCollision = true
+            }
+            i += 1
+        }
+    }
+    
+    private func angleBetweenTwoPointsAndUser(scenePosition: SCNVector3?, pointA: SCNVector3, pointB: SCNVector3) -> CGFloat {
+        if let userPosition = scenePosition {
+            let A = CGPoint(x: CGFloat(pointA.x), y: CGFloat(pointA.z))
+            let B = CGPoint(x: CGFloat(pointB.x), y: CGFloat(pointB.z))
+            let U = CGPoint(x: CGFloat(userPosition.x), y: CGFloat(userPosition.z))
+            
+            let a = A.distance(to: U)
+            let b = B.distance(to: U)
+            let c = A.distance(to: B)
+            return acos((a*a + b*b - c*c) / (2 * a*b))
+        } else {
+            return 0.0
+        }
+    }
 }
+

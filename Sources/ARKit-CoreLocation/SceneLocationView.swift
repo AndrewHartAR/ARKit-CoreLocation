@@ -273,7 +273,7 @@ public extension SceneLocationView {
                                                     .didUpdateLocationAndScaleOfLocationNode(sceneLocationView: self,
                                                                                              locationNode: locationNode)
         }
-
+        locationNode.stackNode(scenePosition: scenePosition, locationNodes: locationNodes, stackingOffset: stackingOffset)
         locationNodes.append(locationNode)
         sceneNode?.addChildNode(locationNode)
     }
