@@ -189,6 +189,7 @@ open class LocationNode: SCNNode {
         return Int.max - 1000 - (Int(distance * 1000))
     }
     
+    @available(iOS 11.0, *)
     func stackNode(scenePosition: SCNVector3?, locationNodes: [LocationNode], stackingOffset: Float) {
         
         // Detecting collision
