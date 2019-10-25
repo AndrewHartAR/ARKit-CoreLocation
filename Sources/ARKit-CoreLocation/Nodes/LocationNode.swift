@@ -85,7 +85,7 @@ open class LocationNode: SCNNode {
     /// The scheme to use for scaling
     public var scalingScheme: ScalingScheme = .normal
     
-    /// Whether the nod should be stacked along the y-axis accordingly with the distance
+    /// Whether the node should be stacked along the y-axis accordingly with the distance
     /// When set to true, scaleRealtiveToDistance should be false
     public var shouldStackAnnotation = false
     
