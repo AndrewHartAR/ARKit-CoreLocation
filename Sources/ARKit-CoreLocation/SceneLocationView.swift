@@ -80,6 +80,7 @@ open class SceneLocationView: ARSCNView {
         }
     }
     
+    /// Y-offset between stacked annotations
     public var stackingOffset: Float = 0.0
 
     /// When set to true, displays an axes node at the start of the scene
