@@ -11,6 +11,15 @@ target 'ARKit+CoreLocation' do
 end
 
 
+target 'Node Demos' do
+    pod 'ARCL', :path => '.'
+
+    target 'Node DemosTests' do
+
+    end
+end
+
+
 post_install do |installer|
     installer.pods_project.targets.each do |target|
         target.build_configurations.each do |config|
