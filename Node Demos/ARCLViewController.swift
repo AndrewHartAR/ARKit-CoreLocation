@@ -21,6 +21,7 @@ enum Demonstration {
     case dynamicNodes
 }
 
+// swiftlint:disable:next type_body_length
 class ARCLViewController: UIViewController {
 
     @IBOutlet weak var contentView: UIView!
@@ -32,7 +33,8 @@ class ARCLViewController: UIViewController {
     var sceneLocationView: SceneLocationView?
     public var demonstration = Demonstration.fieldOfNodes
 
-    /// This is for the `SceneLocationView`. There's no way to set a node's `locationEstimateMethod`, which is hardcoded to `mostRelevantEstimate`.
+    /// This is for the `SceneLocationView`. There's no way to set a node's `locationEstimateMethod`, which is hardcoded to
+    /// `mostRelevantEstimate`.
     public var locationEstimateMethod = LocationEstimateMethod.mostRelevantEstimate
 
     public var arTrackingType = SceneLocationView.ARTrackingType.orientationTracking
@@ -43,7 +45,8 @@ class ARCLViewController: UIViewController {
     public var continuallyUpdatePositionAndScale = true
     public var annotationHeightAdjustmentFactor = 1.1
 
-    let colors = [UIColor.systemGreen, UIColor.systemBlue, UIColor.systemOrange, UIColor.systemPurple, UIColor.systemYellow, UIColor.systemRed]
+    let colors = [UIColor.systemGreen, UIColor.systemBlue, UIColor.systemOrange, UIColor.systemPurple, UIColor.systemYellow,
+                  UIColor.systemRed]
     let northingIncrementMeters = 100.0
     let eastingIncrementMeters = 75.0
 
@@ -72,7 +75,7 @@ class ARCLViewController: UIViewController {
         contentView.addSubview(newSceneLocationView)
         sceneLocationView = newSceneLocationView
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         rebuildSceneLocationView()
@@ -118,7 +121,8 @@ class ARCLViewController: UIViewController {
             annoNode.annotationHeightAdjustmentFactor = annotationHeightAdjustmentFactor
         }
         node.scalingScheme = scalingScheme
-        // FIXME: We should be able to do this, or do it internally in addLocationNode...() calls, to match SceneLocationView's setting.
+        // FIXME: We should be able to do this, or do it internally in addLocationNode...() calls, to match
+        // SceneLocationView's setting.
         // node.locationEstimateMethod = locationEstimateMethod
         node.continuallyAdjustNodePositionWhenWithinRange = continuallyAdjustNodePositionWhenWithinRange
         node.continuallyUpdatePositionAndScale = continuallyUpdatePositionAndScale
@@ -157,14 +161,16 @@ class ARCLViewController: UIViewController {
         }
 
         // Copy the current location because it's a reference type. Necessary?
-        let referenceLocation = CLLocation(coordinate:currentLocation.coordinate,
+        let referenceLocation = CLLocation(coordinate: currentLocation.coordinate,
                                            altitude: currentLocation.altitude)
         var colorIndex = 0
         for altitude in [0.0, 20, 60, 100] {
             let color = colors[colorIndex % colors.count]
             colorIndex += 1
             // Create one annotation node 100 meters north, at specified altitude.
-            let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 100.0, longitudeTranslation: 0.0, altitudeTranslation: altitude))
+            let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 100.0,
+                                                                                          longitudeTranslation: 0.0,
+                                                                                          altitudeTranslation: altitude))
             let node = buildDisplacedAnnotationViewNode(altitude: altitude, color: color, location: location)
             addScenewideNodeSettings(node)
             sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: node)
@@ -202,7 +208,7 @@ class ARCLViewController: UIViewController {
         }
 
         // Copy the current location because it's a reference type. Necessary?
-        let referenceLocation = CLLocation(coordinate:currentLocation.coordinate,
+        let referenceLocation = CLLocation(coordinate: currentLocation.coordinate,
                                            altitude: currentLocation.altitude)
         let rotateForeverAction = SCNAction.repeatForever(SCNAction.rotate(by: .pi, around: SCNVector3(1, 0, 0), duration: 3))
         var colorIndex = 0
@@ -210,7 +216,10 @@ class ARCLViewController: UIViewController {
             let color = colors[colorIndex % colors.count]
             colorIndex += 1
             for eastStep in -5...5 {
-                let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: Double(northStep) * northingIncrementMeters, longitudeTranslation: Double(eastStep) * eastingIncrementMeters, altitudeTranslation: 0.0))
+                let location = referenceLocation.translatedLocation(with:
+                    LocationTranslation(latitudeTranslation: Double(northStep) * northingIncrementMeters,
+                                        longitudeTranslation: Double(eastStep) * eastingIncrementMeters,
+                                        altitudeTranslation: 0.0))
                 let locationNode = LocationNode(location: location)
                 let torus = SCNTorus(ringRadius: 10, pipeRadius: 2)
                 torus.firstMaterial?.diffuse.contents = color
@@ -233,7 +242,7 @@ class ARCLViewController: UIViewController {
         }
 
         // Copy the current location because it's a reference type. Necessary?
-        let referenceLocation = CLLocation(coordinate:currentLocation.coordinate,
+        let referenceLocation = CLLocation(coordinate: currentLocation.coordinate,
                                            altitude: currentLocation.altitude)
         var colorIndex = 0
         for northStep in -5...5 {
@@ -242,8 +251,11 @@ class ARCLViewController: UIViewController {
             for eastStep in -5...5 {
                 let northOffset = Double(northStep) * northingIncrementMeters
                 let eastOffset = Double(eastStep) * eastingIncrementMeters
-                let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: northOffset, longitudeTranslation: eastOffset, altitudeTranslation: 0.0))
-                let radius = Int(sqrt (northOffset * northOffset + eastOffset * eastOffset))
+                let location = referenceLocation.translatedLocation(with:
+                    LocationTranslation(latitudeTranslation: northOffset,
+                                        longitudeTranslation: eastOffset,
+                                        altitudeTranslation: 0.0))
+                let radius = Int(sqrt(northOffset * northOffset + eastOffset * eastOffset))
                 let labeledView = UIView.prettyLabeledView(text: "\(northStep), \(eastStep) (\(radius))", backgroundColor: color)
                 let annoNode = LocationAnnotationNode(location: location, view: labeledView)
                 addScenewideNodeSettings(annoNode)
@@ -252,8 +264,8 @@ class ARCLViewController: UIViewController {
         }
     }
 
-    /// Add an array of annotation nodes showing radius, centered on your current location. Radius values are static. Farther away labels have higher altitudes.
-    /// Use this demo to experiment with `ScalingScheme`.
+    /// Add an array of annotation nodes showing radius, centered on your current location. Radius values are static.
+    /// Farther away labels have higher altitudes. Use this demo to experiment with `ScalingScheme`.
     func addFieldOfRadii() {
         guard let currentLocation = sceneLocationView?.sceneLocationManager.currentLocation else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
@@ -263,7 +275,7 @@ class ARCLViewController: UIViewController {
         }
 
         // Copy the current location because it's a reference type. Necessary?
-        let referenceLocation = CLLocation(coordinate:currentLocation.coordinate,
+        let referenceLocation = CLLocation(coordinate: currentLocation.coordinate,
                                            altitude: currentLocation.altitude)
         var colorIndex = 0
         for northStep in -5...5 {
@@ -273,8 +285,11 @@ class ARCLViewController: UIViewController {
                 let northOffset = Double(northStep) * northingIncrementMeters
                 let eastOffset = Double(eastStep) * eastingIncrementMeters
                 let altitudeTranslation = abs(northStep) + abs(eastStep) * 100
-                let location = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: northOffset, longitudeTranslation: eastOffset, altitudeTranslation: Double(altitudeTranslation)))
-                let radius = Int(sqrt (northOffset * northOffset + eastOffset * eastOffset))
+                let location = referenceLocation.translatedLocation(with:
+                    LocationTranslation(latitudeTranslation: northOffset,
+                                        longitudeTranslation: eastOffset,
+                                        altitudeTranslation: Double(altitudeTranslation)))
+                let radius = Int(sqrt(northOffset * northOffset + eastOffset * eastOffset))
                 let labeledView = UIView.prettyLabeledView(text: "(\(radius))", backgroundColor: color)
                 let annoNode = LocationAnnotationNode(location: location, view: labeledView)
                 addScenewideNodeSettings(annoNode)
@@ -283,8 +298,9 @@ class ARCLViewController: UIViewController {
         }
     }
 
-    /// Show 4 nodes positioned 10 meters north, south, east, and west of starting point. Use dynamically updating CATextLayer as the annotation,
-    /// displaying current distance in meters to each node.
+    /// Show 4 nodes positioned 10 meters north, south, east, and west of starting point. Use dynamically updating CATextLayer
+    /// as the annotation, displaying current distance in meters to each node.
+    // swiftlint:disable:next function_body_length
     func addDynamicNodes() {
         guard let currentLocation = sceneLocationView?.sceneLocationManager.currentLocation else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
@@ -294,11 +310,13 @@ class ARCLViewController: UIViewController {
         }
 
         // Copy the current location because it's a reference type. Necessary?
-        let referenceLocation = CLLocation(coordinate:currentLocation.coordinate, altitude: currentLocation.altitude)
+        let referenceLocation = CLLocation(coordinate: currentLocation.coordinate, altitude: currentLocation.altitude)
 
         let northLayer = CATextLayer()
         northLayer.frame = CGRect(x: 0, y: 0, width: 400, height: 40)
-        let north10MetersLocation = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 10.0, longitudeTranslation: 0.0, altitudeTranslation: 0.0))
+        let north10MetersLocation = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 10.0,
+                                                                                                   longitudeTranslation: 0.0,
+                                                                                                   altitudeTranslation: 0.0))
         let north10MetersLabelNode = LocationAnnotationNode(location: north10MetersLocation, layer: northLayer)
         north10MetersLabelNode.tag = "N"
         addScenewideNodeSettings(north10MetersLabelNode)
@@ -306,7 +324,9 @@ class ARCLViewController: UIViewController {
 
         let southLayer = CATextLayer()
         southLayer.frame = CGRect(x: 0, y: 0, width: 400, height: 40)
-        let south10MetersLocation = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: -10.0, longitudeTranslation: 0.0, altitudeTranslation: 0.0))
+        let south10MetersLocation = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: -10.0,
+                                                                                                   longitudeTranslation: 0.0,
+                                                                                                   altitudeTranslation: 0.0))
         let south10MetersLabelNode = LocationAnnotationNode(location: south10MetersLocation, layer: southLayer)
         south10MetersLabelNode.tag = "S"
         addScenewideNodeSettings(south10MetersLabelNode)
@@ -314,7 +334,9 @@ class ARCLViewController: UIViewController {
 
         let westLayer = CATextLayer()
         westLayer.frame = CGRect(x: 0, y: 0, width: 400, height: 40)
-        let west10MetersLocation = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 0.0, longitudeTranslation: -10.0, altitudeTranslation: 0.0))
+        let west10MetersLocation = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 0.0,
+                                                                                                  longitudeTranslation: -10.0,
+                                                                                                  altitudeTranslation: 0.0))
         let west10MetersLabelNode = LocationAnnotationNode(location: west10MetersLocation, layer: westLayer)
         west10MetersLabelNode.tag = "W"
         addScenewideNodeSettings(west10MetersLabelNode)
@@ -322,7 +344,9 @@ class ARCLViewController: UIViewController {
 
         let eastLayer = CATextLayer()
         eastLayer.frame = CGRect(x: 0, y: 0, width: 400, height: 40)
-        let east10MetersLocation = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 0.0, longitudeTranslation: 10.0, altitudeTranslation: 0.0))
+        let east10MetersLocation = referenceLocation.translatedLocation(with: LocationTranslation(latitudeTranslation: 0.0,
+                                                                                                  longitudeTranslation: 10.0,
+                                                                                                  altitudeTranslation: 0.0))
         let east10MetersLabelNode = LocationAnnotationNode(location: east10MetersLocation, layer: eastLayer)
         east10MetersLabelNode.tag = "E"
         addScenewideNodeSettings(east10MetersLabelNode)
@@ -349,9 +373,10 @@ extension ARCLViewController: ARSCNViewDelegate {
     // These functions defined in SCNSceneRendererDelegate are invoked on the arViewDelegate within ARCL's
     // internal SCNSceneRendererDelegate (akak ARSCNViewDelegate). They're forwarded versions of the
     // SCNSceneRendererDelegate calls.
-    
+
     public func renderer(_ renderer: SCNSceneRenderer, didRenderScene scene: SCNScene, atTime time: TimeInterval) {
         DispatchQueue.main.async {
+            // swiftlint:disable statement_position
             if let position = self.sceneLocationView?.currentScenePosition {
                 let xString = String(format: "%+03.2f", position.x)
                 let yString = String(format: "%+03.2f", position.y)
@@ -386,6 +411,7 @@ extension ARCLViewController: ARSCNViewDelegate {
             else {
                 self.estHeadingLabel.text = ""
             }
+            // swiftlint:enable statement_position
         }
     }
 
@@ -426,13 +452,15 @@ extension ARCLViewController: ARSCNViewDelegate {
 
 extension UIView {
     /// Create a colored view with label, border, and rounded corners.
-    class func prettyLabeledView(text: String, backgroundColor: UIColor = .systemBackground, borderColor: UIColor = .black) -> UIView {
+    class func prettyLabeledView(text: String,
+                                 backgroundColor: UIColor = .systemBackground,
+                                 borderColor: UIColor = .black) -> UIView {
         let font = UIFont.preferredFont(forTextStyle: .title2)
         let fontAttributes = [NSAttributedString.Key.font: font]
         let size = (text as NSString).size(withAttributes: fontAttributes)
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
 
-        let attributedString = NSAttributedString(string: text, attributes:  [NSAttributedString.Key.font: font])
+        let attributedString = NSAttributedString(string: text, attributes: [NSAttributedString.Key.font: font])
         label.attributedText = attributedString
         label.textAlignment = .center
         label.adjustsFontForContentSizeCategory = true
@@ -449,6 +477,5 @@ extension UIView {
 
         return cview
     }
-
 
 }

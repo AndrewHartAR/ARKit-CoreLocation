@@ -12,8 +12,8 @@ import Foundation
 /// Values:
 /// - normal: The default way of scaling, Hardcoded value out to 3000 meters, and then 0.75 that factor beyond 3000 m.
 /// - tiered (threshold, scale): Return 1.0 at distance up to `threshold` meters, or `scale` beyond.
-/// - doubleTiered (firstThreshold, firstCale, secondThreshold, secondScale): A way of scaling everything beyond 2 specific distances at two
-/// specific scales.
+/// - doubleTiered (firstThreshold, firstCale, secondThreshold, secondScale): A way of scaling everything
+/// beyond 2 specific distances at two specific scales.
 /// - linear (threshold): linearly scales an object based on its distance.
 /// - linearBuffer (threshold, buffer): linearly scales an object based on its distance as long as it is
 /// further than the buffer distance, otherwise it just returns 100% scale.
