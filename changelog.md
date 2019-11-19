@@ -1,5 +1,6 @@
 # Changelog
 - 1.2.2
+   - [PR #240 - Fix build error, update compiler checks](https://github.com/ProjectDent/ARKit-CoreLocation/pull/240)
    - [PR #232 - Add new demo app to exercise node types and scene parameters](https://github.com/ProjectDent/ARKit-CoreLocation/pull/232)
    - [PR #230 - Expose an adjustment factor for label annotation height](https://github.com/ProjectDent/ARKit-CoreLocation/pull/230)
    - [PR #225 - Expose SceneLocationView.locationOfLocationNode ](https://github.com/ProjectDent/ARKit-CoreLocation/pull/225)
