@@ -1,6 +1,5 @@
 # Changelog
 - 1.2.2
-   - [PR #241 - Extend SceneLocationView and MapView into bottom SafeAreaInsets](https://github.com/ProjectDent/ARKit-CoreLocation/pull/241)
    - [PR #232 - Add new demo app to exercise node types and scene parameters](https://github.com/ProjectDent/ARKit-CoreLocation/pull/232)
    - [PR #230 - Expose an adjustment factor for label annotation height](https://github.com/ProjectDent/ARKit-CoreLocation/pull/230)
    - [PR #225 - Expose SceneLocationView.locationOfLocationNode ](https://github.com/ProjectDent/ARKit-CoreLocation/pull/225)
