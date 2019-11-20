@@ -49,8 +49,9 @@ class CLLocationExtensionsTests: XCTestCase {
     line: UInt = #line) {
         // Thanks to https://medium.com/bleeding-edge/writing-better-unit-tests-in-swift-part-two-d19b69f3d794 for the #file/#line trick!
         // 1 nautical mile ~= 2000 yards. 1 degree of latitude = 60 nautical miles.
-        let longitudeAccuracy = 0.001 // 120 yards at equator, 85 yards at +/-45 degrees latitude
-        let latitudeAccuracy = 0.001  // 120 yards
+        let longitudeAccuracy = 0.002 // 120 yards at equator, 85 yards at +/-45 degrees latitude
+        let latitudeAccuracy = 0.002  // 120 yards
+        let distanceAccuracy = 0.01 * distanceMeters // 1% of distance
 
         let startPoint = start.coordinate
         let resultPoint = startPoint.coordinateWithBearing(bearing: bearing, distanceMeters: distanceMeters)
@@ -62,11 +63,11 @@ class CLLocationExtensionsTests: XCTestCase {
         // Calculated location must be no farther than 100 meters from correct location.
         let resultLocation = CLLocation.init(coordinate: resultPoint, altitude: 0)
         let distanceError = resultLocation.distance(from: CLLocation.init(latitude: lat, longitude: lon))
-        XCTAssertLessThan(distanceError, 100.0, "distance between correct and computed locations exceeds limit", file: file, line: line)
+        XCTAssertLessThan(distanceError, distanceAccuracy, "distance between correct and computed locations exceeds limit", file: file, line: line)
 
         // Angular error less than 5 degrees, if the error distance is perpendicular to the line of sight.
         // An angular error of 5 degrees is about twice the width of your thumb at arm's length.
-        let maxAngularError = 5.0 * .pi / 180
+        let maxAngularError = 5.0.degreesToRadians
         // distanceError/distanceMeters is the sin of the max angular error.
         XCTAssertLessThan(distanceError / distanceMeters, sin(maxAngularError), "max angular error exceeds limit", file: file, line: line)
     }
