@@ -19,7 +19,7 @@ extension SCNNode {
             geom.materials.forEach { $0.readsFromDepthBuffer = false }
         }
     }
-    
+
     /// Returns a node similar to the one displayed when an `ARSCNView`'s `.debugOptions` includes `.showWorldOrigin`
     class func axesNode(quiverLength: CGFloat, quiverThickness: CGFloat) -> SCNNode {
         let quiverThickness = (quiverLength / 50.0) * quiverThickness
