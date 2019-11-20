@@ -9,6 +9,7 @@
 import UIKit
 import ARCL
 
+// swiftlint:disable:next type_body_length
 class PickerViewController: UITableViewController, UITextFieldDelegate {
 
     // Originally, the hard-coded factor to raise an annotation's label within the viewport was 1.1.
@@ -122,23 +123,18 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
 
             if segue.identifier == "justOneNode" {
                 destination.demonstration = .justOneNode
-            }
-            else if segue.identifier == "stackOfNodes" {
+            } else if segue.identifier == "stackOfNodes" {
                 destination.demonstration = .stackOfNodes
-            }
-            else if segue.identifier == "fieldOfNodes" {
+            } else if segue.identifier == "fieldOfNodes" {
                 destination.demonstration = .fieldOfNodes
-            }
-            else if segue.identifier == "fieldOfLabels" {
+            } else if segue.identifier == "fieldOfLabels" {
                 destination.demonstration = .fieldOfLabels
-            }
-            else if segue.identifier == "fieldOfRadii" {
+            } else if segue.identifier == "fieldOfRadii" {
                 destination.demonstration = .fieldOfRadii
-            }
-//            else if segue.identifier == "spriteKitNodes" {
+//            }  else if segue.identifier == "spriteKitNodes" {
 //                destination.demonstration = .spriteKitNodes
 //            }
-            else if segue.identifier == "liveNodes" {
+            } else if segue.identifier == "liveNodes" {
                 destination.demonstration = .dynamicNodes
             }
         }
@@ -263,8 +259,10 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
     }
 
     /// Yes, this code is very repetitive of `scalingSchemeChanged`. I could make it more DRY by adding
-    /// a computed property to `ScalingScheme`, but I don't want to mess with library code any more than necessary just for this demo.
-    /// https://medium.com/@PhiJay/why-swift-enums-with-associated-values-cannot-have-a-raw-value-21e41d5ec11 has a good discussion.
+    /// a computed property to `ScalingScheme`, but I don't want to mess with library code any more than
+    /// necessary just for this demo.
+    /// https://medium.com/@PhiJay/why-swift-enums-with-associated-values-cannot-have-a-raw-value-21e41d5ec11
+    /// has a good discussion.
     fileprivate func recomputeScalingScheme() {
         switch scalingScheme {
         case .normal:
@@ -272,7 +270,8 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
         case .tiered:
             scalingScheme = .tiered(threshold: threshold1, scale: scale1)
         case .doubleTiered:
-            scalingScheme = .doubleTiered(firstThreshold: threshold1, firstScale: scale1, secondThreshold: threshold2, secondScale: scale2)
+            scalingScheme = .doubleTiered(firstThreshold: threshold1, firstScale: scale1,
+                                          secondThreshold: threshold2, secondScale: scale2)
         case .linear:
             scalingScheme = .linear(threshold: threshold1)
         case .linearBuffer:
