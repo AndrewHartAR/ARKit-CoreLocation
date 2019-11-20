@@ -56,18 +56,18 @@ class POIViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // swiftlint:disable discarded_notification_center_observer
+        // swiftlint:disable:next discarded_notification_center_observer
         NotificationCenter.default.addObserver(forName: UIApplication.willResignActiveNotification,
                                                object: nil,
                                                queue: nil) { _ in
             self.pauseAnimation()
         }
+        // swiftlint:disable:next discarded_notification_center_observer
         NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification,
                                                object: nil,
                                                queue: nil) { _ in
             self.restartAnimation()
         }
-        // swiftlint:enable discarded_notification_center_observer
 
         updateInfoLabelTimer = Timer.scheduledTimer(timeInterval: 0.1,
                                                     target: self,

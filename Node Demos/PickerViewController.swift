@@ -121,29 +121,22 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
             destination.continuallyUpdatePositionAndScale = continuallyUpdatePositionAndScale
             destination.continuallyAdjustNodePositionWhenWithinRange = continuallyAdjustNodePositionWhenWithinRange
 
-            // swiftlint:disable statement_position
             if segue.identifier == "justOneNode" {
                 destination.demonstration = .justOneNode
-            }
-            else if segue.identifier == "stackOfNodes" {
+            } else if segue.identifier == "stackOfNodes" {
                 destination.demonstration = .stackOfNodes
-            }
-            else if segue.identifier == "fieldOfNodes" {
+            } else if segue.identifier == "fieldOfNodes" {
                 destination.demonstration = .fieldOfNodes
-            }
-            else if segue.identifier == "fieldOfLabels" {
+            } else if segue.identifier == "fieldOfLabels" {
                 destination.demonstration = .fieldOfLabels
-            }
-            else if segue.identifier == "fieldOfRadii" {
+            } else if segue.identifier == "fieldOfRadii" {
                 destination.demonstration = .fieldOfRadii
-            }
-//            else if segue.identifier == "spriteKitNodes" {
+//            }  else if segue.identifier == "spriteKitNodes" {
 //                destination.demonstration = .spriteKitNodes
 //            }
-            else if segue.identifier == "liveNodes" {
+            } else if segue.identifier == "liveNodes" {
                 destination.demonstration = .dynamicNodes
             }
-            // swiftlint:enable statement_position
         }
     }
 

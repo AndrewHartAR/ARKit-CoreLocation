@@ -376,14 +376,12 @@ extension ARCLViewController: ARSCNViewDelegate {
 
     public func renderer(_ renderer: SCNSceneRenderer, didRenderScene scene: SCNScene, atTime time: TimeInterval) {
         DispatchQueue.main.async {
-            // swiftlint:disable statement_position
             if let position = self.sceneLocationView?.currentScenePosition {
                 let xString = String(format: "%+03.2f", position.x)
                 let yString = String(format: "%+03.2f", position.y)
                 let zString = String(format: "%+03.2f", position.z)
                 self.sceneXYZLabel.text = "SLV x: \(xString), y: \(yString), z: \(zString)"
-            }
-            else {
+            } else {
                 self.sceneXYZLabel.text = ""
             }
             if let locationEstimate = self.sceneLocationView?.sceneLocationManager.bestLocationEstimate {
@@ -397,8 +395,7 @@ extension ARCLViewController: ARSCNViewDelegate {
                 let latString = String(format: "%+6.5f", coordinate.latitude)
                 let lonString = String(format: "%+6.5f", coordinate.longitude)
                 self.estLatLonLabel.text = "LM \(latString) \(lonString)"
-            }
-            else {
+            } else {
                 self.estXYZLabel.text = ""
                 self.estHeadingLabel.text = ""
             }
@@ -407,11 +404,9 @@ extension ARCLViewController: ARSCNViewDelegate {
                 let headingString = String(format: "%4.1f", heading)
                 let headingAccuracyString = String(format: "%3.1f", headingAccuracy)
                 self.estHeadingLabel.text = "LM heading \(headingString)° +/- \(headingAccuracyString)°"
-            }
-            else {
+            } else {
                 self.estHeadingLabel.text = ""
             }
-            // swiftlint:enable statement_position
         }
     }
 
