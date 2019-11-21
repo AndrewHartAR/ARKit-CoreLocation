@@ -102,7 +102,7 @@ class CLLocationExtensionsTests: XCTestCase {
     /// Test the `CLLocation` extension function `translation(toLocation:)`. Translation from point defined by `lat0, lon0` (Point 0)
     ///  to  `lat1, lon1` (Point 1) must be correct to within 1% of  actual distance, and 1/2 degree in bearing.
     /// Above 85 degrees, required accuracy is much more forgiving: 2% and 3 degrees.
-    func assertCorrectTranslationDistance(start: CLLocation, distanceMeters: Double, bearing: Double, lon: Double, lat: Double, file: StaticString = #file,
+    func assertCorrectTranslation(start: CLLocation, distanceMeters: Double, bearing: Double, lon: Double, lat: Double, file: StaticString = #file,
                                               line: UInt = #line) {
         let requiredAccuracy: Double
         let maxBearingErrorDegrees: Double
@@ -587,17 +587,17 @@ class CLLocationExtensionsTests: XCTestCase {
          315 | POINT(-122.317570183392 47.6267656259013)
          */
         let start = CLLocation.init(latitude: 47.6235858, longitude: -122.3128663)
-        assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing: 0, lon:-122.3128663, lat: 47.6280828887704)
-        assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing: 45, lon: -122.308162416608, lat: 47.6267656259013)
-        assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing: 90, lon:-122.306214407755, lat: 47.6235856071536)
-        assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:135, lon:-122.308162987107, lat: 47.620405779481)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:180, lon:-122.3128663, lat: 47.6190887076871)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:225, lon:-122.317569612893, lat: 47.620405779481)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:270, lon:-122.319518192245, lat: 47.6235856071536)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:315, lon:-122.317570183392, lat: 47.6267656259013)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing: 0, lon:-122.3128663, lat: 47.6280828887704)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing: 45, lon: -122.308162416608, lat: 47.6267656259013)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing: 90, lon:-122.306214407755, lat: 47.6235856071536)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:135, lon:-122.308162987107, lat: 47.620405779481)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:180, lon:-122.3128663, lat: 47.6190887076871)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:225, lon:-122.317569612893, lat: 47.620405779481)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:270, lon:-122.319518192245, lat: 47.6235856071536)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:315, lon:-122.317570183392, lat: 47.6267656259013)
         }
 
-        func testTranslationMidLatitude10000() {
+    func testTranslationMidLatitude10000() {
     /*
          nrhp=> select bearing,ST_AsText(ST_Project('POINT(-122.3128663 47.6235858)'::geography, 10000, radians(bearing)))
                   from (
@@ -614,312 +614,312 @@ class CLLocationExtensionsTests: XCTestCase {
               270 | POINT(-122.445904014755 47.6235086614964)
               315 | POINT(-122.407052493224 47.6871452814007)
     */
-            let start = CLLocation.init(latitude: 47.6235858, longitude: -122.3128663)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing: 0, lon:-122.3128663, lat: 47.7135269024092)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:45, lon:-122.218680106776, lat: 47.6871452814007)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:90, lon:-122.179828585245, lat: 47.6235086614964)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:135, lon:-122.218908306631, lat: 47.5599484713877)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:180, lon:-122.3128663, lat: 47.5336432805981)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:225, lon:-122.406824293369, lat: 47.5599484713877)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:270, lon:-122.445904014755, lat: 47.6235086614964)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:315, lon:-122.407052493224, lat: 47.6871452814007)
+        let start = CLLocation.init(latitude: 47.6235858, longitude: -122.3128663)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing: 0, lon:-122.3128663, lat: 47.7135269024092)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:45, lon:-122.218680106776, lat: 47.6871452814007)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:90, lon:-122.179828585245, lat: 47.6235086614964)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:135, lon:-122.218908306631, lat: 47.5599484713877)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:180, lon:-122.3128663, lat: 47.5336432805981)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:225, lon:-122.406824293369, lat: 47.5599484713877)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:270, lon:-122.445904014755, lat: 47.6235086614964)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:315, lon:-122.407052493224, lat: 47.6871452814007)
         }
 
-        func testTranslationMidLatitude50000() {
-            /*
+    func testTranslationMidLatitude50000() {
+        /*
          nrhp=> select bearing,ST_AsText(ST_Project('POINT(-122.3128663 47.6235858)'::geography, 50000, radians(bearing)))
-                  from (
-                      values (0),(45),(90),(135),(180),(225),(270),(315)
-                  ) s(bearing);
-          bearing |                 st_astext
+         from (
+         values (0),(45),(90),(135),(180),(225),(270),(315)
+         ) s(bearing);
+         bearing |                 st_astext
          ---------+-------------------------------------------
-                0 | POINT(-122.3128663 48.0732771512326)
-               45 | POINT(-121.839637614568 47.9405975715807)
-               90 | POINT(-121.647693382546 47.6216573806133)
-              135 | POINT(-121.845342666805 47.3046277647178)
-              180 | POINT(-122.3128663 47.1738590246445)
-              225 | POINT(-122.780389933195 47.3046277647178)
-              270 | POINT(-122.978039217454 47.6216573806133)
-              315 | POINT(-122.786094985432 47.9405975715807)
+         0 | POINT(-122.3128663 48.0732771512326)
+         45 | POINT(-121.839637614568 47.9405975715807)
+         90 | POINT(-121.647693382546 47.6216573806133)
+         135 | POINT(-121.845342666805 47.3046277647178)
+         180 | POINT(-122.3128663 47.1738590246445)
+         225 | POINT(-122.780389933195 47.3046277647178)
+         270 | POINT(-122.978039217454 47.6216573806133)
+         315 | POINT(-122.786094985432 47.9405975715807)
 
-    */
-            let start = CLLocation.init(latitude: 47.6235858, longitude: -122.3128663)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:0, lon:-122.3128663, lat: 48.0732771512326)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:45, lon:-121.839637614568, lat: 47.9405975715807)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:90, lon:-121.647693382546, lat: 47.6216573806133)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:135, lon:-121.845342666805, lat: 47.3046277647178)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:180, lon:-122.3128663, lat: 47.1738590246445)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:225, lon:-122.780389933195, lat: 47.3046277647178)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:270, lon:-122.978039217454, lat: 47.6216573806133)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:315, lon:-122.786094985432, lat: 47.9405975715807)
-        }
+         */
+        let start = CLLocation.init(latitude: 47.6235858, longitude: -122.3128663)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:0, lon:-122.3128663, lat: 48.0732771512326)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:45, lon:-121.839637614568, lat: 47.9405975715807)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:90, lon:-121.647693382546, lat: 47.6216573806133)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:135, lon:-121.845342666805, lat: 47.3046277647178)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:180, lon:-122.3128663, lat: 47.1738590246445)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:225, lon:-122.780389933195, lat: 47.3046277647178)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:270, lon:-122.978039217454, lat: 47.6216573806133)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:315, lon:-122.786094985432, lat: 47.9405975715807)
+    }
 
-        func testTranslationFarNorth500() {
-            /*
+    func testTranslationFarNorth500() {
+        /*
          nrhp=> select bearing,ST_AsText(ST_Project('POINT(-122.3128663 85)'::geography, 500, radians(bearing)))
-                  from (
-                      values (0),(45),(90),(135),(180),(225),(270),(315)
-                  ) s(bearing);
-          bearing |                 st_astext
+         from (
+         values (0),(45),(90),(135),(180),(225),(270),(315)
+         ) s(bearing);
+         bearing |                 st_astext
          ---------+-------------------------------------------
-                0 | POINT(-122.3128663 85.0044768604693)
-               45 | POINT(-122.27652381425 85.003164618309)
-               90 | POINT(-122.261502726378 84.9999980009648)
-              135 | POINT(-122.276569684625 84.9968333823477)
-              180 | POINT(-122.3128663 84.9955231389167)
-              225 | POINT(-122.349162915375 84.9968333823477)
-              270 | POINT(-122.364229873622 84.9999980009648)
-              315 | POINT(-122.34920878575 85.003164618309)
-
-    */
-            let start = CLLocation.init(latitude: 85, longitude: -122.3128663)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:0, lon:-122.3128663, lat: 85.0044768604693)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:45, lon:-122.27652381425, lat: 85.003164618309)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:90, lon:-122.261502726378, lat: 84.9999980009648)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:135, lon:-122.276569684625, lat: 84.9968333823477)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:180, lon:-122.3128663, lat: 84.9955231389167)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:225, lon:-122.349162915375, lat: 84.9968333823477)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:270, lon:-122.364229873622, lat: 84.9999980009648)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:315, lon:-122.34920878575, lat: 85.003164618309)
-        }
-
-        func testTranslationFarNorth10000() {
-            /*
+         0 | POINT(-122.3128663 85.0044768604693)
+         45 | POINT(-122.27652381425 85.003164618309)
+         90 | POINT(-122.261502726378 84.9999980009648)
+         135 | POINT(-122.276569684625 84.9968333823477)
+         180 | POINT(-122.3128663 84.9955231389167)
+         225 | POINT(-122.349162915375 84.9968333823477)
+         270 | POINT(-122.364229873622 84.9999980009648)
+         315 | POINT(-122.34920878575 85.003164618309)
+         
+         */
+        let start = CLLocation.init(latitude: 85, longitude: -122.3128663)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:0, lon:-122.3128663, lat: 85.0044768604693)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:45, lon:-122.27652381425, lat: 85.003164618309)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:90, lon:-122.261502726378, lat: 84.9999980009648)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:135, lon:-122.276569684625, lat: 84.9968333823477)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:180, lon:-122.3128663, lat: 84.9955231389167)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:225, lon:-122.349162915375, lat: 84.9968333823477)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:270, lon:-122.364229873622, lat: 84.9999980009648)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:315, lon:-122.34920878575, lat: 85.003164618309)
+    }
+    
+    func testTranslationFarNorth10000() {
+        /*
          nrhp=> select bearing,ST_AsText(ST_Project('POINT(-122.3128663 85)'::geography, 10000, radians(bearing)))
-                  from (
-                      values (0),(45),(90),(135),(180),(225),(270),(315)
-                  ) s(bearing);
-          bearing |                 st_astext
+         from (
+         values (0),(45),(90),(135),(180),(225),(270),(315)
+         ) s(bearing);
+         bearing |                 st_astext
          ---------+-------------------------------------------
-                0 | POINT(-122.3128663 85.0895370934438)
-               45 | POINT(-121.57722387973 85.0629073941419)
-               90 | POINT(-121.285703772561 84.9992004496645)
-              135 | POINT(-121.595572036496 84.936292772585)
-              180 | POINT(-122.3128663 84.9104626609434)
-              225 | POINT(-123.030160563504 84.936292772585)
-              270 | POINT(-123.340028827439 84.9992004496645)
-              315 | POINT(-123.04850872027 85.0629073941419)
-
-    */
-            let start = CLLocation.init(latitude: 85, longitude: -122.3128663)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:0, lon:-122.3128663, lat: 85.0895370934438)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:45, lon:-121.57722387973, lat: 85.0629073941419)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:90, lon:-121.285703772561, lat: 84.9992004496645)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:135, lon:-121.595572036496, lat: 84.936292772585)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:180, lon:-122.3128663, lat: 84.9104626609434)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:225, lon:-123.030160563504, lat: 84.936292772585)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:270, lon:-123.340028827439, lat: 84.9992004496645)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:315, lon:-123.04850872027, lat: 85.0629073941419)
-        }
-
-        func testTranslationFarNorth50000() {
-            /*
+         0 | POINT(-122.3128663 85.0895370934438)
+         45 | POINT(-121.57722387973 85.0629073941419)
+         90 | POINT(-121.285703772561 84.9992004496645)
+         135 | POINT(-121.595572036496 84.936292772585)
+         180 | POINT(-122.3128663 84.9104626609434)
+         225 | POINT(-123.030160563504 84.936292772585)
+         270 | POINT(-123.340028827439 84.9992004496645)
+         315 | POINT(-123.04850872027 85.0629073941419)
+         
+         */
+        let start = CLLocation.init(latitude: 85, longitude: -122.3128663)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:0, lon:-122.3128663, lat: 85.0895370934438)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:45, lon:-121.57722387973, lat: 85.0629073941419)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:90, lon:-121.285703772561, lat: 84.9992004496645)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:135, lon:-121.595572036496, lat: 84.936292772585)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:180, lon:-122.3128663, lat: 84.9104626609434)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:225, lon:-123.030160563504, lat: 84.936292772585)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:270, lon:-123.340028827439, lat: 84.9992004496645)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:315, lon:-123.04850872027, lat: 85.0629073941419)
+    }
+    
+    func testTranslationFarNorth50000() {
+        /*
          nrhp=> select bearing,ST_AsText(ST_Project('POINT(-122.3128663 85)'::geography, 50000, radians(bearing)))
-                  from (
-                      values (0),(45),(90),(135),(180),(225),(270),(315)
-                  ) s(bearing);
-          bearing |                 st_astext
+         from (
+         values (0),(45),(90),(135),(180),(225),(270),(315)
+         ) s(bearing);
+         bearing |                 st_astext
          ---------+-------------------------------------------
-                0 | POINT(-122.3128663 85.447683098238)
-               45 | POINT(-118.441917077449 85.3059018482087)
-               90 | POINT(-117.190097318035 84.9800494382655)
-              135 | POINT(-118.900615692524 84.6740447063519)
-              180 | POINT(-122.3128663 84.5523107615602)
-              225 | POINT(-125.725116907476 84.6740447063519)
-              270 | POINT(-127.435635281965 84.9800494382655)
-              315 | POINT(-126.183815522551 85.3059018482087)
-
-    */
-            let start = CLLocation.init(latitude: 85, longitude: -122.3128663)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:0, lon:-122.3128663, lat: 85.447683098238)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:45, lon:-118.441917077449, lat: 85.3059018482087)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:90, lon:-117.190097318035, lat: 84.9800494382655)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:135, lon:-118.900615692524, lat: 84.6740447063519)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:180, lon:-122.3128663, lat: 84.5523107615602)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:225, lon:-125.725116907476, lat: 84.6740447063519)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:270, lon:-127.435635281965, lat: 84.9800494382655)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:315, lon:-126.183815522551, lat: 85.3059018482087)
-        }
-
-        func testTranslationLowLatitude500() {
-            /*
+         0 | POINT(-122.3128663 85.447683098238)
+         45 | POINT(-118.441917077449 85.3059018482087)
+         90 | POINT(-117.190097318035 84.9800494382655)
+         135 | POINT(-118.900615692524 84.6740447063519)
+         180 | POINT(-122.3128663 84.5523107615602)
+         225 | POINT(-125.725116907476 84.6740447063519)
+         270 | POINT(-127.435635281965 84.9800494382655)
+         315 | POINT(-126.183815522551 85.3059018482087)
+         
+         */
+        let start = CLLocation.init(latitude: 85, longitude: -122.3128663)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:0, lon:-122.3128663, lat: 85.447683098238)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:45, lon:-118.441917077449, lat: 85.3059018482087)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:90, lon:-117.190097318035, lat: 84.9800494382655)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:135, lon:-118.900615692524, lat: 84.6740447063519)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:180, lon:-122.3128663, lat: 84.5523107615602)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:225, lon:-125.725116907476, lat: 84.6740447063519)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:270, lon:-127.435635281965, lat: 84.9800494382655)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:315, lon:-126.183815522551, lat: 85.3059018482087)
+    }
+    
+    func testTranslationLowLatitude500() {
+        /*
          nrhp=>
          nrhp=>          select bearing,ST_AsText(ST_Project('POINT(-122.3128663 5)'::geography, 500, radians(bearing)))
          nrhp->                   from (
          nrhp(>                       values (0),(45),(90),(135),(180),(225),(270),(315)
          nrhp(>                   ) s(bearing);
-          bearing |                 st_astext
+         bearing |                 st_astext
          ---------+-------------------------------------------
-                0 | POINT(-122.3128663 5.00452150216546)
-               45 | POINT(-122.309678209556 5.00319717715266)
-               90 | POINT(-122.308357681126 4.99999998449507)
-              135 | POINT(-122.309678240478 4.99680280703131)
-              180 | POINT(-122.3128663 4.99547849721233)
-              225 | POINT(-122.316054359522 4.99680280703131)
-              270 | POINT(-122.317374918874 4.99999998449507)
-              315 | POINT(-122.316054390444 5.00319717715266)
-
-    */
-            let start = CLLocation.init(latitude: 5, longitude: -122.3128663)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:0, lon:-122.3128663, lat: 5.00452150216546)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:45, lon:-122.309678209556, lat: 5.00319717715266)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:90, lon:-122.308357681126, lat: 4.99999998449507)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:135, lon:-122.309678240478, lat: 4.99680280703131)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:180, lon:-122.3128663, lat: 4.99547849721233)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:225, lon:-122.316054359522, lat: 4.99680280703131)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:270, lon:-122.317374918874, lat: 4.99999998449507)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:315, lon:-122.316054390444, lat: 5.00319717715266)
-        }
-
-        func testTranslationLowLatitude10000() {
-            /*
+         0 | POINT(-122.3128663 5.00452150216546)
+         45 | POINT(-122.309678209556 5.00319717715266)
+         90 | POINT(-122.308357681126 4.99999998449507)
+         135 | POINT(-122.309678240478 4.99680280703131)
+         180 | POINT(-122.3128663 4.99547849721233)
+         225 | POINT(-122.316054359522 4.99680280703131)
+         270 | POINT(-122.317374918874 4.99999998449507)
+         315 | POINT(-122.316054390444 5.00319717715266)
+         
+         */
+        let start = CLLocation.init(latitude: 5, longitude: -122.3128663)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:0, lon:-122.3128663, lat: 5.00452150216546)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:45, lon:-122.309678209556, lat: 5.00319717715266)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:90, lon:-122.308357681126, lat: 4.99999998449507)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:135, lon:-122.309678240478, lat: 4.99680280703131)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:180, lon:-122.3128663, lat: 4.99547849721233)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:225, lon:-122.316054359522, lat: 4.99680280703131)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:270, lon:-122.317374918874, lat: 4.99999998449507)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:315, lon:-122.316054390444, lat: 5.00319717715266)
+    }
+    
+    func testTranslationLowLatitude10000() {
+        /*
          nrhp=>
          nrhp=>          select bearing,ST_AsText(ST_Project('POINT(-122.3128663 5)'::geography, 10000, radians(bearing)))
          nrhp->                   from (
          nrhp(>                       values (0),(45),(90),(135),(180),(225),(270),(315)
          nrhp(>                   ) s(bearing);
-          bearing |                 st_astext
+         bearing |                 st_astext
          ---------+-------------------------------------------
-                0 | POINT(-122.3128663 5.09042992434887)
-               45 | POINT(-122.249098589414 5.06394052429685)
-               90 | POINT(-122.222693923089 4.99999379803119)
-              135 | POINT(-122.249110958015 4.93605314928675)
-              180 | POINT(-122.3128663 4.90956982676742)
-              225 | POINT(-122.376621641985 4.93605314928675)
-              270 | POINT(-122.403038676911 4.99999379803119)
-              315 | POINT(-122.376634010586 5.06394052429685)
-
-    */
-            let start = CLLocation.init(latitude: 5, longitude: -122.3128663)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:0, lon:-122.3128663, lat: 5.09042992434887)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:45, lon:-122.249098589414, lat: 5.06394052429685)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:90, lon:-122.222693923089, lat: 4.99999379803119)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:135, lon:-122.249110958015, lat: 4.93605314928675)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:180, lon:-122.3128663, lat: 4.90956982676742)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:225, lon:-122.376621641985, lat: 4.93605314928675)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:270, lon:-122.403038676911, lat: 4.99999379803119)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:315, lon:-122.376634010586, lat: 5.06394052429685)
-        }
-
-        func testTranslationLowLatitude50000() {
-            /*
+         0 | POINT(-122.3128663 5.09042992434887)
+         45 | POINT(-122.249098589414 5.06394052429685)
+         90 | POINT(-122.222693923089 4.99999379803119)
+         135 | POINT(-122.249110958015 4.93605314928675)
+         180 | POINT(-122.3128663 4.90956982676742)
+         225 | POINT(-122.376621641985 4.93605314928675)
+         270 | POINT(-122.403038676911 4.99999379803119)
+         315 | POINT(-122.376634010586 5.06394052429685)
+         
+         */
+        let start = CLLocation.init(latitude: 5, longitude: -122.3128663)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:0, lon:-122.3128663, lat: 5.09042992434887)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:45, lon:-122.249098589414, lat: 5.06394052429685)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:90, lon:-122.222693923089, lat: 4.99999379803119)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:135, lon:-122.249110958015, lat: 4.93605314928675)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:180, lon:-122.3128663, lat: 4.90956982676742)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:225, lon:-122.376621641985, lat: 4.93605314928675)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:270, lon:-122.403038676911, lat: 4.99999379803119)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:315, lon:-122.376634010586, lat: 5.06394052429685)
+    }
+    
+    func testTranslationLowLatitude50000() {
+        /*
          nrhp=>
          nrhp=>          select bearing,ST_AsText(ST_Project('POINT(-122.3128663 5)'::geography, 50000, radians(bearing)))
          nrhp->                   from (
          nrhp(>                       values (0),(45),(90),(135),(180),(225),(270),(315)
          nrhp(>                   ) s(bearing);
-          bearing |                 st_astext
+         bearing |                 st_astext
          ---------+-------------------------------------------
-                0 | POINT(-122.3128663 5.4521470438799)
-               45 | POINT(-121.99390085599 5.31963770686063)
-               90 | POINT(-121.862004483307 4.99984495156423)
-              135 | POINT(-121.994210074066 4.68020413013662)
-              180 | POINT(-122.3128663 4.54784673415444)
-              225 | POINT(-122.631522525934 4.68020413013662)
-              270 | POINT(-122.763728116693 4.99984495156423)
-              315 | POINT(-122.63183174401 5.31963770686063)
-
-    */
-            let start = CLLocation.init(latitude: 5, longitude: -122.3128663)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:0, lon:-122.3128663, lat: 5.4521470438799)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:45, lon:-121.99390085599, lat: 5.31963770686063)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:90, lon:-121.862004483307, lat: 4.99984495156423)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:135, lon:-121.994210074066, lat: 4.68020413013662)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:180, lon:-122.3128663, lat: 4.54784673415444)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:225, lon:-122.631522525934, lat: 4.68020413013662)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:270, lon:-122.763728116693, lat: 4.99984495156423)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:315, lon:-122.63183174401, lat: 5.31963770686063)
-        }
-
-        func testTranslationSouthernHemisphere500() {
-            /*
+         0 | POINT(-122.3128663 5.4521470438799)
+         45 | POINT(-121.99390085599 5.31963770686063)
+         90 | POINT(-121.862004483307 4.99984495156423)
+         135 | POINT(-121.994210074066 4.68020413013662)
+         180 | POINT(-122.3128663 4.54784673415444)
+         225 | POINT(-122.631522525934 4.68020413013662)
+         270 | POINT(-122.763728116693 4.99984495156423)
+         315 | POINT(-122.63183174401 5.31963770686063)
+         
+         */
+        let start = CLLocation.init(latitude: 5, longitude: -122.3128663)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:0, lon:-122.3128663, lat: 5.4521470438799)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:45, lon:-121.99390085599, lat: 5.31963770686063)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:90, lon:-121.862004483307, lat: 4.99984495156423)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:135, lon:-121.994210074066, lat: 4.68020413013662)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:180, lon:-122.3128663, lat: 4.54784673415444)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:225, lon:-122.631522525934, lat: 4.68020413013662)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:270, lon:-122.763728116693, lat: 4.99984495156423)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:315, lon:-122.63183174401, lat: 5.31963770686063)
+    }
+    
+    func testTranslationSouthernHemisphere500() {
+        /*
          nrhp=>          select bearing,ST_AsText(ST_Project('POINT(-122.3128663 -40)'::geography, 500, radians(bearing)))
          nrhp->                   from (
          nrhp(>                       values (0),(45),(90),(135),(180),(225),(270),(315)
          nrhp(>                   ) s(bearing);
-          bearing |                 st_astext
+         bearing |                 st_astext
          ---------+--------------------------------------------
-                0 | POINT(-122.3128663 -39.9954968987312)
-               45 | POINT(-122.308726225035 -39.9968157529746)
-               90 | POINT(-122.30701107789 -39.9999998520994)
-              135 | POINT(-122.308725840415 -40.00318409737)
-              180 | POINT(-122.3128663 -40.0045030977592)
-              225 | POINT(-122.317006759585 -40.00318409737)
-              270 | POINT(-122.318721522109 -39.9999998520994)
-              315 | POINT(-122.317006374965 -39.9968157529746)
-
-    */
-            let start = CLLocation.init(latitude: -40, longitude: -122.3128663)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:0, lon:-122.3128663, lat: -39.9954968987312)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:45, lon:-122.308726225035, lat: -39.9968157529746)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:90, lon:-122.30701107789, lat: -39.9999998520994)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:135, lon:-122.308725840415, lat: -40.00318409737)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:180, lon:-122.3128663, lat: -40.0045030977592)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:225, lon:-122.317006759585, lat: -40.00318409737)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:270, lon:-122.318721522109, lat: -39.9999998520994)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 500, bearing:315, lon:-122.317006374965, lat: -39.9968157529746)
-        }
-
-        func testTranslationSouthernHemisphere10000() {
-            /*
+         0 | POINT(-122.3128663 -39.9954968987312)
+         45 | POINT(-122.308726225035 -39.9968157529746)
+         90 | POINT(-122.30701107789 -39.9999998520994)
+         135 | POINT(-122.308725840415 -40.00318409737)
+         180 | POINT(-122.3128663 -40.0045030977592)
+         225 | POINT(-122.317006759585 -40.00318409737)
+         270 | POINT(-122.318721522109 -39.9999998520994)
+         315 | POINT(-122.317006374965 -39.9968157529746)
+         
+         */
+        let start = CLLocation.init(latitude: -40, longitude: -122.3128663)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:0, lon:-122.3128663, lat: -39.9954968987312)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:45, lon:-122.308726225035, lat: -39.9968157529746)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:90, lon:-122.30701107789, lat: -39.9999998520994)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:135, lon:-122.308725840415, lat: -40.00318409737)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:180, lon:-122.3128663, lat: -40.0045030977592)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:225, lon:-122.317006759585, lat: -40.00318409737)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:270, lon:-122.318721522109, lat: -39.9999998520994)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:315, lon:-122.317006374965, lat: -39.9968157529746)
+    }
+    
+    func testTranslationSouthernHemisphere10000() {
+        /*
          nrhp=>
          nrhp=>          select bearing,ST_AsText(ST_Project('POINT(-122.3128663 -40)'::geography, 10000, radians(bearing)))
          nrhp->                   from (
          nrhp(>                       values (0),(45),(90),(135),(180),(225),(270),(315)
          nrhp(>                   ) s(bearing);
-          bearing |                 st_astext
+         bearing |                 st_astext
          ---------+--------------------------------------------
-                0 | POINT(-122.3128663 -39.9099373079262)
-               45 | POINT(-122.230137797083 -39.9362866650944)
-               90 | POINT(-122.195761925015 -39.9999408398175)
-              135 | POINT(-122.229983949109 -40.0636534726882)
-              180 | POINT(-122.3128663 -40.0900612882388)
-              225 | POINT(-122.395748650891 -40.0636534726882)
-              270 | POINT(-122.429970674985 -39.9999408398175)
-              315 | POINT(-122.395594802917 -39.9362866650943)
-
-    */
-            let start = CLLocation.init(latitude: -40, longitude: -122.3128663)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:0, lon:-122.3128663, lat: -39.9099373079262)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:45, lon:-122.230137797083, lat: -39.9362866650944)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:90, lon:-122.195761925015, lat: -39.9999408398175)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:135, lon:-122.229983949109, lat: -40.0636534726882)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:180, lon:-122.3128663, lat: -40.0900612882388)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:225, lon:-122.395748650891, lat: -40.0636534726882)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:270, lon:-122.429970674985, lat: -39.9999408398175)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 10000, bearing:315, lon:-122.395594802917, lat: -39.9362866650943)
-        }
-
-        func testTranslationSouthernHemisphere50000() {
-            /*
+         0 | POINT(-122.3128663 -39.9099373079262)
+         45 | POINT(-122.230137797083 -39.9362866650944)
+         90 | POINT(-122.195761925015 -39.9999408398175)
+         135 | POINT(-122.229983949109 -40.0636534726882)
+         180 | POINT(-122.3128663 -40.0900612882388)
+         225 | POINT(-122.395748650891 -40.0636534726882)
+         270 | POINT(-122.429970674985 -39.9999408398175)
+         315 | POINT(-122.395594802917 -39.9362866650943)
+         
+         */
+        let start = CLLocation.init(latitude: -40, longitude: -122.3128663)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:0, lon:-122.3128663, lat: -39.9099373079262)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:45, lon:-122.230137797083, lat: -39.9362866650944)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:90, lon:-122.195761925015, lat: -39.9999408398175)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:135, lon:-122.229983949109, lat: -40.0636534726882)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:180, lon:-122.3128663, lat: -40.0900612882388)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:225, lon:-122.395748650891, lat: -40.0636534726882)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:270, lon:-122.429970674985, lat: -39.9999408398175)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:315, lon:-122.395594802917, lat: -39.9362866650943)
+    }
+    
+    func testTranslationSouthernHemisphere50000() {
+        /*
          nrhp=>
          nrhp=>          select bearing,ST_AsText(ST_Project('POINT(-122.3128663 -40)'::geography, 50000, radians(bearing)))
          nrhp->                   from (
          nrhp(>                       values (0),(45),(90),(135),(180),(225),(270),(315)
          nrhp(>                   ) s(bearing);
-          bearing |                 st_astext
+         bearing |                 st_astext
          ---------+--------------------------------------------
-                0 | POINT(-122.3128663 -39.5496725166091)
-               45 | POINT(-121.900752491598 -39.6808395104955)
-               90 | POINT(-121.727352509562 -39.9985210178516)
-              135 | POINT(-121.896906254532 -40.3176638863652)
-              180 | POINT(-122.3128663 -40.4502923882122)
-              225 | POINT(-122.728826345467 -40.3176638863652)
-              270 | POINT(-122.898380090438 -39.9985210178516)
-              315 | POINT(-122.724980108402 -39.6808395104955)
-
-    */
-            let start = CLLocation.init(latitude: -40, longitude: -122.3128663)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:0, lon:-122.3128663, lat: -39.5496725166091)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:45, lon:-121.900752491598, lat: -39.6808395104955)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:90, lon:-121.727352509562, lat: -39.9985210178516)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:135, lon:-121.896906254532, lat: -40.3176638863652)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:180, lon:-122.3128663, lat: -40.4502923882122)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:225, lon:-122.728826345467, lat: -40.3176638863652)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:270, lon:-122.898380090438, lat: -39.9985210178516)
-            assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:315, lon:-122.724980108402, lat: -39.6808395104955)
-        }
-
+         0 | POINT(-122.3128663 -39.5496725166091)
+         45 | POINT(-121.900752491598 -39.6808395104955)
+         90 | POINT(-121.727352509562 -39.9985210178516)
+         135 | POINT(-121.896906254532 -40.3176638863652)
+         180 | POINT(-122.3128663 -40.4502923882122)
+         225 | POINT(-122.728826345467 -40.3176638863652)
+         270 | POINT(-122.898380090438 -39.9985210178516)
+         315 | POINT(-122.724980108402 -39.6808395104955)
+         
+         */
+        let start = CLLocation.init(latitude: -40, longitude: -122.3128663)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:0, lon:-122.3128663, lat: -39.5496725166091)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:45, lon:-121.900752491598, lat: -39.6808395104955)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:90, lon:-121.727352509562, lat: -39.9985210178516)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:135, lon:-121.896906254532, lat: -40.3176638863652)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:180, lon:-122.3128663, lat: -40.4502923882122)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:225, lon:-122.728826345467, lat: -40.3176638863652)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:270, lon:-122.898380090438, lat: -39.9985210178516)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:315, lon:-122.724980108402, lat: -39.6808395104955)
+    }
+    
     // MARK: - CLLocation.earthRadiusMeters
     func testEarthRadiusMeters() {
         // source: https://planetcalc.com/7721/
@@ -944,7 +944,7 @@ class CLLocationExtensionsTests: XCTestCase {
         XCTAssertEqual(CLLocationCoordinate2DMake(-10.0, 0.0).earthRadiusMeters() / 1000.0, 6377.497, accuracy: requiredAccuracyKM)
         XCTAssertEqual(CLLocationCoordinate2DMake(  0.0, 0.0).earthRadiusMeters() / 1000.0, 6378.137, accuracy: requiredAccuracyKM)
     }
-
+    
     // MARK: - PostGIS
     // MARK: coordinateWithBearing
     /*
