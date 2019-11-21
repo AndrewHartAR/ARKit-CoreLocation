@@ -922,7 +922,7 @@ class CLLocationExtensionsTests: XCTestCase {
 
     // MARK: - CLLocation.earthRadiusMeters
     func testEarthRadiusMeters() {
-        // source: https://planetcalc.com/7721/ 
+        // source: https://planetcalc.com/7721/
         let requiredAccuracyKM = 0.001
         XCTAssertEqual(CLLocationCoordinate2DMake( 90.0, 0.0).earthRadiusMeters() / 1000.0, 6356.752, accuracy: requiredAccuracyKM)
         XCTAssertEqual(CLLocationCoordinate2DMake(-90.0, 0.0).earthRadiusMeters() / 1000.0, 6356.752, accuracy: requiredAccuracyKM)
