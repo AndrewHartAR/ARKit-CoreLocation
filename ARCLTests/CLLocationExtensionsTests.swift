@@ -125,6 +125,18 @@ class CLLocationExtensionsTests: XCTestCase {
         
         let translationAngle = (450.0 - atan2(translation.latitudeTranslation, translation.longitudeTranslation).radiansToDegrees).truncatingRemainder(dividingBy: 360.0)
         XCTAssertEqual(translationAngle, bearing, accuracy: maxBearingErrorDegrees, file: file, line: line)
+
+        // A minimal check that our computed translation sends us to the correct destination.
+        // Exercises .translatedLocation(with:) a bit.
+        // This code is here mainly to mark the path for someone to address accuracy later.
+        // I'm using a huge error bound, 1.2 nautical miles of latitude. Test fails if I lower it.
+        // TODO: rewrite .translatedLocation(with:) and .translation(toLocation:) to improve the accuracy.
+        let translatedLocationAccuracy = 0.02
+        let translatedEnd = start.translatedLocation(with: translation)
+        XCTAssertEqual(translatedEnd.coordinate.latitude, endLocation.coordinate.latitude, accuracy: translatedLocationAccuracy,
+                       file: file, line: line)
+        XCTAssertEqual(translatedEnd.coordinate.longitude, endLocation.coordinate.longitude, accuracy: translatedLocationAccuracy,
+                       file: file, line: line)
     }
 
     // MARK: - CLLocation.coordinateWithBearing(bearing:distanceMeters:)

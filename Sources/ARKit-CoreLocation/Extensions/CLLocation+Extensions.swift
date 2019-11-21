@@ -32,6 +32,7 @@ public extension CLLocation {
     /// Translates distance in meters between two locations.
     /// Returns the result as the distance in latitude and distance in longitude.
     /// The approximation used here gives reasonable accuracy out to a radius of 50 km except at high latitudes.
+    /// TODO: rewrite .translation(toLocation:) to improve the accuracy. See unit test notes.
     func translation(toLocation location: CLLocation) -> LocationTranslation {
         let inbetweenLocation = CLLocation(latitude: self.coordinate.latitude, longitude: location.coordinate.longitude)
 
@@ -52,6 +53,7 @@ public extension CLLocation {
                                     altitudeTranslation: altitudeTranslation)
     }
 
+    /// TODO: rewrite .translatedLocation(with:) to improve the accuracy. See unit test notes.
     func translatedLocation(with translation: LocationTranslation) -> CLLocation {
         let latitudeCoordinate = self.coordinate.coordinateWithBearing(bearing: 0,
                                                                        distanceMeters: translation.latitudeTranslation)
