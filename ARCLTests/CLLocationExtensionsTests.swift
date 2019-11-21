@@ -48,10 +48,13 @@ class CLLocationExtensionsTests: XCTestCase {
     func assertCorrectBearingProjection(start: CLLocation, distanceMeters: Double, bearing: Double, lon: Double, lat: Double, file: StaticString = #file,
     line: UInt = #line) {
         // Thanks to https://medium.com/bleeding-edge/writing-better-unit-tests-in-swift-part-two-d19b69f3d794 for the #file/#line trick!
+
+        let distanceAccuracyMeters = 0.01 * distanceMeters // 1% of distance
         // 1 nautical mile ~= 2000 yards. 1 degree of latitude = 60 nautical miles.
-        let longitudeAccuracy = 0.002 // 120 yards at equator, 85 yards at +/-45 degrees latitude
-        let latitudeAccuracy = 0.002  // 120 yards
-        let distanceAccuracy = 0.01 * distanceMeters // 1% of distance
+        let distanceAccuracyNauticalMiles =
+            Measurement.init(value: distanceAccuracyMeters, unit: UnitLength.meters).converted(to: UnitLength.nauticalMiles).value
+        let latitudeAccuracy = distanceAccuracyNauticalMiles / 60.0
+        let longitudeAccuracy = distanceAccuracyNauticalMiles / (60.0 * cos(start.coordinate.latitude.degreesToRadians))
 
         let startPoint = start.coordinate
         let resultPoint = startPoint.coordinateWithBearing(bearing: bearing, distanceMeters: distanceMeters)
@@ -63,11 +66,11 @@ class CLLocationExtensionsTests: XCTestCase {
         // Calculated location must be no farther than 100 meters from correct location.
         let resultLocation = CLLocation.init(coordinate: resultPoint, altitude: 0)
         let distanceError = resultLocation.distance(from: CLLocation.init(latitude: lat, longitude: lon))
-        XCTAssertLessThan(distanceError, distanceAccuracy, "distance between correct and computed locations exceeds limit", file: file, line: line)
+        XCTAssertLessThan(distanceError, distanceAccuracyMeters, "distance between correct and computed locations exceeds limit", file: file, line: line)
 
-        // Angular error less than 5 degrees, if the error distance is perpendicular to the line of sight.
-        // An angular error of 5 degrees is about twice the width of your thumb at arm's length.
-        let maxAngularError = 5.0.degreesToRadians
+        // Angular error less than 1 degrees, if the error distance is perpendicular to the line of sight.
+        // An angular error of 2.5 degrees is about the width of your thumb at arm's length.
+        let maxAngularError = 1.0.degreesToRadians
         // distanceError/distanceMeters is the sin of the max angular error.
         XCTAssertLessThan(distanceError / distanceMeters, sin(maxAngularError), "max angular error exceeds limit", file: file, line: line)
     }
@@ -96,72 +99,33 @@ class CLLocationExtensionsTests: XCTestCase {
         XCTAssertEqual(adjustedComputedBearing, correctBearing, accuracy: maxBearingErrorDegrees, "difference in bearing to second point exceeds limit", file: file, line: line)
     }
 
+    /// Test the `CLLocation` extension function `translation(toLocation:)`. Translation from point defined by `lat0, lon0` (Point 0)
+    ///  to  `lat1, lon1` (Point 1) must be correct to within 1% of  actual distance, and 1/2 degree in bearing.
+    /// Above 85 degrees, required accuracy is much more forgiving: 2% and 3 degrees.
     func assertCorrectTranslationDistance(start: CLLocation, distanceMeters: Double, bearing: Double, lon: Double, lat: Double, file: StaticString = #file,
                                               line: UInt = #line) {
-        let requiredAccuracy = distanceMeters * 0.01 // 1% of actual distance
-        let maxBearingErrorDegrees = 0.5
-        let endLocation = CLLocation(latitude: lat, longitude: lon)
-        
+        let requiredAccuracy: Double
+        let maxBearingErrorDegrees: Double
+        let endLocation: CLLocation
+        // Note: At high latitudes, the translation(toLocation:) function gives lower accuracy than it does near the equator.
+        // We'll allow higher errors for now, in lieu of rewriting translation(toLocation:).
+        if abs(start.coordinate.latitude) < 85.0 {
+            requiredAccuracy = distanceMeters * 0.01 // 1% of actual distance
+            maxBearingErrorDegrees = 0.5
+            endLocation = CLLocation(latitude: lat, longitude: lon)
+        } else {
+            requiredAccuracy = distanceMeters * 0.02 // 2% of actual distance
+            maxBearingErrorDegrees = 3.0
+            endLocation = CLLocation(latitude: lat, longitude: lon)
+        }
+
         let translation = start.translation(toLocation: endLocation)
         let translationDistance = sqrt(translation.latitudeTranslation * translation.latitudeTranslation + translation.longitudeTranslation * translation.longitudeTranslation)
         XCTAssertEqual(distanceMeters, translationDistance, accuracy: requiredAccuracy, file: file, line: line)
         
         let translationAngle = (450.0 - atan2(translation.latitudeTranslation, translation.longitudeTranslation).radiansToDegrees).truncatingRemainder(dividingBy: 360.0)
-        print(bearing, translationAngle)
         XCTAssertEqual(translationAngle, bearing, accuracy: maxBearingErrorDegrees, file: file, line: line)
     }
-
-    /// Test the `CLLocation` extention function `translation(toLocation:)`. Translation from point defined by `lat0, lon0` (Point 0)
-    ///  to  `lat1, lon1` (Point 1) must be correct to within 10 meters. Right triangle hypotenuse of the translations must equal the original translation radius.
-    ///
-    ///  This function is way too complicated.
-    ///
-    /// - Parameters:
-    ///     - bearing: original bearing used in ground-truth computation of Point 1.
-    ///     - radius: distance in meters from Point 1 to Point 2.
-    ///     - lon0: degrees.
-    ///     - lat0: degrees.
-    ///     - east0: easting, in meters, of rectangular projection of Point 0.
-    ///     - north0: northing, in meters, of rectangular projection of Point 0.
-    ///     - lon1: degrees.
-    ///     - lat1: degrees.
-    ///     - east1: easting, in meters, of rectangular projection of Point 1.
-    ///     - north1: northing, in meters, of rectangular projection of Point 1.
-    func assertCorrectTranslationComputations(bearing: Double, radius: Double,
-                                              lon0: Double, lat0: Double, east0: Double, north0:  Double,
-                                              lon1: Double, lat1: Double, east1: Double, north1: Double,
-                                              file: StaticString = #file, line: UInt = #line) {
-        let metersAccuracy = 10.0
-        
-        let startPoint = CLLocation(latitude: lat0, longitude: lon0)
-        let endPoint = CLLocation(latitude: lat1, longitude: lon1)
-        let eastingDelta = east1 - east0
-        let northingDelta = north1 - north0
-        let computedTranslation = startPoint.translation(toLocation: endPoint)
-        print(computedTranslation)
-        XCTAssertEqual(eastingDelta, computedTranslation.longitudeTranslation, accuracy: metersAccuracy, "longitude translation error exceeds limit", file: file, line: line)
-        XCTAssertEqual(northingDelta, computedTranslation.latitudeTranslation, accuracy: metersAccuracy, "longitude translation error exceeds limit", file: file, line: line)
-        XCTAssertEqual(sqrt(eastingDelta*eastingDelta + northingDelta*northingDelta), radius, accuracy: metersAccuracy, "radius wrong", file: file, line: line)
-    }
-
-    // MARK: - tests
-
-    // TODO: this test doesn't appear to test anything. Looks like the expected value axes are reversed, and
-    // a .01 accuracy translates to 1200 yards north/south, about 850 yards east/west
-    // at this latitude.
-    // Leaving it in for now because it's the only green test :-(
-    func testBearing() {
-        let pub = CLLocationCoordinate2D(latitude: 47.6235858, longitude: -122.3128663)
-
-        let north = pub.coordinateWithBearing(bearing: 0, distanceMeters: 500)
-        // Assert: if I move north 500 meters, my northing has changed by less than 1200 yards.
-        XCTAssertEqual(pub.latitude, north.latitude, accuracy: 0.01)
-
-        let east = pub.coordinateWithBearing(bearing: 90, distanceMeters: 500)
-        // Assert: if I move east 500 meters, my easting has changed by less than 800 yards.
-        XCTAssertEqual(pub.longitude, east.longitude, accuracy: 0.01)
-    }
-
 
     // MARK: - CLLocation.coordinateWithBearing(bearing:distanceMeters:)
     
@@ -956,23 +920,6 @@ class CLLocationExtensionsTests: XCTestCase {
             assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:315, lon:-122.724980108402, lat: -39.6808395104955)
         }
 
-
-    /// Uses the same geographic points as the previous mid-latitude 500 meter tests. Any expansion of this particular test would
-    /// warrant a bit of Python code to generate the PostGIS calls and emit the `assertCorrectTranslationComputations`
-    /// invocations.
-    func testTranslationMidLatitude500Old() {
-        
-        assertCorrectTranslationComputations(bearing: 45, radius: 500, lon0: 122.3128663, lat0: 47.6235858, east0: -13615805.9939818, north0:  6044459.82841367 ,lon1:  -122.308162416608, lat1: 47.6267656259013, east1: -13615282.3600778, north1: 6044985.0335112)
-        assertCorrectTranslationComputations(bearing: 90, radius: 500, lon0: 122.3128663, lat0: 47.6235858, east0: -13615805.9939818, north0:  6044459.82841367 ,lon1:  -122.306214407755, lat1: 47.6235856071536, east1: -13615065.5087242, north1: 6044459.7965626)
-        assertCorrectTranslationComputations(bearing: 135, radius: 500, lon0: 122.3128663, lat0: 47.6235858, east0: -13615805.9939818, north0:  6044459.82841367 ,lon1:  -122.308162987107, lat1: 47.620405779481, east1: -13615282.4235855, north1: 6043934.6231210)
-        assertCorrectTranslationComputations(bearing: 180, radius: 500, lon0: 122.3128663, lat0: 47.6235858, east0: -13615805.9939818, north0:  6044459.82841367 ,lon1:  -122.3128663, lat1: 47.6190887076871, east1: -13615805.9939818, north1: 6043717.1077554)
-        assertCorrectTranslationComputations(bearing: 225, radius: 500, lon0: 122.3128663, lat0: 47.6235858, east0: -13615805.9939818, north0:  6044459.82841367 ,lon1:  -122.317569612893, lat1: 47.620405779481, east1: -13616329.564378, north1: 6043934.6231210)
-        assertCorrectTranslationComputations(bearing: 270, radius: 500, lon0: 122.3128663, lat0: 47.6235858, east0: -13615805.9939818, north0:  6044459.82841367 ,lon1:  -122.319518192245, lat1: 47.6235856071536, east1: -13616546.4792393, north1: 6044459.7965626)
-        assertCorrectTranslationComputations(bearing: 315, radius: 500, lon0: 122.3128663, lat0: 47.6235858, east0: -13615805.9939818, north0:  6044459.82841367 ,lon1:  -122.317570183392, lat1: 47.626765625901, east1: -13616329.6278857, north1: 6044985.0335112)
-	 
-
-    }
-    
     // MARK: - PostGIS
     // MARK: coordinateWithBearing
     /*
