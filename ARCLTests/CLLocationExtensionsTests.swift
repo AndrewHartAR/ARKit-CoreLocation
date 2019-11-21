@@ -920,6 +920,31 @@ class CLLocationExtensionsTests: XCTestCase {
             assertCorrectTranslationDistance(start: start, distanceMeters: 50000, bearing:315, lon:-122.724980108402, lat: -39.6808395104955)
         }
 
+    // MARK: - CLLocation.earthRadiusMeters
+    func testEarthRadiusMeters() {
+        // source: https://planetcalc.com/7721/ 
+        let requiredAccuracyKM = 0.001
+        XCTAssertEqual(CLLocationCoordinate2DMake( 90.0, 0.0).earthRadiusMeters() / 1000.0, 6356.752, accuracy: requiredAccuracyKM)
+        XCTAssertEqual(CLLocationCoordinate2DMake(-90.0, 0.0).earthRadiusMeters() / 1000.0, 6356.752, accuracy: requiredAccuracyKM)
+        XCTAssertEqual(CLLocationCoordinate2DMake( 80.0, 0.0).earthRadiusMeters() / 1000.0, 6357.402, accuracy: requiredAccuracyKM)
+        XCTAssertEqual(CLLocationCoordinate2DMake(-80.0, 0.0).earthRadiusMeters() / 1000.0, 6357.402, accuracy: requiredAccuracyKM)
+        XCTAssertEqual(CLLocationCoordinate2DMake( 70.0, 0.0).earthRadiusMeters() / 1000.0, 6359.272, accuracy: requiredAccuracyKM)
+        XCTAssertEqual(CLLocationCoordinate2DMake(-70.0, 0.0).earthRadiusMeters() / 1000.0, 6359.272, accuracy: requiredAccuracyKM)
+        XCTAssertEqual(CLLocationCoordinate2DMake( 60.0, 0.0).earthRadiusMeters() / 1000.0, 6362.132, accuracy: requiredAccuracyKM)
+        XCTAssertEqual(CLLocationCoordinate2DMake(-60.0, 0.0).earthRadiusMeters() / 1000.0, 6362.132, accuracy: requiredAccuracyKM)
+        XCTAssertEqual(CLLocationCoordinate2DMake( 50.0, 0.0).earthRadiusMeters() / 1000.0, 6365.632, accuracy: requiredAccuracyKM)
+        XCTAssertEqual(CLLocationCoordinate2DMake(-50.0, 0.0).earthRadiusMeters() / 1000.0, 6365.632, accuracy: requiredAccuracyKM)
+        XCTAssertEqual(CLLocationCoordinate2DMake( 40.0, 0.0).earthRadiusMeters() / 1000.0, 6369.345, accuracy: requiredAccuracyKM)
+        XCTAssertEqual(CLLocationCoordinate2DMake(-40.0, 0.0).earthRadiusMeters() / 1000.0, 6369.345, accuracy: requiredAccuracyKM)
+        XCTAssertEqual(CLLocationCoordinate2DMake( 30.0, 0.0).earthRadiusMeters() / 1000.0, 6372.824, accuracy: requiredAccuracyKM)
+        XCTAssertEqual(CLLocationCoordinate2DMake(-30.0, 0.0).earthRadiusMeters() / 1000.0, 6372.824, accuracy: requiredAccuracyKM)
+        XCTAssertEqual(CLLocationCoordinate2DMake( 20.0, 0.0).earthRadiusMeters() / 1000.0, 6375.654, accuracy: requiredAccuracyKM)
+        XCTAssertEqual(CLLocationCoordinate2DMake(-20.0, 0.0).earthRadiusMeters() / 1000.0, 6375.654, accuracy: requiredAccuracyKM)
+        XCTAssertEqual(CLLocationCoordinate2DMake( 10.0, 0.0).earthRadiusMeters() / 1000.0, 6377.497, accuracy: requiredAccuracyKM)
+        XCTAssertEqual(CLLocationCoordinate2DMake(-10.0, 0.0).earthRadiusMeters() / 1000.0, 6377.497, accuracy: requiredAccuracyKM)
+        XCTAssertEqual(CLLocationCoordinate2DMake(  0.0, 0.0).earthRadiusMeters() / 1000.0, 6378.137, accuracy: requiredAccuracyKM)
+    }
+
     // MARK: - PostGIS
     // MARK: coordinateWithBearing
     /*
