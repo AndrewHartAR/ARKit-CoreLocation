@@ -264,6 +264,9 @@ extension POIViewController {
         let applePark = buildViewNode(latitude: 37.334807, longitude: -122.009076, altitude: 100, text: "Apple Park")
         nodes.append(applePark)
 
+        let theAlamo = buildViewNode(latitude: 29.4259671, longitude: -98.4861419, altitude: 300, text: "The Alamo")
+        nodes.append(theAlamo)
+
         return nodes
     }
 
@@ -362,11 +365,20 @@ extension POIViewController {
 extension POIViewController: LNTouchDelegate {
 
     func annotationNodeTouched(node: AnnotationNode) {
-        print("AnnotationNode touched \(node)")
+		if let node = node.parent as? LocationNode {
+			let coords = "\(node.location.coordinate.latitude.short) \(node.location.coordinate.longitude.short)"
+			let altitude = "\(node.location.altitude.short)"
+			let tag = node.tag ?? ""
+			nodePositionLabel.text = " Annotation node at \(coords), \(altitude) - \(tag)"
+		}
     }
 
     func locationNodeTouched(node: LocationNode) {
         print("Location node touched - tag: \(node.tag ?? "")")
+		let coords = "\(node.location.coordinate.latitude.short) \(node.location.coordinate.longitude.short)"
+		let altitude = "\(node.location.altitude.short)"
+		let tag = node.tag ?? ""
+		nodePositionLabel.text = " Location node at \(coords), \(altitude) - \(tag)"
     }
 
 }

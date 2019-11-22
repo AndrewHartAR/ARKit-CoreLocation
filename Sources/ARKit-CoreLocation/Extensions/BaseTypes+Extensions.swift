@@ -19,6 +19,9 @@ public extension Double {
     var metersToLongitude: Double {
         return self / (6_356_752.3)
     }
+
+    var short: String { return String(format: "%.02f", self) }
+
 }
 
 public extension Float {
