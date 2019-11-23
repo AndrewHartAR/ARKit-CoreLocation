@@ -366,8 +366,8 @@ extension POIViewController: LNTouchDelegate {
 
     func annotationNodeTouched(node: AnnotationNode) {
 		if let node = node.parent as? LocationNode {
-			let coords = "\(node.location.coordinate.latitude.short) \(node.location.coordinate.longitude.short)"
-			let altitude = "\(node.location.altitude.short)"
+			let coords = "\(node.location.coordinate.latitude.short)° \(node.location.coordinate.longitude.short)°"
+			let altitude = "\(node.location.altitude.short)m"
 			let tag = node.tag ?? ""
 			nodePositionLabel.text = " Annotation node at \(coords), \(altitude) - \(tag)"
 		}
@@ -375,8 +375,8 @@ extension POIViewController: LNTouchDelegate {
 
     func locationNodeTouched(node: LocationNode) {
         print("Location node touched - tag: \(node.tag ?? "")")
-		let coords = "\(node.location.coordinate.latitude.short) \(node.location.coordinate.longitude.short)"
-		let altitude = "\(node.location.altitude.short)"
+		let coords = "\(node.location.coordinate.latitude.short)° \(node.location.coordinate.longitude.short)°"
+		let altitude = "\(node.location.altitude.short)m"
 		let tag = node.tag ?? ""
 		nodePositionLabel.text = " Location node at \(coords), \(altitude) - \(tag)"
     }
