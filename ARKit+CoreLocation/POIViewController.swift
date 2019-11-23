@@ -46,6 +46,7 @@ class POIViewController: UIViewController {
     let displayDebugging = false
 
     let adjustNorthByTappingSidesOfScreen = false
+    let addNodeByTappingScreen = true
 
     class func loadFromStoryboard() -> POIViewController {
         return UIStoryboard(name: "Main", bundle: nil)
@@ -150,7 +151,7 @@ class POIViewController: UIViewController {
             } else if location.x >= view.frame.size.width - 40 && adjustNorthByTappingSidesOfScreen {
                 print("right side of the screen")
                 sceneLocationView.moveSceneHeadingClockwise()
-            } else {
+            } else if addNodeByTappingScreen {
                 let image = UIImage(named: "pin")!
                 let annotationNode = LocationAnnotationNode(location: nil, image: image)
                 annotationNode.scaleRelativeToDistance = false
@@ -264,6 +265,9 @@ extension POIViewController {
         let applePark = buildViewNode(latitude: 37.334807, longitude: -122.009076, altitude: 100, text: "Apple Park")
         nodes.append(applePark)
 
+        let theAlamo = buildViewNode(latitude: 29.4259671, longitude: -98.4861419, altitude: 300, text: "The Alamo")
+        nodes.append(theAlamo)
+
         return nodes
     }
 
@@ -362,11 +366,20 @@ extension POIViewController {
 extension POIViewController: LNTouchDelegate {
 
     func annotationNodeTouched(node: AnnotationNode) {
-        print("AnnotationNode touched \(node)")
+		if let node = node.parent as? LocationNode {
+			let coords = "\(node.location.coordinate.latitude.short)° \(node.location.coordinate.longitude.short)°"
+			let altitude = "\(node.location.altitude.short)m"
+			let tag = node.tag ?? ""
+			nodePositionLabel.text = " Annotation node at \(coords), \(altitude) - \(tag)"
+		}
     }
 
     func locationNodeTouched(node: LocationNode) {
         print("Location node touched - tag: \(node.tag ?? "")")
+		let coords = "\(node.location.coordinate.latitude.short)° \(node.location.coordinate.longitude.short)°"
+		let altitude = "\(node.location.altitude.short)m"
+		let tag = node.tag ?? ""
+		nodePositionLabel.text = " Location node at \(coords), \(altitude) - \(tag)"
     }
 
 }

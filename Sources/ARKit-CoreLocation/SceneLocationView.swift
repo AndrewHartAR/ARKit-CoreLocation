@@ -282,9 +282,9 @@ public extension SceneLocationView {
         }
 
         let coordinates = sender.location(in: touchedView)
-        let hitTest = touchedView.hitTest(coordinates)
+        let hitTests = touchedView.hitTest(coordinates)
 
-        guard let firstHitTest = hitTest.first else {
+        guard let firstHitTest = hitTests.first else {
             return
         }
 

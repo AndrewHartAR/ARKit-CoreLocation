@@ -8,6 +8,10 @@
 
 import Foundation
 
+public extension Double {
+    var short: String { return String(format: "%.02f", self) }
+}
+
 public extension Float {
     var short: String { return String(format: "%.2f", self) }
 }
