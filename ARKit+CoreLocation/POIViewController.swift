@@ -46,7 +46,7 @@ class POIViewController: UIViewController {
     let displayDebugging = false
 
     let adjustNorthByTappingSidesOfScreen = false
-    let addNodeByTappingScreen = false
+    let addNodeByTappingScreen = true
 
     class func loadFromStoryboard() -> POIViewController {
         return UIStoryboard(name: "Main", bundle: nil)
