@@ -46,6 +46,7 @@ class POIViewController: UIViewController {
     let displayDebugging = false
 
     let adjustNorthByTappingSidesOfScreen = false
+    let addNodeByTappingScreen = false
 
     class func loadFromStoryboard() -> POIViewController {
         return UIStoryboard(name: "Main", bundle: nil)
@@ -150,7 +151,7 @@ class POIViewController: UIViewController {
             } else if location.x >= view.frame.size.width - 40 && adjustNorthByTappingSidesOfScreen {
                 print("right side of the screen")
                 sceneLocationView.moveSceneHeadingClockwise()
-            } else {
+            } else if addNodeByTappingScreen {
                 let image = UIImage(named: "pin")!
                 let annotationNode = LocationAnnotationNode(location: nil, image: image)
                 annotationNode.scaleRelativeToDistance = false
