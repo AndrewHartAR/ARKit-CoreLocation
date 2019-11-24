@@ -60,21 +60,19 @@ class POIViewController: UIViewController {
         // swiftlint:disable:next discarded_notification_center_observer
         NotificationCenter.default.addObserver(forName: UIApplication.willResignActiveNotification,
                                                object: nil,
-                                               queue: nil) { _ in
-            self.pauseAnimation()
+                                               queue: nil) { [weak self] _ in
+												self?.pauseAnimation()
         }
         // swiftlint:disable:next discarded_notification_center_observer
         NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification,
                                                object: nil,
-                                               queue: nil) { _ in
-            self.restartAnimation()
+                                               queue: nil) { [weak self] _ in
+												self?.restartAnimation()
         }
 
-        updateInfoLabelTimer = Timer.scheduledTimer(timeInterval: 0.1,
-                                                    target: self,
-                                                    selector: #selector(POIViewController.updateInfoLabel),
-                                                    userInfo: nil,
-                                                    repeats: true)
+		updateInfoLabelTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+			self?.updateInfoLabel()
+		}
 
         // Set to true to display an arrow which points north.
         // Checkout the comments in the property description and on the readme on this.
@@ -97,12 +95,9 @@ class POIViewController: UIViewController {
         mapView.isHidden = !showMap
 
         if showMap {
-            updateUserLocationTimer = Timer.scheduledTimer(
-                timeInterval: 0.5,
-                target: self,
-                selector: #selector(POIViewController.updateUserLocation),
-                userInfo: nil,
-                repeats: true)
+			updateUserLocationTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
+				self?.updateUserLocation()
+			}
 
             routes?.forEach { mapView.addOverlay($0.polyline) }
         }
