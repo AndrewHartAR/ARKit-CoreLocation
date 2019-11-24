@@ -1,5 +1,6 @@
 # Changelog
 - 1.2.2
+   - [PR #249 - Fix Memory Leak](https://github.com/ProjectDent/ARKit-CoreLocation/pull/249)
    - [PR #244 - Improve geodesy calculations and test coverage](https://github.com/ProjectDent/ARKit-CoreLocation/pull/244)
    - [PR #240 - Fix build error, update compiler checks](https://github.com/ProjectDent/ARKit-CoreLocation/pull/240)
    - [PR #232 - Add new demo app to exercise node types and scene parameters](https://github.com/ProjectDent/ARKit-CoreLocation/pull/232)
