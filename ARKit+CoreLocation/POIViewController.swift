@@ -370,11 +370,11 @@ extension POIViewController {
         return LocationAnnotationNode(location: location, view: label)
     }
 
-	func buildLayerNode(latitude: CLLocationDegrees, longitude: CLLocationDegrees,
-						altitude: CLLocationDistance, layer: CALayer) -> LocationAnnotationNode {
+    func buildLayerNode(latitude: CLLocationDegrees, longitude: CLLocationDegrees,
+                        altitude: CLLocationDistance, layer: CALayer) -> LocationAnnotationNode {
         let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let location = CLLocation(coordinate: coordinate, altitude: altitude)
-		return LocationAnnotationNode(location: location, layer: layer)
+        return LocationAnnotationNode(location: location, layer: layer)
     }
 
 }
