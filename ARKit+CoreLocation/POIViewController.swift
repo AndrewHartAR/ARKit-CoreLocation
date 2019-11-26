@@ -265,17 +265,17 @@ extension POIViewController {
 
         let pikesPeakLayer = CATextLayer()
         pikesPeakLayer.frame = CGRect(x: 0, y: 0, width: 200, height: 40)
-		pikesPeakLayer.cornerRadius = 4
-		pikesPeakLayer.fontSize = 14
-		pikesPeakLayer.alignmentMode = .center
-		pikesPeakLayer.foregroundColor = UIColor.black.cgColor
-		pikesPeakLayer.backgroundColor = UIColor.white.cgColor
+        pikesPeakLayer.cornerRadius = 4
+        pikesPeakLayer.fontSize = 14
+        pikesPeakLayer.alignmentMode = .center
+        pikesPeakLayer.foregroundColor = UIColor.black.cgColor
+        pikesPeakLayer.backgroundColor = UIColor.white.cgColor
 
-		_ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-			pikesPeakLayer.string = "Pike's Peak\n" + Date().description
-		}
+        _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+            pikesPeakLayer.string = "Pike's Peak\n" + Date().description
+        }
 
-		let pikesPeak = buildLayerNode(latitude: 38.8405322, longitude: -105.0442048, altitude: 4705, layer: pikesPeakLayer)
+        let pikesPeak = buildLayerNode(latitude: 38.8405322, longitude: -105.0442048, altitude: 4705, layer: pikesPeakLayer)
         nodes.append(pikesPeak)
 
         return nodes
