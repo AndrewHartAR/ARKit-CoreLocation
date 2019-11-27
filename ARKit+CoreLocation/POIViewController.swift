@@ -271,6 +271,9 @@ extension POIViewController {
         pikesPeakLayer.foregroundColor = UIColor.black.cgColor
         pikesPeakLayer.backgroundColor = UIColor.white.cgColor
 
+        // This demo uses a simple periodic timer to showcase dynamic text in a node.  In your implementation,
+        // the view's content will probably be changed as the result of a network fetch or some other asynchronous event.
+
         _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
             pikesPeakLayer.string = "Pike's Peak\n" + Date().description
         }
