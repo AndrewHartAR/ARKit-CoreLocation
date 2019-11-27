@@ -102,41 +102,59 @@ class CLLocationExtensionsTests: XCTestCase {
     /// Test the `CLLocation` extension function `translation(toLocation:)`. Translation from point defined by `lat0, lon0` (Point 0)
     ///  to  `lat1, lon1` (Point 1) must be correct to within 1% of  actual distance, and 1/2 degree in bearing.
     /// Above 85 degrees, required accuracy is much more forgiving: 2% and 3 degrees.
-    func assertCorrectTranslation(start: CLLocation, distanceMeters: Double, bearing: Double, lon: Double, lat: Double, file: StaticString = #file,
+    /// Also tests that reverse translations get back to original spot.
+    func assertCorrectTranslation(start: CLLocation, distanceMeters: Double, bearing: Double, lonTruth: Double, latTruth: Double, file: StaticString = #file,
                                               line: UInt = #line) {
         let requiredAccuracy: Double
         let maxBearingErrorDegrees: Double
-        let endLocation: CLLocation
+
         // Note: At high latitudes, the translation(toLocation:) function gives lower accuracy than it does near the equator.
         // We'll allow higher errors for now, in lieu of rewriting translation(toLocation:).
         if abs(start.coordinate.latitude) < 85.0 {
             requiredAccuracy = distanceMeters * 0.01 // 1% of actual distance
             maxBearingErrorDegrees = 0.5
-            endLocation = CLLocation(latitude: lat, longitude: lon)
         } else {
             requiredAccuracy = distanceMeters * 0.02 // 2% of actual distance
             maxBearingErrorDegrees = 3.0
-            endLocation = CLLocation(latitude: lat, longitude: lon)
         }
+        let trueEndLocation = CLLocation(latitude: latTruth, longitude: lonTruth)
 
-        let translation = start.translation(toLocation: endLocation)
+        let translation = start.translation(toLocation: trueEndLocation)
         let translationDistance = sqrt(translation.latitudeTranslation * translation.latitudeTranslation + translation.longitudeTranslation * translation.longitudeTranslation)
-        XCTAssertEqual(distanceMeters, translationDistance, accuracy: requiredAccuracy, file: file, line: line)
+        XCTAssertEqual(distanceMeters, translationDistance, accuracy: requiredAccuracy, "distance error exceeds \(requiredAccuracy)", file: file, line: line)
         
         let translationAngle = (450.0 - atan2(translation.latitudeTranslation, translation.longitudeTranslation).radiansToDegrees).truncatingRemainder(dividingBy: 360.0)
-        XCTAssertEqual(translationAngle, bearing, accuracy: maxBearingErrorDegrees, file: file, line: line)
+        XCTAssertEqual(translationAngle, bearing, accuracy: maxBearingErrorDegrees, "bearing error exceeds \(maxBearingErrorDegrees)", file: file, line: line)
+
+        let inverseTranslation = trueEndLocation.translation(toLocation: start)
+        // would like to see this below 0.5 meters
+        let translationMetersAccuracy = abs(start.coordinate.latitude) < 85.0 ? 220.0 : 2500.0
+        XCTAssertEqual(translation.latitudeTranslation, inverseTranslation.latitudeTranslation * -1, accuracy: translationMetersAccuracy,
+                       "inverse translation latitude error exceeds \(translationMetersAccuracy) meters", file: file, line: line)
+        XCTAssertEqual(translation.longitudeTranslation, inverseTranslation.longitudeTranslation * -1, accuracy: translationMetersAccuracy,
+                       "inverse translation longitude error exceeds \(translationMetersAccuracy) meters", file: file, line: line)
+        XCTAssertEqual(translation.altitudeTranslation, inverseTranslation.altitudeTranslation * -1, accuracy: translationMetersAccuracy,
+                       "inverse translation altitude error exceeds \(translationMetersAccuracy) meters", file: file, line: line)
 
         // A minimal check that our computed translation sends us to the correct destination.
         // Exercises .translatedLocation(with:) a bit.
         // This code is here mainly to mark the path for someone to address accuracy later.
         // I'm using a huge error bound, 1.2 nautical miles of latitude. Test fails if I lower it.
         // TODO: rewrite .translatedLocation(with:) and .translation(toLocation:) to improve the accuracy.
-        let translatedLocationAccuracy = 0.02
+        let translatedLocationAccuracyDegrees = 0.02 // really ought to be below 0.0001
         let translatedEnd = start.translatedLocation(with: translation)
-        XCTAssertEqual(translatedEnd.coordinate.latitude, endLocation.coordinate.latitude, accuracy: translatedLocationAccuracy,
-                       file: file, line: line)
-        XCTAssertEqual(translatedEnd.coordinate.longitude, endLocation.coordinate.longitude, accuracy: translatedLocationAccuracy,
-                       file: file, line: line)
+        XCTAssertEqual(translatedEnd.coordinate.latitude, trueEndLocation.coordinate.latitude, accuracy: translatedLocationAccuracyDegrees,
+                       "translated latitude error exceeds \(translatedLocationAccuracyDegrees)", file: file, line: line)
+        XCTAssertEqual(translatedEnd.coordinate.longitude, trueEndLocation.coordinate.longitude, accuracy: translatedLocationAccuracyDegrees,
+                       "translated longitude error exceeds \(translatedLocationAccuracyDegrees)", file: file, line: line)
+
+        let endInverseTranslated = translatedEnd.translatedLocation(with: inverseTranslation)
+        XCTAssertEqual(endInverseTranslated.coordinate.latitude, start.coordinate.latitude, accuracy: translatedLocationAccuracyDegrees,
+                       "end's inverse translated latitude more \(translatedLocationAccuracyDegrees) degrees from start", file: file, line: line)
+        XCTAssertEqual(endInverseTranslated.coordinate.longitude, start.coordinate.longitude, accuracy: translatedLocationAccuracyDegrees,
+                       "end's inverse translated longitude more \(translatedLocationAccuracyDegrees) degrees from start", file: file, line: line)
+        XCTAssertEqual(start.distance(from: endInverseTranslated), 0.0, accuracy: translationMetersAccuracy,
+                       "end's inverse translated location more than \(translationMetersAccuracy) meters from start", file: file, line: line)
     }
 
     // MARK: - CLLocation.coordinateWithBearing(bearing:distanceMeters:)
@@ -599,14 +617,14 @@ class CLLocationExtensionsTests: XCTestCase {
          315 | POINT(-122.317570183392 47.6267656259013)
          */
         let start = CLLocation.init(latitude: 47.6235858, longitude: -122.3128663)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing: 0, lon:-122.3128663, lat: 47.6280828887704)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing: 45, lon: -122.308162416608, lat: 47.6267656259013)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing: 90, lon:-122.306214407755, lat: 47.6235856071536)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:135, lon:-122.308162987107, lat: 47.620405779481)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:180, lon:-122.3128663, lat: 47.6190887076871)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:225, lon:-122.317569612893, lat: 47.620405779481)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:270, lon:-122.319518192245, lat: 47.6235856071536)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:315, lon:-122.317570183392, lat: 47.6267656259013)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing: 0, lonTruth:-122.3128663, latTruth: 47.6280828887704)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing: 45, lonTruth: -122.308162416608, latTruth: 47.6267656259013)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing: 90, lonTruth:-122.306214407755, latTruth: 47.6235856071536)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:135, lonTruth:-122.308162987107, latTruth: 47.620405779481)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:180, lonTruth:-122.3128663, latTruth: 47.6190887076871)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:225, lonTruth:-122.317569612893, latTruth: 47.620405779481)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:270, lonTruth:-122.319518192245, latTruth: 47.6235856071536)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:315, lonTruth:-122.317570183392, latTruth: 47.6267656259013)
         }
 
     func testTranslationMidLatitude10000() {
@@ -627,14 +645,14 @@ class CLLocationExtensionsTests: XCTestCase {
               315 | POINT(-122.407052493224 47.6871452814007)
     */
         let start = CLLocation.init(latitude: 47.6235858, longitude: -122.3128663)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing: 0, lon:-122.3128663, lat: 47.7135269024092)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:45, lon:-122.218680106776, lat: 47.6871452814007)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:90, lon:-122.179828585245, lat: 47.6235086614964)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:135, lon:-122.218908306631, lat: 47.5599484713877)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:180, lon:-122.3128663, lat: 47.5336432805981)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:225, lon:-122.406824293369, lat: 47.5599484713877)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:270, lon:-122.445904014755, lat: 47.6235086614964)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:315, lon:-122.407052493224, lat: 47.6871452814007)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing: 0, lonTruth:-122.3128663, latTruth: 47.7135269024092)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:45, lonTruth:-122.218680106776, latTruth: 47.6871452814007)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:90, lonTruth:-122.179828585245, latTruth: 47.6235086614964)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:135, lonTruth:-122.218908306631, latTruth: 47.5599484713877)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:180, lonTruth:-122.3128663, latTruth: 47.5336432805981)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:225, lonTruth:-122.406824293369, latTruth: 47.5599484713877)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:270, lonTruth:-122.445904014755, latTruth: 47.6235086614964)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:315, lonTruth:-122.407052493224, latTruth: 47.6871452814007)
         }
 
     func testTranslationMidLatitude50000() {
@@ -656,14 +674,14 @@ class CLLocationExtensionsTests: XCTestCase {
 
          */
         let start = CLLocation.init(latitude: 47.6235858, longitude: -122.3128663)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:0, lon:-122.3128663, lat: 48.0732771512326)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:45, lon:-121.839637614568, lat: 47.9405975715807)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:90, lon:-121.647693382546, lat: 47.6216573806133)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:135, lon:-121.845342666805, lat: 47.3046277647178)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:180, lon:-122.3128663, lat: 47.1738590246445)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:225, lon:-122.780389933195, lat: 47.3046277647178)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:270, lon:-122.978039217454, lat: 47.6216573806133)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:315, lon:-122.786094985432, lat: 47.9405975715807)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:0, lonTruth:-122.3128663, latTruth: 48.0732771512326)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:45, lonTruth:-121.839637614568, latTruth: 47.9405975715807)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:90, lonTruth:-121.647693382546, latTruth: 47.6216573806133)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:135, lonTruth:-121.845342666805, latTruth: 47.3046277647178)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:180, lonTruth:-122.3128663, latTruth: 47.1738590246445)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:225, lonTruth:-122.780389933195, latTruth: 47.3046277647178)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:270, lonTruth:-122.978039217454, latTruth: 47.6216573806133)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:315, lonTruth:-122.786094985432, latTruth: 47.9405975715807)
     }
 
     func testTranslationFarNorth500() {
@@ -685,14 +703,14 @@ class CLLocationExtensionsTests: XCTestCase {
          
          */
         let start = CLLocation.init(latitude: 85, longitude: -122.3128663)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:0, lon:-122.3128663, lat: 85.0044768604693)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:45, lon:-122.27652381425, lat: 85.003164618309)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:90, lon:-122.261502726378, lat: 84.9999980009648)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:135, lon:-122.276569684625, lat: 84.9968333823477)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:180, lon:-122.3128663, lat: 84.9955231389167)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:225, lon:-122.349162915375, lat: 84.9968333823477)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:270, lon:-122.364229873622, lat: 84.9999980009648)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:315, lon:-122.34920878575, lat: 85.003164618309)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:0, lonTruth:-122.3128663, latTruth: 85.0044768604693)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:45, lonTruth:-122.27652381425, latTruth: 85.003164618309)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:90, lonTruth:-122.261502726378, latTruth: 84.9999980009648)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:135, lonTruth:-122.276569684625, latTruth: 84.9968333823477)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:180, lonTruth:-122.3128663, latTruth: 84.9955231389167)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:225, lonTruth:-122.349162915375, latTruth: 84.9968333823477)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:270, lonTruth:-122.364229873622, latTruth: 84.9999980009648)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:315, lonTruth:-122.34920878575, latTruth: 85.003164618309)
     }
     
     func testTranslationFarNorth10000() {
@@ -714,14 +732,14 @@ class CLLocationExtensionsTests: XCTestCase {
          
          */
         let start = CLLocation.init(latitude: 85, longitude: -122.3128663)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:0, lon:-122.3128663, lat: 85.0895370934438)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:45, lon:-121.57722387973, lat: 85.0629073941419)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:90, lon:-121.285703772561, lat: 84.9992004496645)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:135, lon:-121.595572036496, lat: 84.936292772585)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:180, lon:-122.3128663, lat: 84.9104626609434)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:225, lon:-123.030160563504, lat: 84.936292772585)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:270, lon:-123.340028827439, lat: 84.9992004496645)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:315, lon:-123.04850872027, lat: 85.0629073941419)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:0, lonTruth:-122.3128663, latTruth: 85.0895370934438)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:45, lonTruth:-121.57722387973, latTruth: 85.0629073941419)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:90, lonTruth:-121.285703772561, latTruth: 84.9992004496645)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:135, lonTruth:-121.595572036496, latTruth: 84.936292772585)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:180, lonTruth:-122.3128663, latTruth: 84.9104626609434)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:225, lonTruth:-123.030160563504, latTruth: 84.936292772585)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:270, lonTruth:-123.340028827439, latTruth: 84.9992004496645)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:315, lonTruth:-123.04850872027, latTruth: 85.0629073941419)
     }
     
     func testTranslationFarNorth50000() {
@@ -743,14 +761,14 @@ class CLLocationExtensionsTests: XCTestCase {
          
          */
         let start = CLLocation.init(latitude: 85, longitude: -122.3128663)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:0, lon:-122.3128663, lat: 85.447683098238)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:45, lon:-118.441917077449, lat: 85.3059018482087)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:90, lon:-117.190097318035, lat: 84.9800494382655)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:135, lon:-118.900615692524, lat: 84.6740447063519)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:180, lon:-122.3128663, lat: 84.5523107615602)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:225, lon:-125.725116907476, lat: 84.6740447063519)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:270, lon:-127.435635281965, lat: 84.9800494382655)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:315, lon:-126.183815522551, lat: 85.3059018482087)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:0, lonTruth:-122.3128663, latTruth: 85.447683098238)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:45, lonTruth:-118.441917077449, latTruth: 85.3059018482087)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:90, lonTruth:-117.190097318035, latTruth: 84.9800494382655)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:135, lonTruth:-118.900615692524, latTruth: 84.6740447063519)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:180, lonTruth:-122.3128663, latTruth: 84.5523107615602)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:225, lonTruth:-125.725116907476, latTruth: 84.6740447063519)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:270, lonTruth:-127.435635281965, latTruth: 84.9800494382655)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:315, lonTruth:-126.183815522551, latTruth: 85.3059018482087)
     }
     
     func testTranslationLowLatitude500() {
@@ -773,14 +791,14 @@ class CLLocationExtensionsTests: XCTestCase {
          
          */
         let start = CLLocation.init(latitude: 5, longitude: -122.3128663)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:0, lon:-122.3128663, lat: 5.00452150216546)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:45, lon:-122.309678209556, lat: 5.00319717715266)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:90, lon:-122.308357681126, lat: 4.99999998449507)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:135, lon:-122.309678240478, lat: 4.99680280703131)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:180, lon:-122.3128663, lat: 4.99547849721233)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:225, lon:-122.316054359522, lat: 4.99680280703131)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:270, lon:-122.317374918874, lat: 4.99999998449507)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:315, lon:-122.316054390444, lat: 5.00319717715266)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:0, lonTruth:-122.3128663, latTruth: 5.00452150216546)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:45, lonTruth:-122.309678209556, latTruth: 5.00319717715266)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:90, lonTruth:-122.308357681126, latTruth: 4.99999998449507)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:135, lonTruth:-122.309678240478, latTruth: 4.99680280703131)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:180, lonTruth:-122.3128663, latTruth: 4.99547849721233)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:225, lonTruth:-122.316054359522, latTruth: 4.99680280703131)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:270, lonTruth:-122.317374918874, latTruth: 4.99999998449507)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:315, lonTruth:-122.316054390444, latTruth: 5.00319717715266)
     }
     
     func testTranslationLowLatitude10000() {
@@ -803,14 +821,14 @@ class CLLocationExtensionsTests: XCTestCase {
          
          */
         let start = CLLocation.init(latitude: 5, longitude: -122.3128663)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:0, lon:-122.3128663, lat: 5.09042992434887)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:45, lon:-122.249098589414, lat: 5.06394052429685)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:90, lon:-122.222693923089, lat: 4.99999379803119)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:135, lon:-122.249110958015, lat: 4.93605314928675)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:180, lon:-122.3128663, lat: 4.90956982676742)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:225, lon:-122.376621641985, lat: 4.93605314928675)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:270, lon:-122.403038676911, lat: 4.99999379803119)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:315, lon:-122.376634010586, lat: 5.06394052429685)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:0, lonTruth:-122.3128663, latTruth: 5.09042992434887)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:45, lonTruth:-122.249098589414, latTruth: 5.06394052429685)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:90, lonTruth:-122.222693923089, latTruth: 4.99999379803119)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:135, lonTruth:-122.249110958015, latTruth: 4.93605314928675)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:180, lonTruth:-122.3128663, latTruth: 4.90956982676742)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:225, lonTruth:-122.376621641985, latTruth: 4.93605314928675)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:270, lonTruth:-122.403038676911, latTruth: 4.99999379803119)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:315, lonTruth:-122.376634010586, latTruth: 5.06394052429685)
     }
     
     func testTranslationLowLatitude50000() {
@@ -833,14 +851,14 @@ class CLLocationExtensionsTests: XCTestCase {
          
          */
         let start = CLLocation.init(latitude: 5, longitude: -122.3128663)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:0, lon:-122.3128663, lat: 5.4521470438799)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:45, lon:-121.99390085599, lat: 5.31963770686063)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:90, lon:-121.862004483307, lat: 4.99984495156423)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:135, lon:-121.994210074066, lat: 4.68020413013662)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:180, lon:-122.3128663, lat: 4.54784673415444)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:225, lon:-122.631522525934, lat: 4.68020413013662)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:270, lon:-122.763728116693, lat: 4.99984495156423)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:315, lon:-122.63183174401, lat: 5.31963770686063)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:0, lonTruth:-122.3128663, latTruth: 5.4521470438799)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:45, lonTruth:-121.99390085599, latTruth: 5.31963770686063)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:90, lonTruth:-121.862004483307, latTruth: 4.99984495156423)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:135, lonTruth:-121.994210074066, latTruth: 4.68020413013662)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:180, lonTruth:-122.3128663, latTruth: 4.54784673415444)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:225, lonTruth:-122.631522525934, latTruth: 4.68020413013662)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:270, lonTruth:-122.763728116693, latTruth: 4.99984495156423)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:315, lonTruth:-122.63183174401, latTruth: 5.31963770686063)
     }
     
     func testTranslationSouthernHemisphere500() {
@@ -862,14 +880,14 @@ class CLLocationExtensionsTests: XCTestCase {
          
          */
         let start = CLLocation.init(latitude: -40, longitude: -122.3128663)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:0, lon:-122.3128663, lat: -39.9954968987312)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:45, lon:-122.308726225035, lat: -39.9968157529746)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:90, lon:-122.30701107789, lat: -39.9999998520994)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:135, lon:-122.308725840415, lat: -40.00318409737)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:180, lon:-122.3128663, lat: -40.0045030977592)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:225, lon:-122.317006759585, lat: -40.00318409737)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:270, lon:-122.318721522109, lat: -39.9999998520994)
-        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:315, lon:-122.317006374965, lat: -39.9968157529746)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:0, lonTruth:-122.3128663, latTruth: -39.9954968987312)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:45, lonTruth:-122.308726225035, latTruth: -39.9968157529746)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:90, lonTruth:-122.30701107789, latTruth: -39.9999998520994)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:135, lonTruth:-122.308725840415, latTruth: -40.00318409737)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:180, lonTruth:-122.3128663, latTruth: -40.0045030977592)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:225, lonTruth:-122.317006759585, latTruth: -40.00318409737)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:270, lonTruth:-122.318721522109, latTruth: -39.9999998520994)
+        assertCorrectTranslation(start: start, distanceMeters: 500, bearing:315, lonTruth:-122.317006374965, latTruth: -39.9968157529746)
     }
     
     func testTranslationSouthernHemisphere10000() {
@@ -892,14 +910,14 @@ class CLLocationExtensionsTests: XCTestCase {
          
          */
         let start = CLLocation.init(latitude: -40, longitude: -122.3128663)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:0, lon:-122.3128663, lat: -39.9099373079262)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:45, lon:-122.230137797083, lat: -39.9362866650944)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:90, lon:-122.195761925015, lat: -39.9999408398175)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:135, lon:-122.229983949109, lat: -40.0636534726882)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:180, lon:-122.3128663, lat: -40.0900612882388)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:225, lon:-122.395748650891, lat: -40.0636534726882)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:270, lon:-122.429970674985, lat: -39.9999408398175)
-        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:315, lon:-122.395594802917, lat: -39.9362866650943)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:0, lonTruth:-122.3128663, latTruth: -39.9099373079262)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:45, lonTruth:-122.230137797083, latTruth: -39.9362866650944)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:90, lonTruth:-122.195761925015, latTruth: -39.9999408398175)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:135, lonTruth:-122.229983949109, latTruth: -40.0636534726882)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:180, lonTruth:-122.3128663, latTruth: -40.0900612882388)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:225, lonTruth:-122.395748650891, latTruth: -40.0636534726882)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:270, lonTruth:-122.429970674985, latTruth: -39.9999408398175)
+        assertCorrectTranslation(start: start, distanceMeters: 10000, bearing:315, lonTruth:-122.395594802917, latTruth: -39.9362866650943)
     }
     
     func testTranslationSouthernHemisphere50000() {
@@ -922,14 +940,14 @@ class CLLocationExtensionsTests: XCTestCase {
          
          */
         let start = CLLocation.init(latitude: -40, longitude: -122.3128663)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:0, lon:-122.3128663, lat: -39.5496725166091)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:45, lon:-121.900752491598, lat: -39.6808395104955)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:90, lon:-121.727352509562, lat: -39.9985210178516)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:135, lon:-121.896906254532, lat: -40.3176638863652)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:180, lon:-122.3128663, lat: -40.4502923882122)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:225, lon:-122.728826345467, lat: -40.3176638863652)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:270, lon:-122.898380090438, lat: -39.9985210178516)
-        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:315, lon:-122.724980108402, lat: -39.6808395104955)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:0, lonTruth:-122.3128663, latTruth: -39.5496725166091)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:45, lonTruth:-121.900752491598, latTruth: -39.6808395104955)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:90, lonTruth:-121.727352509562, latTruth: -39.9985210178516)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:135, lonTruth:-121.896906254532, latTruth: -40.3176638863652)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:180, lonTruth:-122.3128663, latTruth: -40.4502923882122)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:225, lonTruth:-122.728826345467, latTruth: -40.3176638863652)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:270, lonTruth:-122.898380090438, latTruth: -39.9985210178516)
+        assertCorrectTranslation(start: start, distanceMeters: 50000, bearing:315, lonTruth:-122.724980108402, latTruth: -39.6808395104955)
     }
     
     // MARK: - CLLocation.earthRadiusMeters
