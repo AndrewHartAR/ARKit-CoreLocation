@@ -263,6 +263,24 @@ extension POIViewController {
         let theAlamo = buildViewNode(latitude: 29.4259671, longitude: -98.4861419, altitude: 300, text: "The Alamo")
         nodes.append(theAlamo)
 
+        let pikesPeakLayer = CATextLayer()
+        pikesPeakLayer.frame = CGRect(x: 0, y: 0, width: 200, height: 40)
+        pikesPeakLayer.cornerRadius = 4
+        pikesPeakLayer.fontSize = 14
+        pikesPeakLayer.alignmentMode = .center
+        pikesPeakLayer.foregroundColor = UIColor.black.cgColor
+        pikesPeakLayer.backgroundColor = UIColor.white.cgColor
+
+        // This demo uses a simple periodic timer to showcase dynamic text in a node.  In your implementation,
+        // the view's content will probably be changed as the result of a network fetch or some other asynchronous event.
+
+        _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+            pikesPeakLayer.string = "Pike's Peak\n" + Date().description
+        }
+
+        let pikesPeak = buildLayerNode(latitude: 38.8405322, longitude: -105.0442048, altitude: 4705, layer: pikesPeakLayer)
+        nodes.append(pikesPeak)
+
         return nodes
     }
 
@@ -354,6 +372,14 @@ extension POIViewController {
         label.textAlignment = .center
         return LocationAnnotationNode(location: location, view: label)
     }
+
+    func buildLayerNode(latitude: CLLocationDegrees, longitude: CLLocationDegrees,
+                        altitude: CLLocationDistance, layer: CALayer) -> LocationAnnotationNode {
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let location = CLLocation(coordinate: coordinate, altitude: altitude)
+        return LocationAnnotationNode(location: location, layer: layer)
+    }
+
 }
 
 // MARK: - LNTouchDelegate
