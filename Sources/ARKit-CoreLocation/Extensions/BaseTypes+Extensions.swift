@@ -10,10 +10,6 @@ import Foundation
 
 public extension Double {
     var short: String { return String(format: "%.02f", self) }
-	var feetToMeters: Double { return self * 0.3048 }
-	var metersToFeet: Double { return self * 3.28084 }
-	var nauticalMilesToMeters: Double { return self * 1852.0 }
-	var metersToNauticalMiles: Double { return self / 1852.0 }
 }
 
 public extension Float {

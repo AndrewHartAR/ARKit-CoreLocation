@@ -20,7 +20,7 @@ class POIViewController: UIViewController {
     @IBOutlet weak var nodePositionLabel: UILabel!
 
     @IBOutlet var contentView: UIView!
-	let sceneLocationView = SceneLocationView(trackingType: .orientationTracking)
+    let sceneLocationView = SceneLocationView()
 
     var userAnnotation: MKPointAnnotation?
     var locationEstimateAnnotation: MKPointAnnotation?
@@ -46,7 +46,7 @@ class POIViewController: UIViewController {
     let displayDebugging = false
 
     let adjustNorthByTappingSidesOfScreen = false
-    let addNodeByTappingScreen = false
+    let addNodeByTappingScreen = true
 
     class func loadFromStoryboard() -> POIViewController {
         return UIStoryboard(name: "Main", bundle: nil)
@@ -230,11 +230,8 @@ extension POIViewController {
                 return box
             }
         } else {
-            // 3. If not, then show the fixed demo objects
+            // 3. If not, then show the
             buildDemoData().forEach {
-                sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: $0)
-            }
-            buildNewDemoData().forEach {
                 sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: $0)
             }
         }
@@ -268,27 +265,6 @@ extension POIViewController {
 
         return nodes
     }
-
-    /// Builds the location annotations for a few random objects, scattered across the country
-    ///
-    /// - Returns: an array of location nodes.
-    func buildNewDemoData() -> [LocationNode] {
-		var nodes: [LocationNode] = []
-
-		let currentCoordinates = sceneLocationView.sceneLocationManager.currentLocation!.coordinate
-
-		let greenCircle2D = currentCoordinates.coordinateWithBearing(bearing: 20, distanceMeters: (6.0).nauticalMilesToMeters)
-		let greenCircle3D = CLLocation(coordinate: greenCircle2D, altitude: 300)
-		let greenCircleNode = buildSphereNode(location: greenCircle3D, radius: (1.0).nauticalMilesToMeters, color: .green)
-        nodes.append(greenCircleNode)
-
-		let yellowCircle2D = currentCoordinates.coordinateWithBearing(bearing: 350, distanceMeters: (6.0).nauticalMilesToMeters)
-		let yellowCircle3D = CLLocation(coordinate: yellowCircle2D, altitude: 300)
-		let yellowCircleNode = buildSphereNode(location: yellowCircle3D, radius: (1.0).nauticalMilesToMeters, color: .yellow)
-        nodes.append(yellowCircleNode)
-
-        return nodes
-	} // buildNewDemoData() -? [LocationNode]
 
     @objc
     func updateUserLocation() {
@@ -366,10 +342,6 @@ extension POIViewController {
         let location = CLLocation(coordinate: coordinate, altitude: altitude)
         let image = UIImage(named: imageName)!
         return LocationAnnotationNode(location: location, image: image)
-    }
-
-    func buildSphereNode(location: CLLocation, radius: CLLocationDistance, color: UIColor) -> SphereNode {
-        return SphereNode(location: location, radius: radius, color: color)
     }
 
     func buildViewNode(latitude: CLLocationDegrees, longitude: CLLocationDegrees,
