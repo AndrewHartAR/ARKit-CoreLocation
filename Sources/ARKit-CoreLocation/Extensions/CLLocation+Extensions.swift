@@ -60,7 +60,8 @@ public extension CLLocation {
 
         let longitudeCoordinate = self.coordinate.coordinateWithBearing(bearing: 90,
                                                                         distanceMeters: translation.longitudeTranslation)
-
+        // NB: Great Circle geometry means that abs(longitudeCoordinate.latitude) < abs(self.coordinate.latitude)
+        // (or equal, if self is on the equator).
         let coordinate = CLLocationCoordinate2D( latitude: latitudeCoordinate.latitude, longitude: longitudeCoordinate.longitude)
 
         let altitude = self.altitude + translation.altitudeTranslation
