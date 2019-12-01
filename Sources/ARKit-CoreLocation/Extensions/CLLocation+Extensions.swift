@@ -93,7 +93,7 @@ public extension CLLocation {
 
     /// Returns the midpoint between two locations
     /// Note: Only usable for short distances like MKPolyline segments
-    func midPoint(to: CLLocation) -> CLLocation {
+    func approxMidpoint(to: CLLocation) -> CLLocation {
         return CLLocation(
             coordinate: CLLocationCoordinate2D(
                 latitude: (coordinate.latitude + to.coordinate.latitude) / 2,
@@ -101,7 +101,7 @@ public extension CLLocation {
             ),
             altitude: (altitude + to.altitude) / 2
         )
-    } // midPoint
+    } // approxMidpoint(to:)
 
 }
 
