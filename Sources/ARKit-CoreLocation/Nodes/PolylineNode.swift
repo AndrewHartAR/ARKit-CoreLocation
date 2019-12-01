@@ -73,6 +73,7 @@ private extension PolylineNode {
         for i in 0 ..< polyline.pointCount - 1 {
             let currentLocation = CLLocation(coordinate: points[i].coordinate, altitude: altitude)
             let nextLocation = CLLocation(coordinate: points[i + 1].coordinate, altitude: altitude)
+            let midLocation = currentLocation.approxMidpoint(to: nextLocation)
 
             let distance = currentLocation.distance(from: nextLocation)
 
@@ -82,13 +83,10 @@ private extension PolylineNode {
 
             let bearing = -currentLocation.bearing(between: nextLocation)
 
-            // This pivot translation in the +Z direction will cause the box to be
-            // rendered a bit away from its true location. The actual factor should
-            // probably be a parameter or property of some sort.
-            boxNode.pivot = SCNMatrix4MakeTranslation(0, 0, 0.5 * Float(distance))
+            // Orient the line to point from currentLoction to nextLocation
             boxNode.eulerAngles.y = Float(bearing).degreesToRadians
 
-            let locationNode = LocationNode(location: currentLocation, tag: tag)
+            let locationNode = LocationNode(location: midLocation, tag: tag)
             locationNode.addChildNode(boxNode)
 
             locationNodes.append(locationNode)
