@@ -1,5 +1,6 @@
 # Changelog
 - 1.3.0
+   - [PR #258 - add Jazzy-generated documentation](https://github.com/ProjectDent/ARKit-CoreLocation/pull/258)
    - [PR #255 - Fix minor error with placement of route steps](https://github.com/ProjectDent/ARKit-CoreLocation/pull/255)
    - [PR #249 - Fix Memory Leak](https://github.com/ProjectDent/ARKit-CoreLocation/pull/249)
    - [PR #244 - Improve geodesy calculations and test coverage](https://github.com/ProjectDent/ARKit-CoreLocation/pull/244)
