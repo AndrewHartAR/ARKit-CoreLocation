@@ -32,6 +32,8 @@ protocol SceneLocationManagerDelegate: class {
     func didRemoveSceneLocationEstimate(position: SCNVector3, location: CLLocation)
 }
 
+/// Responsible for merging updates from `LocationManager` with observations from `ARKit` sensors,
+/// to produce a refined estimate of device's location (latitude/longitude/elevation).
 public final class SceneLocationManager {
     weak var sceneLocationDelegate: SceneLocationManagerDelegate?
 
