@@ -73,7 +73,7 @@ private extension PolylineNode {
         for i in 0 ..< polyline.pointCount - 1 {
             let currentLocation = CLLocation(coordinate: points[i].coordinate, altitude: altitude)
             let nextLocation = CLLocation(coordinate: points[i + 1].coordinate, altitude: altitude)
-            let midLoction = midPoint(currentLocation, nextLocation)
+			let midLoction = currentLocation.midPoint(to: nextLocation)
 
             let distance = currentLocation.distance(from: nextLocation)
 
@@ -92,15 +92,5 @@ private extension PolylineNode {
             locationNodes.append(locationNode)
         }
     }
-
-    func midPoint (_ first: CLLocation, _ second: CLLocation) -> CLLocation {
-        return CLLocation(
-            coordinate: CLLocationCoordinate2D(
-                latitude: (first.coordinate.latitude + second.coordinate.latitude) / 2,
-                longitude: (first.coordinate.longitude + second.coordinate.longitude) / 2
-            ),
-            altitude: (first.altitude + second.altitude) / 2
-        )
-    } // midPoint(_:_:)
 
 }

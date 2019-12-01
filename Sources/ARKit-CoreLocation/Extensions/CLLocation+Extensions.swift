@@ -90,6 +90,19 @@ public extension CLLocation {
         let x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(dLon)
         return atan2(y, x).radiansToDegrees
     }
+
+    /// Returns the midpoint between two locations
+    /// Note: Only usable for short distances like MKPolyline segments
+    func midPoint(to: CLLocation) -> CLLocation {
+        return CLLocation(
+            coordinate: CLLocationCoordinate2D(
+                latitude: (coordinate.latitude + to.coordinate.latitude) / 2,
+                longitude: (coordinate.longitude + to.coordinate.longitude) / 2
+            ),
+            altitude: (altitude + to.altitude) / 2
+        )
+    } // midPoint
+
 }
 
 public extension CLLocation {
