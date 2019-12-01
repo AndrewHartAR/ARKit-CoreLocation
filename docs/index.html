@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ARCL  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="ARCL  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">ARCL 1.3.0 Docs</a> (100% documented)</p>
+        <p class="header-right"><a href="https://github.com/ProjectDent/ARKit-CoreLocation"><img src="img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub%2Ecom%2FProjectDent%2FARKit%2DCoreLocation%2Fdocsets%2FARCL%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">ARCL Reference</a>
+        <img id="carat" src="img/carat.png" />
+        ARCL  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/AnnotationNode.html">AnnotationNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/LocationAnnotationNode.html">LocationAnnotationNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/LocationManager.html">LocationManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/LocationNode.html">LocationNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/PolylineNode.html">PolylineNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SceneLocationEstimate.html">SceneLocationEstimate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SceneLocationManager.html">SceneLocationManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SceneLocationView.html">SceneLocationView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SceneLocationView/ARTrackingType.html">– ARTrackingType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/LocationEstimateMethod.html">LocationEstimateMethod</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/ScalingScheme.html">ScalingScheme</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Extensions/CLLocation.html">CLLocation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/CLLocationCoordinate2D.html">CLLocationCoordinate2D</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/Double.html">Double</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/Float.html">Float</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/FloatingPoint.html">FloatingPoint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/Int.html">Int</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/SCNVector3.html">SCNVector3</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/UIView.html">UIView</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/LNTouchDelegate.html">LNTouchDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SceneLocationViewDelegate.html">SceneLocationViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SceneLocationViewEstimateDelegate.html">SceneLocationViewEstimateDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SceneTrackingDelegate.html">SceneTrackingDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/AttributedType.html">AttributedType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/LocationTranslation.html">LocationTranslation</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:4ARCL10BoxBuildera">BoxBuilder</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <p><img src="https://github.com/ProjectDent/ARKit-CoreLocation/blob/master/arkit.png" alt="ARKit + CoreLocation"></p>
+
+<p align="center">
+    <a href="https://travis-ci.org/ProjectDent/ARKit-CoreLocation">
+        <img src="https://travis-ci.org/ProjectDent/ARKit-CoreLocation.svg?branch=develop" alt="CI Status">
+    </a>
+    <a href="https://opensource.org/licenses/MIT">
+        <img src="https://img.shields.io/github/license/ProjectDent/ARKit-CoreLocation.svg"
+             alt="MIT License">
+    </a>
+    <a href="https://cocoapods.org/pods/ARCL">
+        <img src="https://img.shields.io/cocoapods/v/ARCL.svg?style=flat"
+             alt="Pods Version">
+    </a>
+    <a href="https://github.com/Carthage/Carthage">
+        <img src="https://img.shields.io/badge/Carthage-compatible-brightgreen.svg?style=flat"
+             alt="Carthage Compatible">
+    </a>
+</p>
+
+<p><strong>ARKit</strong>: Uses camera and motion data to map out the local world as you move around.</p>
+
+<p><strong>CoreLocation</strong>: Uses wifi and GPS data to determine your global location, with a low degree of accuracy.</p>
+
+<p><strong>ARKit + CoreLocation</strong>: Combines the high accuracy of AR with the scale of GPS data.</p>
+
+<p><img src="https://github.com/ProjectDent/ARKit-CoreLocation/blob/master/giphy-1.gif" alt="Points of interest demo"> <img src="https://github.com/ProjectDent/ARKit-CoreLocation/blob/master/giphy-2.gif" alt="Navigation demo"></p>
+
+<p>The potential for combining these technologies is huge, with so many potential applications across many different areas. This library comes with two major features:</p>
+
+<ul>
+<li>Allow items to be placed within the AR world using real-world coordinates.</li>
+<li>Dramatically improved location accuracy, using recent location data points combined with knowledge about movement through the AR world.</li>
+</ul>
+
+<p>The improved location accuracy is currently in an “experimental” phase, but could be the most important component.</p>
+
+<p>Because there’s still work to be done there, and in other areas, this project will best be served by an open community, more than what GitHub Issues would allow us. So I’m opening up a Slack group that anyone can join, to discuss the library, improvements to it, and their own work.</p>
+
+<p><strong><a href="https://join.slack.com/t/arcl-dev/shared_invite/enQtNTk4OTg4MzU0MTEyLTkyNGZjMDc3NDZlOGZmZTVlNWY1MWYxODg1MTA4ZWMzOThjZDM0ZmY1NGZlZjNiYmE1OGM3MDFkZTNjNjI5ODc">Join the Slack community</a></strong></p>
+<h2 id='requirements' class='heading'>Requirements</h2>
+
+<p>ARKit requires iOS 11, and supports the following devices:</p>
+
+<ul>
+<li>iPhone 6S and upwards</li>
+<li>iPhone SE</li>
+<li>iPad (2017)</li>
+<li>All iPad Pro models</li>
+</ul>
+
+<p>iOS 11 can be downloaded from Apple’s Developer website.</p>
+<h2 id='usage' class='heading'>Usage</h2>
+
+<p>This library contains the ARKit + CoreLocation framework, as well as a demo application similar to <a href="https://twitter.com/AndrewProjDent/status/886916872683343872">Demo 1</a>.</p>
+
+<p><a href="#true-north-calibration">Be sure to read the section on True North calibration.</a></p>
+<h3 id='building-with-swift' class='heading'>Building with Swift:</h3>
+<pre class="highlight shell"><code>swift build <span class="se">\</span>
+        <span class="nt">-Xswiftc</span> <span class="s2">"-sdk"</span> <span class="nt">-Xswiftc</span> <span class="s2">"</span><span class="sb">`</span>xcrun <span class="nt">--sdk</span> iphonesimulator <span class="nt">--show-sdk-path</span><span class="sb">`</span><span class="s2">"</span> <span class="se">\</span>
+        <span class="nt">-Xswiftc</span> <span class="s2">"-target"</span> <span class="nt">-Xswiftc</span> <span class="s2">"x86_64-apple-ios12.1-simulator"</span>
+</code></pre>
+<h3 id='setting-up-using-swift-package-manager' class='heading'>Setting up using Swift Package Manager</h3>
+<h3 id='setting-up-using-cocoapods' class='heading'>Setting up using CocoaPods</h3>
+
+<ol>
+<li>Add to your podfile:</li>
+</ol>
+
+<p><code>pod &#39;ARCL&#39;</code></p>
+
+<ol>
+<li>In Terminal, navigate to your project folder, then:</li>
+</ol>
+
+<p><code>pod update</code></p>
+
+<p><code>pod install</code></p>
+
+<ol>
+<li>Add <code>NSCameraUsageDescription</code> and <code>NSLocationWhenInUseUsageDescription</code> to plist with a brief explanation (see demo project for an example)</li>
+</ol>
+<h3 id='setting-up-manually' class='heading'>Setting up manually</h3>
+
+<ol>
+<li>Add all files from the <code>ARKit+CoreLocation/Source</code> directory to your project.</li>
+<li>Import ARKit, SceneKit, CoreLocation and MapKit.</li>
+<li>Add <code>NSCameraUsageDescription</code> and <code>NSLocationWhenInUseUsageDescription</code> to plist with a brief explanation (see demo project for an example)</li>
+</ol>
+<h3 id='quick-start-guide' class='heading'>Quick start guide</h3>
+
+<p>To place a pin over a building, for example Canary Wharf in London, we’ll use the main class that ARCL is built around - <code><a href="Classes/SceneLocationView.html">SceneLocationView</a></code>.</p>
+
+<p>First, import ARCL and CoreLocation, then declare SceneLocationView as a property:</p>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">ARCL</span>
+<span class="kd">import</span> <span class="kt">CoreLocation</span>
+
+<span class="kd">class</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
+  <span class="k">var</span> <span class="nv">sceneLocationView</span> <span class="o">=</span> <span class="kt">SceneLocationView</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>You should call <code>sceneLocationView.run()</code> whenever it’s in focus, and <code>sceneLocationView.pause()</code> if it’s interrupted, such as by moving to a different view or by leaving the app.</p>
+<pre class="highlight swift"><code><span class="k">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">super</span><span class="o">.</span><span class="nf">viewDidLoad</span><span class="p">()</span>
+
+  <span class="n">sceneLocationView</span><span class="o">.</span><span class="nf">run</span><span class="p">()</span>
+  <span class="n">view</span><span class="o">.</span><span class="nf">addSubview</span><span class="p">(</span><span class="n">sceneLocationView</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">override</span> <span class="kd">func</span> <span class="nf">viewDidLayoutSubviews</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">super</span><span class="o">.</span><span class="nf">viewDidLayoutSubviews</span><span class="p">()</span>
+
+  <span class="n">sceneLocationView</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">bounds</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>After we’ve called <code>run()</code>, we can add our coordinate. ARCL comes with a class called <code><a href="Classes/LocationNode.html">LocationNode</a></code> - an object within the 3D scene which has a real-world location along with a few other properties which allow it to be displayed appropriately within the world. <code><a href="Classes/LocationNode.html">LocationNode</a></code> is a subclass of SceneKit’s <code>SCNNode</code>, and can also be subclassed further. For this example we’re going to use a subclass called <code><a href="Classes/LocationAnnotationNode.html">LocationAnnotationNode</a></code>, which we use to display a 2D image within the world, which always faces us:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">coordinate</span> <span class="o">=</span> <span class="kt">CLLocationCoordinate2D</span><span class="p">(</span><span class="nv">latitude</span><span class="p">:</span> <span class="mf">51.504571</span><span class="p">,</span> <span class="nv">longitude</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.019717</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">location</span> <span class="o">=</span> <span class="kt">CLLocation</span><span class="p">(</span><span class="nv">coordinate</span><span class="p">:</span> <span class="n">coordinate</span><span class="p">,</span> <span class="nv">altitude</span><span class="p">:</span> <span class="mi">300</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">image</span> <span class="o">=</span> <span class="kt">UIImage</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"pin"</span><span class="p">)</span><span class="o">!</span>
+
+<span class="k">let</span> <span class="nv">annotationNode</span> <span class="o">=</span> <span class="kt">LocationAnnotationNode</span><span class="p">(</span><span class="nv">location</span><span class="p">:</span> <span class="n">location</span><span class="p">,</span> <span class="nv">image</span><span class="p">:</span> <span class="n">image</span><span class="p">)</span>
+</code></pre>
+
+<p><code><a href="Classes/LocationAnnotationNode.html">LocationAnnotationNode</a></code> can also be initialized using a UIView. Internally, the UIView is converted into UIImage, so you cannot update the content dynamically.
+However, this methods allows you to easily show complex layout as POI.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">coordinate</span> <span class="o">=</span> <span class="kt">CLLocationCoordinate2D</span><span class="p">(</span><span class="nv">latitude</span><span class="p">:</span> <span class="mf">51.504571</span><span class="p">,</span> <span class="nv">longitude</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.019717</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">location</span> <span class="o">=</span> <span class="kt">CLLocation</span><span class="p">(</span><span class="nv">coordinate</span><span class="p">:</span> <span class="n">coordinate</span><span class="p">,</span> <span class="nv">altitude</span><span class="p">:</span> <span class="mi">300</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">view</span> <span class="o">=</span> <span class="kt">UIView</span><span class="p">()</span> <span class="c1">// or a custom UIView subclass</span>
+
+<span class="k">let</span> <span class="nv">annotationNode</span> <span class="o">=</span> <span class="kt">LocationAnnotationNode</span><span class="p">(</span><span class="nv">location</span><span class="p">:</span> <span class="n">location</span><span class="p">,</span> <span class="nv">view</span><span class="p">:</span> <span class="n">view</span><span class="p">)</span>
+</code></pre>
+
+<p>It can also be initialized with CALayer. You can use this when you want to update the contents live.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">coordinate</span> <span class="o">=</span> <span class="kt">CLLocationCoordinate2D</span><span class="p">(</span><span class="nv">latitude</span><span class="p">:</span> <span class="mf">51.504571</span><span class="p">,</span> <span class="nv">longitude</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.019717</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">location</span> <span class="o">=</span> <span class="kt">CLLocation</span><span class="p">(</span><span class="nv">coordinate</span><span class="p">:</span> <span class="n">coordinate</span><span class="p">,</span> <span class="nv">altitude</span><span class="p">:</span> <span class="mi">300</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">layer</span> <span class="o">=</span> <span class="kt">CALayer</span><span class="p">()</span> <span class="c1">// or a custom CALayer subclass</span>
+
+<span class="k">let</span> <span class="nv">annotationNode</span> <span class="o">=</span> <span class="kt">LocationAnnotationNode</span><span class="p">(</span><span class="nv">location</span><span class="p">:</span> <span class="n">location</span><span class="p">,</span> <span class="nv">layer</span><span class="p">:</span> <span class="n">layer</span><span class="p">)</span>
+</code></pre>
+
+<p>By default, the image you set should always appear at the size it was given, for example if you give a 100x100 image, it would appear at 100x100 on the screen. This means distant annotation nodes can always be seen at the same size as nearby ones. If you’d rather they scale relative to their distance, you can set LocationAnnotationNode’s <code>scaleRelativeToDistance</code> to <code>true</code>.</p>
+<pre class="highlight swift"><code><span class="n">sceneLocationView</span><span class="o">.</span><span class="nf">addLocationNodeWithConfirmedLocation</span><span class="p">(</span><span class="nv">locationNode</span><span class="p">:</span> <span class="n">annotationNode</span><span class="p">)</span>
+</code></pre>
+
+<p>There are two ways to add a location node to a scene - using <code>addLocationNodeWithConfirmedLocation</code>, or <code>addLocationNodeForCurrentPosition</code>, which positions it to be in the same position as the device, within the world, and then gives it a coordinate.</p>
+
+<p>So that’s it. If you set the frame of your sceneLocationView, you should now see the pin hovering above Canary Wharf.</p>
+
+<p>In order to get a notification when a node is touched in the <code>sceneLocationView</code>, you need to conform to <code><a href="Protocols/LNTouchDelegate.html">LNTouchDelegate</a></code> in the ViewController class. </p>
+
+<p>The <code>annotationNodeTouched(node: AnnotationNode)</code> gives you access to node that was touched on the screen. <code><a href="Classes/AnnotationNode.html">AnnotationNode</a></code> is a subclass of SCNNode with two extra properties: <code>image: UIImage?</code> and <code>view: UIView?</code>. Either of these properties will be filled in based on how the <code><a href="Classes/LocationAnnotationNode.html">LocationAnnotationNode</a></code> was initialized (using the constructor that takes UIImage or UIView).</p>
+
+<p>The <code>locationNodeTouched(node: LocationNode)</code> gives you instead access to the nodes created from a <code>PolyNode</code> (e.g. the rendered directions of a <code>MKRoute</code>).</p>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">ViewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="kt">LNTouchDelegate</span> <span class="p">{</span>
+
+    <span class="k">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">super</span><span class="o">.</span><span class="nf">viewDidLoad</span><span class="p">()</span>
+        <span class="c1">//...</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">sceneLocationView</span><span class="o">.</span><span class="n">locationNodeTouchDelegate</span> <span class="o">=</span> <span class="k">self</span>
+        <span class="c1">//...</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">annotationNodeTouched</span><span class="p">(</span><span class="nv">node</span><span class="p">:</span> <span class="kt">AnnotationNode</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Do stuffs with the node instance</span>
+
+        <span class="c1">// node could have either node.view or node.image</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="nv">nodeView</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">view</span><span class="p">{</span>
+            <span class="c1">// Do stuffs with the nodeView</span>
+            <span class="c1">// ...</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="nv">nodeImage</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">image</span><span class="p">{</span>
+            <span class="c1">// Do stuffs with the nodeImage</span>
+            <span class="c1">// ...</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kd">func</span> <span class="nf">locationNodeTouched</span><span class="p">(</span><span class="nv">node</span><span class="p">:</span> <span class="kt">LocationNode</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">guard</span> <span class="k">let</span> <span class="nv">name</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">tag</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="p">}</span>
+        <span class="k">guard</span> <span class="k">let</span> <span class="nv">selectedNode</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">childNodes</span><span class="o">.</span><span class="nf">first</span><span class="p">(</span><span class="nv">where</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">geometry</span> <span class="k">is</span> <span class="kt">SCNBox</span> <span class="p">})</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="p">}</span>
+
+        <span class="c1">// Interact with the selected node</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre>
+<h2 id='additional-features' class='heading'>Additional features</h2>
+
+<p>The library and demo come with a bunch of additional features for configuration. It’s all fully documented to be sure to have a look around.</p>
+
+<p>SceneLocationView is a subclass of ARSCNView. Note that while this gives you full access to ARSCNView to use it in other ways, you should not set the delegate to another class. If you need to use delegate features then you should subclass <code><a href="Classes/SceneLocationView.html">SceneLocationView</a></code>.</p>
+<h2 id='true-north-calibration' class='heading'>True North calibration</h2>
+
+<p>One issue which I haven’t personally been able to overcome is that the iPhone’s True North calibration currently has an accuracy of 15º at best. This is fine for maps navigation, but when placing things on top of the AR world, it starts to become a problem.</p>
+
+<p>I’m confident that this issue can be overcome by using various AR techniques - it’s one area I think can really benefit from a shared effort.</p>
+
+<p>To improve this currently, I’ve added some functions to the library that allow adjusting the north point:</p>
+
+<ul>
+<li><code>sceneLocationView.moveSceneHeadingClockwise</code></li>
+<li><code>sceneLocationView.moveSceneHeadingAntiClockwise</code></li>
+<li><code>sceneLocationView.resetSceneHeading</code></li>
+</ul>
+
+<p>You should use these by setting <code>sceneLocationView.useTrueNorth</code> to <code>false</code>, and then pointing the device in the general direction of north before beginning, so it’s reasonably close. With <code>useTrueNorth</code> set to true (default), it would continually adjust as it gets a better sense of north.</p>
+
+<p>Within the demo app, there’s a disabled property called <code>adjustNorthByTappingSidesOfScreen</code>, which accesses these functions, and, once enabled, allows tapping on the left and right of the screen to adjust the scene heading.</p>
+
+<p>My recommendation would be to fine a nearby landmark which is directly True North from your location, place an object there using a coordinate, and then use the <code>moveSceneHeading</code> functions to adjust the scene until it lines up.</p>
+<h2 id='improved-location-accuracy' class='heading'>Improved Location Accuracy</h2>
+
+<p>CoreLocation can deliver location updates anywhere from every 1-15 seconds, with accuracies which vary from 150m down to 4m. Occasionally, you’ll receive a far more accurate reading, like 4m or 8m, before returning to more inaccurate readings. At the same time, AR uses motion and camera data to create a map of the local world.</p>
+
+<p>A user may receive a location reading accurate to 4m, then they walk 10m north and receive another location reading accurate to 65m. This 65m-accurate reading is the best that CoreLocation can offer, but knowing the user’s position within the AR scene when they got that 4m reading, and the fact that they’ve walked 10m north through the scene since then, we can translate that data to give them a new coordinate with about 4m of accuracy. This is accurate up to about 100m.</p>
+
+<p><a href="https://github.com/ProjectDent/ARKit-CoreLocation/wiki/Current-Location-Accuracy">There is more detail on this on the wiki</a>.</p>
+<h3 id='issues' class='heading'>Issues</h3>
+
+<p>I mentioned this was experimental - currently, ARKit occasionally gets confused as the user is walking through a scene, and may change their position inaccurately. This issue also seems to affect the “euler angles”, or directional information about the device, so after a short distance it may think you’re walking in a different direction.</p>
+
+<p>While Apple can improve ARKit over time, I think there are improvements we can make to avoid those issues, such as recognising when it happens and working to correct it, and by comparing location data with our supposed location to determine if we’ve moved outside a possible bounds.</p>
+<h3 id='location-algorithm-improvements' class='heading'>Location Algorithm Improvements</h3>
+
+<p>There are further optimisations to determining a user’s location which can be made.</p>
+
+<p>For example, one technique could be to look at recent location data, translate each data point using the user’s travel since then, and use the overlap between the data points to more narrowly determine the user’s possible location.</p>
+
+<p><a href="https://github.com/ProjectDent/ARKit-CoreLocation/wiki/Current-Location-Accuracy">There is more detail on this on the wiki</a>.</p>
+<h2 id='going-forward' class='heading'>Going Forward</h2>
+
+<p>We have some Milestones and Issues related to them - anyone is welcome to discuss and contribute to them. Pull requests are welcomed. You can discuss new features/enhancements/bugs either by adding a new Issue or via <a href="https://join.slack.com/t/arcl-dev/shared_invite/enQtNTk4OTg4MzU0MTEyLTkyNGZjMDc3NDZlOGZmZTVlNWY1MWYxODg1MTA4ZWMzOThjZDM0ZmY1NGZlZjNiYmE1OGM3MDFkZTNjNjI5ODc">the Slack community</a>.</p>
+<h2 id='thanks' class='heading'>Thanks</h2>
+
+<p>Library created by <a href="https://twitter.com/andrewprojdent">@AndrewProjDent</a>, but a community effort from here on.</p>
+
+<p>Available as open source under the terms of the <a href="http://opensource.org/licenses/MIT">MIT License</a>.</p>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2019 <a class="link" href="https://github.com/ProjectDent/ARKit-CoreLocation/graphs/contributors" target="_blank" rel="external">ProjectDent contributors</a>. All rights reserved. (Last updated: 2019-12-01)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.12.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

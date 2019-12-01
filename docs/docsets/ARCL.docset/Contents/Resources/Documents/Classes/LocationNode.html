@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>LocationNode Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/LocationNode" class="dashAnchor"></a>
+    <a title="LocationNode Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">ARCL 1.3.0 Docs</a> (100% documented)</p>
+        <p class="header-right"><a href="https://github.com/ProjectDent/ARKit-CoreLocation"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub%2Ecom%2FProjectDent%2FARKit%2DCoreLocation%2Fdocsets%2FARCL%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">ARCL Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        LocationNode Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/AnnotationNode.html">AnnotationNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocationAnnotationNode.html">LocationAnnotationNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocationManager.html">LocationManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocationNode.html">LocationNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PolylineNode.html">PolylineNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SceneLocationEstimate.html">SceneLocationEstimate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SceneLocationManager.html">SceneLocationManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SceneLocationView.html">SceneLocationView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SceneLocationView/ARTrackingType.html">– ARTrackingType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/LocationEstimateMethod.html">LocationEstimateMethod</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ScalingScheme.html">ScalingScheme</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/CLLocation.html">CLLocation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/CLLocationCoordinate2D.html">CLLocationCoordinate2D</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Double.html">Double</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Float.html">Float</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/FloatingPoint.html">FloatingPoint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Int.html">Int</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/SCNVector3.html">SCNVector3</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UIView.html">UIView</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/LNTouchDelegate.html">LNTouchDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SceneLocationViewDelegate.html">SceneLocationViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SceneLocationViewEstimateDelegate.html">SceneLocationViewEstimateDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SceneTrackingDelegate.html">SceneTrackingDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/AttributedType.html">AttributedType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/LocationTranslation.html">LocationTranslation</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:4ARCL10BoxBuildera">BoxBuilder</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>LocationNode</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">LocationNode</span> <span class="p">:</span> <span class="kt">SCNNode</span></code></pre>
+
+                </div>
+              </div>
+            <p>A location node can be added to a scene using a coordinate.</p>
+
+<p>Its scale and position should not be adjusted, as these are used for scene
+layout purposes.  To adjust the scale and position of items within a node,
+you can add them to a child node and adjust them there</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL12LocationNodeC8locationSo10CLLocationCSgvp"></a>
+                    <a name="//apple_ref/swift/Property/location" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL12LocationNodeC8locationSo10CLLocationCSgvp">location</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Location can be changed and confirmed later by SceneLocationView.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">location</span><span class="p">:</span> <span class="kt">CLLocation</span><span class="o">!</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL12LocationNodeC3tagSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/tag" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL12LocationNodeC3tagSSSgvp">tag</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A general purpose tag that can be used to find nodes already added to a SceneLocationView</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">tag</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL12LocationNodeC17locationConfirmedSbvp"></a>
+                    <a name="//apple_ref/swift/Property/locationConfirmed" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL12LocationNodeC17locationConfirmedSbvp">locationConfirmed</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Whether the location of the node has been confirmed.
+This is automatically set to true when you create a node using a location.
+Otherwise, this is false, and becomes true once the user moves 100m away from the node,
+except when the locationEstimateMethod is set to use Core Location data only,
+as then it becomes true immediately.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">locationConfirmed</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL12LocationNodeC017continuallyAdjustC23PositionWhenWithinRangeSbvp"></a>
+                    <a name="//apple_ref/swift/Property/continuallyAdjustNodePositionWhenWithinRange" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL12LocationNodeC017continuallyAdjustC23PositionWhenWithinRangeSbvp">continuallyAdjustNodePositionWhenWithinRange</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Whether a node&rsquo;s position should be adjusted on an ongoing basis
+based on its given location.
+This only occurs when a node&rsquo;s location is within 100m of the user.
+Adjustment doesn&rsquo;t apply to nodes without a confirmed location.
+When this is set to false, the result is a smoother appearance.
+When this is set to true, this means a node may appear to jump around
+as the user&rsquo;s location estimates update,
+but the position is generally more accurate.
+Defaults to true.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">continuallyAdjustNodePositionWhenWithinRange</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL12LocationNodeC33continuallyUpdatePositionAndScaleSbvp"></a>
+                    <a name="//apple_ref/swift/Property/continuallyUpdatePositionAndScale" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL12LocationNodeC33continuallyUpdatePositionAndScaleSbvp">continuallyUpdatePositionAndScale</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Whether a node&rsquo;s position and scale should be updated automatically on a continual basis.
+This should only be set to false if you plan to manually update position and scale
+at regular intervals. You can do this with <code><a href="../Classes/SceneLocationView.html">SceneLocationView</a></code>&lsquo;s <code>updatePositionOfLocationNode</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">continuallyUpdatePositionAndScale</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL12LocationNodeC23scaleRelativeToDistanceSbvp"></a>
+                    <a name="//apple_ref/swift/Property/scaleRelativeToDistance" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL12LocationNodeC23scaleRelativeToDistanceSbvp">scaleRelativeToDistance</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Whether the node should be scaled relative to its distance from the camera
+Default value (false) scales it to visually appear at the same size no matter the distance
+Setting to true causes annotation nodes to scale like a regular node
+Scaling relative to distance may be useful with local navigation-based uses
+For landmarks in the distance, the default is correct</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">scaleRelativeToDistance</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL12LocationNodeC14ignoreAltitudeSbvp"></a>
+                    <a name="//apple_ref/swift/Property/ignoreAltitude" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL12LocationNodeC14ignoreAltitudeSbvp">ignoreAltitude</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Whether the node should appear at the same altitude of the user
+May be useful when you don&rsquo;t know the real altitude of the node
+When set to true, the node will stay at the same altitude of the user</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">ignoreAltitude</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL12LocationNodeC13scalingSchemeAA07ScalingE0Ovp"></a>
+                    <a name="//apple_ref/swift/Property/scalingScheme" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL12LocationNodeC13scalingSchemeAA07ScalingE0Ovp">scalingScheme</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The scheme to use for scaling</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">scalingScheme</span><span class="p">:</span> <span class="kt"><a href="../Enums/ScalingScheme.html">ScalingScheme</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL12LocationNodeC8location3tagACSo10CLLocationCSg_SSSgtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(location:tag:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL12LocationNodeC8location3tagACSo10CLLocationCSg_SSSgtcfc">init(location:tag:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">location</span><span class="p">:</span> <span class="kt">CLLocation</span><span class="p">?,</span> <span class="nv">tag</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ARCL@objc(cs)LocationNode(im)initWithCoder:"></a>
+                    <a name="//apple_ref/swift/Method/init(coder:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ARCL@objc(cs)LocationNode(im)initWithCoder:">init(coder:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">required</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2019 <a class="link" href="https://github.com/ProjectDent/ARKit-CoreLocation/graphs/contributors" target="_blank" rel="external">ProjectDent contributors</a>. All rights reserved. (Last updated: 2019-12-01)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.12.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

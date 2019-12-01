@@ -1,0 +1,2030 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>SceneLocationView Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/SceneLocationView" class="dashAnchor"></a>
+    <a title="SceneLocationView Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">ARCL 1.3.0 Docs</a> (100% documented)</p>
+        <p class="header-right"><a href="https://github.com/ProjectDent/ARKit-CoreLocation"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub%2Ecom%2FProjectDent%2FARKit%2DCoreLocation%2Fdocsets%2FARCL%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">ARCL Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        SceneLocationView Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/AnnotationNode.html">AnnotationNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocationAnnotationNode.html">LocationAnnotationNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocationManager.html">LocationManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocationNode.html">LocationNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PolylineNode.html">PolylineNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SceneLocationEstimate.html">SceneLocationEstimate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SceneLocationManager.html">SceneLocationManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SceneLocationView.html">SceneLocationView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SceneLocationView/ARTrackingType.html">– ARTrackingType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/LocationEstimateMethod.html">LocationEstimateMethod</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ScalingScheme.html">ScalingScheme</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/CLLocation.html">CLLocation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/CLLocationCoordinate2D.html">CLLocationCoordinate2D</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Double.html">Double</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Float.html">Float</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/FloatingPoint.html">FloatingPoint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Int.html">Int</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/SCNVector3.html">SCNVector3</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UIView.html">UIView</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/LNTouchDelegate.html">LNTouchDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SceneLocationViewDelegate.html">SceneLocationViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SceneLocationViewEstimateDelegate.html">SceneLocationViewEstimateDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SceneTrackingDelegate.html">SceneTrackingDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/AttributedType.html">AttributedType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/LocationTranslation.html">LocationTranslation</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:4ARCL10BoxBuildera">BoxBuilder</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>SceneLocationView</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">SceneLocationView</span> <span class="p">:</span> <span class="kt">ARSCNView</span></code></pre>
+
+                </div>
+              </div>
+            <p><code>SceneLocationView</code> is the <code>ARSCNView</code> subclass used to render an ARCL scene.</p>
+
+<p>Note that all of the standard SceneKit/ARKit delegates and delegate methods are used
+internally by ARCL. The delegate functions declared in <code>ARSCNViewDelegate</code>, <code>ARSessionObserver</code>, and  <code>ARSCNView</code> are
+shadowed by <code>ARSCNViewDelegate</code> and invoked on the <code>SceneLocationView</code>&lsquo;s <code>arDelegate</code>. If you need to receive
+any of these callbacks, implement them on your <code>arDelegate</code>.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC14ARTrackingTypeO"></a>
+                    <a name="//apple_ref/swift/Enum/ARTrackingType" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC14ARTrackingTypeO">ARTrackingType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The type of tracking to use.</p>
+
+<ul>
+<li>orientationTracking: Informs the <code><a href="../Classes/SceneLocationView.html">SceneLocationView</a></code> to use Device Orientation tracking only.
+Useful when your nodes are all CLLocation based, and are not synced to real world planes
+See <a href="https://developer.apple.com/documentation/arkit/arorientationtrackingconfiguration">Apple&rsquo;s documentation</a></li>
+<li>worldTracking: Informs the <code><a href="../Classes/SceneLocationView.html">SceneLocationView</a></code> to use a World Tracking Configuration.
+Useful when you have nodes that attach themselves to real world planes
+See <a href="https://developer.apple.com/documentation/arkit/arworldtrackingconfiguration#overview">Apple&rsquo;s documentation</a></li>
+</ul>
+
+                        <a href="../Classes/SceneLocationView/ARTrackingType.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">ARTrackingType</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC08locationD8DelegateAA0bcdF0_pSgvp"></a>
+                    <a name="//apple_ref/swift/Property/locationViewDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC08locationD8DelegateAA0bcdF0_pSgvp">locationViewDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">locationViewDelegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SceneLocationViewDelegate.html">SceneLocationViewDelegate</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC24locationEstimateDelegateAA0bcdfG0_pSgvp"></a>
+                    <a name="//apple_ref/swift/Property/locationEstimateDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC24locationEstimateDelegateAA0bcdfG0_pSgvp">locationEstimateDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">locationEstimateDelegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SceneLocationViewEstimateDelegate.html">SceneLocationViewEstimateDelegate</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC25locationNodeTouchDelegateAA07LNTouchH0_pSgvp"></a>
+                    <a name="//apple_ref/swift/Property/locationNodeTouchDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC25locationNodeTouchDelegateAA07LNTouchH0_pSgvp">locationNodeTouchDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">locationNodeTouchDelegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/LNTouchDelegate.html">LNTouchDelegate</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC21sceneTrackingDelegateAA0bfG0_pSgvp"></a>
+                    <a name="//apple_ref/swift/Property/sceneTrackingDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC21sceneTrackingDelegateAA0bfG0_pSgvp">sceneTrackingDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">sceneTrackingDelegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SceneTrackingDelegate.html">SceneTrackingDelegate</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC05sceneC7ManagerAA0bcF0Cvp"></a>
+                    <a name="//apple_ref/swift/Property/sceneLocationManager" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC05sceneC7ManagerAA0bcF0Cvp">sceneLocationManager</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">sceneLocationManager</span><span class="p">:</span> <span class="kt"><a href="../Classes/SceneLocationManager.html">SceneLocationManager</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ARCL@objc(cs)SceneLocationView(py)delegate"></a>
+                    <a name="//apple_ref/swift/Property/delegate" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ARCL@objc(cs)SceneLocationView(py)delegate">delegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Addresses <a href="https://github.com/ProjectDent/ARKit-CoreLocation/issues/196">Issue #196</a> -
+Delegate issue when assigned to self (no location nodes render).   If the user
+tries to set the delegate, perform an assertionFailure and tell them to set the <code><a href="../Classes/SceneLocationView.html#/s:4ARCL17SceneLocationViewC02arD8DelegateSo09ARSCNViewF0_pSgvp">arViewDelegate</a></code> instead.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt">ARSCNViewDelegate</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC02arD8DelegateSo09ARSCNViewF0_pSgvp"></a>
+                    <a name="//apple_ref/swift/Property/arViewDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC02arD8DelegateSo09ARSCNViewF0_pSgvp">arViewDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>If you wish to receive delegate <code>ARSCNViewDelegate</code> events, use this instead of the <code><a href="../Classes/SceneLocationView.html#/c:@M@ARCL@objc(cs)SceneLocationView(py)delegate">delegate</a></code> property.
+The <code><a href="../Classes/SceneLocationView.html#/c:@M@ARCL@objc(cs)SceneLocationView(py)delegate">delegate</a></code> property is reserved for this class itself and trying to set it will result in an assertionFailure
+and in production, things just won&rsquo;t work as you expect.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">arViewDelegate</span><span class="p">:</span> <span class="kt">ARSCNViewDelegate</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC22locationEstimateMethodAA0cfG0Ovp"></a>
+                    <a name="//apple_ref/swift/Property/locationEstimateMethod" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC22locationEstimateMethodAA0cfG0Ovp">locationEstimateMethod</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The method to use for determining locations.
+Not advisable to change this as the scene is ongoing.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">locationEstimateMethod</span><span class="p">:</span> <span class="kt"><a href="../Enums/LocationEstimateMethod.html">LocationEstimateMethod</a></span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC12showAxesNodeSbvp"></a>
+                    <a name="//apple_ref/swift/Property/showAxesNode" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC12showAxesNodeSbvp">showAxesNode</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When set to true, displays an axes node at the start of the scene</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">showAxesNode</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC9sceneNodeSo7SCNNodeCSgvp"></a>
+                    <a name="//apple_ref/swift/Property/sceneNode" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC9sceneNodeSo7SCNNodeCSgvp">sceneNode</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">sceneNode</span><span class="p">:</span> <span class="kt">SCNNode</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC17orientToTrueNorthSbvp"></a>
+                    <a name="//apple_ref/swift/Property/orientToTrueNorth" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC17orientToTrueNorthSbvp">orientToTrueNorth</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Only to be overrided if you plan on manually setting True North.
+When true, sets up the scene to face what the device considers to be True North.
+This can be inaccurate, hence the option to override it.
+The functions for altering True North can be used irrespective of this value,
+but if the scene is oriented to true north, it will update without warning,
+thus affecting your alterations.
+The initial value of this property is respected.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">orientToTrueNorth</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC17showFeaturePointsSbvp"></a>
+                    <a name="//apple_ref/swift/Property/showFeaturePoints" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC17showFeaturePointsSbvp">showFeaturePoints</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Whether debugging feature points should be displayed.
+Defaults to false</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">showFeaturePoints</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Scene%20location%20estimates"></a>
+                <a name="//apple_ref/swift/Section/Scene location estimates" class="dashAnchor"></a>
+                <a href="#/Scene%20location%20estimates">
+                  <h3 class="section-name">Scene location estimates</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC07currentB8PositionSo10SCNVector3VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/currentScenePosition" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC07currentB8PositionSo10SCNVector3VSgvp">currentScenePosition</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">currentScenePosition</span><span class="p">:</span> <span class="kt">SCNVector3</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC18currentEulerAnglesSo10SCNVector3VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/currentEulerAngles" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC18currentEulerAnglesSo10SCNVector3VSgvp">currentEulerAngles</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">currentEulerAngles</span><span class="p">:</span> <span class="kt">SCNVector3</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC13locationNodesSayAA0C4NodeCGvp"></a>
+                    <a name="//apple_ref/swift/Property/locationNodes" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC13locationNodesSayAA0C4NodeCGvp">locationNodes</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">locationNodes</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/LocationNode.html">LocationNode</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC13polylineNodesSayAA12PolylineNodeCGvp"></a>
+                    <a name="//apple_ref/swift/Property/polylineNodes" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC13polylineNodesSayAA12PolylineNodeCGvp">polylineNodes</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">polylineNodes</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/PolylineNode.html">PolylineNode</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC14arTrackingTypeAC010ARTrackingG0Ovp"></a>
+                    <a name="//apple_ref/swift/Property/arTrackingType" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC14arTrackingTypeAC010ARTrackingG0Ovp">arTrackingType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">arTrackingType</span><span class="p">:</span> <span class="kt">SceneLocationView</span><span class="o">.</span><span class="kt"><a href="../Classes/SceneLocationView/ARTrackingType.html">ARTrackingType</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Setup"></a>
+                <a name="//apple_ref/swift/Section/Setup" class="dashAnchor"></a>
+                <a href="#/Setup">
+                  <h3 class="section-name">Setup</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC12trackingType5frame7optionsA2C010ARTrackingF0O_So6CGRectVSDySSypGSgtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(trackingType:frame:options:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC12trackingType5frame7optionsA2C010ARTrackingF0O_So6CGRectVSDySSypGSgtcfc">init(trackingType:frame:options:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This initializer allows you to specify the type of tracking configuration (defaults to world tracking) as well as
+some other optional values.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">trackingType</span><span class="p">:</span> <span class="kt"><a href="../Classes/SceneLocationView/ARTrackingType.html">ARTrackingType</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">worldTracking</span><span class="p">,</span> <span class="nv">frame</span><span class="p">:</span> <span class="kt">CGRect</span> <span class="o">=</span> <span class="o">.</span><span class="n">zero</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>trackingType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The type of AR Tracking configuration (defaults to world tracking).</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>frame</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The CGRect for the frame (defaults to .zero).</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>options</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The rendering options for the <code>SCNView</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ARCL@objc(cs)SceneLocationView(im)initWithFrame:options:"></a>
+                    <a name="//apple_ref/swift/Method/init(frame:options:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ARCL@objc(cs)SceneLocationView(im)initWithFrame:options:">init(frame:options:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">override</span> <span class="nf">init</span><span class="p">(</span><span class="nv">frame</span><span class="p">:</span> <span class="kt">CGRect</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ARCL@objc(cs)SceneLocationView(im)initWithCoder:"></a>
+                    <a name="//apple_ref/swift/Method/init(coder:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ARCL@objc(cs)SceneLocationView(im)initWithCoder:">init(coder:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">required</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC010locationOfC4NodeySo10CLLocationCAA0cG0CF"></a>
+                    <a name="//apple_ref/swift/Method/locationOfLocationNode(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC010locationOfC4NodeySo10CLLocationCAA0cG0CF">locationOfLocationNode(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Gives the best estimate of the location of a node</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">locationOfLocationNode</span><span class="p">(</span><span class="n">_</span> <span class="nv">locationNode</span><span class="p">:</span> <span class="kt"><a href="../Classes/LocationNode.html">LocationNode</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CLLocation</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/ARSCNViewDelegate"></a>
+                <a name="//apple_ref/swift/Section/ARSCNViewDelegate" class="dashAnchor"></a>
+                <a href="#/ARSCNViewDelegate">
+                  <h3 class="section-name">ARSCNViewDelegate</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ARCL@objc(cs)SceneLocationView(im)renderer:nodeForAnchor:"></a>
+                    <a name="//apple_ref/swift/Method/renderer(_:nodeFor:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ARCL@objc(cs)SceneLocationView(im)renderer:nodeForAnchor:">renderer(_:nodeFor:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">renderer</span><span class="p">(</span><span class="n">_</span> <span class="nv">renderer</span><span class="p">:</span> <span class="kt">SCNSceneRenderer</span><span class="p">,</span> <span class="n">nodeFor</span> <span class="nv">anchor</span><span class="p">:</span> <span class="kt">ARAnchor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">SCNNode</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ARCL@objc(cs)SceneLocationView(im)renderer:didAddNode:forAnchor:"></a>
+                    <a name="//apple_ref/swift/Method/renderer(_:didAdd:for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ARCL@objc(cs)SceneLocationView(im)renderer:didAddNode:forAnchor:">renderer(_:didAdd:for:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">renderer</span><span class="p">(</span><span class="n">_</span> <span class="nv">renderer</span><span class="p">:</span> <span class="kt">SCNSceneRenderer</span><span class="p">,</span> <span class="n">didAdd</span> <span class="nv">node</span><span class="p">:</span> <span class="kt">SCNNode</span><span class="p">,</span> <span class="k">for</span> <span class="nv">anchor</span><span class="p">:</span> <span class="kt">ARAnchor</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ARCL@objc(cs)SceneLocationView(im)renderer:willUpdateNode:forAnchor:"></a>
+                    <a name="//apple_ref/swift/Method/renderer(_:willUpdate:for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ARCL@objc(cs)SceneLocationView(im)renderer:willUpdateNode:forAnchor:">renderer(_:willUpdate:for:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">renderer</span><span class="p">(</span><span class="n">_</span> <span class="nv">renderer</span><span class="p">:</span> <span class="kt">SCNSceneRenderer</span><span class="p">,</span> <span class="n">willUpdate</span> <span class="nv">node</span><span class="p">:</span> <span class="kt">SCNNode</span><span class="p">,</span> <span class="k">for</span> <span class="nv">anchor</span><span class="p">:</span> <span class="kt">ARAnchor</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ARCL@objc(cs)SceneLocationView(im)renderer:didUpdateNode:forAnchor:"></a>
+                    <a name="//apple_ref/swift/Method/renderer(_:didUpdate:for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ARCL@objc(cs)SceneLocationView(im)renderer:didUpdateNode:forAnchor:">renderer(_:didUpdate:for:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">renderer</span><span class="p">(</span><span class="n">_</span> <span class="nv">renderer</span><span class="p">:</span> <span class="kt">SCNSceneRenderer</span><span class="p">,</span> <span class="n">didUpdate</span> <span class="nv">node</span><span class="p">:</span> <span class="kt">SCNNode</span><span class="p">,</span> <span class="k">for</span> <span class="nv">anchor</span><span class="p">:</span> <span class="kt">ARAnchor</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ARCL@objc(cs)SceneLocationView(im)renderer:didRemoveNode:forAnchor:"></a>
+                    <a name="//apple_ref/swift/Method/renderer(_:didRemove:for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ARCL@objc(cs)SceneLocationView(im)renderer:didRemoveNode:forAnchor:">renderer(_:didRemove:for:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">renderer</span><span class="p">(</span><span class="n">_</span> <span class="nv">renderer</span><span class="p">:</span> <span class="kt">SCNSceneRenderer</span><span class="p">,</span> <span class="n">didRemove</span> <span class="nv">node</span><span class="p">:</span> <span class="kt">SCNNode</span><span class="p">,</span> <span class="k">for</span> <span class="nv">anchor</span><span class="p">:</span> <span class="kt">ARAnchor</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/ARSessionObserver"></a>
+                <a name="//apple_ref/swift/Section/ARSessionObserver" class="dashAnchor"></a>
+                <a href="#/ARSessionObserver">
+                  <h3 class="section-name">ARSessionObserver</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ARCL@objc(cs)SceneLocationView(im)session:didFailWithError:"></a>
+                    <a name="//apple_ref/swift/Method/session(_:didFailWithError:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ARCL@objc(cs)SceneLocationView(im)session:didFailWithError:">session(_:didFailWithError:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">session</span><span class="p">(</span><span class="n">_</span> <span class="nv">session</span><span class="p">:</span> <span class="kt">ARSession</span><span class="p">,</span> <span class="n">didFailWithError</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">Error</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ARCL@objc(cs)SceneLocationView(im)session:cameraDidChangeTrackingState:"></a>
+                    <a name="//apple_ref/swift/Method/session(_:cameraDidChangeTrackingState:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ARCL@objc(cs)SceneLocationView(im)session:cameraDidChangeTrackingState:">session(_:cameraDidChangeTrackingState:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">session</span><span class="p">(</span><span class="n">_</span> <span class="nv">session</span><span class="p">:</span> <span class="kt">ARSession</span><span class="p">,</span> <span class="n">cameraDidChangeTrackingState</span> <span class="nv">camera</span><span class="p">:</span> <span class="kt">ARCamera</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ARCL@objc(cs)SceneLocationView(im)sessionWasInterrupted:"></a>
+                    <a name="//apple_ref/swift/Method/sessionWasInterrupted(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ARCL@objc(cs)SceneLocationView(im)sessionWasInterrupted:">sessionWasInterrupted(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">sessionWasInterrupted</span><span class="p">(</span><span class="n">_</span> <span class="nv">session</span><span class="p">:</span> <span class="kt">ARSession</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ARCL@objc(cs)SceneLocationView(im)sessionInterruptionEnded:"></a>
+                    <a name="//apple_ref/swift/Method/sessionInterruptionEnded(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ARCL@objc(cs)SceneLocationView(im)sessionInterruptionEnded:">sessionInterruptionEnded(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">sessionInterruptionEnded</span><span class="p">(</span><span class="n">_</span> <span class="nv">session</span><span class="p">:</span> <span class="kt">ARSession</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ARCL@objc(cs)SceneLocationView(im)sessionShouldAttemptRelocalization:"></a>
+                    <a name="//apple_ref/swift/Method/sessionShouldAttemptRelocalization(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ARCL@objc(cs)SceneLocationView(im)sessionShouldAttemptRelocalization:">sessionShouldAttemptRelocalization(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">sessionShouldAttemptRelocalization</span><span class="p">(</span><span class="n">_</span> <span class="nv">session</span><span class="p">:</span> <span class="kt">ARSession</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ARCL@objc(cs)SceneLocationView(im)session:didOutputAudioSampleBuffer:"></a>
+                    <a name="//apple_ref/swift/Method/session(_:didOutputAudioSampleBuffer:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ARCL@objc(cs)SceneLocationView(im)session:didOutputAudioSampleBuffer:">session(_:didOutputAudioSampleBuffer:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">session</span><span class="p">(</span><span class="n">_</span> <span class="nv">session</span><span class="p">:</span> <span class="kt">ARSession</span><span class="p">,</span> <span class="n">didOutputAudioSampleBuffer</span> <span class="nv">audioSampleBuffer</span><span class="p">:</span> <span class="kt">CMSampleBuffer</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/SCNSceneRendererDelegate"></a>
+                <a name="//apple_ref/swift/Section/SCNSceneRendererDelegate" class="dashAnchor"></a>
+                <a href="#/SCNSceneRendererDelegate">
+                  <h3 class="section-name">SCNSceneRendererDelegate</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ARCL@objc(cs)SceneLocationView(im)renderer:didRenderScene:atTime:"></a>
+                    <a name="//apple_ref/swift/Method/renderer(_:didRenderScene:atTime:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ARCL@objc(cs)SceneLocationView(im)renderer:didRenderScene:atTime:">renderer(_:didRenderScene:atTime:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">renderer</span><span class="p">(</span><span class="n">_</span> <span class="nv">renderer</span><span class="p">:</span> <span class="kt">SCNSceneRenderer</span><span class="p">,</span> <span class="n">didRenderScene</span> <span class="nv">scene</span><span class="p">:</span> <span class="kt">SCNScene</span><span class="p">,</span> <span class="n">atTime</span> <span class="nv">time</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ARCL@objc(cs)SceneLocationView(im)renderer:updateAtTime:"></a>
+                    <a name="//apple_ref/swift/Method/renderer(_:updateAtTime:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ARCL@objc(cs)SceneLocationView(im)renderer:updateAtTime:">renderer(_:updateAtTime:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">renderer</span><span class="p">(</span><span class="n">_</span> <span class="nv">renderer</span><span class="p">:</span> <span class="kt">SCNSceneRenderer</span><span class="p">,</span> <span class="n">updateAtTime</span> <span class="nv">time</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ARCL@objc(cs)SceneLocationView(im)renderer:didApplyAnimationsAtTime:"></a>
+                    <a name="//apple_ref/swift/Method/renderer(_:didApplyAnimationsAtTime:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ARCL@objc(cs)SceneLocationView(im)renderer:didApplyAnimationsAtTime:">renderer(_:didApplyAnimationsAtTime:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">renderer</span><span class="p">(</span><span class="n">_</span> <span class="nv">renderer</span><span class="p">:</span> <span class="kt">SCNSceneRenderer</span><span class="p">,</span> <span class="n">didApplyAnimationsAtTime</span> <span class="nv">time</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ARCL@objc(cs)SceneLocationView(im)renderer:didSimulatePhysicsAtTime:"></a>
+                    <a name="//apple_ref/swift/Method/renderer(_:didSimulatePhysicsAtTime:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ARCL@objc(cs)SceneLocationView(im)renderer:didSimulatePhysicsAtTime:">renderer(_:didSimulatePhysicsAtTime:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">renderer</span><span class="p">(</span><span class="n">_</span> <span class="nv">renderer</span><span class="p">:</span> <span class="kt">SCNSceneRenderer</span><span class="p">,</span> <span class="n">didSimulatePhysicsAtTime</span> <span class="nv">time</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ARCL@objc(cs)SceneLocationView(im)renderer:didApplyConstraintsAtTime:"></a>
+                    <a name="//apple_ref/swift/Method/renderer(_:didApplyConstraintsAtTime:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ARCL@objc(cs)SceneLocationView(im)renderer:didApplyConstraintsAtTime:">renderer(_:didApplyConstraintsAtTime:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">renderer</span><span class="p">(</span><span class="n">_</span> <span class="nv">renderer</span><span class="p">:</span> <span class="kt">SCNSceneRenderer</span><span class="p">,</span> <span class="n">didApplyConstraintsAtTime</span> <span class="nv">time</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ARCL@objc(cs)SceneLocationView(im)renderer:willRenderScene:atTime:"></a>
+                    <a name="//apple_ref/swift/Method/renderer(_:willRenderScene:atTime:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ARCL@objc(cs)SceneLocationView(im)renderer:willRenderScene:atTime:">renderer(_:willRenderScene:atTime:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">renderer</span><span class="p">(</span><span class="n">_</span> <span class="nv">renderer</span><span class="p">:</span> <span class="kt">SCNSceneRenderer</span><span class="p">,</span> <span class="n">willRenderScene</span> <span class="nv">scene</span><span class="p">:</span> <span class="kt">SCNScene</span><span class="p">,</span> <span class="n">atTime</span> <span class="nv">time</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC3runyyF"></a>
+                    <a name="//apple_ref/swift/Method/run()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC3runyyF">run()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">run</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC5pauseyyF"></a>
+                    <a name="//apple_ref/swift/Method/pause()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC5pauseyyF">pause()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">pause</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/True%20North"></a>
+                <a name="//apple_ref/swift/Section/True North" class="dashAnchor"></a>
+                <a href="#/True%20North">
+                  <h3 class="section-name">True North</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC04moveB16HeadingClockwiseyyF"></a>
+                    <a name="//apple_ref/swift/Method/moveSceneHeadingClockwise()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC04moveB16HeadingClockwiseyyF">moveSceneHeadingClockwise()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>iOS can be inaccurate when setting true north
+The scene is oriented to true north, and will update its heading when it gets a more accurate reading
+You can disable this through setting the
+These functions provide manual overriding of the scene heading,
+if you have a more precise idea of where True North is
+The goal is for the True North orientation problems to be resolved
+At which point these functions would no longer be useful
+Moves the scene heading clockwise by 1 degree
+Intended for correctional purposes</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">moveSceneHeadingClockwise</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC04moveB20HeadingAntiClockwiseyyF"></a>
+                    <a name="//apple_ref/swift/Method/moveSceneHeadingAntiClockwise()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC04moveB20HeadingAntiClockwiseyyF">moveSceneHeadingAntiClockwise()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Moves the scene heading anti-clockwise by 1 degree
+Intended for correctional purposes</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">moveSceneHeadingAntiClockwise</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/LocationNodes"></a>
+                <a name="//apple_ref/swift/Section/LocationNodes" class="dashAnchor"></a>
+                <a href="#/LocationNodes">
+                  <h3 class="section-name">LocationNodes</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC03addC22NodeForCurrentPosition08locationF0yAA0cF0C_tF"></a>
+                    <a name="//apple_ref/swift/Method/addLocationNodeForCurrentPosition(locationNode:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC03addC22NodeForCurrentPosition08locationF0yAA0cF0C_tF">addLocationNodeForCurrentPosition(locationNode:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Upon being added, a node&rsquo;s location, locationConfirmed and position may be modified and should not be changed externally.
+Silently fails and returns without adding the node to the scene if any of <code><a href="../Classes/SceneLocationView.html#/s:4ARCL17SceneLocationViewC07currentB8PositionSo10SCNVector3VSgvp">currentScenePosition</a></code>,
+<code>sceneLocationManager.currentLocation</code>, or <code><a href="../Classes/SceneLocationView.html#/s:4ARCL17SceneLocationViewC9sceneNodeSo7SCNNodeCSgvp">sceneNode</a></code> is <code>nil</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">addLocationNodeForCurrentPosition</span><span class="p">(</span><span class="nv">locationNode</span><span class="p">:</span> <span class="kt"><a href="../Classes/LocationNode.html">LocationNode</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC03addC23NodesForCurrentPosition08locationF0ySayAA0C4NodeCG_tF"></a>
+                    <a name="//apple_ref/swift/Method/addLocationNodesForCurrentPosition(locationNodes:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC03addC23NodesForCurrentPosition08locationF0ySayAA0C4NodeCG_tF">addLocationNodesForCurrentPosition(locationNodes:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Each node&rsquo;s addition to the scene can silently fail; See <code><a href="../Classes/SceneLocationView.html#/s:4ARCL17SceneLocationViewC03addC22NodeForCurrentPosition08locationF0yAA0cF0C_tF">addLocationNodeForCurrentPosition(locationNode:)</a></code>.</p>
+
+<p>Why would we want to add multiple nodes at the current position?</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">addLocationNodesForCurrentPosition</span><span class="p">(</span><span class="nv">locationNodes</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/LocationNode.html">LocationNode</a></span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC03addc17NodeWithConfirmedC008locationF0yAA0cF0C_tF"></a>
+                    <a name="//apple_ref/swift/Method/addLocationNodeWithConfirmedLocation(locationNode:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC03addc17NodeWithConfirmedC008locationF0yAA0cF0C_tF">addLocationNodeWithConfirmedLocation(locationNode:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Silently fails and returns without adding the node unless<code>location</code> is not <code>nil</code> and <code>locationConfirmed</code> is <code>true</code>.
+Upon being added, a node&rsquo;s position will be modified internally and should not be changed externally.
+<code>location</code> will not be modified, but taken as accurate.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">addLocationNodeWithConfirmedLocation</span><span class="p">(</span><span class="nv">locationNode</span><span class="p">:</span> <span class="kt"><a href="../Classes/LocationNode.html">LocationNode</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ARCL@objc(cs)SceneLocationView(im)sceneLocationViewTouchedWithSender:"></a>
+                    <a name="//apple_ref/swift/Method/sceneLocationViewTouched(sender:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ARCL@objc(cs)SceneLocationView(im)sceneLocationViewTouchedWithSender:">sceneLocationViewTouched(sender:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">func</span> <span class="nf">sceneLocationViewTouched</span><span class="p">(</span><span class="nv">sender</span><span class="p">:</span> <span class="kt">UITapGestureRecognizer</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC03addc18NodesWithConfirmedC008locationF0ySayAA0C4NodeCG_tF"></a>
+                    <a name="//apple_ref/swift/Method/addLocationNodesWithConfirmedLocation(locationNodes:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC03addc18NodesWithConfirmedC008locationF0ySayAA0C4NodeCG_tF">addLocationNodesWithConfirmedLocation(locationNodes:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Each node&rsquo;s addition to the scene can silently fail; See <code><a href="../Classes/SceneLocationView.html#/s:4ARCL17SceneLocationViewC03addc17NodeWithConfirmedC008locationF0yAA0cF0C_tF">addLocationNodeWithConfirmedLocation(locationNode:)</a></code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">addLocationNodesWithConfirmedLocation</span><span class="p">(</span><span class="nv">locationNodes</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/LocationNode.html">LocationNode</a></span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC14removeAllNodesyyF"></a>
+                    <a name="//apple_ref/swift/Method/removeAllNodes()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC14removeAllNodesyyF">removeAllNodes()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">removeAllNodes</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC24sceneContainsNodeWithTagySbSSF"></a>
+                    <a name="//apple_ref/swift/Method/sceneContainsNodeWithTag(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC24sceneContainsNodeWithTagySbSSF">sceneContainsNodeWithTag(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Determine if scene contains a node with the specified tag</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">sceneContainsNodeWithTag</span><span class="p">(</span><span class="n">_</span> <span class="nv">tag</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tag</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>tag text</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>true if a LocationNode with the tag exists; false otherwise</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC9findNodes6taggedSayAA0C4NodeCGSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/findNodes(tagged:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC9findNodes6taggedSayAA0C4NodeCGSS_tF">findNodes(tagged:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Find all location nodes in the scene tagged with <code>tag</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">findNodes</span><span class="p">(</span><span class="n">tagged</span> <span class="nv">tag</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/LocationNode.html">LocationNode</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tag</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The tag text for which to search nodes.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A list of all matching tags</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC06removeC4Node08locationF0yAA0cF0C_tF"></a>
+                    <a name="//apple_ref/swift/Method/removeLocationNode(locationNode:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC06removeC4Node08locationF0yAA0cF0C_tF">removeLocationNode(locationNode:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">removeLocationNode</span><span class="p">(</span><span class="nv">locationNode</span><span class="p">:</span> <span class="kt"><a href="../Classes/LocationNode.html">LocationNode</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC06removeC5Nodes08locationF0ySayAA0C4NodeCG_tF"></a>
+                    <a name="//apple_ref/swift/Method/removeLocationNodes(locationNodes:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC06removeC5Nodes08locationF0ySayAA0C4NodeCG_tF">removeLocationNodes(locationNodes:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">removeLocationNodes</span><span class="p">(</span><span class="nv">locationNodes</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/LocationNode.html">LocationNode</a></span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC9addRoutes6routes10boxBuilderySaySo7MKRouteCG_So6SCNBoxC12CoreGraphics7CGFloatVcSgtF"></a>
+                    <a name="//apple_ref/swift/Method/addRoutes(routes:boxBuilder:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC9addRoutes6routes10boxBuilderySaySo7MKRouteCG_So6SCNBoxC12CoreGraphics7CGFloatVcSgtF">addRoutes(routes:boxBuilder:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Adds routes to the scene and lets you specify the geometry prototype for the box.
+Note: You can provide your own SCNBox prototype to base the direction nodes from.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">addRoutes</span><span class="p">(</span><span class="nv">routes</span><span class="p">:</span> <span class="p">[</span><span class="kt">MKRoute</span><span class="p">],</span> <span class="nv">boxBuilder</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:4ARCL10BoxBuildera">BoxBuilder</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>routes</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The MKRoute of directions</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>boxBuilder</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A block that will customize how a box is built.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC9addRoutes9polylines0012altitude_wBf10boxBuilderySayAA14AttributedTypeVySo10MKPolylineCGG_SdSo6SCNBoxC12CoreGraphics7CGFloatVcSgtF"></a>
+                    <a name="//apple_ref/swift/Method/addRoutes(polylines:Δaltitude:boxBuilder:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC9addRoutes9polylines0012altitude_wBf10boxBuilderySayAA14AttributedTypeVySo10MKPolylineCGG_SdSo6SCNBoxC12CoreGraphics7CGFloatVcSgtF">addRoutes(polylines:Δaltitude:boxBuilder:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Adds polylines to the scene and lets you specify the geometry prototype for the box.
+Note: You can provide your own SCNBox prototype to base the direction nodes from.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">addRoutes</span><span class="p">(</span><span class="nv">polylines</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/AttributedType.html">AttributedType</a></span><span class="o">&lt;</span><span class="kt">MKPolyline</span><span class="o">&gt;</span><span class="p">],</span>
+               <span class="kt">Δaltitude</span><span class="p">:</span> <span class="kt">CLLocationDistance</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">,</span>
+               <span class="nv">boxBuilder</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:4ARCL10BoxBuildera">BoxBuilder</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>polylines</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The list of attributed MKPolyline to rendered</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>Δaltitude</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>difference between box and current user altitude</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>boxBuilder</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A block that will customize how a box is built.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC12removeRoutes6routesySaySo7MKRouteCG_tF"></a>
+                    <a name="//apple_ref/swift/Method/removeRoutes(routes:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC12removeRoutes6routesySaySo7MKRouteCG_tF">removeRoutes(routes:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">removeRoutes</span><span class="p">(</span><span class="nv">routes</span><span class="p">:</span> <span class="p">[</span><span class="kt">MKRoute</span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC12addPolylines9polylines10boxBuilderySaySo10MKPolylineCG_So6SCNBoxC12CoreGraphics7CGFloatVcSgtF"></a>
+                    <a name="//apple_ref/swift/Method/addPolylines(polylines:boxBuilder:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC12addPolylines9polylines10boxBuilderySaySo10MKPolylineCG_So6SCNBoxC12CoreGraphics7CGFloatVcSgtF">addPolylines(polylines:boxBuilder:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Adds polylines to the scene and lets you specify the geometry prototype for the box.
+Note: You can provide your own SCNBox prototype to base the direction nodes from.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">addPolylines</span><span class="p">(</span><span class="nv">polylines</span><span class="p">:</span> <span class="p">[</span><span class="kt">MKPolyline</span><span class="p">],</span> <span class="nv">boxBuilder</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:4ARCL10BoxBuildera">BoxBuilder</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>polylines</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A set of MKPolyline.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>boxBuilder</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A block that will customize how a box is built.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL17SceneLocationViewC15removePolylines9polylinesySaySo10MKPolylineCG_tF"></a>
+                    <a name="//apple_ref/swift/Method/removePolylines(polylines:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL17SceneLocationViewC15removePolylines9polylinesySaySo10MKPolylineCG_tF">removePolylines(polylines:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">removePolylines</span><span class="p">(</span><span class="nv">polylines</span><span class="p">:</span> <span class="p">[</span><span class="kt">MKPolyline</span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2019 <a class="link" href="https://github.com/ProjectDent/ARKit-CoreLocation/graphs/contributors" target="_blank" rel="external">ProjectDent contributors</a>. All rights reserved. (Last updated: 2019-12-01)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.12.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
