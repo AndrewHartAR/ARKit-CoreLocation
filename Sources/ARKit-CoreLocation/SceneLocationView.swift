@@ -79,6 +79,9 @@ open class SceneLocationView: ARSCNView {
             locationNodes.forEach { $0.locationEstimateMethod = newValue }
         }
     }
+    
+    /// Y-offset between stacked annotations
+    public var stackingOffset: Float = 0.0
 
     /// When set to true, displays an axes node at the start of the scene
     public var showAxesNode = false
@@ -271,7 +274,7 @@ public extension SceneLocationView {
                                                     .didUpdateLocationAndScaleOfLocationNode(sceneLocationView: self,
                                                                                              locationNode: locationNode)
         }
-
+        locationNode.stackNode(scenePosition: scenePosition, locationNodes: locationNodes, stackingOffset: stackingOffset)
         locationNodes.append(locationNode)
         sceneNode?.addChildNode(locationNode)
     }
@@ -382,7 +385,7 @@ public extension SceneLocationView {
                 let locationNodeLocation = self.locationOfLocationNode($0)
             $0.updatePositionAndScale(setup: true,
                                       scenePosition: currentScenePosition,
-                                          locationNodeLocation: locationNodeLocation,
+                                      locationNodeLocation: locationNodeLocation,
                                       locationManager: sceneLocationManager,
                                       onCompletion: {})
             sceneNode?.addChildNode($0)
