@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>LocationManager Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/LocationManager" class="dashAnchor"></a>
+    <a title="LocationManager Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">ARCL Docs</a> (31% documented)</p>
+        <p class="header-right"><a href="https://github.com/ProjectDent/ARKit-CoreLocation"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">ARCL Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        LocationManager Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/AnnotationNode.html">AnnotationNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocationAnnotationNode.html">LocationAnnotationNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocationManager.html">LocationManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocationNode.html">LocationNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PolylineNode.html">PolylineNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SceneLocationEstimate.html">SceneLocationEstimate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SceneLocationManager.html">SceneLocationManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SceneLocationView.html">SceneLocationView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SceneLocationView/ARTrackingType.html">– ARTrackingType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/LocationEstimateMethod.html">LocationEstimateMethod</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ScalingScheme.html">ScalingScheme</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/CGPoint.html">CGPoint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/CLLocation.html">CLLocation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/CLLocationCoordinate2D.html">CLLocationCoordinate2D</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Double.html">Double</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Float.html">Float</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/FloatingPoint.html">FloatingPoint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Int.html">Int</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/SCNNode.html">SCNNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/SCNVector3.html">SCNVector3</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UIView.html">UIView</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/LNTouchDelegate.html">LNTouchDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/LocationManagerDelegate.html">LocationManagerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SceneLocationManagerDelegate.html">SceneLocationManagerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SceneLocationViewDelegate.html">SceneLocationViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SceneLocationViewEstimateDelegate.html">SceneLocationViewEstimateDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SceneTrackingDelegate.html">SceneTrackingDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/ARKit_CoreLocation.html">ARKit_CoreLocation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AttributedType.html">AttributedType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/LocationTranslation.html">LocationTranslation</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:4ARCL10BoxBuildera">BoxBuilder</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>LocationManager</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">LocationManager</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+
+                </div>
+              </div>
+            <p>Handles retrieving the location and heading from CoreLocation
+Does not contain anything related to ARKit or advanced location</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL15LocationManagerC8delegateAA0bC8Delegate_pSgvp"></a>
+                    <a name="//apple_ref/swift/Property/delegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL15LocationManagerC8delegateAA0bC8Delegate_pSgvp">delegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">weak</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/LocationManagerDelegate.html">LocationManagerDelegate</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL15LocationManagerC07currentB0So10CLLocationCSgvp"></a>
+                    <a name="//apple_ref/swift/Property/currentLocation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL15LocationManagerC07currentB0So10CLLocationCSgvp">currentLocation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">currentLocation</span><span class="p">:</span> <span class="kt">CLLocation</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL15LocationManagerC7headingSdSgvp"></a>
+                    <a name="//apple_ref/swift/Property/heading" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL15LocationManagerC7headingSdSgvp">heading</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">private(set)</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">heading</span><span class="p">:</span> <span class="kt">CLLocationDirection</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL15LocationManagerC15headingAccuracySdSgvp"></a>
+                    <a name="//apple_ref/swift/Property/headingAccuracy" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL15LocationManagerC15headingAccuracySdSgvp">headingAccuracy</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">private(set)</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">headingAccuracy</span><span class="p">:</span> <span class="kt">CLLocationDirection</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ARCL@objc(cs)LocationManager(im)init"></a>
+                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ARCL@objc(cs)LocationManager(im)init">init()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">override</span> <span class="nf">init</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL15LocationManagerC20requestAuthorizationyyF"></a>
+                    <a name="//apple_ref/swift/Method/requestAuthorization()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL15LocationManagerC20requestAuthorizationyyF">requestAuthorization()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">requestAuthorization</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/CLLocationManagerDelegate"></a>
+                <a name="//apple_ref/swift/Section/CLLocationManagerDelegate" class="dashAnchor"></a>
+                <a href="#/CLLocationManagerDelegate">
+                  <h3 class="section-name">CLLocationManagerDelegate</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ARCL@objc(cs)LocationManager(im)locationManager:didChangeAuthorizationStatus:"></a>
+                    <a name="//apple_ref/swift/Method/locationManager(_:didChangeAuthorization:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ARCL@objc(cs)LocationManager(im)locationManager:didChangeAuthorizationStatus:">locationManager(_:didChangeAuthorization:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">locationManager</span><span class="p">(</span><span class="n">_</span> <span class="nv">manager</span><span class="p">:</span> <span class="kt">CLLocationManager</span><span class="p">,</span> <span class="n">didChangeAuthorization</span> <span class="nv">status</span><span class="p">:</span> <span class="kt">CLAuthorizationStatus</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ARCL@objc(cs)LocationManager(im)locationManager:didUpdateLocations:"></a>
+                    <a name="//apple_ref/swift/Method/locationManager(_:didUpdateLocations:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ARCL@objc(cs)LocationManager(im)locationManager:didUpdateLocations:">locationManager(_:didUpdateLocations:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">locationManager</span><span class="p">(</span><span class="n">_</span> <span class="nv">manager</span><span class="p">:</span> <span class="kt">CLLocationManager</span><span class="p">,</span> <span class="n">didUpdateLocations</span> <span class="nv">locations</span><span class="p">:</span> <span class="p">[</span><span class="kt">CLLocation</span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ARCL@objc(cs)LocationManager(im)locationManager:didUpdateHeading:"></a>
+                    <a name="//apple_ref/swift/Method/locationManager(_:didUpdateHeading:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ARCL@objc(cs)LocationManager(im)locationManager:didUpdateHeading:">locationManager(_:didUpdateHeading:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">locationManager</span><span class="p">(</span><span class="n">_</span> <span class="nv">manager</span><span class="p">:</span> <span class="kt">CLLocationManager</span><span class="p">,</span> <span class="n">didUpdateHeading</span> <span class="nv">newHeading</span><span class="p">:</span> <span class="kt">CLHeading</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ARCL@objc(cs)LocationManager(im)locationManagerShouldDisplayHeadingCalibration:"></a>
+                    <a name="//apple_ref/swift/Method/locationManagerShouldDisplayHeadingCalibration(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ARCL@objc(cs)LocationManager(im)locationManagerShouldDisplayHeadingCalibration:">locationManagerShouldDisplayHeadingCalibration(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">locationManagerShouldDisplayHeadingCalibration</span><span class="p">(</span><span class="n">_</span> <span class="nv">manager</span><span class="p">:</span> <span class="kt">CLLocationManager</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2019 <a class="link" href="https://github.com/ProjectDent/ARKit-CoreLocation/graphs/contributors" target="_blank" rel="external">ProjectDent contributors</a>. All rights reserved. (Last updated: 2019-12-03)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.12.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
