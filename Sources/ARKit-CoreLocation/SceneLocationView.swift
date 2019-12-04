@@ -79,7 +79,7 @@ open class SceneLocationView: ARSCNView {
             locationNodes.forEach { $0.locationEstimateMethod = newValue }
         }
     }
-    
+
     /// Y-offset between stacked annotations
     public var stackingOffset: Float = 0.0
 

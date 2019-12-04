@@ -84,11 +84,10 @@ open class LocationNode: SCNNode {
 
     /// The scheme to use for scaling
     public var scalingScheme: ScalingScheme = .normal
-    
+
     /// Whether the node should be stacked along the y-axis accordingly with the distance
     /// When set to true, scaleRealtiveToDistance should be false
     public var shouldStackAnnotation = false
-    
 
     public init(location: CLLocation?, tag: String? = nil) {
         self.location = location
@@ -126,7 +125,11 @@ open class LocationNode: SCNNode {
         locationTranslation.altitudeTranslation = ignoreAltitude ? 0 : locationTranslation.altitudeTranslation
 
         let adjustedDistance: CLLocationDistance
-        if locationConfirmed && (distance > 100 || continuallyAdjustNodePositionWhenWithinRange || setup || shouldStackAnnotation) {
+        // FIXME: Magic Number
+        if locationConfirmed && (distance > 100
+            || continuallyAdjustNodePositionWhenWithinRange
+            || setup
+            || shouldStackAnnotation) {
             if distance > 100 || shouldStackAnnotation {
                 //If the item is too far away, bring it closer and scale it down
                 let scale = 100 / Float(distance)
@@ -189,18 +192,19 @@ open class LocationNode: SCNNode {
     func renderingOrder(fromDistance distance: CLLocationDistance) -> Int {
         return Int.max - 1000 - (Int(distance * 1000))
     }
-    
+
     @available(iOS 11.0, *)
     func stackNode(scenePosition: SCNVector3?, locationNodes: [LocationNode], stackingOffset: Float) {
-        
+
         // Detecting collision
         let node1 = self.childNodes.first!
         var hasCollision = false
+        // FIXME: better variable name
         var i = 0
         while i < locationNodes.count {
             let locationNode2 = locationNodes[i]
-            
-            if (locationNode2 == self) {
+
+            if locationNode2 == self {
                 // If collision, start over because movement could cause additional collisions
                 if hasCollision {
                     hasCollision = false
@@ -209,17 +213,21 @@ open class LocationNode: SCNNode {
                 }
                 break
             }
-            
+
+            // FIXME: force unwrap
             let node2 = locationNode2.childNodes.first!
-            
+
             // If the angle between two nodes and the user is less than a threshold and the vertical distance
             // between the node centers is less than deltaY trheshold a collision occured and move the node up
-            let angle = angleBetweenTwoPointsAndUser(scenePosition: scenePosition, pointA: node1.worldPosition, pointB: node2.worldPosition)
+            let angle = angleBetweenTwoPointsAndUser(scenePosition: scenePosition,
+                                                     pointA: node1.worldPosition,
+                                                     pointB: node2.worldPosition)
+            // FIXME: parameterize this factor
             let angleMin = CGFloat(2.5 * atan(node1.scale.x / 100)) // You can change 2.5 to your requirements
-            
+
             let deltaY = abs(node1.worldPosition.y - node2.worldPosition.y)
             let deltaYMin = 2 * node1.boundingBox.max.y * node1.scale.y
-            
+
             // We have a collision, move the node 1 up
             if deltaY < deltaYMin && angle < angleMin {
                 node1.position.y += deltaYMin + stackingOffset
@@ -228,13 +236,14 @@ open class LocationNode: SCNNode {
             i += 1
         }
     }
-    
+
+    // FIXME: use SIMD
     private func angleBetweenTwoPointsAndUser(scenePosition: SCNVector3?, pointA: SCNVector3, pointB: SCNVector3) -> CGFloat {
         if let userPosition = scenePosition {
             let A = CGPoint(x: CGFloat(pointA.x), y: CGFloat(pointA.z))
             let B = CGPoint(x: CGFloat(pointB.x), y: CGFloat(pointB.z))
             let U = CGPoint(x: CGFloat(userPosition.x), y: CGFloat(userPosition.z))
-            
+
             let a = A.distance(to: U)
             let b = B.distance(to: U)
             let c = A.distance(to: B)
@@ -244,4 +253,3 @@ open class LocationNode: SCNNode {
         }
     }
 }
-
