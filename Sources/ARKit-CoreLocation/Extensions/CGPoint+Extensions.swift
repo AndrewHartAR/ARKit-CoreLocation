@@ -22,6 +22,7 @@ extension CGPoint {
         return x + y <= radiusSquared
     }
 
+    // TODO: use SIMD and provide a unit test, or eliminate.
     func distance(to point: CGPoint) -> CGFloat {
             return sqrt(pow(x - point.x, 2) + pow(y - point.y, 2))
     }

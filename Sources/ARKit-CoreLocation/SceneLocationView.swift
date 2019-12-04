@@ -81,6 +81,7 @@ open class SceneLocationView: ARSCNView {
     }
 
     /// Y-offset between stacked annotations
+    // FIXME: Units? Screen points?
     public var stackingOffset: Float = 0.0
 
     /// When set to true, displays an axes node at the start of the scene
@@ -274,6 +275,7 @@ public extension SceneLocationView {
                                                     .didUpdateLocationAndScaleOfLocationNode(sceneLocationView: self,
                                                                                              locationNode: locationNode)
         }
+        // FIXME: this name looks weird to me in this context.
         locationNode.stackNode(scenePosition: scenePosition, locationNodes: locationNodes, stackingOffset: stackingOffset)
         locationNodes.append(locationNode)
         sceneNode?.addChildNode(locationNode)
