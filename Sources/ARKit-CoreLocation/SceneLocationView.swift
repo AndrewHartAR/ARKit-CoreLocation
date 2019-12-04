@@ -276,6 +276,7 @@ public extension SceneLocationView {
                                                                                              locationNode: locationNode)
         }
         // FIXME: this name looks weird to me in this context.
+        // FIXME: Oops, this causes nodes to be stacked even when stacking is off.
         locationNode.stackNode(scenePosition: scenePosition, locationNodes: locationNodes, stackingOffset: stackingOffset)
         locationNodes.append(locationNode)
         sceneNode?.addChildNode(locationNode)

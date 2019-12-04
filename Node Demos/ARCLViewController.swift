@@ -40,11 +40,13 @@ class ARCLViewController: UIViewController {
     public var arTrackingType = SceneLocationView.ARTrackingType.orientationTracking
     public var scalingScheme = ScalingScheme.normal
 
-    // These three properties are properties of individual nodes. We'll set them the same way for each node added.
+    // These four properties are properties of individual nodes. We'll set them the same way for each node added.
     public var continuallyAdjustNodePositionWhenWithinRange = true
     public var continuallyUpdatePositionAndScale = true
     public var annotationHeightAdjustmentFactor = 1.1
-
+    public var shouldStackNodes = false
+    
+    // The colors and offset increments for the sample node groups
     let colors = [UIColor.systemGreen, UIColor.systemBlue, UIColor.systemOrange, UIColor.systemPurple, UIColor.systemYellow,
                   UIColor.systemRed]
     let northingIncrementMeters = 100.0
@@ -119,6 +121,7 @@ class ARCLViewController: UIViewController {
     func addScenewideNodeSettings(_ node: LocationNode) {
         if let annoNode = node as? LocationAnnotationNode {
             annoNode.annotationHeightAdjustmentFactor = annotationHeightAdjustmentFactor
+            annoNode.shouldStackAnnotation = shouldStackNodes
         }
         node.scalingScheme = scalingScheme
         // FIXME: We should be able to do this, or do it internally in addLocationNode...() calls, to match

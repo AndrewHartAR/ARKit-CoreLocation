@@ -30,6 +30,8 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
     var continuallyAdjustNodePositionWhenWithinRange = true
     var continuallyUpdatePositionAndScale = true
 
+    var shouldStackNodes = false
+    
     // MARK: - Outlets
 
     @IBOutlet weak var annoHeightAdjustFactorField: UITextField!
@@ -37,6 +39,7 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var trackingTypeSegController: UISegmentedControl!
     @IBOutlet weak var adjustNodePositionWithinRangeSwitch: UISwitch!
     @IBOutlet weak var updateNodePositionAndScaleSwitch: UISwitch!
+    @IBOutlet weak var shouldStackNodesSwitch: UISwitch!
     @IBOutlet weak var scalingSchemeSegController: UISegmentedControl!
     @IBOutlet weak var threshold1Field: UITextField!
     @IBOutlet weak var scale1Field: UITextField!
@@ -68,6 +71,8 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
         adjustNodePositionWithinRangeSwitch.isOn = continuallyAdjustNodePositionWhenWithinRange
         updateNodePositionAndScaleSwitch.isOn = continuallyUpdatePositionAndScale
 
+        shouldStackNodesSwitch.isOn = shouldStackNodes
+        
         threshold1Field.text = "\(threshold1)"
         threshold2Field.text = "\(threshold2)"
         scale1Field.text = "\(scale1)"
@@ -120,6 +125,7 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
             destination.arTrackingType = arTrackingType
             destination.continuallyUpdatePositionAndScale = continuallyUpdatePositionAndScale
             destination.continuallyAdjustNodePositionWhenWithinRange = continuallyAdjustNodePositionWhenWithinRange
+            destination.shouldStackNodes = shouldStackNodes
 
             if segue.identifier == "justOneNode" {
                 destination.demonstration = .justOneNode
@@ -176,6 +182,11 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
             locationEstimateMethodSegController.selectedSegmentIndex = 1
         }
     }
+
+    @IBAction func nodestackingChanged(_ sender: UISwitch) {
+        shouldStackNodes = sender.isOn
+    }
+
 
     @IBAction func trackingTypeChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
