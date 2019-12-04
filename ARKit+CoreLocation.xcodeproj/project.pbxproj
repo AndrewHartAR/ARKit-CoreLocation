@@ -795,7 +795,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BE2F92C419DF91E84D057E99 /* Pods-Node Demos-Node DemosTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -816,7 +815,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E4E06A4958DE9F30B7B602A0 /* Pods-Node Demos-Node DemosTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -835,7 +833,6 @@
 		2B0FADE123513B35005C1A52 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "Node DemosUITests/Info.plist";
@@ -854,7 +851,6 @@
 		2B0FADE223513B35005C1A52 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "Node DemosUITests/Info.plist";

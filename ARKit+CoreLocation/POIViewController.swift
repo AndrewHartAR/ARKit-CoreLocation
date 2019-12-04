@@ -46,6 +46,7 @@ class POIViewController: UIViewController {
     let displayDebugging = false
 
     let adjustNorthByTappingSidesOfScreen = false
+    let addNodeByTappingScreen = true
 
     class func loadFromStoryboard() -> POIViewController {
         return UIStoryboard(name: "Main", bundle: nil)
@@ -56,18 +57,22 @@ class POIViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        NotificationCenter.default.addObserver(forName: UIApplication.willResignActiveNotification, object: nil, queue: nil) { _ in
-            self.pauseAnimation()
+        // swiftlint:disable:next discarded_notification_center_observer
+        NotificationCenter.default.addObserver(forName: UIApplication.willResignActiveNotification,
+                                               object: nil,
+                                               queue: nil) { [weak self] _ in
+												self?.pauseAnimation()
         }
-        NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil) { _ in
-            self.restartAnimation()
+        // swiftlint:disable:next discarded_notification_center_observer
+        NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification,
+                                               object: nil,
+                                               queue: nil) { [weak self] _ in
+												self?.restartAnimation()
         }
 
-        updateInfoLabelTimer = Timer.scheduledTimer(timeInterval: 0.1,
-                                                    target: self,
-                                                    selector: #selector(POIViewController.updateInfoLabel),
-                                                    userInfo: nil,
-                                                    repeats: true)
+		updateInfoLabelTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+			self?.updateInfoLabel()
+		}
 
         // Set to true to display an arrow which points north.
         // Checkout the comments in the property description and on the readme on this.
@@ -90,12 +95,9 @@ class POIViewController: UIViewController {
         mapView.isHidden = !showMap
 
         if showMap {
-            updateUserLocationTimer = Timer.scheduledTimer(
-                timeInterval: 0.5,
-                target: self,
-                selector: #selector(POIViewController.updateUserLocation),
-                userInfo: nil,
-                repeats: true)
+			updateUserLocationTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
+				self?.updateUserLocation()
+			}
 
             routes?.forEach { mapView.addOverlay($0.polyline) }
         }
@@ -144,7 +146,7 @@ class POIViewController: UIViewController {
             } else if location.x >= view.frame.size.width - 40 && adjustNorthByTappingSidesOfScreen {
                 print("right side of the screen")
                 sceneLocationView.moveSceneHeadingClockwise()
-            } else {
+            } else if addNodeByTappingScreen {
                 let image = UIImage(named: "pin")!
                 let annotationNode = LocationAnnotationNode(location: nil, image: image)
                 annotationNode.scaleRelativeToDistance = false
@@ -258,6 +260,27 @@ extension POIViewController {
         let applePark = buildViewNode(latitude: 37.334807, longitude: -122.009076, altitude: 100, text: "Apple Park")
         nodes.append(applePark)
 
+        let theAlamo = buildViewNode(latitude: 29.4259671, longitude: -98.4861419, altitude: 300, text: "The Alamo")
+        nodes.append(theAlamo)
+
+        let pikesPeakLayer = CATextLayer()
+        pikesPeakLayer.frame = CGRect(x: 0, y: 0, width: 200, height: 40)
+        pikesPeakLayer.cornerRadius = 4
+        pikesPeakLayer.fontSize = 14
+        pikesPeakLayer.alignmentMode = .center
+        pikesPeakLayer.foregroundColor = UIColor.black.cgColor
+        pikesPeakLayer.backgroundColor = UIColor.white.cgColor
+
+        // This demo uses a simple periodic timer to showcase dynamic text in a node.  In your implementation,
+        // the view's content will probably be changed as the result of a network fetch or some other asynchronous event.
+
+        _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+            pikesPeakLayer.string = "Pike's Peak\n" + Date().description
+        }
+
+        let pikesPeak = buildLayerNode(latitude: 38.8405322, longitude: -105.0442048, altitude: 4705, layer: pikesPeakLayer)
+        nodes.append(pikesPeak)
+
         return nodes
     }
 
@@ -349,6 +372,14 @@ extension POIViewController {
         label.textAlignment = .center
         return LocationAnnotationNode(location: location, view: label)
     }
+
+    func buildLayerNode(latitude: CLLocationDegrees, longitude: CLLocationDegrees,
+                        altitude: CLLocationDistance, layer: CALayer) -> LocationAnnotationNode {
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let location = CLLocation(coordinate: coordinate, altitude: altitude)
+        return LocationAnnotationNode(location: location, layer: layer)
+    }
+
 }
 
 // MARK: - LNTouchDelegate
@@ -356,11 +387,20 @@ extension POIViewController {
 extension POIViewController: LNTouchDelegate {
 
     func annotationNodeTouched(node: AnnotationNode) {
-        print("AnnotationNode touched \(node)")
+		if let node = node.parent as? LocationNode {
+			let coords = "\(node.location.coordinate.latitude.short)° \(node.location.coordinate.longitude.short)°"
+			let altitude = "\(node.location.altitude.short)m"
+			let tag = node.tag ?? ""
+			nodePositionLabel.text = " Annotation node at \(coords), \(altitude) - \(tag)"
+		}
     }
 
     func locationNodeTouched(node: LocationNode) {
         print("Location node touched - tag: \(node.tag ?? "")")
+		let coords = "\(node.location.coordinate.latitude.short)° \(node.location.coordinate.longitude.short)°"
+		let altitude = "\(node.location.altitude.short)m"
+		let tag = node.tag ?? ""
+		nodePositionLabel.text = " Location node at \(coords), \(altitude) - \(tag)"
     }
 
 }

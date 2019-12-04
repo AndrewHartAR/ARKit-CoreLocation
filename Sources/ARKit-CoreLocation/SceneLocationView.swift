@@ -285,9 +285,9 @@ public extension SceneLocationView {
         }
 
         let coordinates = sender.location(in: touchedView)
-        let hitTest = touchedView.hitTest(coordinates)
+        let hitTests = touchedView.hitTest(coordinates)
 
-        guard let firstHitTest = hitTest.first else {
+        guard let firstHitTest = hitTests.first else {
             return
         }
 
@@ -411,7 +411,7 @@ public extension SceneLocationView {
     ///   - polylines: A set of MKPolyline.
     ///   - boxBuilder: A block that will customize how a box is built.
     func addPolylines(polylines: [MKPolyline], boxBuilder: BoxBuilder? = nil) {
-        
+
         guard let altitude = sceneLocationManager.currentLocation?.altitude else {
             return assertionFailure("we don't have an elevation")
         }
@@ -421,19 +421,19 @@ public extension SceneLocationView {
 
         polylineNodes.forEach {
             $0.locationNodes.forEach {
-                
+
                 let locationNodeLocation = self.locationOfLocationNode($0)
                 $0.updatePositionAndScale(setup: true,
                                           scenePosition: currentScenePosition,
                                           locationNodeLocation: locationNodeLocation,
                                           locationManager: sceneLocationManager,
                                           onCompletion: {})
-                
+
                 sceneNode?.addChildNode($0)
             }
         }
     }
-    
+
     func removePolylines(polylines: [MKPolyline]) {
         polylines.forEach { polyline in
             if let index = polylineNodes.firstIndex(where: { $0.polyline == polyline }) {

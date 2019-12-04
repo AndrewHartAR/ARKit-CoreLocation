@@ -8,6 +8,8 @@
 
 import UIKit
 
+// swiftlint:disable all
+// This file is an Apple template and it's not worth our time to make it pass swiftlint for a demo.
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

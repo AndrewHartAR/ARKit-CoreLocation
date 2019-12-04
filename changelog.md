@@ -1,11 +1,16 @@
 # Changelog
-- 1.2.2
+- 1.3.1
     - [PR #235 - Adds support to vertically stack annotations](https://github.com/ProjectDent/ARKit-CoreLocation/pull/235)
-    - [PR #232 - Add new demo app to exercise node types and scene parameters](https://github.com/ProjectDent/ARKit-CoreLocation/pull/232)
-    - [PR #230 - Expose an adjustment factor for label annotation height](https://github.com/ProjectDent/ARKit-CoreLocation/pull/230)
-    - [PR #225 - Expose SceneLocationView.locationOfLocationNode ](https://github.com/ProjectDent/ARKit-CoreLocation/pull/225)
-    - [PR #222 - Trigger viewWillDisappear/viewWillAppear calls when app backgrounded/foregrounded](https://github.com/ProjectDent/ARKit-CoreLocation/pull/222)
-    - [PR #220 - Render distant nodes behind closer nodes ](https://github.com/ProjectDent/ARKit-CoreLocation/pull/220)
+- 1.3.0
+   - [PR #255 - Fix minor error with placement of route steps](https://github.com/ProjectDent/ARKit-CoreLocation/pull/255)
+   - [PR #249 - Fix Memory Leak](https://github.com/ProjectDent/ARKit-CoreLocation/pull/249)
+   - [PR #244 - Improve geodesy calculations and test coverage](https://github.com/ProjectDent/ARKit-CoreLocation/pull/244)
+   - [PR #240 - Fix build error, update compiler checks](https://github.com/ProjectDent/ARKit-CoreLocation/pull/240)
+   - [PR #232 - Add new demo app to exercise node types and scene parameters](https://github.com/ProjectDent/ARKit-CoreLocation/pull/232)
+   - [PR #230 - Expose an adjustment factor for label annotation height](https://github.com/ProjectDent/ARKit-CoreLocation/pull/230)
+   - [PR #225 - Expose SceneLocationView.locationOfLocationNode ](https://github.com/ProjectDent/ARKit-CoreLocation/pull/225)
+   - [PR #222 - Trigger viewWillDisappear/viewWillAppear calls when app backgrounded/foregrounded](https://github.com/ProjectDent/ARKit-CoreLocation/pull/222)
+   - [PR #220 - Render distant nodes behind closer nodes ](https://github.com/ProjectDent/ARKit-CoreLocation/pull/220)
     - [PR #213 - Allows specifying CALayer as POI view](https://github.com/ProjectDent/ARKit-CoreLocation/pull/213)
     - [PR #224 - Enable default lighting ](https://github.com/ProjectDent/ARKit-CoreLocation/pull/224)
     - [PR #220 - Render distant nodes behind closer nodes ](https://github.com/ProjectDent/ARKit-CoreLocation/pull/220)
