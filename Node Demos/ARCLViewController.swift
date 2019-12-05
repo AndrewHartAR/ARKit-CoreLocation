@@ -45,7 +45,7 @@ class ARCLViewController: UIViewController {
     public var continuallyUpdatePositionAndScale = true
     public var annotationHeightAdjustmentFactor = 1.1
     public var shouldStackNodes = false
-    
+
     // The colors and offset increments for the sample node groups
     let colors = [UIColor.systemGreen, UIColor.systemBlue, UIColor.systemOrange, UIColor.systemPurple, UIColor.systemYellow,
                   UIColor.systemRed]
@@ -121,8 +121,8 @@ class ARCLViewController: UIViewController {
     func addScenewideNodeSettings(_ node: LocationNode) {
         if let annoNode = node as? LocationAnnotationNode {
             annoNode.annotationHeightAdjustmentFactor = annotationHeightAdjustmentFactor
-            annoNode.shouldStackAnnotation = shouldStackNodes
         }
+        node.stackable = shouldStackNodes
         node.scalingScheme = scalingScheme
         // FIXME: We should be able to do this, or do it internally in addLocationNode...() calls, to match
         // SceneLocationView's setting.
