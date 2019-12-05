@@ -31,7 +31,7 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
     var continuallyUpdatePositionAndScale = true
 
     var shouldStackNodes = false
-    
+
     // MARK: - Outlets
 
     @IBOutlet weak var annoHeightAdjustFactorField: UITextField!
@@ -72,7 +72,7 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
         updateNodePositionAndScaleSwitch.isOn = continuallyUpdatePositionAndScale
 
         shouldStackNodesSwitch.isOn = shouldStackNodes
-        
+
         threshold1Field.text = "\(threshold1)"
         threshold2Field.text = "\(threshold2)"
         scale1Field.text = "\(scale1)"
@@ -186,7 +186,6 @@ class PickerViewController: UITableViewController, UITextFieldDelegate {
     @IBAction func nodestackingChanged(_ sender: UISwitch) {
         shouldStackNodes = sender.isOn
     }
-
 
     @IBAction func trackingTypeChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
