@@ -10,25 +10,6 @@ import Foundation
 import SceneKit
 import CoreLocation
 
-/// This node type enables the client to have access to the view or image that
-/// was used to initialize the `LocationAnnotationNode`.
-open class AnnotationNode: SCNNode {
-    public var view: UIView?
-    public var image: UIImage?
-    public var layer: CALayer?
-
-    public init(view: UIView?, image: UIImage?, layer: CALayer? = nil) {
-        super.init()
-        self.view = view
-        self.image = image
-        self.layer = layer
-    }
-
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
 /// A location node can be added to a scene using a coordinate.
 ///
 /// Its scale and position should not be adjusted, as these are used for scene
@@ -86,12 +67,11 @@ open class LocationNode: SCNNode {
     public var scalingScheme: ScalingScheme = .normal
 
     /// Whether the node should be stacked along the y-axis accordingly with the distance.
-    /// When set to true, scaleRelativeToDistance should be `false`.
+    /// When set to `true`, `scaleRelativeToDistance` should be `false`.
     /// TODO: figure out whether this is "should" or "must", and clarify the comment.  If "should",
-    /// then add an explanation of what happens when scaleRelativeToDistance is true. If "must",
-    /// then enforce that with a property didSet observer. What happens when the scalingScheme
-    /// is not normal?
-
+    /// then add an explanation of what happens when `scaleRelativeToDistance` is true. If "must",
+    /// then enforce that with a property `didSet` observer. What happens when `scalingScheme`
+    /// is not `ScalingScheme.normal`?
     public var shouldStackAnnotation = false
 
     public init(location: CLLocation?, tag: String? = nil) {
