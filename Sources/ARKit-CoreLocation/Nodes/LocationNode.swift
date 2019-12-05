@@ -92,7 +92,7 @@ open class LocationNode: SCNNode {
     /// then add an explanation of what happens when `scaleRelativeToDistance` is true. If "must",
     /// then enforce that with a property `didSet` observer. What happens when `scalingScheme`
     /// is not `ScalingScheme.normal`?
-    public var shouldStackAnnotation = false
+    public var stackable = false
 
     public init(location: CLLocation?, tag: String? = nil) {
         self.location = location
@@ -117,6 +117,8 @@ open class LocationNode: SCNNode {
         }
     }
 
+    /// Called from `updatePositionAndScale()`. The call in `LocationNode` discards the result,
+    /// but the call in `LocationAnnotationNode` uses the result for rescaling the label.
     internal func adjustedDistance(setup: Bool, position: SCNVector3, locationNodeLocation: CLLocation,
                                    locationManager: SceneLocationManager) -> CLLocationDistance {
         guard let location = locationManager.currentLocation else {
@@ -134,8 +136,8 @@ open class LocationNode: SCNNode {
         if locationConfirmed && (distance > 100
             || continuallyAdjustNodePositionWhenWithinRange
             || setup
-            || shouldStackAnnotation) {
-            if distance > 100 || shouldStackAnnotation {
+            || stackable) {
+            if distance > 100 || stackable {
                 //If the item is too far away, bring it closer and scale it down
                 let scale = 100 / Float(distance)
 
@@ -198,56 +200,65 @@ open class LocationNode: SCNNode {
         return Int.max - 1000 - (Int(distance * 1000))
     }
 
+    
     @available(iOS 11.0, *)
-    /// TODO: write a real docstring. Consider renaming.
+    /// Adjust the position of the first `childNode` up, relative to its origin, if it is obscured by any node in `locationNodes`.
+    ///
+    /// - Parameters:
+    ///     - scenePosition: current scene viewpoint.
+    ///     - locationNodes: all nodes to be tested against. Might include `self`, which will be ignored.
+    ///     - stackingOffset: number of meters to raise the node (along the Y axis) if a collision is detected.
     func stackNode(scenePosition: SCNVector3?, locationNodes: [LocationNode], stackingOffset: Float) {
-
-        // Detecting collision
-        // FIXME: force unwrap.
-        let node1 = self.childNodes.first!
-        var hasCollision = false
-        // FIXME: better variable name
-        var i = 0
-        while i < locationNodes.count {
-            let locationNode2 = locationNodes[i]
-
-            if locationNode2 == self {
-                // If collision, start over because movement could cause additional collisions
-                if hasCollision {
-                    hasCollision = false
-                    i = 0
-                    continue
+        
+        // Detecting collision. Compare against each element of `locationNodes`.
+        // node1 is either an AnnotationNode, or an SCNNode with geometry.
+        if let node1 = self.childNodes.first {
+            print(node1.renderingOrder)
+            var hasCollision = false
+            var locationNodesIndex = 0
+            while locationNodesIndex < locationNodes.count {
+                let locationNode2 = locationNodes[locationNodesIndex]
+                
+                if locationNode2 == self {
+                    // If collision was previously detected, start over because movement could cause additional collisions
+                    if hasCollision {
+                        hasCollision = false
+                        locationNodesIndex = 0
+                        continue
+                    }
+                    break
                 }
-                break
+                
+                // node2, like node1, is either an AnnotationNode, or an SCNNode with geometry.
+                if let node2 = locationNode2.childNodes.first {
+                    print("node2", locationNode2.renderingOrder, node2.renderingOrder)
+                    // FIXME: there's a SIMD function for this.
+                    // If the angle between two nodes and the user is less than a threshold and the vertical distance
+                    // between the node centers is less than deltaY trheshold a collision occured and move the node up
+                    let angleRadians = angleRadiansBetweenTwoPointsAndUser(scenePosition: scenePosition,
+                                                             pointA: node1.worldPosition,
+                                                             pointB: node2.worldPosition)
+                    // FIXME: parameterize this 2.5 factor and figure out what 100 means.
+                    let angleMinRadians = CGFloat(2.5 * atan(node1.scale.x / 100)) // You can change 2.5 to your requirements
+                    print (angleRadians, angleMinRadians)
+                    let deltaYMeters = abs(node1.worldPosition.y - node2.worldPosition.y)
+                    let deltaYMinMeters = 2 * node1.boundingBox.max.y * node1.scale.y
+                    
+                    // We have a collision, move the node 1 up
+                    // TODO: means "move it up by one stacking offset"?
+                    if deltaYMeters < deltaYMinMeters && angleRadians < angleMinRadians {
+                        node1.position.y += deltaYMinMeters + stackingOffset
+                        hasCollision = true
+                    }
+                }
+                locationNodesIndex += 1
             }
-
-            // FIXME: force unwrap
-            let node2 = locationNode2.childNodes.first!
-
-            // FIXME: there's a SIMD function for this.
-            // If the angle between two nodes and the user is less than a threshold and the vertical distance
-            // between the node centers is less than deltaY trheshold a collision occured and move the node up
-            let angle = angleBetweenTwoPointsAndUser(scenePosition: scenePosition,
-                                                     pointA: node1.worldPosition,
-                                                     pointB: node2.worldPosition)
-            // FIXME: parameterize this 2.5 factor and figure out what 100 means.
-            let angleMin = CGFloat(2.5 * atan(node1.scale.x / 100)) // You can change 2.5 to your requirements
-
-            let deltaY = abs(node1.worldPosition.y - node2.worldPosition.y)
-            let deltaYMin = 2 * node1.boundingBox.max.y * node1.scale.y
-
-            // We have a collision, move the node 1 up
-            // TODO: means "move it up by one stacking offset"?
-            if deltaY < deltaYMin && angle < angleMin {
-                node1.position.y += deltaYMin + stackingOffset
-                hasCollision = true
-            }
-            i += 1
         }
     }
 
     // FIXME: use SIMD and provide a unit test.
-    private func angleBetweenTwoPointsAndUser(scenePosition: SCNVector3?, pointA: SCNVector3, pointB: SCNVector3) -> CGFloat {
+    /// Returns radians.
+    private func angleRadiansBetweenTwoPointsAndUser(scenePosition: SCNVector3?, pointA: SCNVector3, pointB: SCNVector3) -> CGFloat {
         if let userPosition = scenePosition {
             let A = CGPoint(x: CGFloat(pointA.x), y: CGFloat(pointA.z))
             let B = CGPoint(x: CGFloat(pointB.x), y: CGFloat(pointB.z))
