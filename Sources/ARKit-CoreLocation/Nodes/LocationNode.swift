@@ -10,6 +10,7 @@ import Foundation
 import SceneKit
 import CoreLocation
 
+/// Child node of a `LocationAnnotationNode`. You will not need to create this yourself.
 /// This node type enables the client to have access to the view or image that
 /// was used to initialize the `LocationAnnotationNode`.
 open class AnnotationNode: SCNNode {
@@ -86,12 +87,11 @@ open class LocationNode: SCNNode {
     public var scalingScheme: ScalingScheme = .normal
 
     /// Whether the node should be stacked along the y-axis accordingly with the distance.
-    /// When set to true, scaleRelativeToDistance should be `false`.
+    /// When set to `true`, `scaleRelativeToDistance` should be `false`.
     /// TODO: figure out whether this is "should" or "must", and clarify the comment.  If "should",
-    /// then add an explanation of what happens when scaleRelativeToDistance is true. If "must",
-    /// then enforce that with a property didSet observer. What happens when the scalingScheme
-    /// is not normal?
-
+    /// then add an explanation of what happens when `scaleRelativeToDistance` is true. If "must",
+    /// then enforce that with a property `didSet` observer. What happens when `scalingScheme`
+    /// is not `ScalingScheme.normal`?
     public var shouldStackAnnotation = false
 
     public init(location: CLLocation?, tag: String? = nil) {

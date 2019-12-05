@@ -9,7 +9,7 @@ import Foundation
 import SceneKit
 import CoreLocation
 
-/// A `LocationNode` which has an attached `AnnotationNode`.
+/// A `LocationNode` which has an  `AnnotationNode` as a child node.
 open class LocationAnnotationNode: LocationNode {
     /// Subnodes and adjustments should be applied to this subnode
     /// Required to allow scaling at the same time as having a 2D 'billboard' appearance
