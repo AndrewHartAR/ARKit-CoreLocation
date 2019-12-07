@@ -82,7 +82,7 @@ open class SceneLocationView: ARSCNView {
 
     /// Y-offset between stacked annotations.
     /// FIXME: Units? Screen points?
-    public var stackingOffset: Float = 0.0
+    public var stackingOffset: Float = 10.0
 
     /// When set to true, displays an axes node at the start of the scene
     public var showAxesNode = false
@@ -116,14 +116,36 @@ open class SceneLocationView: ARSCNView {
         return scene.rootNode.convertPosition(pointOfView.position, to: sceneNode)
     }
 
+    public var simdCurrentScenePosition: SIMD3<Float>? {
+        guard let pointOfView = pointOfView else { return nil }
+        return scene.rootNode.simdConvertPosition(pointOfView.simdPosition, to: sceneNode)
+    }
+
     public var currentEulerAngles: SCNVector3? { return pointOfView?.eulerAngles }
 
-    public internal(set) var locationNodes = [LocationNode]()
+    public internal(set) var locationNodes = [LocationNode]() {
+        didSet {
+            recomputeOcclusionAndVisibility()
+        }
+    }
     public internal(set) var polylineNodes = [PolylineNode]()
     public internal(set) var arTrackingType: ARTrackingType = .worldTracking
 
-    // MARK: Internal desclarations
+    /// How often to check for node occlusion and range
+    public var visibilityCheckInterval: TimeInterval? = 10.0
+    /// How far from the last node occlusion check viewpoint before we recheck. Meters.
+    public var visibilityCheckRange = Float(100.0)
+    /// If non-`nil`, LocationNodes will have their `isHidden` value toggled when they go in and out of range.
+    public var maximumNodeVisibilityRange: Float? = nil {
+        didSet {
+            recomputeOcclusionAndVisibility()
+        }
+    }
+
+    // MARK: Internal declarations
     internal var didFetchInitialLocation = false
+    internal var lastVisibilityCheckViewpoint: SIMD3<Float>?
+    internal var lastVisibilityCheckTimestamp = Date.distantPast
 
     // MARK: Setup
 
@@ -185,6 +207,94 @@ open class SceneLocationView: ARSCNView {
             return bestLocationEstimate.translatedLocation(to: locationNode.position)
         } else {
             return locationNode.location!
+        }
+    }
+
+    private func recomputeOcclusionAndVisibilityIfNecessary() {
+        guard let simdCurrentScenePosition = simdCurrentScenePosition else {return}
+        var shouldRecomputeVisibility = false
+        if let lastVisibilityCheckViewpoint = lastVisibilityCheckViewpoint {
+            let distanceFromLastCheck = length(simdCurrentScenePosition - lastVisibilityCheckViewpoint)
+            if distanceFromLastCheck > visibilityCheckRange {
+                shouldRecomputeVisibility = true
+            }
+        }
+        if let visibilityCheckInterval = visibilityCheckInterval {
+            let timeSinceLastCheck = Date().timeIntervalSince(lastVisibilityCheckTimestamp)
+            if timeSinceLastCheck > visibilityCheckInterval {
+                shouldRecomputeVisibility = true
+            }
+        }
+        if shouldRecomputeVisibility {
+            recomputeOcclusionAndVisibility()
+        }
+    }
+    
+    private func recomputeVisibility() {
+        if let simdCurrentPosition = simdCurrentScenePosition,
+            let maximumNodeVisibilityRange = maximumNodeVisibilityRange {
+            SCNTransaction.animationDuration = 0.2
+            locationNodes.forEach({$0.isHidden = (length(simdCurrentPosition - $0.simdPosition) < maximumNodeVisibilityRange)})
+        }
+    }
+    
+    private func recomputeOcclusionAndVisibility() {
+        if let simdCurrentPosition = simdCurrentScenePosition {
+            SCNTransaction.animationDuration = 0.2
+            lastVisibilityCheckViewpoint = simdCurrentPosition
+            lastVisibilityCheckTimestamp = Date()
+            recomputeVisibility()
+            let stackableNodes = locationNodes
+                .filter({!$0.isHidden}).filter({$0.stackable})
+                .sorted(by: {length(simdCurrentPosition - $0.simdPosition) < length(simdCurrentPosition - $1.simdPosition)})
+            if stackableNodes.count > 1 {
+                for nearIndex in 0..<stackableNodes.count - 1 {
+                    let nearNode = stackableNodes[nearIndex]
+                    for farIndex in nearIndex+1..<stackableNodes.count {
+                        let farNode = stackableNodes[farIndex]
+                        print(nearIndex, length(simdCurrentPosition - nearNode.simdPosition), farIndex, length(simdCurrentPosition - farNode.simdPosition))
+                        checkOcclusionAndAdjust(nearNode: nearNode, farNode: farNode, from: simdCurrentPosition)
+                    }
+                }
+                print(stackableNodes.last)
+            }
+        }
+    }
+
+    private func checkOcclusionAndAdjust(nearNode: LocationNode, farNode: LocationNode, from viewpoint: SIMD3<Float>) {
+        // If the angle between two nodes and the user is less than a threshold, check the vertical distance
+        // between the node centers. If vertical distance is less than deltaY trheshold, occlusion exists, so move the far node up.
+        let dotProduct = simd_dot(nearNode.simdWorldPosition - viewpoint, farNode.simdWorldPosition - viewpoint)
+        let angleRadians = acos(dotProduct/(simd_length(nearNode.simdWorldPosition) * simd_length(farNode.simdWorldPosition)))
+        let angleRadians2 = angleRadiansBetweenTwoPointsAndUser(scenePosition: SCNVector3.init(viewpoint),
+                                                               pointA: nearNode.worldPosition,
+                                                               pointB: farNode.worldPosition)
+        // FIXME: parameterize this 2.5 factor and figure out what 100 means.
+        let angleMinRadians = Float(2.5 * atan(nearNode.scale.x / 100)) // You can change 2.5 to your requirements
+        let deltaYMeters = abs(nearNode.worldPosition.y - farNode.worldPosition.y)
+        let deltaYMinMeters = 2 * nearNode.boundingBox.max.y * nearNode.scale.y
+        
+        // We have a collision, move the node 1 up
+        // TODO: means "move it up by one stacking offset"?
+        if deltaYMeters < deltaYMinMeters && angleRadians < angleMinRadians {
+            farNode.position.y += deltaYMinMeters + stackingOffset
+        }
+    }
+        
+    // FIXME: use SIMD and provide a unit test.
+    /// Returns radians.
+    private func angleRadiansBetweenTwoPointsAndUser(scenePosition: SCNVector3?, pointA: SCNVector3, pointB: SCNVector3) -> CGFloat {
+        if let userPosition = scenePosition {
+            let A = CGPoint(x: CGFloat(pointA.x), y: CGFloat(pointA.z))
+            let B = CGPoint(x: CGFloat(pointB.x), y: CGFloat(pointB.z))
+            let U = CGPoint(x: CGFloat(userPosition.x), y: CGFloat(userPosition.z))
+
+            let a = A.distance(to: U)
+            let b = B.distance(to: U)
+            let c = A.distance(to: B)
+            return acos((a*a + b*b - c*c) / (2 * a*b))
+        } else {
+            return 0.0
         }
     }
 }
@@ -275,11 +385,6 @@ public extension SceneLocationView {
                                                     .didUpdateLocationAndScaleOfLocationNode(sceneLocationView: self,
                                                                                              locationNode: locationNode)
         }
-        // FIXME: this name looks weird to me in this context.
-        // FIXME: Oops, this causes nodes to be stacked even when stacking is off.
-        if locationNode.stackable {
-            locationNode.stackNode(scenePosition: scenePosition, locationNodes: locationNodes, stackingOffset: stackingOffset)
-        }
         locationNodes.append(locationNode)
         sceneNode?.addChildNode(locationNode)
     }
@@ -342,6 +447,7 @@ public extension SceneLocationView {
         }
 
         locationNode.removeFromParentNode()
+        recomputeOcclusionAndVisibility()
     }
 
     func removeLocationNodes(locationNodes: [LocationNode]) {
@@ -491,6 +597,7 @@ extension SceneLocationView: SceneLocationManagerDelegate {
                         sceneLocationView: self, locationNode: node)
             }
         }
+        recomputeOcclusionAndVisibilityIfNecessary()
     }
 
     func didAddSceneLocationEstimate(position: SCNVector3, location: CLLocation) {

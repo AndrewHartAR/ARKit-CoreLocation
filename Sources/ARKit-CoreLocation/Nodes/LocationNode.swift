@@ -200,7 +200,6 @@ open class LocationNode: SCNNode {
         return Int.max - 1000 - (Int(distance * 1000))
     }
 
-    
     @available(iOS 11.0, *)
     /// Adjust the position of the first `childNode` up, relative to its origin, if it is obscured by any node in `locationNodes`.
     ///
