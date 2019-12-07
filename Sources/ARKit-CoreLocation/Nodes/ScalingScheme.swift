@@ -9,6 +9,15 @@ import Foundation
 
 /// A set of schemes that can be used to scale a LocationNode.
 ///
+/// The threshold values are meters.
+///
+/// Threshold defines at what distance the change in scale kicks in. e.g. in `tiered` where `threshold` is 3.0 and `scale` is 0.5,
+/// the nodes will halve their scale when the their distance is beyond 3 meters from the user.
+/// In regards to `linear`, since we can already define a starting scale for the nodes, setting the
+/// threshold defines how gradual or quick the node's scaling changes. In `linear`, anything past the
+/// threshold has a scaling of 0. `linearbuffer` is the same, but lets you define an increase amount of
+/// distance before the scaling activates, whereas `linear` is immediate.
+///
 /// Values:
 /// - normal: The default way of scaling, Hardcoded value out to 3000 meters, and then 0.75 that factor beyond 3000 m.
 /// - tiered (threshold, scale): Return 1.0 at distance up to `threshold` meters, or `scale` beyond.
