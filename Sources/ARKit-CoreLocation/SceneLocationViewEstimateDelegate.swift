@@ -43,6 +43,10 @@ public protocol SceneLocationViewDelegate: class {
     func didSetupSceneNode(sceneLocationView: SceneLocationView, sceneNode: SCNNode)
 
     func didUpdateLocationAndScaleOfLocationNode(sceneLocationView: SceneLocationView, locationNode: LocationNode)
+  
+    func didTouchNode(node: SCNNode)
+
+    func didUpdateFrame(frame: ARFrame?, renderer: SCNSceneRenderer?)
 }
 
 /// Subset of delegate methods from ARSCNViewDelegate to be notified on tracking status changes

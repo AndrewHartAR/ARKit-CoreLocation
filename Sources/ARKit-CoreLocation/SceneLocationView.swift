@@ -183,6 +183,17 @@ open class SceneLocationView: ARSCNView {
             return locationNode.location!
         }
     }
+    
+    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else {return}
+        if(touch.view == self) {
+            let viewTouchLocation:CGPoint = touch.location(in: self)
+            guard let result = self.hitTest(viewTouchLocation, options: nil).first else {
+                return
+            }
+            locationViewDelegate?.didTouchNode(node: result.node)
+        }
+    }
 }
 
 @available(iOS 11.0, *)

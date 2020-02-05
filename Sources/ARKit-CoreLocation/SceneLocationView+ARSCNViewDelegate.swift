@@ -128,6 +128,7 @@ extension SceneLocationView {
                 sceneLocationManager.addSceneLocationEstimate(location: currentLocation)
             }
         }
+      locationViewDelegate?.didUpdateFrame(frame: session.currentFrame, renderer: renderer)
     }
 
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
