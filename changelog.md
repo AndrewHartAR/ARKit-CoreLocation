@@ -1,4 +1,6 @@
 # Changelog
+- 1.3.2
+   - [PR #273 - Add view delegate functions for touches and current frames](https://github.com/ProjectDent/ARKit-CoreLocation/pull/273)
 - 1.3.0
    - [PR #255 - Fix minor error with placement of route steps](https://github.com/ProjectDent/ARKit-CoreLocation/pull/255)
    - [PR #249 - Fix Memory Leak](https://github.com/ProjectDent/ARKit-CoreLocation/pull/249)
