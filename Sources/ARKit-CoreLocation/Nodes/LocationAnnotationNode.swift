@@ -121,6 +121,34 @@ open class LocationAnnotationNode: LocationNode {
 
         onCompletion()
     }
+
+    private func updatePlane(plane: SCNPlane) {
+        annotationNode.geometry = plane
+        annotationNode.removeFlicker()
+    }
+
+    func updateImage(image: UIImage) {
+        let plane = SCNPlane(width: image.size.width / 100, height: image.size.height / 100)
+        plane.firstMaterial?.diffuse.contents = image
+        plane.firstMaterial?.lightingModel = .constant
+
+        annotationNode.image = image
+        updatePlane(plane: plane)
+    }
+
+    @available(iOS 10.0, *)
+    func updateView(view: UIView) {
+        updateImage(image: view.image)
+    }
+
+    func updateLayer(layer: CALayer) {
+        let plane = SCNPlane(width: layer.bounds.size.width / 100, height: layer.bounds.size.height / 100)
+        plane.firstMaterial?.diffuse.contents = layer
+        plane.firstMaterial?.lightingModel = .constant
+
+        annotationNode.layer = layer
+        updatePlane(plane: plane)
+    }
 }
 
 // MARK: - Image from View
