@@ -233,6 +233,14 @@ For example, one technique could be to look at recent location data, translate e
 
 We have some Milestones and Issues related to them - anyone is welcome to discuss and contribute to them. Pull requests are welcomed. You can discuss new features/enhancements/bugs either by adding a new Issue or via [the Slack community](https://join.slack.com/t/arcl-dev/shared_invite/enQtNTk4OTg4MzU0MTEyLTkyNGZjMDc3NDZlOGZmZTVlNWY1MWYxODg1MTA4ZWMzOThjZDM0ZmY1NGZlZjNiYmE1OGM3MDFkZTNjNjI5ODc).
 
+## Help / Examples
+- [360 iDev 2019: Eric Internicola - Build immersive experiences with ARKit and CoreLocation](https://vimeo.com/361883047)
+    - What if you could create objects and set a real-world (fixed) location for them and view those objects using ARKit? A library called ARCL combines the power of CoreLocation with ARKit and lets you do just that! Allow users to use their device to look in the direction of a landmark. Allow users to see location-bound objects on their device using AR. Show you users directions as they walk the streets!
+- [360iDevARNavigation - Reference Navigation App](https://github.com/intere/360iDevARNavigation)
+    -  Draws blue lines on the road for navigation (similar to the demo video at the top of this README)
+- [GeoTrackKit - ARCL Integration](https://github.com/intere/GeoTrackKit/pull/19)
+    - Integrates ARCL with a tracking library `GeoTrackKit` and has some useful demo screencasts
+
 ## Thanks
 Library created by [@AndrewProjDent](https://twitter.com/andrewprojdent), but a community effort from here on.
 
