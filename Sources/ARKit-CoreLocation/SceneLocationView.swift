@@ -292,6 +292,18 @@ public extension SceneLocationView {
             self.locationNodeTouchDelegate?.annotationNodeTouched(node: touchedNode)
         } else if let locationNode = firstHitTest.node.parent as? LocationNode {
             self.locationNodeTouchDelegate?.locationNodeTouched(node: locationNode)
+        } else {
+            var node: SCNNode? = firstHitTest.node
+            var iteration = 0
+            let maxIterations = 1000
+            while node != nil, iteration < maxIterations {
+                if let locationNode = node as? LocationNode {
+                    self.locationNodeTouchDelegate?.locationNodeTouched(node: locationNode)
+                    return
+                }
+                node = node?.parent
+                iteration+=1
+            }
         }
     }
 
