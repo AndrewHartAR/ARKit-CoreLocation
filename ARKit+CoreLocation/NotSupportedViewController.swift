@@ -13,7 +13,7 @@ class NotSupportedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .systemBackground
 
         let label = UILabel()
         label.textAlignment = .center
