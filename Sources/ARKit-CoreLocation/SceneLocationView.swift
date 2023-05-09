@@ -350,9 +350,10 @@ public extension SceneLocationView {
     /// - Parameters:
     ///   - routes: The MKRoute of directions
     ///   - boxBuilder: A block that will customize how a box is built.
-    func addRoutes(routes: [MKRoute], boxBuilder: BoxBuilder? = nil) {
+    func addRoutes(routes: [MKRoute], altitude: CLLocationDistance = -2.0, boxBuilder: BoxBuilder? = nil) {
         addRoutes(polylines: routes.map { AttributedType(type: $0.polyline,
                                                          attribute: $0.name) },
+                  Δaltitude: altitude,
                   boxBuilder: boxBuilder)
     }
 
@@ -364,7 +365,7 @@ public extension SceneLocationView {
     ///   - Δaltitude: difference between box and current user altitude
     ///   - boxBuilder: A block that will customize how a box is built.
     func addRoutes(polylines: [AttributedType<MKPolyline>],
-                   Δaltitude: CLLocationDistance = -2.0,
+                   Δaltitude: CLLocationDistance,
                    boxBuilder: BoxBuilder? = nil) {
         guard let altitude = sceneLocationManager.currentLocation?.altitude else {
             return assertionFailure("we don't have an elevation")
@@ -375,19 +376,19 @@ public extension SceneLocationView {
                          tag: $0.attribute,
                          boxBuilder: boxBuilder)
         }
-
+        
         polylineNodes.append(contentsOf: polyNodes)
         polyNodes.forEach {
             $0.locationNodes.forEach {
                 let locationNodeLocation = self.locationOfLocationNode($0)
-            $0.updatePositionAndScale(setup: true,
-                                      scenePosition: currentScenePosition,
+                $0.updatePositionAndScale(setup: true,
+                                          scenePosition: currentScenePosition,
                                           locationNodeLocation: locationNodeLocation,
-                                      locationManager: sceneLocationManager,
-                                      onCompletion: {})
-            sceneNode?.addChildNode($0)
+                                          locationManager: sceneLocationManager,
+                                          onCompletion: {})
+                sceneNode?.addChildNode($0)
+            }
         }
-    }
     }
 
     func removeRoutes(routes: [MKRoute]) {
