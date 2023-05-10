@@ -390,6 +390,36 @@ public extension SceneLocationView {
             }
         }
     }
+    
+    func addStep(step: MKRoute.Step, altitude: CLLocationDistance = -2.0, boxBuilder: BoxBuilder? = nil) {
+        addStep(polyline: AttributedType(type: step.polyline, attribute: step.description),
+                  Δaltitude: altitude,
+                  boxBuilder: boxBuilder)
+    }
+    
+    func addStep(polyline: AttributedType<MKPolyline>,
+                   Δaltitude: CLLocationDistance,
+                   boxBuilder: BoxBuilder? = nil) {
+        guard let altitude = sceneLocationManager.currentLocation?.altitude else {
+            return assertionFailure("we don't have an elevation")
+        }
+        let polyNode = PolylineNode(polyline: polyline.type,
+                         altitude: altitude + Δaltitude,
+                         tag: polyline.attribute,
+                         boxBuilder: boxBuilder)
+                
+        polylineNodes.append(polyNode)
+        
+        polyNode.locationNodes.forEach {
+            let locationNodeLocation = self.locationOfLocationNode($0)
+            $0.updatePositionAndScale(setup: true,
+                                      scenePosition: currentScenePosition,
+                                      locationNodeLocation: locationNodeLocation,
+                                      locationManager: sceneLocationManager,
+                                      onCompletion: {})
+            sceneNode?.addChildNode($0)
+        }
+    }
 
     func removeRoutes(routes: [MKRoute]) {
         routes.forEach { route in
