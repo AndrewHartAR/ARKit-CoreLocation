@@ -19,13 +19,26 @@ open class LocationAnnotationNode: LocationNode {
     /// To draw the label exactly on the true location, use a value of 0. To draw it below the true location,
     /// use a negative value.
     public var annotationHeightAdjustmentFactor = 1.1
+    
+    public init(location : CLLocation?, node : SCNNode){
+        annotationNode = AnnotationNode(view: nil, image: nil, node: node)
+        annotationNode.addChildNode(node)
+        annotationNode.removeFlicker()
+        super.init(location: location)
+        
+        let billboardConstraint = SCNBillboardConstraint()
+        billboardConstraint.freeAxes = SCNBillboardAxis.Y
+        constraints = [billboardConstraint]
+
+        addChildNode(annotationNode)
+    }
 
     public init(location: CLLocation?, image: UIImage) {
         let plane = SCNPlane(width: image.size.width / 100, height: image.size.height / 100)
         plane.firstMaterial?.diffuse.contents = image
         plane.firstMaterial?.lightingModel = .constant
 
-        annotationNode = AnnotationNode(view: nil, image: image)
+        annotationNode = AnnotationNode(view: nil, image: image, node: nil)
         annotationNode.geometry = plane
         annotationNode.removeFlicker()
 
@@ -55,7 +68,7 @@ open class LocationAnnotationNode: LocationNode {
         plane.firstMaterial?.diffuse.contents = layer
         plane.firstMaterial?.lightingModel = .constant
 
-        annotationNode = AnnotationNode(view: nil, image: nil, layer: layer)
+        annotationNode = AnnotationNode(view: nil, image: nil, layer: layer, node: nil)
         annotationNode.geometry = plane
         annotationNode.removeFlicker()
 

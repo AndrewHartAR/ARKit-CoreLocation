@@ -16,12 +16,14 @@ open class AnnotationNode: SCNNode {
     public var view: UIView?
     public var image: UIImage?
     public var layer: CALayer?
+    public var node : SCNNode?
 
-    public init(view: UIView?, image: UIImage?, layer: CALayer? = nil) {
+    public init(view: UIView?, image: UIImage?, layer: CALayer? = nil, node : SCNNode?) {
         super.init()
         self.view = view
         self.image = image
         self.layer = layer
+        self.node = node
     }
 
     required public init?(coder aDecoder: NSCoder) {

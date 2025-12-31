@@ -19,6 +19,7 @@ enum Demonstration {
     case fieldOfLabels
     case fieldOfRadii
     case dynamicNodes
+    case customNode
 }
 
 // swiftlint:disable:next type_body_length
@@ -94,6 +95,8 @@ class ARCLViewController: UIViewController {
 //            addSpriteKitNodes()
         case .dynamicNodes:
             addDynamicNodes()
+        case .customNode:
+            addCustomNode()
         }
         sceneLocationView?.run()
     }
@@ -351,6 +354,29 @@ class ARCLViewController: UIViewController {
         east10MetersLabelNode.tag = "E"
         addScenewideNodeSettings(east10MetersLabelNode)
         sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: east10MetersLabelNode)
+    }
+    
+    func addCustomNode(){
+        guard let currentLocation = sceneLocationView?.sceneLocationManager.currentLocation else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.addDynamicNodes()
+            }
+            return
+        }
+        
+        // Copy the current location because it's a reference type. Necessary?
+        let referenceLocation = CLLocation(coordinate: currentLocation.coordinate, altitude: currentLocation.altitude)
+        
+        
+        let box = SCNBox(width: 1, height: 0.5, length: 15, chamferRadius: 0)
+        
+        box.firstMaterial?.diffuse.contents = UIColor.blue
+        box.firstMaterial?.transparency = 0.9
+        let node = SCNNode(geometry: box)
+
+        let placeNode = LocationAnnotationNode(location: currentLocation, node: node)
+        addScenewideNodeSettings(placeNode)
+        sceneLocationView?.addLocationNodeWithConfirmedLocation(locationNode: placeNode)
     }
 }
 
