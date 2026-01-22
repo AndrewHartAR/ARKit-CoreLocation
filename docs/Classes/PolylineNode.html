@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>PolylineNode Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/PolylineNode" class="dashAnchor"></a>
+    <a title="PolylineNode Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">ARCL Docs</a> (31% documented)</p>
+        <p class="header-right"><a href="https://github.com/ProjectDent/ARKit-CoreLocation"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">ARCL Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        PolylineNode Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/AnnotationNode.html">AnnotationNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocationAnnotationNode.html">LocationAnnotationNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocationManager.html">LocationManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocationNode.html">LocationNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PolylineNode.html">PolylineNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SceneLocationEstimate.html">SceneLocationEstimate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SceneLocationManager.html">SceneLocationManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SceneLocationView.html">SceneLocationView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SceneLocationView/ARTrackingType.html">– ARTrackingType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/LocationEstimateMethod.html">LocationEstimateMethod</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ScalingScheme.html">ScalingScheme</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/CGPoint.html">CGPoint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/CLLocation.html">CLLocation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/CLLocationCoordinate2D.html">CLLocationCoordinate2D</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Double.html">Double</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Float.html">Float</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/FloatingPoint.html">FloatingPoint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Int.html">Int</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/SCNNode.html">SCNNode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/SCNVector3.html">SCNVector3</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UIView.html">UIView</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/LNTouchDelegate.html">LNTouchDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/LocationManagerDelegate.html">LocationManagerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SceneLocationManagerDelegate.html">SceneLocationManagerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SceneLocationViewDelegate.html">SceneLocationViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SceneLocationViewEstimateDelegate.html">SceneLocationViewEstimateDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SceneTrackingDelegate.html">SceneTrackingDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/ARKit_CoreLocation.html">ARKit_CoreLocation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AttributedType.html">AttributedType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/LocationTranslation.html">LocationTranslation</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:4ARCL10BoxBuildera">BoxBuilder</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>PolylineNode</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">PolylineNode</span> <span class="p">:</span> <span class="kt"><a href="../Classes/LocationNode.html">LocationNode</a></span></code></pre>
+
+                </div>
+              </div>
+            <p>A Node that is used to show directions in AR-CL.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL12PolylineNodeC13locationNodesSayAA08LocationC0CGvp"></a>
+                    <a name="//apple_ref/swift/Property/locationNodes" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL12PolylineNodeC13locationNodesSayAA08LocationC0CGvp">locationNodes</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">locationNodes</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/LocationNode.html">LocationNode</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL12PolylineNodeC8polylineSo10MKPolylineCvp"></a>
+                    <a name="//apple_ref/swift/Property/polyline" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL12PolylineNodeC8polylineSo10MKPolylineCvp">polyline</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">polyline</span><span class="p">:</span> <span class="kt">MKPolyline</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL12PolylineNodeC8altitudeSdvp"></a>
+                    <a name="//apple_ref/swift/Property/altitude" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL12PolylineNodeC8altitudeSdvp">altitude</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">altitude</span><span class="p">:</span> <span class="kt">CLLocationDistance</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL12PolylineNodeC10boxBuilderySo6SCNBoxC12CoreGraphics7CGFloatVcvp"></a>
+                    <a name="//apple_ref/swift/Property/boxBuilder" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL12PolylineNodeC10boxBuilderySo6SCNBoxC12CoreGraphics7CGFloatVcvp">boxBuilder</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">boxBuilder</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:4ARCL10BoxBuildera">BoxBuilder</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4ARCL12PolylineNodeC8polyline8altitude3tag10boxBuilderACSo10MKPolylineC_SdSSSgSo6SCNBoxC12CoreGraphics7CGFloatVcSgtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(polyline:altitude:tag:boxBuilder:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4ARCL12PolylineNodeC8polyline8altitude3tag10boxBuilderACSo10MKPolylineC_SdSSSgSo6SCNBoxC12CoreGraphics7CGFloatVcSgtcfc">init(polyline:altitude:tag:boxBuilder:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates a <code>PolylineNode</code> from the provided polyline, altitude (which is assumed to be uniform
+for all of the points) and an optional SCNBox to use as a prototype for the location boxes.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">polyline</span><span class="p">:</span> <span class="kt">MKPolyline</span><span class="p">,</span>
+            <span class="nv">altitude</span><span class="p">:</span> <span class="kt">CLLocationDistance</span><span class="p">,</span>
+            <span class="nv">tag</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">boxBuilder</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:4ARCL10BoxBuildera">BoxBuilder</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>polyline</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The polyline that we&rsquo;ll be creating location nodes for.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>altitude</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The uniform altitude to use to show the location nodes.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tag</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a String attribute to identify the node in the scene (e.g when it&rsquo;s touched)</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>boxBuilder</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A block that will customize how a box is built.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ARCL@objc(cs)PolylineNode(im)initWithCoder:"></a>
+                    <a name="//apple_ref/swift/Method/init(coder:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ARCL@objc(cs)PolylineNode(im)initWithCoder:">init(coder:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">required</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2019 <a class="link" href="https://github.com/ProjectDent/ARKit-CoreLocation/graphs/contributors" target="_blank" rel="external">ProjectDent contributors</a>. All rights reserved. (Last updated: 2019-12-03)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.12.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

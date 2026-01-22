@@ -1,0 +1,13 @@
+clean: true
+output: docs
+min_acl: internal
+
+author: ProjectDent contributors
+author_url: https://github.com/ProjectDent/ARKit-CoreLocation/graphs/contributors
+
+module: ARCL
+github_url: https://github.com/ProjectDent/ARKit-CoreLocation
+
+readme: readme.md
+
+podspec: ARCL.podspec

@@ -1,0 +1,1132 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/ARKit_CoreLocation.swift",
+      "line": 1,
+      "symbol": "ARKit_CoreLocation",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/ARKit_CoreLocation.swift",
+      "line": 3,
+      "symbol": "ARKit_CoreLocation.text",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Extensions/BaseTypes+Extensions.swift",
+      "line": 12,
+      "symbol": "Double.short",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Extensions/BaseTypes+Extensions.swift",
+      "line": 16,
+      "symbol": "Float.short",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Extensions/BaseTypes+Extensions.swift",
+      "line": 20,
+      "symbol": "Int.short",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Extensions/BaseTypes+Extensions.swift",
+      "line": 21,
+      "symbol": "Int.short3",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Extensions/CGPoint+Extensions.swift",
+      "line": 13,
+      "symbol": "CGPoint.pointWithVector(vector:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Extensions/CGPoint+Extensions.swift",
+      "line": 17,
+      "symbol": "CGPoint.radiusContainsPoint(radius:point:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Extensions/CLLocation+Extensions.swift",
+      "line": 14,
+      "symbol": "LocationTranslation.latitudeTranslation",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Extensions/CLLocation+Extensions.swift",
+      "line": 15,
+      "symbol": "LocationTranslation.longitudeTranslation",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Extensions/CLLocation+Extensions.swift",
+      "line": 16,
+      "symbol": "LocationTranslation.altitudeTranslation",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Extensions/CLLocation+Extensions.swift",
+      "line": 28,
+      "symbol": "CLLocation.init(coordinate:altitude:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Extensions/CLLocation+Extensions.swift",
+      "line": 110,
+      "symbol": "CLLocation.debugLog",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Extensions/FloatingPoint+Radians.swift",
+      "line": 12,
+      "symbol": "FloatingPoint.degreesToRadians",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Extensions/FloatingPoint+Radians.swift",
+      "line": 13,
+      "symbol": "FloatingPoint.radiansToDegrees",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/LocationManager.swift",
+      "line": 12,
+      "symbol": "LocationManagerDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/LocationManager.swift",
+      "line": 13,
+      "symbol": "LocationManagerDelegate.locationManagerDidUpdateLocation(_:location:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/LocationManager.swift",
+      "line": 15,
+      "symbol": "LocationManagerDelegate.locationManagerDidUpdateHeading(_:heading:accuracy:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/LocationManager.swift",
+      "line": 20,
+      "symbol": "LocationManagerDelegate",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/LocationManager.swift",
+      "line": 21,
+      "symbol": "LocationManagerDelegate.locationManagerDidUpdateLocation(_:location:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/LocationManager.swift",
+      "line": 24,
+      "symbol": "LocationManagerDelegate.locationManagerDidUpdateHeading(_:heading:accuracy:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/LocationManager.swift",
+      "line": 32,
+      "symbol": "LocationManager.delegate",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/LocationManager.swift",
+      "line": 36,
+      "symbol": "LocationManager.currentLocation",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/LocationManager.swift",
+      "line": 38,
+      "symbol": "LocationManager.heading",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/LocationManager.swift",
+      "line": 39,
+      "symbol": "LocationManager.headingAccuracy",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/LocationManager.swift",
+      "line": 41,
+      "symbol": "LocationManager.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/LocationManager.swift",
+      "line": 58,
+      "symbol": "LocationManager.requestAuthorization()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/LocationManager.swift",
+      "line": 77,
+      "symbol": "LocationManager.locationManager(_:didChangeAuthorization:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/LocationManager.swift",
+      "line": 81,
+      "symbol": "LocationManager.locationManager(_:didUpdateLocations:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/LocationManager.swift",
+      "line": 89,
+      "symbol": "LocationManager.locationManager(_:didUpdateHeading:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/LocationManager.swift",
+      "line": 96,
+      "symbol": "LocationManager.locationManagerShouldDisplayHeadingCalibration(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationEstimate.swift",
+      "line": 12,
+      "symbol": "SceneLocationEstimate",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationEstimate.swift",
+      "line": 13,
+      "symbol": "SceneLocationEstimate",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationEstimate.swift",
+      "line": 14,
+      "symbol": "SceneLocationEstimate.location",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationEstimate.swift",
+      "line": 15,
+      "symbol": "SceneLocationEstimate.position",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationEstimate.swift",
+      "line": 17,
+      "symbol": "SceneLocationEstimate.init(location:position:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationManager.swift",
+      "line": 25,
+      "symbol": "SceneLocationManagerDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationManager.swift",
+      "line": 26,
+      "symbol": "SceneLocationManagerDelegate.scenePosition",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationManager.swift",
+      "line": 28,
+      "symbol": "SceneLocationManagerDelegate.confirmLocationOfDistantLocationNodes()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationManager.swift",
+      "line": 29,
+      "symbol": "SceneLocationManagerDelegate.updatePositionAndScaleOfLocationNodes()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationManager.swift",
+      "line": 31,
+      "symbol": "SceneLocationManagerDelegate.didAddSceneLocationEstimate(position:location:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationManager.swift",
+      "line": 32,
+      "symbol": "SceneLocationManagerDelegate.didRemoveSceneLocationEstimate(position:location:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationManager.swift",
+      "line": 35,
+      "symbol": "SceneLocationManager",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationManager.swift",
+      "line": 36,
+      "symbol": "SceneLocationManager.sceneLocationDelegate",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationManager.swift",
+      "line": 38,
+      "symbol": "SceneLocationManager.locationEstimateMethod",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationManager.swift",
+      "line": 39,
+      "symbol": "SceneLocationManager.locationManager",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationManager.swift",
+      "line": 41,
+      "symbol": "SceneLocationManager.sceneLocationEstimates",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationManager.swift",
+      "line": 43,
+      "symbol": "SceneLocationManager.updateEstimatesTimer",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationManager.swift",
+      "line": 61,
+      "symbol": "SceneLocationManager.currentLocation",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationManager.swift",
+      "line": 70,
+      "symbol": "SceneLocationManager.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationManager.swift",
+      "line": 74,
+      "symbol": "SceneLocationManager.deinit",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationManager.swift",
+      "line": 79,
+      "symbol": "SceneLocationManager.updateLocationData()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationManager.swift",
+      "line": 95,
+      "symbol": "SceneLocationManager.removeOldLocationEstimates()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationManager.swift",
+      "line": 100,
+      "symbol": "SceneLocationManager.removeOldLocationEstimates(currentScenePosition:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationManager.swift",
+      "line": 122,
+      "symbol": "SceneLocationManager",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationManager.swift",
+      "line": 123,
+      "symbol": "SceneLocationManager.run()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationManager.swift",
+      "line": 134,
+      "symbol": "SceneLocationManager.pause()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationManager.swift",
+      "line": 140,
+      "symbol": "SceneLocationManager",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Location Manager/SceneLocationManager.swift",
+      "line": 142,
+      "symbol": "SceneLocationManager.locationManagerDidUpdateLocation(_:location:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Nodes/LocationAnnotationNode.swift",
+      "line": 23,
+      "symbol": "LocationAnnotationNode.init(location:image:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Nodes/LocationAnnotationNode.swift",
+      "line": 49,
+      "symbol": "LocationAnnotationNode.init(location:view:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Nodes/LocationAnnotationNode.swift",
+      "line": 53,
+      "symbol": "LocationAnnotationNode.init(location:layer:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Nodes/LocationAnnotationNode.swift",
+      "line": 71,
+      "symbol": "LocationAnnotationNode.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Nodes/LocationAnnotationNode.swift",
+      "line": 132,
+      "symbol": "UIView.image",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Nodes/LocationNode.swift",
+      "line": 16,
+      "symbol": "AnnotationNode.view",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Nodes/LocationNode.swift",
+      "line": 17,
+      "symbol": "AnnotationNode.image",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Nodes/LocationNode.swift",
+      "line": 18,
+      "symbol": "AnnotationNode.layer",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Nodes/LocationNode.swift",
+      "line": 20,
+      "symbol": "AnnotationNode.init(view:image:layer:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Nodes/LocationNode.swift",
+      "line": 27,
+      "symbol": "AnnotationNode.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Nodes/LocationNode.swift",
+      "line": 88,
+      "symbol": "LocationNode.init(location:tag:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Nodes/LocationNode.swift",
+      "line": 94,
+      "symbol": "LocationNode.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Nodes/LocationNode.swift",
+      "line": 98,
+      "symbol": "LocationNode.location(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Nodes/LocationNode.swift",
+      "line": 111,
+      "symbol": "LocationNode.adjustedDistance(setup:position:locationNodeLocation:locationManager:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Nodes/PolylineNode.swift",
+      "line": 19,
+      "symbol": "PolylineNode.locationNodes",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Nodes/PolylineNode.swift",
+      "line": 21,
+      "symbol": "PolylineNode.polyline",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Nodes/PolylineNode.swift",
+      "line": 22,
+      "symbol": "PolylineNode.altitude",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Nodes/PolylineNode.swift",
+      "line": 23,
+      "symbol": "PolylineNode.boxBuilder",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Nodes/PolylineNode.swift",
+      "line": 48,
+      "symbol": "PolylineNode.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Nodes/ScalingScheme.swift",
+      "line": 22,
+      "symbol": "ScalingScheme.normal",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Nodes/ScalingScheme.swift",
+      "line": 23,
+      "symbol": "ScalingScheme.tiered(threshold:scale:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Nodes/ScalingScheme.swift",
+      "line": 24,
+      "symbol": "ScalingScheme.doubleTiered(firstThreshold:firstScale:secondThreshold:secondScale:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Nodes/ScalingScheme.swift",
+      "line": 25,
+      "symbol": "ScalingScheme.linear(threshold:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Nodes/ScalingScheme.swift",
+      "line": 26,
+      "symbol": "ScalingScheme.linearBuffer(threshold:buffer:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView+ARSCNViewDelegate.swift",
+      "line": 19,
+      "symbol": "SceneLocationView.renderer(_:nodeFor:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView+ARSCNViewDelegate.swift",
+      "line": 23,
+      "symbol": "SceneLocationView.renderer(_:didAdd:for:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView+ARSCNViewDelegate.swift",
+      "line": 27,
+      "symbol": "SceneLocationView.renderer(_:willUpdate:for:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView+ARSCNViewDelegate.swift",
+      "line": 31,
+      "symbol": "SceneLocationView.renderer(_:didUpdate:for:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView+ARSCNViewDelegate.swift",
+      "line": 35,
+      "symbol": "SceneLocationView.renderer(_:didRemove:for:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView+ARSCNViewDelegate.swift",
+      "line": 46,
+      "symbol": "SceneLocationView.session(_:didFailWithError:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView+ARSCNViewDelegate.swift",
+      "line": 54,
+      "symbol": "SceneLocationView.session(_:cameraDidChangeTrackingState:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView+ARSCNViewDelegate.swift",
+      "line": 77,
+      "symbol": "SceneLocationView.sessionWasInterrupted(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView+ARSCNViewDelegate.swift",
+      "line": 85,
+      "symbol": "SceneLocationView.sessionInterruptionEnded(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView+ARSCNViewDelegate.swift",
+      "line": 94,
+      "symbol": "SceneLocationView.sessionShouldAttemptRelocalization(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView+ARSCNViewDelegate.swift",
+      "line": 98,
+      "symbol": "SceneLocationView.session(_:didOutputAudioSampleBuffer:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView+ARSCNViewDelegate.swift",
+      "line": 109,
+      "symbol": "SceneLocationView.renderer(_:didRenderScene:atTime:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView+ARSCNViewDelegate.swift",
+      "line": 133,
+      "symbol": "SceneLocationView.renderer(_:updateAtTime:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView+ARSCNViewDelegate.swift",
+      "line": 137,
+      "symbol": "SceneLocationView.renderer(_:didApplyAnimationsAtTime:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView+ARSCNViewDelegate.swift",
+      "line": 141,
+      "symbol": "SceneLocationView.renderer(_:didSimulatePhysicsAtTime:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView+ARSCNViewDelegate.swift",
+      "line": 145,
+      "symbol": "SceneLocationView.renderer(_:didApplyConstraintsAtTime:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView+ARSCNViewDelegate.swift",
+      "line": 149,
+      "symbol": "SceneLocationView.renderer(_:willRenderScene:atTime:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 17,
+      "symbol": "SceneLocationView",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 23,
+      "symbol": "SceneLocationView",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 37,
+      "symbol": "SceneLocationView.ARTrackingType.orientationTracking",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 38,
+      "symbol": "SceneLocationView.ARTrackingType.worldTracking",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 41,
+      "symbol": "SceneLocationView.locationViewDelegate",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 42,
+      "symbol": "SceneLocationView.locationEstimateDelegate",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 43,
+      "symbol": "SceneLocationView.locationNodeTouchDelegate",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 44,
+      "symbol": "SceneLocationView",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 44,
+      "symbol": "SceneLocationView.sceneTrackingDelegate",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 46,
+      "symbol": "SceneLocationView.sceneLocationManager",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 86,
+      "symbol": "SceneLocationView.sceneNode",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 107,
+      "symbol": "SceneLocationView",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 110,
+      "symbol": "SceneLocationView.currentScenePosition",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 115,
+      "symbol": "SceneLocationView.currentEulerAngles",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 117,
+      "symbol": "SceneLocationView.locationNodes",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 118,
+      "symbol": "SceneLocationView.polylineNodes",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 119,
+      "symbol": "SceneLocationView.arTrackingType",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 122,
+      "symbol": "SceneLocationView.didFetchInitialLocation",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 138,
+      "symbol": "SceneLocationView.init(frame:options:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 143,
+      "symbol": "SceneLocationView.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 167,
+      "symbol": "SceneLocationView.confirmLocationOfLocationNode(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 189,
+      "symbol": "SceneLocationView",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 191,
+      "symbol": "SceneLocationView.run()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 207,
+      "symbol": "SceneLocationView.pause()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 279,
+      "symbol": "SceneLocationView.sceneLocationViewTouched(sender:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 303,
+      "symbol": "SceneLocationView.removeAllNodes()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 331,
+      "symbol": "SceneLocationView.removeLocationNode(locationNode:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 339,
+      "symbol": "SceneLocationView.removeLocationNodes(locationNodes:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 345,
+      "symbol": "SceneLocationView",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 393,
+      "symbol": "SceneLocationView.removeRoutes(routes:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 403,
+      "symbol": "SceneLocationView",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 434,
+      "symbol": "SceneLocationView.removePolylines(polylines:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 444,
+      "symbol": "SceneLocationView",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 445,
+      "symbol": "SceneLocationView.scenePosition",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 447,
+      "symbol": "SceneLocationView.confirmLocationOfDistantLocationNodes()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 488,
+      "symbol": "SceneLocationView.didAddSceneLocationEstimate(position:location:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationView.swift",
+      "line": 492,
+      "symbol": "SceneLocationView.didRemoveSceneLocationEstimate(position:location:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationViewEstimateDelegate.swift",
+      "line": 15,
+      "symbol": "LNTouchDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationViewEstimateDelegate.swift",
+      "line": 16,
+      "symbol": "LNTouchDelegate.annotationNodeTouched(node:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationViewEstimateDelegate.swift",
+      "line": 17,
+      "symbol": "LNTouchDelegate.locationNodeTouched(node:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationViewEstimateDelegate.swift",
+      "line": 21,
+      "symbol": "SceneLocationViewEstimateDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationViewEstimateDelegate.swift",
+      "line": 22,
+      "symbol": "SceneLocationViewEstimateDelegate.didAddSceneLocationEstimate(sceneLocationView:position:location:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationViewEstimateDelegate.swift",
+      "line": 23,
+      "symbol": "SceneLocationViewEstimateDelegate.didRemoveSceneLocationEstimate(sceneLocationView:position:location:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationViewEstimateDelegate.swift",
+      "line": 27,
+      "symbol": "SceneLocationViewEstimateDelegate",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationViewEstimateDelegate.swift",
+      "line": 28,
+      "symbol": "SceneLocationViewEstimateDelegate.didAddSceneLocationEstimate(sceneLocationView:position:location:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationViewEstimateDelegate.swift",
+      "line": 31,
+      "symbol": "SceneLocationViewEstimateDelegate.didRemoveSceneLocationEstimate(sceneLocationView:position:location:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationViewEstimateDelegate.swift",
+      "line": 37,
+      "symbol": "SceneLocationViewDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationViewEstimateDelegate.swift",
+      "line": 43,
+      "symbol": "SceneLocationViewDelegate.didSetupSceneNode(sceneLocationView:sceneNode:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationViewEstimateDelegate.swift",
+      "line": 45,
+      "symbol": "SceneLocationViewDelegate.didUpdateLocationAndScaleOfLocationNode(sceneLocationView:locationNode:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationViewEstimateDelegate.swift",
+      "line": 52,
+      "symbol": "SceneTrackingDelegate.sessionWasInterrupted(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationViewEstimateDelegate.swift",
+      "line": 54,
+      "symbol": "SceneTrackingDelegate.sessionInterruptionEnded(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationViewEstimateDelegate.swift",
+      "line": 56,
+      "symbol": "SceneTrackingDelegate.session(_:didFailWithError:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationViewEstimateDelegate.swift",
+      "line": 58,
+      "symbol": "SceneTrackingDelegate.session(_:cameraDidChangeTrackingState:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationViewEstimateDelegate.swift",
+      "line": 63,
+      "symbol": "SceneLocationViewDelegate",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationViewEstimateDelegate.swift",
+      "line": 64,
+      "symbol": "SceneLocationViewDelegate.didAddSceneLocationEstimate(sceneLocationView:position:location:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationViewEstimateDelegate.swift",
+      "line": 67,
+      "symbol": "SceneLocationViewDelegate.didRemoveSceneLocationEstimate(sceneLocationView:position:location:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationViewEstimateDelegate.swift",
+      "line": 74,
+      "symbol": "SceneLocationViewDelegate.didSetupSceneNode(sceneLocationView:sceneNode:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/SceneLocationViewEstimateDelegate.swift",
+      "line": 78,
+      "symbol": "SceneLocationViewDelegate.didUpdateLocationAndScaleOfLocationNode(sceneLocationView:locationNode:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Util/AttributedType.swift",
+      "line": 12,
+      "symbol": "AttributedType.type",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Util/AttributedType.swift",
+      "line": 13,
+      "symbol": "AttributedType.attribute",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation/Sources/ARKit-CoreLocation/Util/AttributedType.swift",
+      "line": 15,
+      "symbol": "AttributedType.init(type:attribute:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/hal/DevelopmentSandbox/ProjectDent-ARKit-CoreLocation"
+}
