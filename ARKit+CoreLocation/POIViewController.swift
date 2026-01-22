@@ -268,8 +268,8 @@ extension POIViewController {
         pikesPeakLayer.cornerRadius = 4
         pikesPeakLayer.fontSize = 14
         pikesPeakLayer.alignmentMode = .center
-        pikesPeakLayer.foregroundColor = UIColor.black.cgColor
-        pikesPeakLayer.backgroundColor = UIColor.white.cgColor
+        pikesPeakLayer.foregroundColor = UIColor.label.cgColor
+        pikesPeakLayer.backgroundColor = UIColor.systemBackground.cgColor
 
         // This demo uses a simple periodic timer to showcase dynamic text in a node.  In your implementation,
         // the view's content will probably be changed as the result of a network fetch or some other asynchronous event.
