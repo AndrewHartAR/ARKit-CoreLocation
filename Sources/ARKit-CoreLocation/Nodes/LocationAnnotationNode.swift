@@ -128,12 +128,12 @@ open class LocationAnnotationNode: LocationNode {
 public extension UIView {
 
     @available(iOS 10.0, *)
-    /// Gets you an image from the view.
+    /// Gets you an image from the view. Source: https://stackoverflow.com/a/22494886/3131790
     var image: UIImage {
-        let renderer = UIGraphicsImageRenderer(bounds: bounds)
-        return renderer.image { rendererContext in
-            layer.render(in: rendererContext.cgContext)
-        }
+        UIGraphicsBeginImageContextWithOptions(bounds.size, isOpaque, 0)
+        defer { UIGraphicsEndImageContext() }
+        drawHierarchy(in: bounds, afterScreenUpdates: true)
+        return UIGraphicsGetImageFromCurrentImageContext() ?? UIImage()
     }
 
 }
